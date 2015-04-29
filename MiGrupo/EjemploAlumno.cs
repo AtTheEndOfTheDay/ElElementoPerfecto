@@ -1,20 +1,48 @@
+
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TgcViewer.Example;
-using TgcViewer;
-using Microsoft.DirectX.Direct3D;
 using System.Drawing;
+
+
 using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
+
+
+using TgcViewer;
+using TgcViewer.Example;
 using TgcViewer.Utils.Modifiers;
+using TgcViewer.Utils._2D;
+using TgcViewer.Utils.TgcGeometry;
+using TgcViewer.Utils.TgcSceneLoader;
+
+
+
+
+/*using System.IO; // Manejo de archivos
+
+using System.Linq;
+
+using TgcViewer.Utils.TgcKeyFrameLoader;
+using TgcViewer.Utils.TgcSkeletalAnimation;
+using TgcViewer.Utils.TgcGeometry;
+ */
+
+
+ 
 
 namespace AlumnoEjemplos.MiGrupo
 {
     /// <summary>
     /// Ejemplo del alumno
     /// </summary>
+    /// 
+    
+
     public class EjemploAlumno : TgcExample
     {
+        MenuObjetos menu;
+         
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
         /// Influye en donde se va a haber en el árbol de la derecha de la pantalla.
@@ -38,6 +66,11 @@ namespace AlumnoEjemplos.MiGrupo
         public override string getDescription()
         {
             return "MiIdea - Descripcion de la idea";
+        }
+
+        public static string alumnoTextureFolder()
+        {
+            return GuiController.Instance.AlumnoEjemplosMediaDir + "Texturas\\";
         }
 
         /// <summary>
@@ -64,7 +97,7 @@ namespace AlumnoEjemplos.MiGrupo
             //Cargar valor en UserVar
             GuiController.Instance.UserVars.setValue("variablePrueba", 5451);
 
-
+            menu = new MenuObjetos();
 
             ///////////////MODIFIERS//////////////////
 
@@ -148,6 +181,8 @@ namespace AlumnoEjemplos.MiGrupo
             string opcionElegida = (string)GuiController.Instance.Modifiers["valorIntervalo"];
             Vector3 valorVertice = (Vector3)GuiController.Instance.Modifiers["valorVertice"];
 
+            menu.actualizarModifiers();
+
 
             ///////////////INPUT//////////////////
             //conviene deshabilitar ambas camaras para que no haya interferencia
@@ -164,6 +199,16 @@ namespace AlumnoEjemplos.MiGrupo
                 //Boton izq apretado
             }
 
+
+            //Iniciar dibujado de todos los Sprites de la escena (en este caso es solo uno)
+            GuiController.Instance.Drawer2D.beginDrawSprite();
+
+            //Dibujar sprite (si hubiese mas, deberian ir todos aquí)
+            menu.renderMenu();
+
+            //Finalizar el dibujado de Sprites
+            GuiController.Instance.Drawer2D.endDrawSprite();
+
         }
 
         /// <summary>
@@ -172,6 +217,7 @@ namespace AlumnoEjemplos.MiGrupo
         /// </summary>
         public override void close()
         {
+            menu.disposeMenu();
 
         }
 
