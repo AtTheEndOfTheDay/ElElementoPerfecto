@@ -15,6 +15,8 @@ using TgcViewer.Utils.Modifiers;
 using TgcViewer.Utils._2D;
 using TgcViewer.Utils.TgcGeometry;
 using TgcViewer.Utils.TgcSceneLoader;
+using TgcViewer.Utils.Input;
+using Microsoft.DirectX.DirectInput;
 
 
 
@@ -42,7 +44,14 @@ namespace AlumnoEjemplos.MiGrupo
     public class EjemploAlumno : TgcExample
     {
         MenuObjetos menu;
-         
+
+        TgcBox caja;
+        TgcBox caja2;
+        TgcBox caja3;
+        TgcSphere pelota;
+        const float MOVEMENT_SPEED = 400f;
+
+
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
         /// Influye en donde se va a haber en el árbol de la derecha de la pantalla.
@@ -80,10 +89,47 @@ namespace AlumnoEjemplos.MiGrupo
         /// </summary>
         public override void init()
         {
+
+
+            TgcTexture textPared = TgcTexture.createTexture(GuiController.Instance.ExamplesMediaDir + "MeshCreator\\Textures\\Madera\\t_gfpanel03b.jpg");
+            TgcTexture textPiso = TgcTexture.createTexture(GuiController.Instance.ExamplesMediaDir + "MeshCreator\\Textures\\Madera\\wood2.jpg");
+            TgcTexture textPelota = TgcTexture.createTexture(GuiController.Instance.ExamplesMediaDir + "MeshCreator\\Textures\\Metal\\Silver-metal-texture-7.jpg");
+            Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
+
+            Vector3 centro = new Vector3(0, 0, 0);
+            Vector3 costado = new Vector3(505, 370, 0);
+            Vector3 atras = new Vector3(0, 370, -505);
+
+            Vector3 piso = new Vector3(1000, 10, 1000);
+            Vector3 lateral = new Vector3(10, 750, 1000);
+            Vector3 fondo = new Vector3(1000, 750, 10);
+            Vector3 iniPelota = new Vector3(0, 800, 0);
+
+            Color color = Color.Red;
+            caja = TgcBox.fromSize(centro, piso, textPiso);
+            caja2 = TgcBox.fromSize(costado, lateral, textPared);
+            caja3 = TgcBox.fromSize(atras, fondo, textPared);
+
+
+            pelota = new TgcSphere();
+            pelota.Radius = (float)30;
+            pelota.Position = iniPelota;
+            pelota.LevelOfDetail = 4;
+            pelota.BasePoly = TgcSphere.eBasePoly.ICOSAHEDRON;
+            pelota.setTexture(textPelota);
+
+
+            GuiController.Instance.ThirdPersonCamera.Enable = true;
+            GuiController.Instance.ThirdPersonCamera.setCamera(pelota.Position, 900, 1100);
+
+
+
+
+
             //GuiController.Instance: acceso principal a todas las herramientas del Framework
 
             //Device de DirectX para crear primitivas
-            Device d3dDevice = GuiController.Instance.D3dDevice;
+            
 
             //Carpeta de archivos Media del alumno
             string alumnoMediaFolder = GuiController.Instance.AlumnoEjemplosMediaDir;
@@ -115,9 +161,9 @@ namespace AlumnoEjemplos.MiGrupo
 
             ///////////////CONFIGURAR CAMARA ROTACIONAL//////////////////
             //Es la camara que viene por default, asi que no hace falta hacerlo siempre
-            GuiController.Instance.RotCamera.Enable = true;
+            //GuiController.Instance.RotCamera.Enable = true;
             //Configurar centro al que se mira y distancia desde la que se mira
-            GuiController.Instance.RotCamera.setCamera(new Vector3(0, 0, 0), 100);
+            //GuiController.Instance.RotCamera.setCamera(new Vector3(0, 0, 0), 100);
 
 
             /*
@@ -168,9 +214,72 @@ namespace AlumnoEjemplos.MiGrupo
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
-            //Device de DirectX para renderizar
-            Device d3dDevice = GuiController.Instance.D3dDevice;
 
+            Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
+            TgcD3dInput input = GuiController.Instance.D3dInput;
+            Vector3 movement = new Vector3(0, 0, 0);
+
+            if (input.keyDown(Key.A))
+            {
+
+                movement.X = 1;
+                pelota.rotateZ(-15 * elapsedTime);
+            }
+            else if (input.keyDown(Key.D))
+            {
+                movement.X = -1;
+                pelota.rotateZ(15 * elapsedTime);
+            }
+            if (input.keyDown(Key.W))
+            {
+                pelota.rotateX(-15 * elapsedTime);
+                movement.Z = -1;
+            }
+            else if (input.keyDown(Key.S))
+            {
+                movement.Z = 1;
+                pelota.rotateX(15 * elapsedTime);
+            }
+
+
+            Vector3 originalPos = pelota.Position;
+
+
+            if (TgcCollisionUtils.testSphereAABB(pelota.BoundingSphere, caja2.BoundingBox))
+            {
+                movement.X = -1;
+            }
+
+            if (TgcCollisionUtils.testSphereAABB(pelota.BoundingSphere, caja3.BoundingBox))
+            {
+                movement.Z = 1;
+            }
+
+            movement.Y = -1.5f;
+            if (TgcCollisionUtils.testSphereAABB(pelota.BoundingSphere, caja.BoundingBox))
+            {
+                movement.Y = 1.5f;
+            }
+
+
+
+            //Aplicar movimiento
+            movement *= MOVEMENT_SPEED * elapsedTime;
+            pelota.move(movement);
+
+            caja.render();
+            caja2.render();
+            caja3.render();
+            pelota.render();
+            pelota.updateValues();
+            GuiController.Instance.ThirdPersonCamera.Target = pelota.Position;
+            
+            
+            
+            
+            
+            //Device de DirectX para renderizar
+     
 
             //Obtener valor de UserVar (hay que castear)
             int valor = (int)GuiController.Instance.UserVars.getValue("variablePrueba");
@@ -218,7 +327,10 @@ namespace AlumnoEjemplos.MiGrupo
         public override void close()
         {
             menu.disposeMenu();
-
+            caja.dispose();
+            caja2.dispose();
+            caja3.dispose();
+            pelota.dispose();
         }
 
     }
