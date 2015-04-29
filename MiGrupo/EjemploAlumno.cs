@@ -58,7 +58,7 @@ namespace AlumnoEjemplos.MiGrupo
         /// </summary>
         public override string getCategory()
         {
-            return "AlumnoEjemplos";
+            return "At_the_end_of_the_day";
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace AlumnoEjemplos.MiGrupo
         /// </summary>
         public override string getName()
         {
-            return "Grupo 99";
+            return "Elemento Perfecto";
         }
 
         /// <summary>
