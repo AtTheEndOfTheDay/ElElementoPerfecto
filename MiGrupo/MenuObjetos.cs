@@ -36,14 +36,14 @@ namespace AlumnoEjemplos.MiGrupo
             //textureSize = menu.Texture.Size;
 
             //Ubicarlo centrado en la pantalla
-            menu.Position = new Vector2(0,screenSize.Height* 0.8f);
-            menu.SrcRect = new Rectangle(100, 100, screenSize.Width,(int) Math.Round(screenSize.Height * 0.2));
+            menu.Position = new Vector2(screenSize.Width * 0.8f, 0);
+            menu.SrcRect = new Rectangle(100, 100, (int)Math.Round(screenSize.Width * 0.2), screenSize.Height);
 
                        
             //Modifiers para variar parametros del sprite
             //GuiController.Instance.Modifiers.addVertex2f("position", new Vector2(0, 0), new Vector2(screenSize.Width, screenSize.Height), menu.Position);
             //GuiController.Instance.Modifiers.addVertex2f("scaling", new Vector2(0, 0), new Vector2(4, 4), menu.Scaling);
-            GuiController.Instance.Modifiers.addFloat("Tamaño altura en % de Screen", 0, 1, 0.2f);
+            GuiController.Instance.Modifiers.addFloat("Tamaño ancho en % de Screen", 0, 1, 0.2f);
         
         }
 
@@ -59,10 +59,10 @@ namespace AlumnoEjemplos.MiGrupo
 
         public void actualizarModifiers()
         {
-            float heightRate = (float) GuiController.Instance.Modifiers["Tamaño altura en % de Screen"];
+            float heightRate = (float) GuiController.Instance.Modifiers["Tamaño ancho en % de Screen"];
             //Actualizar valores cargados en modifiers
-            menu.Position = new Vector2(0, screenSize.Height * (1 - heightRate));
-            menu.SrcRect = new Rectangle(100, 100, screenSize.Width, (int)Math.Round(screenSize.Height * heightRate));
+            menu.Position = new Vector2(screenSize.Width * (1 - heightRate),0);
+            menu.SrcRect = new Rectangle(100, 100, (int)Math.Round(screenSize.Width * heightRate), screenSize.Height);
             
         }
 
