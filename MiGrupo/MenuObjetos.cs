@@ -20,20 +20,30 @@ namespace AlumnoEjemplos.MiGrupo
     class MenuObjetos
     {
         private TgcSprite menu;
+        private TgcSprite[] objetos;
         Size screenSize = GuiController.Instance.Panel3d.Size;
-        //Size textureSize;
 
         private string texturaMenu()
         {
             return EjemploAlumno.alumnoTextureFolder() + "menu3.jpg"; 
         }
 
+        private string texturaObjeto()
+        {
+            return EjemploAlumno.alumnoTextureFolder() + "menu2.jpg";
+        }
+
+
         public MenuObjetos()
         {               
             //Crear Sprite
             menu = new TgcSprite();
             menu.Texture = TgcTexture.createTexture(texturaMenu());
-            //textureSize = menu.Texture.Size;
+            objetos = new TgcSprite[10];
+            for(var i = 0; i < 10; i++)
+                objetos[i] = new TgcSprite();
+            foreach (var sprite in objetos)
+                sprite.Texture = TgcTexture.createTexture(texturaObjeto());
 
             //Ubicarlo centrado en la pantalla
             menu.Position = new Vector2(screenSize.Width * 0.8f, 0);
@@ -41,8 +51,6 @@ namespace AlumnoEjemplos.MiGrupo
 
                        
             //Modifiers para variar parametros del sprite
-            //GuiController.Instance.Modifiers.addVertex2f("position", new Vector2(0, 0), new Vector2(screenSize.Width, screenSize.Height), menu.Position);
-            //GuiController.Instance.Modifiers.addVertex2f("scaling", new Vector2(0, 0), new Vector2(4, 4), menu.Scaling);
             GuiController.Instance.Modifiers.addFloat("Tamaño ancho en % de Screen", 0, 1, 0.2f);
         
         }
@@ -50,6 +58,8 @@ namespace AlumnoEjemplos.MiGrupo
         public void renderMenu()
         {
             menu.render();
+            for (var i = 0; i < 10; i++)
+                objetos[i].render();
         }
 
         public void disposeMenu()
@@ -60,9 +70,21 @@ namespace AlumnoEjemplos.MiGrupo
         public void actualizarModifiers()
         {
             float heightRate = (float) GuiController.Instance.Modifiers["Tamaño ancho en % de Screen"];
+            float esquinaSupIzqMenu = screenSize.Width * (1 - heightRate);
+            int ladoObjeto = (int)Math.Round(screenSize.Width * heightRate * 0.5f);
             //Actualizar valores cargados en modifiers
-            menu.Position = new Vector2(screenSize.Width * (1 - heightRate),0);
+            menu.Position = new Vector2(esquinaSupIzqMenu, 0);
             menu.SrcRect = new Rectangle(100, 100, (int)Math.Round(screenSize.Width * heightRate), screenSize.Height);
+            for (var i = 0; i < 5; i++)
+            {
+                objetos[i].Position = new Vector2(esquinaSupIzqMenu, 0 + ladoObjeto * i);
+                objetos[i].SrcRect = new Rectangle(100, 100, ladoObjeto, ladoObjeto);
+            }
+            for (var i = 5; i < 10; i++)
+            {
+                objetos[i].Position = new Vector2(esquinaSupIzqMenu + ladoObjeto, 0 + ladoObjeto * (i-5));
+                objetos[i].SrcRect = new Rectangle(100, 100, ladoObjeto, ladoObjeto);
+            }
             
         }
 
