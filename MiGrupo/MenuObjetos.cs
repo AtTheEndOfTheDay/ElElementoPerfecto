@@ -35,7 +35,27 @@ namespace AlumnoEjemplos.MiGrupo
             //Asginar Texturas
             menu.Texture = texturaMenu;
             foreach (var sprite in objetos)
-                sprite.Texture = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "menu2.jpg");      
+                sprite.Texture = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "menu2.jpg");
+
+            //Esta pensado para una resolucion con aspect ratio 16:9
+            //Dibujo Menu
+            float ladoIzqMenu = screenSize.Width * (1 - 0.25f);
+            float anchoMenu = screenSize.Width - ladoIzqMenu;
+            menu.Position = new Vector2(ladoIzqMenu, 0);
+            menu.SrcRect = new Rectangle(0, 0, (int)Math.Round(anchoMenu), screenSize.Height);
+
+            //Dibujo Objetos de Menu
+            float ladoObjeto = anchoMenu * 0.5f;
+            for (var i = 0; i < 4; i++)
+            {
+                objetos[i].Position = new Vector2(ladoIzqMenu, 0 + ladoObjeto * i);
+                objetos[i].Scaling = new Vector2(ladoObjeto / objetos[0].Texture.Width, ladoObjeto / objetos[0].Texture.Height);
+            }
+            for (var i = 4; i < 8; i++)
+            {
+                objetos[i].Position = new Vector2(ladoIzqMenu + ladoObjeto, 0 + ladoObjeto * (i - 4));
+                objetos[i].Scaling = new Vector2(ladoObjeto / objetos[0].Texture.Width, ladoObjeto / objetos[0].Texture.Height);
+            }
         }
 
         public void renderMenu()
@@ -51,29 +71,5 @@ namespace AlumnoEjemplos.MiGrupo
             for (var i = 0; i < 8; i++)
                 objetos[i].dispose();
         }
-
-        public void actualizarModifiers()
-        {//Esta pensado para una resolucion con aspect ratio 16:9
-            //Actualizacion de Menu
-            float ladoIzqMenu = screenSize.Width * (1 - 0.25f);
-            float anchoMenu = screenSize.Width - ladoIzqMenu;
-            menu.Position = new Vector2(ladoIzqMenu, 0);
-            menu.SrcRect = new Rectangle(0, 0, (int)Math.Round(anchoMenu), screenSize.Height);
-            
-            //Actualizacion de Objetos de Menu
-            float ladoObjeto = anchoMenu *0.5f;
-            for (var i = 0; i < 4; i++)
-            {
-                objetos[i].Position = new Vector2(ladoIzqMenu, 0 + ladoObjeto * i);
-                objetos[i].Scaling = new Vector2(ladoObjeto / objetos[0].Texture.Width, ladoObjeto / objetos[0].Texture.Height);
-            }
-            for (var i = 4; i < 8; i++)
-            {
-                objetos[i].Position = new Vector2(ladoIzqMenu + ladoObjeto, 0 + ladoObjeto * (i - 4));
-                objetos[i].Scaling = new Vector2(ladoObjeto / objetos[0].Texture.Width, ladoObjeto / objetos[0].Texture.Height);
-            }
-            
-        }
-
     }
 }
