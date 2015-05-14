@@ -46,17 +46,15 @@ namespace AlumnoEjemplos.MiGrupo
         MenuObjetos menu;
 
         TgcBox fondo;
-//        TgcBox piso;
- //       TgcBox lateralDerecha;
-   //     TgcBox lateralIzquierda;
         Item piso;
         Item lateralDerecha;
         Item lateralIzquierda;
 
 
-        //TgcSphere pelota;
-        //Pelota pelota;
-        //const float MOVEMENT_SPEED = 400f;
+        Pelota pelota;
+        Vector3 iniPelota = new Vector3(0, 100, 0);
+        Stage construccion;
+        Stage play;
         Stage stage;
 
 
@@ -99,39 +97,32 @@ namespace AlumnoEjemplos.MiGrupo
         {
             List<Item> itemsInScenario = new List<Item>();
 
-            TgcTexture textPiso = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Fondo.jpg");
-            
-            //TgcTexture textPelota = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Pelotita.jpg");
-            
+            TgcTexture textPiso = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Fondo.jpg");            
             
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
 
             Vector3 centro = new Vector3(0, 0, 0);
-            //Vector3 iniPelota = new Vector3(0, 500, 0);
+            
 
             Color color = Color.Red;
             fondo = TgcBox.fromSize(new Vector3(145, 0, 0), new Vector3(1200, 900, 0), textPiso);
             
-            piso = new Pared(TgcBox.fromSize(new Vector3(145, -408, 0), new Vector3(1200, 10, 10), textPiso));
-            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-445, 0, 0), new Vector3(10, 900, 10), textPiso));
-            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(750, 0, 0), new Vector3(10, 900, 10), textPiso));
+            piso = new Pared(TgcBox.fromSize(new Vector3(145, -408, 0), new Vector3(1200, 10, 10), textPiso),1);
+            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-445, 0, 0), new Vector3(10, 900, 10), textPiso),2);
+            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(750, 0, 0), new Vector3(10, 900, 10), textPiso),3);
 
 
-            //pelota = new Pelota();
+            pelota = new Pelota();
 
-            //pelota = new TgcSphere();
-            //pelota.Radius = (float)20;
-            //pelota.Position = iniPelota;
-            //pelota.LevelOfDetail = 4;
-            //pelota.BasePoly = TgcSphere.eBasePoly.ICOSAHEDRON;
-            //pelota.setTexture(textPelota);
-
-            //itemsInScenario.Add(pelota);
             itemsInScenario.Add(piso);
             itemsInScenario.Add(lateralDerecha);
             itemsInScenario.Add(lateralIzquierda);
 
-            stage = new Play(itemsInScenario);
+            construccion = new Construccion(itemsInScenario,pelota);
+            play = new Play(itemsInScenario,pelota);
+            stage = construccion;
+
+            
 
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(centro, 0, 1000);
@@ -160,7 +151,21 @@ namespace AlumnoEjemplos.MiGrupo
             Vector3 movement = new Vector3(0, 0, 0);
 
 
-            stage = stage.interaccion(input,elapsedTime);
+            if ((input.keyDown(Key.Return))&&(stage.Equals(construccion)))
+            {
+                pelota.reiniciar();
+                stage = play;
+            }
+            else
+            {
+                if ((input.keyDown(Key.C)) && (stage.Equals(play)))
+                {
+                    pelota.reiniciar();
+                    stage = construccion;
+                }
+            }
+            
+            stage.interaccion(input,elapsedTime);
 
             stage.aplicarMovimientos(elapsedTime);
 

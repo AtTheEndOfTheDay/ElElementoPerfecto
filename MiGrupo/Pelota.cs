@@ -20,27 +20,31 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Pelota
     {
-        const float CONST_VELOCIDAD = 100f;
-
-        private Vector3 velocidad_f = new Vector3(0, -1.5f, 0);
-        private Vector3 velocidad_w = new Vector3(0, 0, 0);
+        const float CONST_VELOCIDAD = 400f;
+        
+        private Vector3 velocidad_f;
+        private Vector3 velocidad_w;
         //private Vector3 aceleracion_i = new Vector3(0, 0, 0);
         //private Vector3 aceleracion_w = new Vector3(0, 0, 0);
+        private Vector3 iniPelota = new Vector3(0, 100, 0);
+        private Vector3 iniVel_f = new Vector3(0, -1.5f, 0);
+        private Vector3 iniVel_w = new Vector3(0, 0, 0);
 
         private TgcTexture textPelota = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Pelotita.jpg");
         public TgcSphere esfera;
 
         public Pelota()
         {
-            Vector3 iniPelota = new Vector3(0, 500, 0);
-
+            
             esfera = new TgcSphere();
-            esfera.Radius = (float)20;
+            esfera.Radius = 20f;
             esfera.Position = iniPelota;
             esfera.LevelOfDetail = 4;
             esfera.BasePoly = TgcSphere.eBasePoly.ICOSAHEDRON;
             esfera.setTexture(textPelota);
 
+            velocidad_f = iniVel_f;
+            velocidad_w = iniVel_w;
            
         }
 
@@ -81,15 +85,21 @@ namespace AlumnoEjemplos.MiGrupo
             esfera.updateValues();
         }
 
-        public void rebotar(Item item, float coef_rebote,ITransformObject objeto)
+        public void rebotar(Item item, float coef_rebote,Vector3 normal)
         {
-            if (Vector3.Dot(velocidad_f - item.velocidad(), esfera.Position - objeto.Position) < 0)
+            if (Vector3.Dot(velocidad_f - item.velocidad(), normal) < 0)
             {
                 velocidad_f.Y = (-velocidad_f.Y)*coef_rebote; //cambiar esto solo sirve para cuando rebota en el piso
             }
             
         }
 
+        public void reiniciar()
+        {
+            esfera.Position = iniPelota;
+            velocidad_f = iniVel_f;
+            velocidad_w = iniVel_w;
+        }
         public void dispose()
         {
             esfera.dispose();

@@ -15,15 +15,15 @@ namespace AlumnoEjemplos.MiGrupo
     class Play : Stage
     {
         private List<Item> itemsInScenario;
-        private Pelota pelota = new Pelota();
+        private Pelota pelota;
         private TgcSprite cartel;
 
         TgcTexture texturaCartel = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "cartelPlay.png");
 
-        public Play(List<Item> unosItems)
+        public Play(List<Item> unosItems,Pelota unaPelota)
         {
             itemsInScenario = unosItems ;
-
+            pelota = unaPelota;
             cartel = new TgcSprite();
             cartel.Texture = texturaCartel;
             cartel.Position = new Vector2(0, 0);
@@ -31,11 +31,6 @@ namespace AlumnoEjemplos.MiGrupo
 
         Stage Stage.interaccion(TgcD3dInput input, float elapsedTime)
         {
-            if (input.keyDown(Key.Q))
-            {
-                return new Construccion(itemsInScenario);
-            }
-
             pelota.interactuar(input, elapsedTime);
 
             foreach (var item in itemsInScenario)
@@ -55,8 +50,6 @@ namespace AlumnoEjemplos.MiGrupo
             {
                 item.aplicarMovimientos(elapsedTime);
             }
-
-
         }
 
         void Stage.render()

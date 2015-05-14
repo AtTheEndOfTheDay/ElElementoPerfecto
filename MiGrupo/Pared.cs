@@ -21,11 +21,14 @@ namespace AlumnoEjemplos.MiGrupo
     class Pared : Item
     {
         public TgcBox caja;
+        TgcObb orientedBB;
+        int caraRebote;
 
-
-        public Pared(TgcBox unaCaja)
+        public Pared(TgcBox unaCaja,int unaCara)
         {
-            caja = unaCaja;       
+            caja = unaCaja;
+            orientedBB = TgcObb.computeFromAABB(caja.BoundingBox);
+            caraRebote = unaCara;
         }
 
         void Item.interactuar(TgcD3dInput input,float elapsedTime)
@@ -33,9 +36,11 @@ namespace AlumnoEjemplos.MiGrupo
 
         void Item.interactuarConPelota(TgcD3dInput input, float elapsedTime,Pelota pelota)
         {
-            if (TgcCollisionUtils.testSphereAABB(pelota.esfera.BoundingSphere, caja.BoundingBox))
+            if (TgcCollisionUtils.testSphereOBB(pelota.esfera.BoundingSphere, orientedBB))
             {
-                pelota.rebotar((Item) this,0.5f,caja);
+                pelota.rebotar((Item)this, 0.5f, orientedBB.Orientation[caraRebote]);
+                
+               
             }
         }
 

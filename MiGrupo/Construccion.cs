@@ -18,11 +18,13 @@ namespace AlumnoEjemplos.MiGrupo
         private List<Item> itemsInScenario = new List<Item>();
         private TgcSprite cartel;
         TgcTexture texturaCartel = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "cartelConstruccion.png");
+        private Pelota pelota;
 
-        public Construccion(List<Item> unosItems)
+        public Construccion(List<Item> unosItems,Pelota unaPelota)
         {
             itemsInScenario = unosItems;
 
+            pelota = unaPelota;
             cartel = new TgcSprite();
             cartel.Texture = texturaCartel;
             cartel.Position = new Vector2(0, 0);
@@ -30,10 +32,7 @@ namespace AlumnoEjemplos.MiGrupo
 
         Stage Stage.interaccion(TgcD3dInput input, float elapsedTime)
         {
-            if (input.keyDown(Key.E))
-            {
-                return new Play(itemsInScenario);
-            }
+
 
             //aqui iría lo de arrastrar los objetos de la barra a la pantalla
             //poder mover la lista en el menu de elementos, etc
@@ -47,6 +46,7 @@ namespace AlumnoEjemplos.MiGrupo
 
         void Stage.render()
         {
+            pelota.render();
             foreach (var item in itemsInScenario)
             {
                 item.render();
