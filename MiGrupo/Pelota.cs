@@ -24,14 +24,13 @@ namespace AlumnoEjemplos.MiGrupo
         
         private Vector3 velocidad_f;
         private Vector3 velocidad_w;
-        //private Vector3 aceleracion_i = new Vector3(0, 0, 0);
-        //private Vector3 aceleracion_w = new Vector3(0, 0, 0);
         private Vector3 iniPelota = new Vector3(0, 100, 0);
         private Vector3 iniVel_f = new Vector3(0, -1.5f, 0);
         private Vector3 iniVel_w = new Vector3(0, 0, 0);
 
         private TgcTexture textPelota = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Pelotita.jpg");
         public TgcSphere esfera;
+
 
         public Pelota()
         {

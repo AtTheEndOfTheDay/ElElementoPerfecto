@@ -45,6 +45,8 @@ namespace AlumnoEjemplos.MiGrupo
     {
         MenuObjetos menu;
 
+        TgcText2d textStage;
+
         TgcBox fondo;
         Item piso;
         Item lateralDerecha;
@@ -108,8 +110,8 @@ namespace AlumnoEjemplos.MiGrupo
             fondo = TgcBox.fromSize(new Vector3(145, 0, 0), new Vector3(1200, 900, 0), textPiso);
             
             piso = new Pared(TgcBox.fromSize(new Vector3(145, -408, 0), new Vector3(1200, 10, 10), textPiso),1);
-            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-445, 0, 0), new Vector3(10, 900, 10), textPiso),2);
-            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(750, 0, 0), new Vector3(10, 900, 10), textPiso),3);
+            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-445, 0, 0), new Vector3(10, 900, 10), textPiso),1);
+            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(750, 0, 0), new Vector3(10, 900, 10), textPiso),1);
 
 
             pelota = new Pelota();
@@ -132,7 +134,12 @@ namespace AlumnoEjemplos.MiGrupo
             string alumnoMediaFolder = GuiController.Instance.AlumnoEjemplosMediaDir;
      
             menu = new MenuObjetos();
+
+            textStage = new TgcText2d();
             
+            textStage.Color = Color.White;
+            textStage.Position = new Point(0,0);
+            textStage.Text = "Construccion";
 
         }
 
@@ -155,6 +162,7 @@ namespace AlumnoEjemplos.MiGrupo
             {
                 pelota.reiniciar();
                 stage = play;
+                textStage.Text = stage.getNombre();
             }
             else
             {
@@ -162,7 +170,9 @@ namespace AlumnoEjemplos.MiGrupo
                 {
                     pelota.reiniciar();
                     stage = construccion;
+                    textStage.Text = stage.getNombre();
                 }
+                    
             }
             
             stage.interaccion(input,elapsedTime);
@@ -170,57 +180,16 @@ namespace AlumnoEjemplos.MiGrupo
             stage.aplicarMovimientos(elapsedTime);
 
             stage.render();
-            /*
-            if (input.keyDown(Key.A))
-            {
-
-                movement.X = 1;
-                pelota.rotateZ(-15 * elapsedTime);
-            }
-            else if (input.keyDown(Key.D))
-            {
-                movement.X = -1;
-                pelota.rotateZ(15 * elapsedTime);
-            }
-
-            //Vector3 originalPos = pelota.Position;
-            */
-
-            /*
-            movement.Y = -1.5f;
-            if (TgcCollisionUtils.testSphereAABB(pelota.esfera.BoundingSphere, piso.BoundingBox))
-            {
-                movement.Y = 1.5f;
-            }
-            if (TgcCollisionUtils.testSphereAABB(pelota.esfera.BoundingSphere, lateralDerecha.BoundingBox))
-            {
-                movement.X = 1;
-            }
-            if (TgcCollisionUtils.testSphereAABB(pelota.esfera.BoundingSphere, lateralIzquierda.BoundingBox))
-            {
-                movement.X = -1;
-            }
-            */
-
-
-            //Aplicar movimiento
-            //movement *= MOVEMENT_SPEED * elapsedTime;
-            //pelota.move(movement);
-
+            
 
             fondo.render();
-            //piso.render();
-            //lateralDerecha.render();
-            //lateralIzquierda.render();
-            //pelota.render();
-            //pelota.updateValues();
             
             GuiController.Instance.Drawer2D.beginDrawSprite();
 
             //Dibujar sprite (si hubiese mas, deberian ir todos aquí)
             menu.renderMenu();
 
-            stage.mostrarStage();
+            textStage.render();
 
             //Finalizar el dibujado de Sprites
             GuiController.Instance.Drawer2D.endDrawSprite();

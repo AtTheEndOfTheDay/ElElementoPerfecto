@@ -29,7 +29,7 @@ namespace AlumnoEjemplos.MiGrupo
             cartel.Position = new Vector2(0, 0);
         }
 
-        Stage Stage.interaccion(TgcD3dInput input, float elapsedTime)
+        void Stage.interaccion(TgcD3dInput input, float elapsedTime)
         {
             pelota.interactuar(input, elapsedTime);
 
@@ -39,7 +39,6 @@ namespace AlumnoEjemplos.MiGrupo
                 item.interactuarConPelota(input, elapsedTime, pelota);
             }
 
-            return this;
         }
 
         void Stage.aplicarMovimientos(float elapsedTime)
@@ -62,9 +61,9 @@ namespace AlumnoEjemplos.MiGrupo
             }
         }
 
-        void Stage.mostrarStage()
+        String Stage.getNombre()
         {
-            cartel.render();
+            return "Play";
         }
 
     }

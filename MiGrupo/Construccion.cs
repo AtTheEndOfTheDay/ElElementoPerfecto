@@ -30,13 +30,12 @@ namespace AlumnoEjemplos.MiGrupo
             cartel.Position = new Vector2(0, 0);
         }
 
-        Stage Stage.interaccion(TgcD3dInput input, float elapsedTime)
+        void Stage.interaccion(TgcD3dInput input, float elapsedTime)
         {
 
 
             //aqui iría lo de arrastrar los objetos de la barra a la pantalla
             //poder mover la lista en el menu de elementos, etc
-            return this;
         }
 
         void Stage.aplicarMovimientos(float elapsedTime)
@@ -53,9 +52,9 @@ namespace AlumnoEjemplos.MiGrupo
             }
         }
 
-        void Stage.mostrarStage()
+        String Stage.getNombre()
         {
-            cartel.render();
+            return "Construccion";
         }
     }
 }

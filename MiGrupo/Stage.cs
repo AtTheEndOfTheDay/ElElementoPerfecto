@@ -10,11 +10,11 @@ namespace AlumnoEjemplos.MiGrupo
     {
         void render();
 
-        Stage interaccion(TgcD3dInput input, float elapsedTime);
+        void interaccion(TgcD3dInput input, float elapsedTime);
 
         void aplicarMovimientos(float elapsedTime);
 
-        void mostrarStage();
+        String getNombre();
 
     }
 }
