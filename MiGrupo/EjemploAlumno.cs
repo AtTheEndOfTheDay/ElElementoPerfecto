@@ -46,11 +46,18 @@ namespace AlumnoEjemplos.MiGrupo
         MenuObjetos menu;
 
         TgcBox fondo;
-        TgcBox piso;
-        TgcBox lateralDerecha;
-        TgcBox lateralIzquierda;
-        TgcSphere pelota;
-        const float MOVEMENT_SPEED = 400f;
+//        TgcBox piso;
+ //       TgcBox lateralDerecha;
+   //     TgcBox lateralIzquierda;
+        Item piso;
+        Item lateralDerecha;
+        Item lateralIzquierda;
+
+
+        //TgcSphere pelota;
+        //Pelota pelota;
+        //const float MOVEMENT_SPEED = 400f;
+        Stage stage;
 
 
         /// <summary>
@@ -90,30 +97,41 @@ namespace AlumnoEjemplos.MiGrupo
         /// </summary>
         public override void init()
         {
-
+            List<Item> itemsInScenario = new List<Item>();
 
             TgcTexture textPiso = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Fondo.jpg");
-            TgcTexture textPelota = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Pelotita.jpg");
+            
+            //TgcTexture textPelota = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Pelotita.jpg");
+            
+            
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
 
             Vector3 centro = new Vector3(0, 0, 0);
-            Vector3 iniPelota = new Vector3(0, 500, 0);
+            //Vector3 iniPelota = new Vector3(0, 500, 0);
 
             Color color = Color.Red;
             fondo = TgcBox.fromSize(new Vector3(145, 0, 0), new Vector3(1200, 900, 0), textPiso);
-            piso = TgcBox.fromSize(new Vector3(145, -408, 0), new Vector3(1200, 10, 10), textPiso);
-            lateralDerecha = TgcBox.fromSize(new Vector3(-445, 0, 0), new Vector3(10, 900, 10), textPiso);
-            lateralIzquierda = TgcBox.fromSize(new Vector3(750, 0, 0), new Vector3(10, 900, 10), textPiso);
+            
+            piso = new Pared(TgcBox.fromSize(new Vector3(145, -408, 0), new Vector3(1200, 10, 10), textPiso));
+            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-445, 0, 0), new Vector3(10, 900, 10), textPiso));
+            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(750, 0, 0), new Vector3(10, 900, 10), textPiso));
 
 
+            //pelota = new Pelota();
 
-            pelota = new TgcSphere();
-            pelota.Radius = (float)20;
-            pelota.Position = iniPelota;
-            pelota.LevelOfDetail = 4;
-            pelota.BasePoly = TgcSphere.eBasePoly.ICOSAHEDRON;
-            pelota.setTexture(textPelota);
+            //pelota = new TgcSphere();
+            //pelota.Radius = (float)20;
+            //pelota.Position = iniPelota;
+            //pelota.LevelOfDetail = 4;
+            //pelota.BasePoly = TgcSphere.eBasePoly.ICOSAHEDRON;
+            //pelota.setTexture(textPelota);
 
+            //itemsInScenario.Add(pelota);
+            itemsInScenario.Add(piso);
+            itemsInScenario.Add(lateralDerecha);
+            itemsInScenario.Add(lateralIzquierda);
+
+            stage = new Play(itemsInScenario);
 
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(centro, 0, 1000);
@@ -141,6 +159,13 @@ namespace AlumnoEjemplos.MiGrupo
             TgcD3dInput input = GuiController.Instance.D3dInput;
             Vector3 movement = new Vector3(0, 0, 0);
 
+
+            stage = stage.interaccion(input,elapsedTime);
+
+            stage.aplicarMovimientos(elapsedTime);
+
+            stage.render();
+            /*
             if (input.keyDown(Key.A))
             {
 
@@ -153,41 +178,44 @@ namespace AlumnoEjemplos.MiGrupo
                 pelota.rotateZ(15 * elapsedTime);
             }
 
-            Vector3 originalPos = pelota.Position;
+            //Vector3 originalPos = pelota.Position;
+            */
 
-
+            /*
             movement.Y = -1.5f;
-            if (TgcCollisionUtils.testSphereAABB(pelota.BoundingSphere, piso.BoundingBox))
+            if (TgcCollisionUtils.testSphereAABB(pelota.esfera.BoundingSphere, piso.BoundingBox))
             {
                 movement.Y = 1.5f;
             }
-            if (TgcCollisionUtils.testSphereAABB(pelota.BoundingSphere, lateralDerecha.BoundingBox))
+            if (TgcCollisionUtils.testSphereAABB(pelota.esfera.BoundingSphere, lateralDerecha.BoundingBox))
             {
                 movement.X = 1;
             }
-            if (TgcCollisionUtils.testSphereAABB(pelota.BoundingSphere, lateralIzquierda.BoundingBox))
+            if (TgcCollisionUtils.testSphereAABB(pelota.esfera.BoundingSphere, lateralIzquierda.BoundingBox))
             {
                 movement.X = -1;
             }
-
+            */
 
 
             //Aplicar movimiento
-            movement *= MOVEMENT_SPEED * elapsedTime;
-            pelota.move(movement);
+            //movement *= MOVEMENT_SPEED * elapsedTime;
+            //pelota.move(movement);
 
 
             fondo.render();
-            piso.render();
-            lateralDerecha.render();
-            lateralIzquierda.render();
-            pelota.render();
-            pelota.updateValues();
+            //piso.render();
+            //lateralDerecha.render();
+            //lateralIzquierda.render();
+            //pelota.render();
+            //pelota.updateValues();
             
             GuiController.Instance.Drawer2D.beginDrawSprite();
 
             //Dibujar sprite (si hubiese mas, deberian ir todos aquí)
             menu.renderMenu();
+
+            stage.mostrarStage();
 
             //Finalizar el dibujado de Sprites
             GuiController.Instance.Drawer2D.endDrawSprite();
@@ -205,7 +233,6 @@ namespace AlumnoEjemplos.MiGrupo
             piso.dispose();
             lateralDerecha.dispose();
             lateralIzquierda.dispose();
-            pelota.dispose();
         }
 
     }
