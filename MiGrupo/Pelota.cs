@@ -20,11 +20,11 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Pelota
     {
-        const float CONST_VELOCIDAD = 400f;
+        const float CONST_VELOCIDAD = 40f;
         
         private Vector3 velocidad_f;
         private Vector3 velocidad_w;
-        private Vector3 iniPelota = new Vector3(0, 100, 0);
+        private Vector3 iniPelota = new Vector3(0, 10, 0);
         private Vector3 iniVel_f = new Vector3(0, -1.5f, 0);
         private Vector3 iniVel_w = new Vector3(0, 0, 0);
 
@@ -36,7 +36,7 @@ namespace AlumnoEjemplos.MiGrupo
         {
             
             esfera = new TgcSphere();
-            esfera.Radius = 20f;
+            esfera.Radius = 2f;
             esfera.Position = iniPelota;
             esfera.LevelOfDetail = 4;
             esfera.BasePoly = TgcSphere.eBasePoly.ICOSAHEDRON;

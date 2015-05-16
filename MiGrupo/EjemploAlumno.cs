@@ -104,14 +104,15 @@ namespace AlumnoEjemplos.MiGrupo
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
 
             Vector3 centro = new Vector3(0, 0, 0);
-            
 
-            Color color = Color.Red;
-            fondo = TgcBox.fromSize(new Vector3(145, 0, 0), new Vector3(1200, 900, 0), textPiso);
+
+            GuiController.Instance.Modifiers.addFloat("medida", 0, 150, 85);
             
-            piso = new Pared(TgcBox.fromSize(new Vector3(145, -408, 0), new Vector3(1200, 10, 10), textPiso),1);
-            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-445, 0, 0), new Vector3(10, 900, 10), textPiso),1);
-            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(750, 0, 0), new Vector3(10, 900, 10), textPiso),1);
+            fondo = TgcBox.fromSize(new Vector3(11.5f, 0, 0), new Vector3(128, 83, 0), textPiso);
+
+            piso = new Pared(TgcBox.fromSize(new Vector3(11.5f, -41, 0), new Vector3(128, 1, 1), textPiso), 1);
+            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-53f, 0, 0), new Vector3(1, 83, 1), textPiso), 1);
+            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(75f, 0, 0), new Vector3(1, 83, 1), textPiso), 1);
 
 
             pelota = new Pelota();
@@ -127,8 +128,7 @@ namespace AlumnoEjemplos.MiGrupo
             
 
             GuiController.Instance.ThirdPersonCamera.Enable = true;
-            GuiController.Instance.ThirdPersonCamera.setCamera(centro, 0, 1100);
-           // GuiController.Instance.ThirdPersonCamera.
+            GuiController.Instance.ThirdPersonCamera.setCamera(centro, 0, 100);
 
             //Carpeta de archivos Media del alumno
             string alumnoMediaFolder = GuiController.Instance.AlumnoEjemplosMediaDir;
@@ -156,7 +156,6 @@ namespace AlumnoEjemplos.MiGrupo
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
             TgcD3dInput input = GuiController.Instance.D3dInput;
             Vector3 movement = new Vector3(0, 0, 0);
-
 
             if ((input.keyDown(Key.Return))&&(stage.Equals(construccion)))
             {
