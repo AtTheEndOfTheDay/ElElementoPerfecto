@@ -127,13 +127,13 @@ namespace AlumnoEjemplos.MiGrupo
             
 
             GuiController.Instance.ThirdPersonCamera.Enable = true;
-            GuiController.Instance.ThirdPersonCamera.setCamera(centro, 0, 1000);
+            GuiController.Instance.ThirdPersonCamera.setCamera(centro, 0, 1100);
            // GuiController.Instance.ThirdPersonCamera.
 
             //Carpeta de archivos Media del alumno
             string alumnoMediaFolder = GuiController.Instance.AlumnoEjemplosMediaDir;
      
-            menu = new MenuObjetos();
+            menu = new MenuObjetos(12);
 
             textStage = new TgcText2d();
             
@@ -187,7 +187,7 @@ namespace AlumnoEjemplos.MiGrupo
             GuiController.Instance.Drawer2D.beginDrawSprite();
 
             //Dibujar sprite (si hubiese mas, deberian ir todos aquí)
-            menu.renderMenu();
+            menu.renderMenu(12);
 
             textStage.render();
 
@@ -202,7 +202,7 @@ namespace AlumnoEjemplos.MiGrupo
         /// </summary>
         public override void close()
         {
-            menu.disposeMenu();
+            menu.disposeMenu(12);
             fondo.dispose();
             piso.dispose();
             lateralDerecha.dispose();
