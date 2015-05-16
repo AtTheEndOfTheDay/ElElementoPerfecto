@@ -22,50 +22,48 @@ namespace AlumnoEjemplos.MiGrupo
     {
         const float CONST_VELOCIDAD = 40f;
         
-        private Vector3 velocidad_f;
-        private Vector3 velocidad_w;
+        private Vector3 velocidadMovimiento;
+        private Vector3 velocidadRotacion;
         private Vector3 iniPelota = new Vector3(0, 10, 0);
-        private Vector3 iniVel_f = new Vector3(0, -1.5f, 0);
-        private Vector3 iniVel_w = new Vector3(0, 0, 0);
+        private Vector3 velocidadInicialMovimiento = new Vector3(0, -1.5f, 0);
+        private Vector3 velocidadInicialRotacion = new Vector3(0, 0, 0);
 
         private TgcTexture textPelota = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Pelotita.jpg");
-        public TgcSphere esfera;
+        public TgcSphere esfera = new TgcSphere();
 
 
         public Pelota()
         {
-            
-            esfera = new TgcSphere();
             esfera.Radius = 2f;
             esfera.Position = iniPelota;
             esfera.LevelOfDetail = 4;
             esfera.BasePoly = TgcSphere.eBasePoly.ICOSAHEDRON;
             esfera.setTexture(textPelota);
 
-            velocidad_f = iniVel_f;
-            velocidad_w = iniVel_w;
+            velocidadMovimiento = velocidadInicialMovimiento;
+            velocidadRotacion = velocidadInicialRotacion;
            
         }
 
         public void interactuar(TgcD3dInput input,float elapsedTime)
         {
-            velocidad_f.X = 0;
-            velocidad_w.Z = 0;
+            velocidadMovimiento.X = 0;
+            velocidadRotacion.Z = 0;
 
             if (input.keyDown(Key.A))
             {
-                velocidad_f.X += 1;
-                velocidad_w.Z += -15;
+                velocidadMovimiento.X += 1;
+                velocidadRotacion.Z += -15;
                 //pelota.rotateZ(-15 * elapsedTime);
             }
             else if (input.keyDown(Key.D))
             {
-                velocidad_f.X = -1;
-                velocidad_w.Z = 15;
+                velocidadMovimiento.X = -1;
+                velocidadRotacion.Z = 15;
                 //pelota.rotateZ(15 * elapsedTime);
             }
 
-            velocidad_f.Y += -0.5f * elapsedTime;
+            velocidadMovimiento.Y += -0.5f * elapsedTime;
             //pelota.rotateX(velocidad_w.X * elapsedTime);
             //pelota.rotateY(velocidad_w.Y * elapsedTime);
 
@@ -73,8 +71,8 @@ namespace AlumnoEjemplos.MiGrupo
 
         public void aplicarMovimientos(float elapsedTime)
         {
-            esfera.rotateZ(velocidad_w.Z * elapsedTime);
-            esfera.move(velocidad_f * CONST_VELOCIDAD * elapsedTime);
+            esfera.rotateZ(velocidadRotacion.Z * elapsedTime);
+            esfera.move(velocidadMovimiento * CONST_VELOCIDAD * elapsedTime);
         }
 
         public void render()
@@ -86,9 +84,9 @@ namespace AlumnoEjemplos.MiGrupo
 
         public void rebotar(Item item, float coef_rebote,Vector3 normal)
         {
-            if (Vector3.Dot(velocidad_f - item.velocidad(), normal) < 0)
+            if (Vector3.Dot(velocidadMovimiento - item.velocidad(), normal) < 0)
             {
-                velocidad_f.Y = (-velocidad_f.Y)*coef_rebote; //cambiar esto solo sirve para cuando rebota en el piso
+                velocidadMovimiento.Y = (-velocidadMovimiento.Y)*coef_rebote; //cambiar esto solo sirve para cuando rebota en el piso
             }
             
         }
@@ -96,8 +94,8 @@ namespace AlumnoEjemplos.MiGrupo
         public void reiniciar()
         {
             esfera.Position = iniPelota;
-            velocidad_f = iniVel_f;
-            velocidad_w = iniVel_w;
+            velocidadMovimiento = velocidadInicialMovimiento;
+            velocidadRotacion = velocidadInicialRotacion;
         }
         public void dispose()
         {

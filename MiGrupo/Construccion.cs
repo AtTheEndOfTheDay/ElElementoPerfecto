@@ -16,18 +16,12 @@ namespace AlumnoEjemplos.MiGrupo
     class Construccion : Stage
     {
         private List<Item> itemsInScenario = new List<Item>();
-        private TgcSprite cartel;
-        TgcTexture texturaCartel = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "cartelConstruccion.png");
         private Pelota pelota;
 
         public Construccion(List<Item> unosItems,Pelota unaPelota)
         {
             itemsInScenario = unosItems;
-
             pelota = unaPelota;
-            cartel = new TgcSprite();
-            cartel.Texture = texturaCartel;
-            cartel.Position = new Vector2(0, 0);
         }
 
         void Stage.interaccion(TgcD3dInput input, float elapsedTime)

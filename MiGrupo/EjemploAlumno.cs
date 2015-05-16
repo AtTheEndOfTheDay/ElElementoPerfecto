@@ -45,19 +45,18 @@ namespace AlumnoEjemplos.MiGrupo
     {
         MenuObjetos menu;
 
-        TgcText2d textStage;
+        TgcText2d textStage = new TgcText2d();
 
         TgcBox fondo;
-        Item piso;
-        Item lateralDerecha;
-        Item lateralIzquierda;
-
+        Pared piso;
+        Pared lateralDerecha;
+        Pared lateralIzquierda;
 
         Pelota pelota;
         Vector3 iniPelota = new Vector3(0, 100, 0);
-        Stage construccion;
-        Stage play;
-        Stage stage;
+        Construccion construccion;
+        Play play;
+        Stage nivel;
 
 
         /// <summary>
@@ -97,23 +96,17 @@ namespace AlumnoEjemplos.MiGrupo
         /// </summary>
         public override void init()
         {
+            //Propios de cada nivel, delegar al nivel
             List<Item> itemsInScenario = new List<Item>();
-
             TgcTexture textPiso = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Fondo.jpg");            
             
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
-
-            Vector3 centro = new Vector3(0, 0, 0);
-
-
-            GuiController.Instance.Modifiers.addFloat("medida", 0, 150, 85);
-            
+                    
             fondo = TgcBox.fromSize(new Vector3(11.5f, 0, 0), new Vector3(128, 83, 0), textPiso);
 
             piso = new Pared(TgcBox.fromSize(new Vector3(11.5f, -41, 0), new Vector3(128, 1, 1), textPiso), 1);
             lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-53f, 0, 0), new Vector3(1, 83, 1), textPiso), 1);
             lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(75f, 0, 0), new Vector3(1, 83, 1), textPiso), 1);
-
 
             pelota = new Pelota();
 
@@ -123,20 +116,13 @@ namespace AlumnoEjemplos.MiGrupo
 
             construccion = new Construccion(itemsInScenario,pelota);
             play = new Play(itemsInScenario,pelota);
-            stage = construccion;
-
-            
+            nivel = construccion;           
 
             GuiController.Instance.ThirdPersonCamera.Enable = true;
-            GuiController.Instance.ThirdPersonCamera.setCamera(centro, 0, 100);
-
-            //Carpeta de archivos Media del alumno
-            string alumnoMediaFolder = GuiController.Instance.AlumnoEjemplosMediaDir;
+            GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 100);
      
             menu = new MenuObjetos(12);
-
-            textStage = new TgcText2d();
-            
+                        
             textStage.Color = Color.White;
             textStage.Position = new Point(0,0);
             textStage.Text = "Construccion";
@@ -157,40 +143,35 @@ namespace AlumnoEjemplos.MiGrupo
             TgcD3dInput input = GuiController.Instance.D3dInput;
             Vector3 movement = new Vector3(0, 0, 0);
 
-            if ((input.keyDown(Key.Return))&&(stage.Equals(construccion)))
+            if ((input.keyDown(Key.Return))&&(nivel.Equals(construccion)))
             {
                 pelota.reiniciar();
-                stage = play;
-                textStage.Text = stage.getNombre();
+                nivel = play;
+                textStage.Text = nivel.getNombre();
             }
             else
             {
-                if ((input.keyDown(Key.C)) && (stage.Equals(play)))
+                if ((input.keyDown(Key.C)) && (nivel.Equals(play)))
                 {
                     pelota.reiniciar();
-                    stage = construccion;
-                    textStage.Text = stage.getNombre();
+                    nivel = construccion;
+                    textStage.Text = nivel.getNombre();
                 }
                     
             }
-            
-            stage.interaccion(input,elapsedTime);
 
-            stage.aplicarMovimientos(elapsedTime);
-
-            stage.render();
-            
 
             fondo.render();
             
+            nivel.interaccion(input,elapsedTime);
+
+            nivel.aplicarMovimientos(elapsedTime);
+
+            nivel.render();
+            
             GuiController.Instance.Drawer2D.beginDrawSprite();
-
-            //Dibujar sprite (si hubiese mas, deberian ir todos aquí)
-            menu.renderMenu(12);
-
-            textStage.render();
-
-            //Finalizar el dibujado de Sprites
+                menu.renderMenu(12);
+                textStage.render();
             GuiController.Instance.Drawer2D.endDrawSprite();
 
         }
@@ -206,6 +187,7 @@ namespace AlumnoEjemplos.MiGrupo
             piso.dispose();
             lateralDerecha.dispose();
             lateralIzquierda.dispose();
+            pelota.dispose();
         }
 
     }
