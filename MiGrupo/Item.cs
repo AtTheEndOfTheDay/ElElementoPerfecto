@@ -20,6 +20,5 @@ namespace AlumnoEjemplos.MiGrupo
         void aplicarMovimientos(float elapsedTime);
         Vector3 velocidad();
         void dispose();
-        TgcTexture getTexture();
     }
 }

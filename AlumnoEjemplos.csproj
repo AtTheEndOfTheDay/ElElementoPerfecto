@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MiGrupo\ItemUsuario.cs" />
     <Compile Include="MiGrupo\Construccion.cs" />
     <Compile Include="MiGrupo\EjemploAlumno.cs" />
     <Compile Include="MiGrupo\Etapa.cs" />
