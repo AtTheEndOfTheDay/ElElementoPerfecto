@@ -59,7 +59,7 @@ namespace AlumnoEjemplos.MiGrupo
 
             menu = new MenuObjetos(objetosDelUsuario, TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Laja.jpg"));
 
-            construccion = new Construccion(itemsDelNivel, pelota,cajaCreadora, menu);
+            construccion = new Construccion(itemsDelNivel, pelota, cajaCreadora, menu, objetosDelUsuario);
             play = new Play(itemsDelNivel, pelota);
             etapa = construccion;
 

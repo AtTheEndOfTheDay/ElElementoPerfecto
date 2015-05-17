@@ -23,6 +23,8 @@ namespace AlumnoEjemplos.MiGrupo
         private TgcBox caja;
          Vector2 mouseVector;
          Vector2 anteriorMouse;
+         List<ItemUsuario> objetos;
+         ItemUsuario objetoAMover;
 
         TgcPickingRay pickingRay = new TgcPickingRay();
         bool selected = false;
@@ -33,12 +35,13 @@ namespace AlumnoEjemplos.MiGrupo
         TgcBox elemCreado = TgcBox.fromSize(new Vector3(10, 5, 0), new Vector3(1.5f, 1.5f, 0));
         MenuObjetos menu;
 
-        public Construccion(List<Item> unosItems,Pelota unaPelota, TgcBox unacaja, MenuObjetos menuActual)
+        public Construccion(List<Item> unosItems,Pelota unaPelota, TgcBox unacaja, MenuObjetos menuActual, List<ItemUsuario> objetosDelUsuario)
         {
             itemsInScenario = unosItems;
             pelota = unaPelota;
             caja = unacaja;
             menu = menuActual;
+            objetos = objetosDelUsuario;
         }
 
         void Etapa.interaccion(TgcD3dInput input, float elapsedTime)
@@ -52,13 +55,16 @@ namespace AlumnoEjemplos.MiGrupo
             mouseVector = new Vector2(GuiController.Instance.D3dInput.Xpos, GuiController.Instance.D3dInput.Ypos);
          if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
+
+
                 //Actualizar Ray de colisión en base a posición del mouse
                 pickingRay.updateRay();
+
                 //Testear Ray contra el AABB de todos los meshes
-              TgcBoundingBox aabb = caja.BoundingBox;
+            TgcBoundingBox aabb = caja.BoundingBox;
 
                 //Ejecutar test, si devuelve true se carga el punto de colision collisionPoint
-               selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
+             //  selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
 
                if (menu.estaEnMenu(mouseVector.X, mouseVector.Y))
                {
@@ -96,10 +102,15 @@ namespace AlumnoEjemplos.MiGrupo
                 //Actualizar Ray de colisión en base a posición del mouse
                 pickingRay.updateRay();
                //Testear Ray contra el AABB de todos los meshes
-              TgcBoundingBox aabb = elemCreado.BoundingBox;
+                foreach (ItemUsuario objeto in objetos)
+                {
+                    TgcBoundingBox aabb = objeto.mesh.BoundingBox;
+                    selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
 
+                    objetoAMover = objeto;
+                }
                 //Ejecutar test, si devuelve true se carga el punto de colision collisionPoint
-               selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
+             //  selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
 
                 if (selected || agarrado)
                 {
@@ -107,6 +118,7 @@ namespace AlumnoEjemplos.MiGrupo
                    movimiento2.X = -(mouseVector.X - anteriorMouse.X);
                    movimiento2.Y = -(mouseVector.Y - anteriorMouse.Y);
                    agarrado = true;
+
                 }
             }
 
@@ -117,6 +129,7 @@ namespace AlumnoEjemplos.MiGrupo
             if (selected && aparece)
             {
                 selectedMesh.BoundingBox.render();
+                objetoAMover.mesh.move(movimiento2 * 0.345f);
                // collisionPointMesh.Position = collisionPoint;
              //   collisionPointMesh.render();
             }
@@ -127,7 +140,8 @@ namespace AlumnoEjemplos.MiGrupo
             }
 
             anteriorMouse = mouseVector;
-            elemCreado.move(movimiento2 * 0.0345f);
+
+          //  objetoAMover.mesh.move(movimiento2 * 0.345f);
         }
 
         void Etapa.aplicarMovimientos(float elapsedTime)
