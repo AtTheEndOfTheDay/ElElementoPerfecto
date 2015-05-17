@@ -87,16 +87,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MiGrupo\ItemUsuario.cs" />
-    <Compile Include="MiGrupo\Construccion.cs" />
-    <Compile Include="MiGrupo\EjemploAlumno.cs" />
-    <Compile Include="MiGrupo\Etapa.cs" />
-    <Compile Include="MiGrupo\Item.cs" />
-    <Compile Include="MiGrupo\MenuObjetos.cs" />
-    <Compile Include="MiGrupo\Nivel.cs" />
-    <Compile Include="MiGrupo\Pared.cs" />
-    <Compile Include="MiGrupo\Pelota.cs" />
-    <Compile Include="MiGrupo\Play.cs" />
+    <Compile Include="MiGrupo\Items\Cannon.cs" />
+    <Compile Include="MiGrupo\Items\ItemUsuario.cs" />
+    <Compile Include="MiGrupo\Juego\Construccion.cs" />
+    <Compile Include="MiGrupo\Juego\EjemploAlumno.cs" />
+    <Compile Include="MiGrupo\Juego\Etapa.cs" />
+    <Compile Include="MiGrupo\Items\Item.cs" />
+    <Compile Include="MiGrupo\Juego\MenuObjetos.cs" />
+    <Compile Include="MiGrupo\Juego\Nivel.cs" />
+    <Compile Include="MiGrupo\Items\Pared.cs" />
+    <Compile Include="MiGrupo\Items\Pelota.cs" />
+    <Compile Include="MiGrupo\Juego\Play.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

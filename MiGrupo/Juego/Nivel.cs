@@ -98,7 +98,7 @@ namespace AlumnoEjemplos.MiGrupo
 
             foreach (ItemUsuario objeto in objetosDelUsuario)
             {
-                objeto.mesh.render();
+                objeto.render();
             }
                         
             GuiController.Instance.Drawer2D.beginDrawSprite();

@@ -53,7 +53,7 @@ namespace AlumnoEjemplos.MiGrupo
 
         TgcSceneLoader loader = new TgcSceneLoader();
         TgcScene scene;
-        ItemUsuario cannon;
+        Cannon cannon;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -105,7 +105,7 @@ namespace AlumnoEjemplos.MiGrupo
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 25);
 
             scene = loader.loadSceneFromFile(EjemploAlumno.alumnoMeshFolder() + "Cannon-TgcScene.xml");
-            cannon = new ItemUsuario(scene.Meshes[0], texturaCannon);
+            cannon = new Cannon(scene.Meshes[0], texturaCannon);
             cannon.mesh.setColor(Color.Black);
             cannon.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
             cannon.mesh.Rotation = new Vector3(0, 0, 3.14f / 4);
