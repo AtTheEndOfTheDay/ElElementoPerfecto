@@ -107,7 +107,10 @@ namespace AlumnoEjemplos.MiGrupo
                     TgcBoundingBox aabb = objeto.mesh.BoundingBox;
                     selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
                     objetoAMover = objeto;
-                    agarrado = true;
+                    if (selected)
+                    {
+                        agarrado = true;
+                    }
                 }
                 //Ejecutar test, si devuelve true se carga el punto de colision collisionPoint
              //  selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
