@@ -51,6 +51,7 @@ namespace AlumnoEjemplos.MiGrupo
             
             pelota = pelotita;
             objetosDeMenu = itemsDelUsuario;
+            TgcBox cajaCreadora = TgcBox.fromSize(new Vector3(-10, 5, 0), new Vector3(1, 1, 0), textPiso); 
 
             fondo = TgcBox.fromSize(new Vector3(2.85f, 0, 0), new Vector3(32, 20.75f, 0), textFondo);
             piso = new Pared(TgcBox.fromSize(new Vector3(2.85f, -10.25f, 0), new Vector3(32, 0.25f, 1f), textPiso), 1);
@@ -61,7 +62,7 @@ namespace AlumnoEjemplos.MiGrupo
             itemsDelNivel.Add(lateralDerecha);
             itemsDelNivel.Add(lateralIzquierda);
 
-            construccion = new Construccion(itemsDelNivel, pelota);
+            construccion = new Construccion(itemsDelNivel, pelota,cajaCreadora);
             play = new Play(itemsDelNivel, pelota);
             etapa = construccion;
 
