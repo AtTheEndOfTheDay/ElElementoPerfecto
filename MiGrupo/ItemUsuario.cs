@@ -21,7 +21,7 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class ItemUsuario : Item
     {
-        bool enEscena = true;
+        public bool enEscena = false;
         public TgcMesh mesh;
         TgcTexture textura;
         public ItemUsuario(TgcMesh unMesh, TgcTexture texture)

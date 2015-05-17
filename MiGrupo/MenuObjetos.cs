@@ -24,10 +24,13 @@ namespace AlumnoEjemplos.MiGrupo
         Size screenSize = GuiController.Instance.Panel3d.Size;
         float ladoIzqMenu;
         float ladoObjeto;
+        int cantidadObjetos;
+        List<ItemUsuario> objetosUsuario;
 
         public MenuObjetos(List<ItemUsuario> listaMenu, TgcTexture texturaMenu)
         {
-            int cantidadObjetos = listaMenu.Count;
+            cantidadObjetos = listaMenu.Count;
+            objetosUsuario = listaMenu;
             //Creacion de Sprites
             menu = new TgcSprite();
             objetos = new TgcSprite[cantidadObjetos];
@@ -81,12 +84,12 @@ namespace AlumnoEjemplos.MiGrupo
 
         internal bool estaEnMenu(float mouseX, float mouseY)
         {
-            foreach (TgcSprite spriteObjeto in objetos)
+            for (var i = 0; i < cantidadObjetos;  i++)
             {
-                if ((mouseX > spriteObjeto.Position.X) && (mouseX < (spriteObjeto.Position.X + ladoObjeto)) &&
-                    (mouseY > spriteObjeto.Position.Y) && (mouseY < (spriteObjeto.Position.Y + ladoObjeto)))
+                if ((mouseX > objetos[i].Position.X) && (mouseX < (objetos[i].Position.X + ladoObjeto)) &&
+                    (mouseY > objetos[i].Position.Y) && (mouseY < (objetos[i].Position.Y + ladoObjeto)))
                 {
-                    return true;
+                    objetosUsuario[i].enEscena = true;
                 }
             }
             return false;
