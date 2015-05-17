@@ -23,9 +23,11 @@ namespace AlumnoEjemplos.MiGrupo
         private TgcBox caja;
          Vector2 mouseVector;
          Vector2 anteriorMouse;
+
         TgcPickingRay pickingRay = new TgcPickingRay();
         bool selected = false;
         bool aparece = false;
+        bool agarrado = false;
         Vector3 collisionPoint;
         TgcBox selectedMesh;
         TgcBox elemCreado = TgcBox.fromSize(new Vector3(10, 5, 0), new Vector3(1.5f, 1.5f, 0));
@@ -77,7 +79,9 @@ namespace AlumnoEjemplos.MiGrupo
                 {
                     aparece = false;
                     selected = false;
+             
                 }
+                
             }
 
             if (input.buttonDown(TgcD3dInput.MouseButtons.BUTTON_LEFT))
@@ -90,14 +94,19 @@ namespace AlumnoEjemplos.MiGrupo
                 //Ejecutar test, si devuelve true se carga el punto de colision collisionPoint
                selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
 
-                if (selected)
+                if (selected || agarrado)
                 {
                     selectedMesh = elemCreado;
                    movimiento2.X = -(mouseVector.X - anteriorMouse.X);
                    movimiento2.Y = -(mouseVector.Y - anteriorMouse.Y);
+                   agarrado = true;
                 }
             }
 
+            if (input.buttonUp(TgcD3dInput.MouseButtons.BUTTON_LEFT))
+            {
+                agarrado = false;
+            }
             if (selected && aparece)
             {
                 selectedMesh.BoundingBox.render();
