@@ -47,10 +47,10 @@ namespace AlumnoEjemplos.MiGrupo
             pelota = pelotita;
             objetosDeMenu = itemsDelUsuario;
 
-            fondo = TgcBox.fromSize(new Vector3(11.5f, 0, 0), new Vector3(128, 83, 0), textFondo); 
-            piso = new Pared(TgcBox.fromSize(new Vector3(11.5f, -41, 0), new Vector3(128, 1, 1), textPiso), 1);
-            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-53f, 0, 0), new Vector3(1, 83, 1), textParedes), 1);
-            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(75f, 0, 0), new Vector3(1, 83, 1), textParedes), 1);
+            fondo = TgcBox.fromSize(new Vector3(2.85f, 0, 0), new Vector3(32, 20.75f, 0), textFondo);
+            piso = new Pared(TgcBox.fromSize(new Vector3(2.85f, -10.25f, 0), new Vector3(32, 0.25f, 0.25f), textPiso), 1);
+            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-13.1f, 0, 0), new Vector3(0.25f, 20.75f, 0.25f), textParedes), 1);
+            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(18.8f, 0, 0), new Vector3(0.25f, 20.75f, 0.25f), textParedes), 1);
 
             itemsDelNivel.Add(piso);
             itemsDelNivel.Add(lateralDerecha);
@@ -68,6 +68,12 @@ namespace AlumnoEjemplos.MiGrupo
 
         }
 
+        public void reiniciar(){
+            pelota.reiniciar();
+            etapa = construccion;
+            textStage.Text = etapa.getNombre();
+        }
+
         public void render(float elapsedTime)
         {
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
@@ -76,7 +82,6 @@ namespace AlumnoEjemplos.MiGrupo
             fondo.render();
             if ((input.keyDown(Key.Return))&&(etapa.Equals(construccion)))
             {
-                pelota.reiniciar();
                 etapa = play;
                 textStage.Text = etapa.getNombre();
             }
@@ -84,9 +89,7 @@ namespace AlumnoEjemplos.MiGrupo
             {
                 if ((input.keyDown(Key.C)) && (etapa.Equals(play)))
                 {
-                    pelota.reiniciar();
-                    etapa = construccion;
-                    textStage.Text = etapa.getNombre();
+                    reiniciar();
                 }
                     
             }           

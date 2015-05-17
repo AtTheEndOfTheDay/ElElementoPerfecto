@@ -44,6 +44,11 @@ namespace AlumnoEjemplos.MiGrupo
     public class EjemploAlumno : TgcExample
     {
         Nivel nivelActual;
+        Nivel nivel1;
+        Nivel nivel2;
+
+        TgcTexture madera = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Madera.jpg");
+        TgcTexture metal = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Metal.jpg");
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -88,7 +93,9 @@ namespace AlumnoEjemplos.MiGrupo
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
 
             GuiController.Instance.ThirdPersonCamera.Enable = true;
-            GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 100);
+            GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 25);
+
+        
 
             //Es como un mock de un Cannon, un Magnet y un Spring, de momento solo para obtener la textura y ver que el menu funcione
             Pared supuestoCannon = new Pared(TgcBox.fromSize(new Vector3(0, 0, 0), new Vector3(0, 0, 0), 
@@ -97,22 +104,35 @@ namespace AlumnoEjemplos.MiGrupo
                                             TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Magnet.png")), 1);
             Pared supuestoSpring = new Pared(TgcBox.fromSize(new Vector3(0, 0, 0), new Vector3(0, 0, 0),
                                             TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Spring.png")), 1);
-            List<Item> listaUsuario = new List<Item>();
-            listaUsuario.Add(supuestoCannon); //Importa el orden, por como los muestra el menu
-            listaUsuario.Add(supuestoMagnet); 
-            listaUsuario.Add(supuestoCannon);
-            listaUsuario.Add(supuestoMagnet);
-            listaUsuario.Add(supuestoSpring);
+            List<Item> itemsUsuarioNivel1 = new List<Item>();
+            itemsUsuarioNivel1.Add(supuestoSpring); //Importa el orden, por como los muestra el menu
+            itemsUsuarioNivel1.Add(supuestoMagnet); 
             //Terminan las inicializaciones de mentira
 
-            nivelActual = new Nivel (TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Madera.jpg"),
-                                     TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Madera.jpg"),
-                                     TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Madera.jpg"),
-                                     new Pelota(2f, new Vector3(0, 10, 0), TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Metal.jpg")),
-                                     new List<Item>(),
-                                     listaUsuario);
+            nivel1 = new Nivel (madera, madera, madera, new Pelota(0.5f, new Vector3(0, 2, 0), metal),
+                                     new List<Item>(), itemsUsuarioNivel1);
 
-            
+            //Inicializaciones de menria
+            List<Item> itemsUsuarioNivel2 = new List<Item>();
+            itemsUsuarioNivel2.Add(supuestoCannon); //Importa el orden, por como los muestra el menu
+            itemsUsuarioNivel2.Add(supuestoMagnet);
+            itemsUsuarioNivel2.Add(supuestoCannon);
+            itemsUsuarioNivel2.Add(supuestoMagnet);
+            itemsUsuarioNivel2.Add(supuestoSpring);
+            Pared obstaculo1 = new Pared(TgcBox.fromSize(new Vector3(-10, -6, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
+            Pared obstaculo2 = new Pared(TgcBox.fromSize(new Vector3(-5, -4, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
+            Pared obstaculo3 = new Pared(TgcBox.fromSize(new Vector3(5, -2, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
+            Pared obstaculo4 = new Pared(TgcBox.fromSize(new Vector3(10, 0, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
+            List<Item> itemsNivel2 = new List<Item>();
+            itemsNivel2.Add(obstaculo1);
+            itemsNivel2.Add(obstaculo2);
+            itemsNivel2.Add(obstaculo3);
+            itemsNivel2.Add(obstaculo4);
+            //Terminan las inicializaciones de mentira
+            nivel2 = new Nivel(metal, metal, metal, new Pelota(1f, new Vector3(10, 5, 0), madera),
+                                     itemsNivel2, itemsUsuarioNivel2);
+
+            nivelActual = nivel1;
 
         }
 
@@ -125,6 +145,19 @@ namespace AlumnoEjemplos.MiGrupo
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
+            TgcD3dInput input = GuiController.Instance.D3dInput;
+            if (input.keyDown(Key.F1))
+            {
+                nivelActual.reiniciar();
+                nivelActual = nivel1;
+            }                   
+            else
+                if (input.keyDown(Key.F2))
+                {
+                    nivelActual.reiniciar();
+                    nivelActual = nivel2;
+                }
+            
             nivelActual.render(elapsedTime);
         }
 
@@ -135,6 +168,8 @@ namespace AlumnoEjemplos.MiGrupo
         public override void close()
         {
             nivelActual.dispose();
+            nivel1.dispose();
+            nivel2.dispose();
         }
         
     }

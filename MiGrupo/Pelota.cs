@@ -20,7 +20,7 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Pelota
     {
-        const float CONST_VELOCIDAD = 40f;
+        const float CONST_VELOCIDAD = 10f;
         
         private Vector3 velocidadMovimiento;
         private Vector3 velocidadRotacion;
