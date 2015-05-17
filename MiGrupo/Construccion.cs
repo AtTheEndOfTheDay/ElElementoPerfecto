@@ -106,18 +106,18 @@ namespace AlumnoEjemplos.MiGrupo
                 {
                     TgcBoundingBox aabb = objeto.mesh.BoundingBox;
                     selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
-
                     objetoAMover = objeto;
+                    agarrado = true;
                 }
                 //Ejecutar test, si devuelve true se carga el punto de colision collisionPoint
              //  selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
 
-                if (selected || agarrado)
+                if (agarrado)
                 {
                     selectedMesh = elemCreado;
                    movimiento2.X = -(mouseVector.X - anteriorMouse.X);
                    movimiento2.Y = -(mouseVector.Y - anteriorMouse.Y);
-                   agarrado = true;
+                   //agarrado = true;
 
                 }
             }
@@ -126,10 +126,10 @@ namespace AlumnoEjemplos.MiGrupo
             {
                 agarrado = false;
             }
-            if (selected && aparece)
+            if (agarrado)
             {
                 selectedMesh.BoundingBox.render();
-                objetoAMover.mesh.move(movimiento2 * 0.345f);
+               objetoAMover.mesh.move(movimiento2 * 0.032f);
                // collisionPointMesh.Position = collisionPoint;
              //   collisionPointMesh.render();
             }
@@ -141,7 +141,7 @@ namespace AlumnoEjemplos.MiGrupo
 
             anteriorMouse = mouseVector;
 
-          //  objetoAMover.mesh.move(movimiento2 * 0.345f);
+           // objetoAMover.mesh.move(movimiento2 * 0.345f);
         }
 
         void Etapa.aplicarMovimientos(float elapsedTime)
