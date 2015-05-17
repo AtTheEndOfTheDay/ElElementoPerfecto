@@ -50,6 +50,10 @@ namespace AlumnoEjemplos.MiGrupo
         TgcTexture madera = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Madera.jpg");
         TgcTexture metal = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Metal.jpg");
 
+        TgcSceneLoader loader = new TgcSceneLoader();
+      /*  TgcScene scene;
+        TgcMesh cannon;*/
+
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
         /// Influye en donde se va a haber en el árbol de la derecha de la pantalla.
@@ -79,6 +83,10 @@ namespace AlumnoEjemplos.MiGrupo
         {
             return GuiController.Instance.AlumnoEjemplosMediaDir + "Texturas\\";
         }
+        public static string alumnoMeshFolder()
+        {
+            return GuiController.Instance.AlumnoEjemplosMediaDir + "MeshCreator\\Meshes\\";
+        }
 
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
@@ -95,7 +103,11 @@ namespace AlumnoEjemplos.MiGrupo
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 25);
 
-        
+           /* scene = loader.loadSceneFromFile(EjemploAlumno.alumnoMeshFolder() + "Cannon-TgcScene.xml");
+            cannon = scene.Meshes[0];
+            cannon.setColor(Color.Black);
+            cannon.Scale = new Vector3 (0.3f, 0.3f, 0.3f);
+            cannon.Rotation = new Vector3 (3.14f/4, 3.14f/4, 3.14f/4);*/
 
             //Es como un mock de un Cannon, un Magnet y un Spring, de momento solo para obtener la textura y ver que el menu funcione
             Pared supuestoCannon = new Pared(TgcBox.fromSize(new Vector3(0, 0, 0), new Vector3(0, 0, 0), 

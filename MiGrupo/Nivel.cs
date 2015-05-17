@@ -80,7 +80,7 @@ namespace AlumnoEjemplos.MiGrupo
             TgcD3dInput input = GuiController.Instance.D3dInput;
 
             fondo.render();
-            if ((input.keyDown(Key.Return))&&(etapa.Equals(construccion)))
+            if ((input.keyDown(Key.Space))&&(etapa.Equals(construccion)))
             {
                 etapa = play;
                 textStage.Text = etapa.getNombre();
