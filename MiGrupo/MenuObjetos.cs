@@ -22,9 +22,8 @@ namespace AlumnoEjemplos.MiGrupo
         private TgcSprite menu;
         private TgcSprite[] objetos;
         Size screenSize = GuiController.Instance.Panel3d.Size;
-        TgcTexture texturaMenu = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Menu.jpg");
 
-        public MenuObjetos(List<Item> listaMenu)
+        public MenuObjetos(List<Item> listaMenu, TgcTexture texturaMenu)
         {
             int cantidadObjetos = listaMenu.Count;
             //Creacion de Sprites

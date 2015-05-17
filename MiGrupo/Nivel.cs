@@ -60,7 +60,7 @@ namespace AlumnoEjemplos.MiGrupo
             play = new Play(itemsDelNivel, pelota);
             etapa = construccion;
 
-            menu = new MenuObjetos(objetosDeMenu);
+            menu = new MenuObjetos(objetosDeMenu, TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Laja.jpg"));
 
             textStage.Color = Color.White;
             textStage.Position = new Point(0, 0);

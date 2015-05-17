@@ -105,10 +105,10 @@ namespace AlumnoEjemplos.MiGrupo
             listaUsuario.Add(supuestoSpring);
             //Terminan las inicializaciones de mentira
 
-            nivelActual = new Nivel (TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Fondo.jpg"),
-                                     TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Fondo.jpg"),
-                                     TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Fondo.jpg"),
-                                     new Pelota(2f, new Vector3(0, 10, 0), TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Pelotita.jpg")),
+            nivelActual = new Nivel (TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Madera.jpg"),
+                                     TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Madera.jpg"),
+                                     TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Madera.jpg"),
+                                     new Pelota(2f, new Vector3(0, 10, 0), TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Metal.jpg")),
                                      new List<Item>(),
                                      listaUsuario);
 
