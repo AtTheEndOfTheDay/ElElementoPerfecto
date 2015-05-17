@@ -16,7 +16,7 @@ using TgcViewer.Utils.TgcGeometry;
 namespace AlumnoEjemplos.MiGrupo
 {
 
-    class Construccion : Stage
+    class Construccion : Etapa
     {
         private List<Item> itemsInScenario = new List<Item>();
         private Pelota pelota;
@@ -41,7 +41,7 @@ namespace AlumnoEjemplos.MiGrupo
             menu = menuActual;
         }
 
-        void Stage.interaccion(TgcD3dInput input, float elapsedTime)
+        void Etapa.interaccion(TgcD3dInput input, float elapsedTime)
         {
         
             //aqui iría lo de arrastrar los objetos de la barra a la pantalla
@@ -60,7 +60,7 @@ namespace AlumnoEjemplos.MiGrupo
                 //Ejecutar test, si devuelve true se carga el punto de colision collisionPoint
                selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
 
-               if (menu.estaEnMenu(mouseVector.X))
+               if (menu.estaEnMenu(mouseVector.X, mouseVector.Y))
                {
                    selected = true; 
                }
@@ -130,12 +130,12 @@ namespace AlumnoEjemplos.MiGrupo
             elemCreado.move(movimiento2 * 0.0345f);
         }
 
-        void Stage.aplicarMovimientos(float elapsedTime)
+        void Etapa.aplicarMovimientos(float elapsedTime)
         {
             //supongo que nada se mueve por si solo cuando construyo, sino debería ir aquí
         }
 
-        void Stage.render()
+        void Etapa.render()
         {
             pelota.render();
             caja.render();
@@ -146,7 +146,7 @@ namespace AlumnoEjemplos.MiGrupo
             }
         }
 
-        String Stage.getNombre()
+        String Etapa.getNombre()
         {
             return "Construccion";
         }

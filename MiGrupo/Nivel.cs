@@ -36,7 +36,7 @@ namespace AlumnoEjemplos.MiGrupo
         
         Construccion construccion;
         Play play;
-        Stage etapa;
+        Etapa etapa;
         TgcText2d textStage = new TgcText2d();
         
         public Nivel( TgcTexture textFondo, TgcTexture textPiso, TgcTexture textParedes,

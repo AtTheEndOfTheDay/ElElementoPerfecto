@@ -23,6 +23,7 @@ namespace AlumnoEjemplos.MiGrupo
         private TgcSprite[] objetos;
         Size screenSize = GuiController.Instance.Panel3d.Size;
         float ladoIzqMenu;
+        float ladoObjeto;
 
         public MenuObjetos(List<ItemUsuario> listaMenu, TgcTexture texturaMenu)
         {
@@ -32,7 +33,7 @@ namespace AlumnoEjemplos.MiGrupo
             objetos = new TgcSprite[cantidadObjetos];
             for (var i = 0; i < cantidadObjetos; i++)
                 objetos[i] = new TgcSprite();
-
+            
             //Asginar Texturas
             menu.Texture = texturaMenu;
             for (var i = 0; i < cantidadObjetos; i++)
@@ -47,7 +48,7 @@ namespace AlumnoEjemplos.MiGrupo
             menu.SrcRect = new Rectangle(0, 0, (int)Math.Round(anchoMenu), screenSize.Height);
 
             //Dibujo Objetos de Menu
-            float ladoObjeto = screenSize.Height / ((cantidadObjetos / 2) + 1);
+            ladoObjeto = screenSize.Height / ((cantidadObjetos / 2) + 1);
             if (ladoObjeto * 2 > anchoMenu)
             {
                 ladoObjeto = anchoMenu / 2;
@@ -78,9 +79,17 @@ namespace AlumnoEjemplos.MiGrupo
                 objetos[i].dispose();
         }
 
-        internal bool estaEnMenu(float mouseX)
+        internal bool estaEnMenu(float mouseX, float mouseY)
         {
-            return (mouseX > ladoIzqMenu);
+            foreach (TgcSprite spriteObjeto in objetos)
+            {
+                if ((mouseX > spriteObjeto.Position.X) && (mouseX < (spriteObjeto.Position.X + ladoObjeto)) &&
+                    (mouseY > spriteObjeto.Position.Y) && (mouseY < (spriteObjeto.Position.Y + ladoObjeto)))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

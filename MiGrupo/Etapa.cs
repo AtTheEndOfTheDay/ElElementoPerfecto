@@ -6,7 +6,7 @@ using TgcViewer.Utils.Input;
 
 namespace AlumnoEjemplos.MiGrupo
 {
-    interface Stage
+    interface Etapa
     {
         void render();
 

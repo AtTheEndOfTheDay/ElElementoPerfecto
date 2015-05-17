@@ -12,7 +12,7 @@ using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.MiGrupo
 {
-    class Play : Stage
+    class Play : Etapa
     {
         private List<Item> itemsInScenario;
         private Pelota pelota;
@@ -23,7 +23,7 @@ namespace AlumnoEjemplos.MiGrupo
             pelota = unaPelota;
         }
 
-        void Stage.interaccion(TgcD3dInput input, float elapsedTime)
+        void Etapa.interaccion(TgcD3dInput input, float elapsedTime)
         {
             pelota.interactuar(input, elapsedTime);
 
@@ -35,7 +35,7 @@ namespace AlumnoEjemplos.MiGrupo
 
         }
 
-        void Stage.aplicarMovimientos(float elapsedTime)
+        void Etapa.aplicarMovimientos(float elapsedTime)
         {
             pelota.aplicarMovimientos(elapsedTime);
 
@@ -45,7 +45,7 @@ namespace AlumnoEjemplos.MiGrupo
             }
         }
 
-        void Stage.render()
+        void Etapa.render()
         {
             pelota.render();
 
@@ -55,7 +55,7 @@ namespace AlumnoEjemplos.MiGrupo
             }
         }
 
-        String Stage.getNombre()
+        String Etapa.getNombre()
         {
             return "Play";
         }
