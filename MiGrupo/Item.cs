@@ -7,6 +7,8 @@ using TgcViewer.Utils.Input;
 
 using Microsoft.DirectX;
 
+using TgcViewer.Utils.TgcSceneLoader;
+
 namespace AlumnoEjemplos.MiGrupo
 {
     interface Item
@@ -18,5 +20,6 @@ namespace AlumnoEjemplos.MiGrupo
         void aplicarMovimientos(float elapsedTime);
         Vector3 velocidad();
         void dispose();
+        TgcTexture getTexture();
     }
 }

@@ -43,21 +43,7 @@ namespace AlumnoEjemplos.MiGrupo
 
     public class EjemploAlumno : TgcExample
     {
-        MenuObjetos menu;
-
-        TgcText2d textStage = new TgcText2d();
-
-        TgcBox fondo;
-        Pared piso;
-        Pared lateralDerecha;
-        Pared lateralIzquierda;
-
-        Pelota pelota;
-        Vector3 iniPelota = new Vector3(0, 100, 0);
-        Construccion construccion;
-        Play play;
-        Stage nivel;
-
+        Nivel nivelActual;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -97,35 +83,36 @@ namespace AlumnoEjemplos.MiGrupo
         public override void init()
         {
             //Propios de cada nivel, delegar al nivel
-            List<Item> itemsInScenario = new List<Item>();
-            TgcTexture textPiso = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Fondo.jpg");            
+                   
             
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
-                    
-            fondo = TgcBox.fromSize(new Vector3(11.5f, 0, 0), new Vector3(128, 83, 0), textPiso);
-
-            piso = new Pared(TgcBox.fromSize(new Vector3(11.5f, -41, 0), new Vector3(128, 1, 1), textPiso), 1);
-            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-53f, 0, 0), new Vector3(1, 83, 1), textPiso), 1);
-            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(75f, 0, 0), new Vector3(1, 83, 1), textPiso), 1);
-
-            pelota = new Pelota();
-
-            itemsInScenario.Add(piso);
-            itemsInScenario.Add(lateralDerecha);
-            itemsInScenario.Add(lateralIzquierda);
-
-            construccion = new Construccion(itemsInScenario,pelota);
-            play = new Play(itemsInScenario,pelota);
-            nivel = construccion;           
 
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 100);
-     
-            menu = new MenuObjetos(12);
-                        
-            textStage.Color = Color.White;
-            textStage.Position = new Point(0,0);
-            textStage.Text = "Construccion";
+
+            //Es como un mock de un Cannon, un Magnet y un Spring, de momento solo para obtener la textura y ver que el menu funcione
+            Pared supuestoCannon = new Pared(TgcBox.fromSize(new Vector3(0, 0, 0), new Vector3(0, 0, 0), 
+                                            TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Cannon.png")), 1);
+            Pared supuestoMagnet = new Pared(TgcBox.fromSize(new Vector3(0, 0, 0), new Vector3(0, 0, 0),
+                                            TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Magnet.png")), 1);
+            Pared supuestoSpring = new Pared(TgcBox.fromSize(new Vector3(0, 0, 0), new Vector3(0, 0, 0),
+                                            TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Spring.png")), 1);
+            List<Item> listaUsuario = new List<Item>();
+            listaUsuario.Add(supuestoCannon); //Importa el orden, por como los muestra el menu
+            listaUsuario.Add(supuestoMagnet); 
+            listaUsuario.Add(supuestoCannon);
+            listaUsuario.Add(supuestoMagnet);
+            listaUsuario.Add(supuestoSpring);
+            //Terminan las inicializaciones de mentira
+
+            nivelActual = new Nivel (TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Fondo.jpg"),
+                                     TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Fondo.jpg"),
+                                     TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Fondo.jpg"),
+                                     new Pelota(2f, new Vector3(0, 10, 0), TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Pelotita.jpg")),
+                                     new List<Item>(),
+                                     listaUsuario);
+
+            
 
         }
 
@@ -138,42 +125,7 @@ namespace AlumnoEjemplos.MiGrupo
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
-
-            Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
-            TgcD3dInput input = GuiController.Instance.D3dInput;
-            Vector3 movement = new Vector3(0, 0, 0);
-
-            if ((input.keyDown(Key.Return))&&(nivel.Equals(construccion)))
-            {
-                pelota.reiniciar();
-                nivel = play;
-                textStage.Text = nivel.getNombre();
-            }
-            else
-            {
-                if ((input.keyDown(Key.C)) && (nivel.Equals(play)))
-                {
-                    pelota.reiniciar();
-                    nivel = construccion;
-                    textStage.Text = nivel.getNombre();
-                }
-                    
-            }
-
-
-            fondo.render();
-            
-            nivel.interaccion(input,elapsedTime);
-
-            nivel.aplicarMovimientos(elapsedTime);
-
-            nivel.render();
-            
-            GuiController.Instance.Drawer2D.beginDrawSprite();
-                menu.renderMenu(12);
-                textStage.render();
-            GuiController.Instance.Drawer2D.endDrawSprite();
-
+            nivelActual.render(elapsedTime);
         }
 
         /// <summary>
@@ -182,13 +134,8 @@ namespace AlumnoEjemplos.MiGrupo
         /// </summary>
         public override void close()
         {
-            menu.disposeMenu(12);
-            fondo.dispose();
-            piso.dispose();
-            lateralDerecha.dispose();
-            lateralIzquierda.dispose();
-            pelota.dispose();
+            nivelActual.dispose();
         }
-
+        
     }
 }

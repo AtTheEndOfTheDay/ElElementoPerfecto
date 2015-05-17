@@ -64,5 +64,9 @@ namespace AlumnoEjemplos.MiGrupo
         {
             caja.dispose();
         }
+        public TgcTexture getTexture()
+        {
+            return caja.Texture;
+        }
     }
 }

@@ -24,17 +24,17 @@ namespace AlumnoEjemplos.MiGrupo
         
         private Vector3 velocidadMovimiento;
         private Vector3 velocidadRotacion;
-        private Vector3 iniPelota = new Vector3(0, 10, 0);
+        private Vector3 iniPelota;
         private Vector3 velocidadInicialMovimiento = new Vector3(0, -1.5f, 0);
         private Vector3 velocidadInicialRotacion = new Vector3(0, 0, 0);
 
-        private TgcTexture textPelota = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Pelotita.jpg");
         public TgcSphere esfera = new TgcSphere();
 
 
-        public Pelota()
+        public Pelota(float radio, Vector3 posicionInicial, TgcTexture textPelota)
         {
-            esfera.Radius = 2f;
+            iniPelota = posicionInicial;
+            esfera.Radius = radio;
             esfera.Position = iniPelota;
             esfera.LevelOfDetail = 4;
             esfera.BasePoly = TgcSphere.eBasePoly.ICOSAHEDRON;

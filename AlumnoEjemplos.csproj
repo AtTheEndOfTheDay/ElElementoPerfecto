@@ -89,12 +89,13 @@
   <ItemGroup>
     <Compile Include="MiGrupo\Construccion.cs" />
     <Compile Include="MiGrupo\EjemploAlumno.cs" />
+    <Compile Include="MiGrupo\Etapa.cs" />
     <Compile Include="MiGrupo\Item.cs" />
     <Compile Include="MiGrupo\MenuObjetos.cs" />
+    <Compile Include="MiGrupo\Nivel.cs" />
     <Compile Include="MiGrupo\Pared.cs" />
     <Compile Include="MiGrupo\Pelota.cs" />
     <Compile Include="MiGrupo\Play.cs" />
-    <Compile Include="MiGrupo\Stage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

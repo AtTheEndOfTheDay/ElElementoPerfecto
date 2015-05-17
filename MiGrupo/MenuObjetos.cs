@@ -24,8 +24,9 @@ namespace AlumnoEjemplos.MiGrupo
         Size screenSize = GuiController.Instance.Panel3d.Size;
         TgcTexture texturaMenu = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Menu.jpg");
 
-        public MenuObjetos(int cantidadObjetos)
-        {               
+        public MenuObjetos(List<Item> listaMenu)
+        {
+            int cantidadObjetos = listaMenu.Count;
             //Creacion de Sprites
             menu = new TgcSprite();
             objetos = new TgcSprite[cantidadObjetos];
@@ -34,12 +35,9 @@ namespace AlumnoEjemplos.MiGrupo
 
             //Asginar Texturas
             menu.Texture = texturaMenu;
-            for (var i = 0; i < 4; i++)
-                objetos[i].Texture = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Cannon.png");
-            for (var i = 4; i < 8; i++)
-                objetos[i].Texture = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Magnet.png");
-            for (var i = 8; i < 12; i++)
-                objetos[i].Texture = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Spring.png");
+            for (var i = 0; i < cantidadObjetos; i++)
+                objetos[i].Texture = listaMenu[i].getTexture();
+            
 
             //Esta pensado para una resolucion con aspect ratio 16:9
             //Dibujo Menu
@@ -50,6 +48,10 @@ namespace AlumnoEjemplos.MiGrupo
 
             //Dibujo Objetos de Menu
             float ladoObjeto = screenSize.Height / ((cantidadObjetos / 2) + 1);
+            if (ladoObjeto * 2 > anchoMenu)
+            {
+                ladoObjeto = anchoMenu / 2;
+            }
             for (var i = 0; i < (cantidadObjetos / 2); i++)
             {
                 objetos[i].Position = new Vector2(ladoIzqMenu, 0 + ladoObjeto * i);
