@@ -31,12 +31,14 @@ namespace AlumnoEjemplos.MiGrupo
         Vector3 collisionPoint;
         TgcBox selectedMesh;
         TgcBox elemCreado = TgcBox.fromSize(new Vector3(10, 5, 0), new Vector3(1.5f, 1.5f, 0));
+        MenuObjetos menu;
 
-        public Construccion(List<Item> unosItems,Pelota unaPelota, TgcBox unacaja)
+        public Construccion(List<Item> unosItems,Pelota unaPelota, TgcBox unacaja, MenuObjetos menuActual)
         {
             itemsInScenario = unosItems;
             pelota = unaPelota;
             caja = unacaja;
+            menu = menuActual;
         }
 
         void Stage.interaccion(TgcD3dInput input, float elapsedTime)
@@ -57,6 +59,11 @@ namespace AlumnoEjemplos.MiGrupo
 
                 //Ejecutar test, si devuelve true se carga el punto de colision collisionPoint
                selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
+
+               if (menu.estaEnMenu(mouseVector.X))
+               {
+                   selected = true; 
+               }
 
                 if (selected)
                 {
