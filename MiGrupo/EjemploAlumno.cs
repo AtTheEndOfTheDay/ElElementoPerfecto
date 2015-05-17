@@ -51,8 +51,8 @@ namespace AlumnoEjemplos.MiGrupo
         TgcTexture metal = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Metal.jpg");
 
         TgcSceneLoader loader = new TgcSceneLoader();
-      /*  TgcScene scene;
-        TgcMesh cannon;*/
+        TgcScene scene;
+        TgcMesh cannon;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -103,11 +103,12 @@ namespace AlumnoEjemplos.MiGrupo
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 25);
 
-           /* scene = loader.loadSceneFromFile(EjemploAlumno.alumnoMeshFolder() + "Cannon-TgcScene.xml");
+            scene = loader.loadSceneFromFile(EjemploAlumno.alumnoMeshFolder() + "Cannon-TgcScene.xml");
             cannon = scene.Meshes[0];
             cannon.setColor(Color.Black);
-            cannon.Scale = new Vector3 (0.3f, 0.3f, 0.3f);
-            cannon.Rotation = new Vector3 (3.14f/4, 3.14f/4, 3.14f/4);*/
+            cannon.Scale = new Vector3(0.1f, 0.1f, 0.1f);
+            cannon.Rotation = new Vector3(0, 0, 3.14f / 4);
+            cannon.move(new Vector3(16, -8f, 1f));
 
             //Es como un mock de un Cannon, un Magnet y un Spring, de momento solo para obtener la textura y ver que el menu funcione
             Pared supuestoCannon = new Pared(TgcBox.fromSize(new Vector3(0, 0, 0), new Vector3(0, 0, 0), 
@@ -121,8 +122,8 @@ namespace AlumnoEjemplos.MiGrupo
             itemsUsuarioNivel1.Add(supuestoMagnet); 
             //Terminan las inicializaciones de mentira
 
-            nivel1 = new Nivel (madera, madera, madera, new Pelota(0.5f, new Vector3(0, 2, 0), metal),
-                                     new List<Item>(), itemsUsuarioNivel1);
+            nivel1 = new Nivel(madera, madera, madera, new Pelota(0.5f, new Vector3(0, 2, 0.25f), metal),
+                                     new List<Item>(), itemsUsuarioNivel1, scene);
 
             //Inicializaciones de menria
             List<Item> itemsUsuarioNivel2 = new List<Item>();
@@ -141,8 +142,8 @@ namespace AlumnoEjemplos.MiGrupo
             itemsNivel2.Add(obstaculo3);
             itemsNivel2.Add(obstaculo4);
             //Terminan las inicializaciones de mentira
-            nivel2 = new Nivel(metal, metal, metal, new Pelota(1f, new Vector3(10, 5, 0), madera),
-                                     itemsNivel2, itemsUsuarioNivel2);
+            nivel2 = new Nivel(metal, metal, metal, new Pelota(1f, new Vector3(10, 5, 0.25f), madera),
+                                     itemsNivel2, itemsUsuarioNivel2, scene);
 
             nivelActual = nivel1;
 
@@ -171,6 +172,8 @@ namespace AlumnoEjemplos.MiGrupo
                 }
             
             nivelActual.render(elapsedTime);
+
+
         }
 
         /// <summary>
