@@ -65,7 +65,7 @@ namespace AlumnoEjemplos.MiGrupo
             menu = new MenuObjetos(objetosDelUsuario, textMenu);
 
             construccion = new Construccion(objetosDelNivel, pelota, menu, objetosDelUsuario);
-            play = new Play(objetosDelNivel, pelota);
+            play = new Play(objetosDelNivel, objetosDelUsuario, pelota);
             etapa = construccion;
 
             textStage.Color = Color.White;

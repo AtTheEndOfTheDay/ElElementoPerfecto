@@ -14,12 +14,19 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Play : Etapa
     {
-        private List<Item> itemsInScenario;
+        private List<Item> itemsDelNivel;
+        private List<Item> itemsDelUsuario;
+        private List<Item> items = new List<Item>();
         private Pelota pelota;
 
-        public Play(List<Item> unosItems,Pelota unaPelota)
+        public Play(List<Item> itemsNivel, List<Item> itemsUsuario, Pelota unaPelota)
         {
-            itemsInScenario = unosItems ;
+            itemsDelNivel = itemsNivel ;
+            itemsDelUsuario = itemsUsuario;
+            foreach (Item item in itemsDelNivel)
+                items.Add(item);
+            foreach (Item item in itemsDelUsuario)
+                items.Add(item);
             pelota = unaPelota;
         }
 
@@ -30,7 +37,7 @@ namespace AlumnoEjemplos.MiGrupo
 
         void Etapa.aplicarMovimientos(float elapsedTime)
         {
-            pelota.aplicarMovimientos(elapsedTime,itemsInScenario);
+            pelota.aplicarMovimientos(elapsedTime, items);
 
         }
 
@@ -38,7 +45,7 @@ namespace AlumnoEjemplos.MiGrupo
         {
             pelota.render();
 
-            foreach (var item in itemsInScenario)
+            foreach (var item in items)
             {
                 item.render();
             }
