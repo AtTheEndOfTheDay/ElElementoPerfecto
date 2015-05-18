@@ -178,10 +178,12 @@ namespace AlumnoEjemplos.MiGrupo
 
             List<Item> itemsUsuarioNivel2 = new List<Item>();
             itemsUsuarioNivel2.Add(cannon2); //Importa el orden, por como los muestra el menu
-            Pared obstaculo1 = new Pared(TgcBox.fromSize(new Vector3(-10, -6, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo1"), madera);
-            Pared obstaculo2 = new Pared(TgcBox.fromSize(new Vector3(-5, -4, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo2"), madera);
-            Pared obstaculo3 = new Pared(TgcBox.fromSize(new Vector3(5, -2, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo3"), madera);
-            Pared obstaculo4 = new Pared(TgcBox.fromSize(new Vector3(10, 0, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo4"), madera);
+
+            Pared obstaculo1 = Pared.CrearPared(new Vector3(-10, -6, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, 0), madera, "Obstaculo1");
+            Pared obstaculo2 = Pared.CrearPared(new Vector3(-5, -4, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, 0), madera, "Obstaculo2");
+            Pared obstaculo3 = Pared.CrearPared(new Vector3(5, -2, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, 0), madera, "Obstaculo3");
+            Pared obstaculo4 = Pared.CrearPared(new Vector3(10, 0, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, FastMath.PI/4), madera, "Obstaculo4");
+
             List<Item> itemsNivel2 = new List<Item>();
             itemsNivel2.Add(obstaculo1);
             itemsNivel2.Add(obstaculo2);
