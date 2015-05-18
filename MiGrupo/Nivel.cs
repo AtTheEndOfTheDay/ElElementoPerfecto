@@ -134,13 +134,5 @@ namespace AlumnoEjemplos.MiGrupo
             etapa = construccion;
             textStage.Text = etapa.getNombre();
         }
-        public void reiniciar()
-        {
-            pasarAConstruccion();
-            foreach (ItemUsuario objeto in objetosDelUsuario)
-            {
-                objeto.enEscena = false;
-            }
-        }
     }
 }

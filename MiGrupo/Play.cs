@@ -30,7 +30,6 @@ namespace AlumnoEjemplos.MiGrupo
             foreach (var item in itemsInScenario)
             {
                 item.interactuar(input,elapsedTime);
-                item.interactuarConPelota(input, elapsedTime, pelota);
             }
 
         }

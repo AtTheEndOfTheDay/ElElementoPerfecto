@@ -108,9 +108,9 @@ namespace AlumnoEjemplos.MiGrupo
             scene = loader.loadSceneFromFile(EjemploAlumno.alumnoMeshFolder() + "Cannon-TgcScene.xml");
             
             iniciarNivel1();
+            iniciarNivel2();
             
             nivelActual = nivel1;
-
         }
 
 
@@ -145,7 +145,6 @@ namespace AlumnoEjemplos.MiGrupo
         /// </summary>
         public override void close()
         {
-            nivelActual.dispose();
             nivel1.dispose();
             nivel2.dispose();
         }
@@ -159,18 +158,18 @@ namespace AlumnoEjemplos.MiGrupo
             cannon.enEscena = true;
             List<Item> itemsNivel1 = new List<Item>();
             itemsNivel1.Add(cannon);
-            nivel1 = new Nivel(madera, madera, madera, new Pelota(0.5f, new Vector3(0, 2, 0.25f), metal),
+            nivel1 = new Nivel(madera, madera, madera, new Pelota(0.5f, new Vector3(16, -8f, 0.25f), metal),
                                      itemsNivel1, new List<ItemUsuario>());
         }
 
         private void iniciarNivel2()
         {
-            cannon2 = new Cannon(scene.Meshes[0], texturaCannon);
-            cannon.mesh.setColor(Color.Black);
-            cannon.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
-            cannon.mesh.Rotation = new Vector3(0, 0, 3.14f / 4);
-            cannon.llevarAContenedor();
-            cannon.enEscena = false;
+            cannon2 = new Cannon(scene.Meshes[0].clone("Cannon2"), texturaCannon);
+            cannon2.mesh.setColor(Color.Black);
+            cannon2.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
+            cannon2.mesh.Rotation = new Vector3(0, 0, 3.14f / 4);
+            cannon2.llevarAContenedor();
+            cannon2.enEscena = false;
 
             List<ItemUsuario> itemsUsuarioNivel2 = new List<ItemUsuario>();
             itemsUsuarioNivel2.Add(cannon2); //Importa el orden, por como los muestra el menu

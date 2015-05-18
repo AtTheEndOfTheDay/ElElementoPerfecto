@@ -55,7 +55,10 @@ namespace AlumnoEjemplos.MiGrupo
             {
                 if (TgcCollisionUtils.testSphereAABB(testSphere, item.getBB()))
                 {
-                    newVelocidad = rebotar(esfera, item.getCoefRebote(), velocidad, factorVelocidad, item.getBB(), item.velocidad());
+                    if (item.debeRebotar(esfera))
+                        newVelocidad = rebotar(esfera, item.getCoefRebote(), velocidad, factorVelocidad, item.getBB(), item.velocidad());
+                    else
+                        newVelocidad = item.interactuarConPelota();
                     if (!newVelocidad.Equals(velocidad))
                     {
                         newVelocidad = ConsiderarColicionesCon(esfera, itemsInScenario, newVelocidad, factorVelocidad, nivelRecursivo + 1);

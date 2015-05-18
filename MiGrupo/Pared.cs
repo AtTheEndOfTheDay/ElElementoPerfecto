@@ -30,9 +30,9 @@ namespace AlumnoEjemplos.MiGrupo
         void Item.interactuar(TgcD3dInput input,float elapsedTime)
         {}
 
-        void Item.interactuarConPelota(TgcD3dInput input, float elapsedTime,Pelota pelota)
+        Vector3 Item.interactuarConPelota()
         {
-
+            return new Vector3(0, 0, 0);
         }
 
         void Item.aplicarMovimientos(float elapsedTime)
@@ -73,6 +73,11 @@ namespace AlumnoEjemplos.MiGrupo
         float Item.getCoefRebote()
         {
             return 0.5f;
+        }
+
+        bool Item.debeRebotar(TgcSphere esfera)
+        {
+            return true;
         }
     }
 }

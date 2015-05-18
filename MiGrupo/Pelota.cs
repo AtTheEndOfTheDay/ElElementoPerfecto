@@ -25,7 +25,7 @@ namespace AlumnoEjemplos.MiGrupo
         private Vector3 velocidadMovimiento;
         private Vector3 velocidadRotacion;
         private Vector3 iniPelota;
-        private Vector3 velocidadInicialMovimiento = new Vector3(-1f, -1.5f, 0);
+        private Vector3 velocidadInicialMovimiento = new Vector3(0, -1.5f, 0);
         private Vector3 velocidadInicialRotacion = new Vector3(0, 0, 0);
 
         public TgcSphere esfera = new TgcSphere();

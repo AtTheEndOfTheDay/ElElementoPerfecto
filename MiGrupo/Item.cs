@@ -15,7 +15,7 @@ namespace AlumnoEjemplos.MiGrupo
     interface Item
     {
         void interactuar(TgcD3dInput input, float elapsedTime);
-        void interactuarConPelota(TgcD3dInput input, float elapsedTime, Pelota pelota);
+        Vector3 interactuarConPelota();
         void iluminar();
         void render();
         bool esMovil();
@@ -24,5 +24,6 @@ namespace AlumnoEjemplos.MiGrupo
         void dispose();
         TgcBoundingBox getBB();
         float getCoefRebote();
+        bool debeRebotar(TgcSphere esfera);
     }
 }
