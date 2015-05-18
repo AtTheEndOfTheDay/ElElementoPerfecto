@@ -76,8 +76,10 @@ namespace AlumnoEjemplos.MiGrupo
         {
             float menorDistancia = float.MaxValue;
             TgcBoundingBox.Face collisionFace = null;
+            TgcBoundingBox.Face bbFaceTransformada = new TgcBoundingBox.Face();
 
             Vector3 pNormal;
+
 
             TgcBoundingBox.Face[] bbFaces = obstaculoBB.computeFaces();
 
@@ -87,28 +89,49 @@ namespace AlumnoEjemplos.MiGrupo
 
                 //ensanchar las paredes
 
-                //TODO falta ensanchar para los costados (ver dibujo explicativo)
+                //TODO en vez de ensanchar iría convertirlo en un cuarto de circunferencia
                 for (int i = 0; i < 4; i++)
                 {
-                    bbFace.Extremes[i] += Vector3.Multiply(pNormal, bEsfera.Radius);
+                    bbFaceTransformada.Extremes[i] = bbFace.Extremes[i] + Vector3.Multiply(pNormal, bEsfera.Radius);
+
+                    for (int j = 0; j < 4; j++)
+                    {
+                        //si no es el opuesto ni es el mismo vertice
+                        if ((j != 3 - i) && (j != i))
+                        {
+                            //muevo el vertice la distancia del radio en direccion opuesta a el otro vertice
+                            bbFaceTransformada.Extremes[i] += Vector3.Multiply(Vector3.Normalize(bbFace.Extremes[i] - bbFace.Extremes[j]), bEsfera.Radius);
+                        }
+                    }
+
                 }
 
-                bbFace.Plane = new Plane(pNormal.X, pNormal.Y, pNormal.Z, -Vector3.Dot(pNormal,bbFace.Extremes[0]));
 
-                
+
+
+                bbFaceTransformada.Plane = new Plane(pNormal.X, pNormal.Y, pNormal.Z, -Vector3.Dot(pNormal, bbFaceTransformada.Extremes[0]));
+
+
 
                 //proyectar rayo del centro de la pelota con su movimiento
                 TgcRay movementRay = new TgcRay(bEsfera.Center, movementVector);
                 float distanciaInterseccion;
                 Vector3 puntoDeInterseccion;
                 //Si no intersecta con el plano de la pared => descarta la cara
-                if (!TgcCollisionUtils.intersectRayPlane(movementRay, bbFace.Plane, out distanciaInterseccion, out puntoDeInterseccion))
+                if (!TgcCollisionUtils.intersectRayPlane(movementRay, bbFaceTransformada.Plane, out distanciaInterseccion, out puntoDeInterseccion))
                 {
-                    continue;
+                    if (!TgcCollisionUtils.intersectRayPlane(movementRay, bbFace.Plane, out distanciaInterseccion, out puntoDeInterseccion))
+                    {
+                        continue;
+                    }
+
+                    //TODO esta entre los dos planos (el transformado y el original) => puede que pege en el vertice
+
+                    return Vector3.Normalize(-movementVector);
                 }
 
                 //Si el punto intersectado con el plano no esta incluido en la cara => descarto la cara
-                if (!pointInBounbingBoxFace(puntoDeInterseccion, bbFace))
+                if (!pointInBounbingBoxFace(puntoDeInterseccion, bbFaceTransformada))
                 {
                     continue;
                 }
@@ -126,7 +149,7 @@ namespace AlumnoEjemplos.MiGrupo
             if (collisionFace != null)
             {
                 return TgcCollisionUtils.getPlaneNormal(collisionFace.Plane);
-                
+
             }
             else
             {
