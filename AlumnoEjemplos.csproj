@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MiGrupo\Objetos\Magnet.cs" />
     <Compile Include="MiGrupo\Objetos\Cannon.cs" />
     <Compile Include="MiGrupo\Objetos\Item.cs" />
     <Compile Include="MiGrupo\Juego\Construccion.cs" />

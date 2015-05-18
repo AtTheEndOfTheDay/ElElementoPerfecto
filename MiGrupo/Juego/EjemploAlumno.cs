@@ -51,12 +51,15 @@ namespace AlumnoEjemplos.MiGrupo
         TgcTexture madera = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Madera.jpg");
         TgcTexture metal = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Metal.jpg");
         TgcTexture texturaCannon = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Cannon.png");
+        TgcTexture texturaMagnet = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "magnet.png");
 
         Pelota[] pelotas;
         TgcSceneLoader loader = new TgcSceneLoader();
         TgcScene scene;
+
         Cannon cannon;
         Cannon cannon2;
+        Magnet magnet1;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -145,8 +148,8 @@ namespace AlumnoEjemplos.MiGrupo
             {
                 reiniciar(nivelActual);
                 nivelActual.pasaAConstruccion();
-            }    
-            
+            }
+
             nivelActual.render(elapsedTime);
 
         }
@@ -163,21 +166,35 @@ namespace AlumnoEjemplos.MiGrupo
         private void iniciarNivel1()
         {
             pelotas[0] = new Pelota(0.5f, new Vector3(16, -8f, 1), metal);
+            
+            //Items del Nivel
             cannon = new Cannon(scene.Meshes[0], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi/4), new Vector3(16, -8f, 1f));
             cannon.enEscena = true;
             cannon.cargado = true;
             List<Item> itemsNivel1 = new List<Item>();
             itemsNivel1.Add(cannon);
-            nivel1 = new Nivel(1, madera, madera, madera, pelotas[0], itemsNivel1, new List<Item>());
+            //Fin Items del Nivel
+
+            //Items del Usuario
+            magnet1 = new Magnet(scene.Meshes[2], texturaMagnet, Color.Black, new Vector3(0.15f, 0.15f, 0.15f), new Vector3(0, pi/2, pi));
+            List<Item> itemsUsuario1 = new List<Item>();
+            itemsUsuario1.Add(magnet1);
+            //Fin Items del Usuario
+
+            nivel1 = new Nivel(1, madera, madera, madera, pelotas[0], itemsNivel1, itemsUsuario1);
         }
 
         private void iniciarNivel2()
         {
             pelotas[1] = new Pelota(1f, new Vector3(10, 5, 1), madera);
-            cannon2 = new Cannon(scene.Meshes[3], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0 / 2, 0));
-
+            
+            //Items del Nivel
+            cannon2 = new Cannon(scene.Meshes[3], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
             List<Item> itemsUsuarioNivel2 = new List<Item>();
-            itemsUsuarioNivel2.Add(cannon2); //Importa el orden, por como los muestra el menu
+            itemsUsuarioNivel2.Add(cannon2);
+            //Fin Items del Nivel
+
+            //Items del Usuario
             Pared obstaculo1 = new Pared(TgcBox.fromSize(new Vector3(-10, -6, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo1"), madera);
             Pared obstaculo2 = new Pared(TgcBox.fromSize(new Vector3(-5, -4, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo2"), madera);
             Pared obstaculo3 = new Pared(TgcBox.fromSize(new Vector3(5, -2, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo3"), madera);
@@ -187,6 +204,7 @@ namespace AlumnoEjemplos.MiGrupo
             itemsNivel2.Add(obstaculo2);
             itemsNivel2.Add(obstaculo3);
             itemsNivel2.Add(obstaculo4);
+            //Fin Items del Usuario  
 
             nivel2 = new Nivel(2, metal, metal, metal, pelotas[1], itemsNivel2, itemsUsuarioNivel2);
         }
