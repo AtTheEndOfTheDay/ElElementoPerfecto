@@ -35,11 +35,6 @@ namespace AlumnoEjemplos.MiGrupo
             return new Vector3(0, 0, 0);
         }
 
-        void Item.aplicarMovimientos(float elapsedTime)
-        {
-            //las paredes no se mueven
-        }
-
         void Item.iluminar()
         {
             //No se ilumina
@@ -49,10 +44,7 @@ namespace AlumnoEjemplos.MiGrupo
         {
             caja.render();
         }
-
-        bool Item.esMovil()
-        { return false; }
-
+        
         Vector3 Item.velocidad()
         { return new Vector3(0,0,0); }
 

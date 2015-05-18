@@ -50,7 +50,7 @@ namespace AlumnoEjemplos.MiGrupo
 
             //Cargar variables shader de la luz
             mesh.Effect.SetValue("lightColor", ColorValue.FromColor(Color.White));
-            mesh.Effect.SetValue("lightPosition", TgcParserUtils.vector3ToFloat4Array(new Vector3(0, 10.5f, 10)));
+            mesh.Effect.SetValue("lightPosition", TgcParserUtils.vector3ToFloat4Array(new Vector3(-13.1f, 10.5f, 10)));
             mesh.Effect.SetValue("eyePosition", TgcParserUtils.vector3ToFloat4Array(GuiController.Instance.ThirdPersonCamera.getPosition()));
             mesh.Effect.SetValue("lightIntensity", 15);
             mesh.Effect.SetValue("lightAttenuation", 1);
@@ -73,17 +73,7 @@ namespace AlumnoEjemplos.MiGrupo
                 mesh.render();
             }
         }
-
-        bool Item.esMovil()
-        {
-            return true;
-        }
-
-        void Item.aplicarMovimientos(float elapsedTime)
-        {
-            //No Implementado
-        }
-
+        
         Vector3 Item.velocidad()
         { 
             return new Vector3(0, 0, 0); 

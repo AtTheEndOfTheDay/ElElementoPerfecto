@@ -38,10 +38,6 @@ namespace AlumnoEjemplos.MiGrupo
         {
             pelota.aplicarMovimientos(elapsedTime,itemsInScenario);
 
-            foreach(var item in itemsInScenario)
-            {
-                item.aplicarMovimientos(elapsedTime);
-            }
         }
 
         void Etapa.render()

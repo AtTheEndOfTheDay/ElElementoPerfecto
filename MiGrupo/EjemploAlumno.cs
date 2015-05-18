@@ -43,6 +43,7 @@ namespace AlumnoEjemplos.MiGrupo
 
     public class EjemploAlumno : TgcExample
     {
+        float pi = (float)Math.PI;
         Nivel nivelActual;
         Nivel nivel1;
         Nivel nivel2;
@@ -153,7 +154,7 @@ namespace AlumnoEjemplos.MiGrupo
             cannon = new Cannon(scene.Meshes[0], texturaCannon);
             cannon.mesh.setColor(Color.Black);
             cannon.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
-            cannon.mesh.Rotation = new Vector3(0, 0, 3.14f / 4);
+            cannon.mesh.Rotation = new Vector3(0, 0, pi / 4);
             cannon.mesh.move(new Vector3(16 - cannon.mesh.Position.X, -8f -cannon.mesh.Position.Y, 1f - cannon.mesh.Position.Z));
             cannon.enEscena = true;
             List<Item> itemsNivel1 = new List<Item>();
@@ -167,7 +168,7 @@ namespace AlumnoEjemplos.MiGrupo
             cannon2 = new Cannon(scene.Meshes[0].clone("Cannon2"), texturaCannon);
             cannon2.mesh.setColor(Color.Black);
             cannon2.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
-            cannon2.mesh.Rotation = new Vector3(0, 0, 3.14f / 4);
+            cannon2.mesh.Rotation = new Vector3(0, 0, pi / 4);
             cannon2.llevarAContenedor();
             cannon2.enEscena = false;
 

@@ -18,9 +18,7 @@ namespace AlumnoEjemplos.MiGrupo
         Vector3 interactuarConPelota();
         void iluminar();
         void render();
-        bool esMovil();
-        void aplicarMovimientos(float elapsedTime);
-        Vector3 velocidad();
+        Vector3 velocidad(); //No sirve
         void dispose();
         TgcBoundingBox getBB();
         float getCoefRebote();
