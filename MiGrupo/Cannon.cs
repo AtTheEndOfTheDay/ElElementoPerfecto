@@ -26,5 +26,11 @@ namespace AlumnoEjemplos.MiGrupo
         {
 
         }
+
+        public override void interactuarConPelota(TgcD3dInput input, float elapsedTime, Pelota pelota)
+        {
+            
+        }
+        
     }
 }

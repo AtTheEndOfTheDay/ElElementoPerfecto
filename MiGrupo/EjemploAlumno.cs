@@ -54,6 +54,7 @@ namespace AlumnoEjemplos.MiGrupo
         TgcSceneLoader loader = new TgcSceneLoader();
         TgcScene scene;
         Cannon cannon;
+        Cannon cannon2;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -105,40 +106,9 @@ namespace AlumnoEjemplos.MiGrupo
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 25);
 
             scene = loader.loadSceneFromFile(EjemploAlumno.alumnoMeshFolder() + "Cannon-TgcScene.xml");
-            cannon = new Cannon(scene.Meshes[0], texturaCannon);
-            cannon.mesh.setColor(Color.Black);
-            cannon.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
-            cannon.mesh.Rotation = new Vector3(0, 0, 3.14f / 4);
-            cannon.mesh.move(new Vector3(16, -8f, 1f));
-
-            List<ItemUsuario> itemsUsuarioNivel1 = new List<ItemUsuario>();
-            itemsUsuarioNivel1.Add(cannon); //Importa el orden, por como los muestra el menu
-            itemsUsuarioNivel1.Add(cannon); 
-            //Terminan las inicializaciones de mentira
-
-            nivel1 = new Nivel(madera, madera, madera, new Pelota(0.5f, new Vector3(0, 2, 0.25f), metal),
-                                     new List<Item>(), itemsUsuarioNivel1);
-
-            //Inicializaciones de menria
-            List<ItemUsuario> itemsUsuarioNivel2 = new List<ItemUsuario>();
-            itemsUsuarioNivel2.Add(cannon); //Importa el orden, por como los muestra el menu
-            itemsUsuarioNivel2.Add(cannon);
-            itemsUsuarioNivel2.Add(cannon);
-            itemsUsuarioNivel2.Add(cannon);
-            itemsUsuarioNivel2.Add(cannon);
-            Pared obstaculo1 = new Pared(TgcBox.fromSize(new Vector3(-10, -6, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
-            Pared obstaculo2 = new Pared(TgcBox.fromSize(new Vector3(-5, -4, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
-            Pared obstaculo3 = new Pared(TgcBox.fromSize(new Vector3(5, -2, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
-            Pared obstaculo4 = new Pared(TgcBox.fromSize(new Vector3(10, 0, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
-            List<Item> itemsNivel2 = new List<Item>();
-            itemsNivel2.Add(obstaculo1);
-            itemsNivel2.Add(obstaculo2);
-            itemsNivel2.Add(obstaculo3);
-            itemsNivel2.Add(obstaculo4);
-            //Terminan las inicializaciones de mentira
-            nivel2 = new Nivel(metal, metal, metal, new Pelota(1f, new Vector3(10, 5, 0.25f), madera),
-                                     itemsNivel2, itemsUsuarioNivel2);
-
+            
+            iniciarNivel1();
+            
             nivelActual = nivel1;
 
         }
@@ -155,13 +125,13 @@ namespace AlumnoEjemplos.MiGrupo
             TgcD3dInput input = GuiController.Instance.D3dInput;
             if (input.keyDown(Key.F1))
             {
-                nivelActual.reiniciar();
+                iniciarNivel1();
                 nivelActual = nivel1;
             }                   
             else
                 if (input.keyDown(Key.F2))
                 {
-                    nivelActual.reiniciar();
+                    iniciarNivel2();
                     nivelActual = nivel2;
                 }
             
@@ -178,6 +148,44 @@ namespace AlumnoEjemplos.MiGrupo
             nivelActual.dispose();
             nivel1.dispose();
             nivel2.dispose();
+        }
+        private void iniciarNivel1()
+        {
+            cannon = new Cannon(scene.Meshes[0], texturaCannon);
+            cannon.mesh.setColor(Color.Black);
+            cannon.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
+            cannon.mesh.Rotation = new Vector3(0, 0, 3.14f / 4);
+            cannon.mesh.move(new Vector3(16 - cannon.mesh.Position.X, -8f -cannon.mesh.Position.Y, 1f - cannon.mesh.Position.Z));
+            cannon.enEscena = true;
+            List<Item> itemsNivel1 = new List<Item>();
+            itemsNivel1.Add(cannon);
+            nivel1 = new Nivel(madera, madera, madera, new Pelota(0.5f, new Vector3(0, 2, 0.25f), metal),
+                                     itemsNivel1, new List<ItemUsuario>());
+        }
+
+        private void iniciarNivel2()
+        {
+            cannon2 = new Cannon(scene.Meshes[0], texturaCannon);
+            cannon.mesh.setColor(Color.Black);
+            cannon.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
+            cannon.mesh.Rotation = new Vector3(0, 0, 3.14f / 4);
+            cannon.llevarAContenedor();
+            cannon.enEscena = false;
+
+            List<ItemUsuario> itemsUsuarioNivel2 = new List<ItemUsuario>();
+            itemsUsuarioNivel2.Add(cannon2); //Importa el orden, por como los muestra el menu
+            Pared obstaculo1 = new Pared(TgcBox.fromSize(new Vector3(-10, -6, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
+            Pared obstaculo2 = new Pared(TgcBox.fromSize(new Vector3(-5, -4, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
+            Pared obstaculo3 = new Pared(TgcBox.fromSize(new Vector3(5, -2, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
+            Pared obstaculo4 = new Pared(TgcBox.fromSize(new Vector3(10, 0, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
+            List<Item> itemsNivel2 = new List<Item>();
+            itemsNivel2.Add(obstaculo1);
+            itemsNivel2.Add(obstaculo2);
+            itemsNivel2.Add(obstaculo3);
+            itemsNivel2.Add(obstaculo4);
+            
+            nivel2 = new Nivel(metal, metal, metal, new Pelota(1f, new Vector3(10, 5, 0.25f), madera),
+                                     itemsNivel2, itemsUsuarioNivel2);
         }
         
     }

@@ -49,6 +49,11 @@ namespace AlumnoEjemplos.MiGrupo
             //las paredes no se mueven
         }
 
+        void Item.iluminar()
+        {
+            //No se ilumina
+        }
+
         void Item.render()
         {
             caja.render();

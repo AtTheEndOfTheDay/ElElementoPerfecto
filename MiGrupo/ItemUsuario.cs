@@ -19,7 +19,7 @@ using Microsoft.DirectX.DirectInput;
 
 namespace AlumnoEjemplos.MiGrupo
 {
-    class ItemUsuario : Item
+    abstract class ItemUsuario : Item
     {
         public bool enEscena = false;
         public TgcMesh mesh;
@@ -37,9 +37,12 @@ namespace AlumnoEjemplos.MiGrupo
 
         void Item.interactuarConPelota(TgcD3dInput input, float elapsedTime, Pelota pelota)
         {
-            //No Implementado
+            interactuarConPelota(input, elapsedTime, pelota);
         }
-
+        void Item.iluminar()
+        {
+            iluminar();
+        }
         void Item.render()
         {
             render();
@@ -77,7 +80,28 @@ namespace AlumnoEjemplos.MiGrupo
             }     
         }
 
-        internal void reiniciarPosicion()
+        public abstract void interactuarConPelota(TgcD3dInput input, float elapsedTime, Pelota pelota);
+
+        public void iluminar()
+        {
+            mesh.Effect = GuiController.Instance.Shaders.TgcMeshPointLightShader;
+
+            //Cargar variables shader de la luz
+            mesh.Effect.SetValue("lightColor", ColorValue.FromColor(Color.White));
+            mesh.Effect.SetValue("lightPosition", TgcParserUtils.vector3ToFloat4Array(new Vector3(0, 10.5f, 10)));
+            mesh.Effect.SetValue("eyePosition", TgcParserUtils.vector3ToFloat4Array(GuiController.Instance.ThirdPersonCamera.getPosition()));
+            mesh.Effect.SetValue("lightIntensity", 15);
+            mesh.Effect.SetValue("lightAttenuation", 1);
+
+            //Cargar variables de shader de Material. El Material en realidad deberia ser propio de cada mesh. Pero en este ejemplo se simplifica con uno comun para todos
+            mesh.Effect.SetValue("materialEmissiveColor", ColorValue.FromColor(Color.Black));
+            mesh.Effect.SetValue("materialAmbientColor", ColorValue.FromColor(Color.White));
+            mesh.Effect.SetValue("materialDiffuseColor", ColorValue.FromColor(Color.White));
+            mesh.Effect.SetValue("materialSpecularColor", ColorValue.FromColor(Color.White));
+            mesh.Effect.SetValue("materialSpecularExp", 10f);
+        }
+
+        internal void llevarAContenedor()
         {
             mesh.move ( new Vector3 ( -14.75f- mesh.Position.X, -8.5f - mesh.Position.Y, 0));
         }
