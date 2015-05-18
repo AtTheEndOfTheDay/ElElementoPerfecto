@@ -61,40 +61,26 @@ namespace AlumnoEjemplos.MiGrupo
                 pickingRay.updateRay();
 
                 //Testear Ray contra el AABB de todos los meshes
-            TgcBoundingBox aabb = caja.BoundingBox;
+                TgcBoundingBox aabb = caja.BoundingBox;
 
-                //Ejecutar test, si devuelve true se carga el punto de colision collisionPoint
-             //  selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
+               menu.poneloEnPantallaSiToco(mouseVector.X, mouseVector.Y);
 
-               if (menu.estaEnMenu(mouseVector.X, mouseVector.Y))
-               {
-                   selected = true; 
-               }
-
-                if (selected)
-                {
-                aparece = true;
-                selectedMesh = caja;
-                }
             } 
 
             if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_RIGHT))
             {
                 //Actualizar Ray de colisión en base a posición del mouse
                 pickingRay.updateRay();
-                //Testear Ray contra el AABB de todos los meshes
-            TgcBoundingBox aabb = elemCreado.BoundingBox;
-
-                //Ejecutar test, si devuelve true se carga el punto de colision collisionPoint
-            selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
-
-                if (selected)
+                foreach (ItemUsuario objeto in objetos)
                 {
-                    aparece = false;
-                    selected = false;
-             
-                }
-                
+                    TgcBoundingBox aabb = objeto.mesh.BoundingBox;
+                    selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
+                    objetoAMover = objeto;
+                    if (selected)
+                    {
+                        objetoAMover.enEscena = false;
+                    }
+                }           
             }
 
             if (input.buttonDown(TgcD3dInput.MouseButtons.BUTTON_LEFT))

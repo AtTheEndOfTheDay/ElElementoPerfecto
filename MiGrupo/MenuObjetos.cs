@@ -48,7 +48,7 @@ namespace AlumnoEjemplos.MiGrupo
             ladoIzqMenu = screenSize.Width * (1 - 0.15f);
             float anchoMenu = screenSize.Width - ladoIzqMenu;
             menu.Position = new Vector2(ladoIzqMenu, 0);
-            menu.SrcRect = new Rectangle(0, 0, (int)Math.Round(anchoMenu), screenSize.Height);
+            menu.SrcRect = new Rectangle(0, 0, (int)Math.Round(anchoMenu), (int)Math.Round((screenSize.Height*0.8f)));
 
             //Dibujo Objetos de Menu
             ladoObjeto = screenSize.Height / ((cantidadObjetos / 2) + 1);
@@ -82,17 +82,20 @@ namespace AlumnoEjemplos.MiGrupo
                 objetos[i].dispose();
         }
 
-        internal bool estaEnMenu(float mouseX, float mouseY)
+        internal void poneloEnPantallaSiToco(float mouseX, float mouseY)
         {
             for (var i = 0; i < cantidadObjetos;  i++)
             {
                 if ((mouseX > objetos[i].Position.X) && (mouseX < (objetos[i].Position.X + ladoObjeto)) &&
                     (mouseY > objetos[i].Position.Y) && (mouseY < (objetos[i].Position.Y + ladoObjeto)))
                 {
-                    objetosUsuario[i].enEscena = true;
+                    if (objetosUsuario[i].enEscena == false)
+                    {
+                        objetosUsuario[i].enEscena = true;
+                        objetosUsuario[i].reiniciarPosicion();
+                    }
                 }
             }
-            return false;
         }
     }
 }

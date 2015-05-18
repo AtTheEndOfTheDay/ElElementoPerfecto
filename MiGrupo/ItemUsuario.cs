@@ -76,5 +76,10 @@ namespace AlumnoEjemplos.MiGrupo
                 mesh.render();
             }     
         }
+
+        internal void reiniciarPosicion()
+        {
+            mesh.move ( new Vector3 ( -14.75f- mesh.Position.X, -8.5f - mesh.Position.Y, 0));
+        }
     }
 }

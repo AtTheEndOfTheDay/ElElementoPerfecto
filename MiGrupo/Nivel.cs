@@ -30,6 +30,7 @@ namespace AlumnoEjemplos.MiGrupo
         Vector3 iniPelota = new Vector3(0, 100, 0);
 
         TgcBox fondo;
+        TgcBox contenedor;
         Pared piso;
         Pared lateralDerecha;
         Pared lateralIzquierda; 
@@ -38,7 +39,7 @@ namespace AlumnoEjemplos.MiGrupo
         Play play;
         Etapa etapa;
         TgcText2d textStage = new TgcText2d();
-        
+        TgcTexture textMenu = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Laja.jpg");
         public Nivel( TgcTexture textFondo, TgcTexture textPiso, TgcTexture textParedes,
                      Pelota pelotita, List<Item> itemsDelNivel, List<ItemUsuario> itemsDelUsuario)
         {
@@ -46,8 +47,9 @@ namespace AlumnoEjemplos.MiGrupo
                         
             pelota = pelotita;
             objetosDelUsuario = itemsDelUsuario;
-            TgcBox cajaCreadora = TgcBox.fromSize(new Vector3(-10, 5, 0), new Vector3(1, 1, 0), textPiso); 
+            TgcBox cajaCreadora = TgcBox.fromSize(new Vector3(-10, 5, 0), new Vector3(1, 1, 0), textPiso);
 
+            contenedor = TgcBox.fromSize(new Vector3(-15.5f, -8.25f, 0.9f), new Vector3(5.5f, 4.5f, 0), textMenu);
             fondo = TgcBox.fromSize(new Vector3(2.85f, 0, 0), new Vector3(32, 20.75f, 0), textFondo);
             piso = new Pared(TgcBox.fromSize(new Vector3(2.85f, -10.25f, 0), new Vector3(32, 0.25f, 1f), textPiso), 1);
             lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-13.1f, 0, 0), new Vector3(0.25f, 20.75f, 1f), textParedes), 1);
@@ -57,7 +59,7 @@ namespace AlumnoEjemplos.MiGrupo
             itemsDelNivel.Add(lateralDerecha);
             itemsDelNivel.Add(lateralIzquierda);
 
-            menu = new MenuObjetos(objetosDelUsuario, TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Laja.jpg"));
+            menu = new MenuObjetos(objetosDelUsuario, textMenu);
 
             construccion = new Construccion(itemsDelNivel, pelota, cajaCreadora, menu, objetosDelUsuario);
             play = new Play(itemsDelNivel, pelota);
@@ -76,6 +78,7 @@ namespace AlumnoEjemplos.MiGrupo
             TgcD3dInput input = GuiController.Instance.D3dInput;
 
             fondo.render();
+            contenedor.render();
             if ((input.keyDown(Key.Space))&&(etapa.Equals(construccion)))
             {
                 etapa = play;
@@ -110,6 +113,7 @@ namespace AlumnoEjemplos.MiGrupo
         public void dispose(){
             fondo.dispose();
             piso.dispose();
+            contenedor.dispose();
             lateralDerecha.dispose();
             lateralIzquierda.dispose();
             menu.disposeMenu(objetosDelUsuario.Count);

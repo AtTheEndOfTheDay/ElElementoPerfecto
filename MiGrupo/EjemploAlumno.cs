@@ -55,6 +55,7 @@ namespace AlumnoEjemplos.MiGrupo
         TgcScene scene;
         Cannon cannon;
 
+        TgcBox cajaPrueba;
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
         /// Influye en donde se va a haber en el árbol de la derecha de la pantalla.
@@ -100,7 +101,7 @@ namespace AlumnoEjemplos.MiGrupo
                    
             
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
-
+            
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 25);
 
@@ -166,7 +167,6 @@ namespace AlumnoEjemplos.MiGrupo
                 }
             
             nivelActual.render(elapsedTime);
-
 
         }
 
