@@ -163,11 +163,7 @@ namespace AlumnoEjemplos.MiGrupo
         private void iniciarNivel1()
         {
             pelotas[0] = new Pelota(0.5f, new Vector3(16, -8f, 1), metal);
-            cannon = new Cannon(scene.Meshes[0], texturaCannon);
-            cannon.mesh.setColor(Color.Black);
-            cannon.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
-            cannon.mesh.Rotation = new Vector3(0, 0, pi / 4);
-            cannon.mesh.move(new Vector3(16 - cannon.mesh.Position.X, -8f -cannon.mesh.Position.Y, 1f - cannon.mesh.Position.Z));
+            cannon = new Cannon(scene.Meshes[0], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi/4), new Vector3(16, -8f, 1f));
             cannon.enEscena = true;
             cannon.cargado = true;
             List<Item> itemsNivel1 = new List<Item>();
@@ -178,12 +174,7 @@ namespace AlumnoEjemplos.MiGrupo
         private void iniciarNivel2()
         {
             pelotas[1] = new Pelota(1f, new Vector3(10, 5, 1), madera);
-            cannon2 = new Cannon(scene.Meshes[3], texturaCannon);
-            cannon2.mesh.setColor(Color.Black);
-            cannon2.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
-            cannon2.mesh.Rotation = new Vector3(0, 0/2, 0);
-            cannon2.llevarAContenedor();
-            cannon2.enEscena = false;
+            cannon2 = new Cannon(scene.Meshes[3], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0 / 2, 0));
 
             List<Item> itemsUsuarioNivel2 = new List<Item>();
             itemsUsuarioNivel2.Add(cannon2); //Importa el orden, por como los muestra el menu

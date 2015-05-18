@@ -23,11 +23,25 @@ namespace AlumnoEjemplos.MiGrupo
     {
         public float potencia = 0.6f;
         public bool cargado = false;
-        
-        public Cannon(TgcMesh mesh, TgcTexture texture)
-            : base(mesh, texture)
-        {
 
+        public Cannon(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion, Vector3 movimiento)
+            : base(unMesh, texture)
+        {
+            mesh.setColor(uncolor);
+            mesh.Scale = escalado;
+            mesh.Rotation = rotacion;
+            mesh.move(movimiento);
+            enEscena = false;
+        }
+        
+        public Cannon(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion)
+            : base(unMesh, texture)
+        {
+            mesh.setColor(uncolor);
+            mesh.Scale = escalado;
+            mesh.Rotation = rotacion;
+            llevarAContenedor();
+            enEscena = false;
         }
 
         public override Vector3 interactuarConPelota()
