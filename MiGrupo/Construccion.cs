@@ -20,26 +20,23 @@ namespace AlumnoEjemplos.MiGrupo
     {
         private List<Item> itemsInScenario = new List<Item>();
         private Pelota pelota;
-        private TgcBox caja;
-         Vector2 mouseVector;
-         Vector2 anteriorMouse;
-         List<ItemUsuario> objetos;
-         ItemUsuario objetoAMover;
+        Vector2 mouseVector;
+        Vector2 anteriorMouse;
+        List<ItemUsuario> objetos;
+        ItemUsuario objetoAMover;
 
         TgcPickingRay pickingRay = new TgcPickingRay();
         bool selected = false;
-        bool aparece = false;
         bool agarrado = false;
         Vector3 collisionPoint;
         TgcBox selectedMesh;
         TgcBox elemCreado = TgcBox.fromSize(new Vector3(10, 5, 0), new Vector3(1.5f, 1.5f, 0));
         MenuObjetos menu;
 
-        public Construccion(List<Item> unosItems,Pelota unaPelota, TgcBox unacaja, MenuObjetos menuActual, List<ItemUsuario> objetosDelUsuario)
+        public Construccion(List<Item> unosItems,Pelota unaPelota, MenuObjetos menuActual, List<ItemUsuario> objetosDelUsuario)
         {
             itemsInScenario = unosItems;
             pelota = unaPelota;
-            caja = unacaja;
             menu = menuActual;
             objetos = objetosDelUsuario;
         }
@@ -55,16 +52,10 @@ namespace AlumnoEjemplos.MiGrupo
             mouseVector = new Vector2(GuiController.Instance.D3dInput.Xpos, GuiController.Instance.D3dInput.Ypos);
          if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
-
-
-                //Actualizar Ray de colisión en base a posición del mouse
-                pickingRay.updateRay();
-
-                //Testear Ray contra el AABB de todos los meshes
-                TgcBoundingBox aabb = caja.BoundingBox;
-
-               menu.poneloEnPantallaSiToco(mouseVector.X, mouseVector.Y);
-
+             //Actualizar Ray de colisión en base a posición del mouse
+             pickingRay.updateRay();
+             
+             menu.poneloEnPantallaSiToco(mouseVector.X, mouseVector.Y);
             } 
 
             if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_RIGHT))
@@ -138,7 +129,6 @@ namespace AlumnoEjemplos.MiGrupo
         void Etapa.render()
         {
             pelota.render();
-            caja.render();
             
             foreach (var item in itemsInScenario)
             {

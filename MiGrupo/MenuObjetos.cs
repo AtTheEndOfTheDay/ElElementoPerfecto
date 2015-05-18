@@ -45,10 +45,11 @@ namespace AlumnoEjemplos.MiGrupo
 
             //Esta pensado para una resolucion con aspect ratio 16:9
             //Dibujo Menu
-            ladoIzqMenu = screenSize.Width * (1 - 0.15f);
-            float anchoMenu = screenSize.Width - ladoIzqMenu;
+            ladoIzqMenu = 957; // screenSize.Width * (1 - 0.15f);
+            int anchoMenu = 169; // screenSize.Width - ladoIzqMenu;
+            int altoMenu = 495; //(int)Math.Round((screenSize.Height*0.8f))
             menu.Position = new Vector2(ladoIzqMenu, 0);
-            menu.SrcRect = new Rectangle(0, 0, (int)Math.Round(anchoMenu), (int)Math.Round((screenSize.Height*0.8f)));
+            menu.SrcRect = new Rectangle(0, 0, anchoMenu, altoMenu);
 
             //Dibujo Objetos de Menu
             ladoObjeto = screenSize.Height / ((cantidadObjetos / 2) + 1);
@@ -77,9 +78,14 @@ namespace AlumnoEjemplos.MiGrupo
 
         public void disposeMenu(int cantidadObjetos)
         {
+            menu.Texture.dispose();
             menu.dispose();
             for (var i = 0; i < cantidadObjetos; i++)
+            {
+                objetos[i].Texture.dispose();
                 objetos[i].dispose();
+            }
+                
         }
 
         internal void poneloEnPantallaSiToco(float mouseX, float mouseY)

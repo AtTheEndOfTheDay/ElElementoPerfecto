@@ -55,7 +55,6 @@ namespace AlumnoEjemplos.MiGrupo
         TgcScene scene;
         Cannon cannon;
 
-        TgcBox cajaPrueba;
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
         /// Influye en donde se va a haber en el árbol de la derecha de la pantalla.

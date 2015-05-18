@@ -25,6 +25,7 @@ namespace AlumnoEjemplos.MiGrupo
     {
         MenuObjetos menu;
         List<ItemUsuario> objetosDelUsuario;
+        List<Item> objetosDelNivel;
 
         Pelota pelota;
         Vector3 iniPelota = new Vector3(0, 100, 0);
@@ -40,6 +41,7 @@ namespace AlumnoEjemplos.MiGrupo
         Etapa etapa;
         TgcText2d textStage = new TgcText2d();
         TgcTexture textMenu = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Laja.jpg");
+
         public Nivel( TgcTexture textFondo, TgcTexture textPiso, TgcTexture textParedes,
                      Pelota pelotita, List<Item> itemsDelNivel, List<ItemUsuario> itemsDelUsuario)
         {
@@ -47,6 +49,7 @@ namespace AlumnoEjemplos.MiGrupo
                         
             pelota = pelotita;
             objetosDelUsuario = itemsDelUsuario;
+            objetosDelNivel = itemsDelNivel;
             TgcBox cajaCreadora = TgcBox.fromSize(new Vector3(-10, 5, 0), new Vector3(1, 1, 0), textPiso);
 
             contenedor = TgcBox.fromSize(new Vector3(-15.5f, -8.25f, 0.9f), new Vector3(5.5f, 4.5f, 0), textMenu);
@@ -55,14 +58,14 @@ namespace AlumnoEjemplos.MiGrupo
             lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-13.1f, 0, 0), new Vector3(0.25f, 20.75f, 1f), textParedes), 1);
             lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(18.8f, 0, 0), new Vector3(0.25f, 20.75f, 1f), textParedes), 1);
 
-            itemsDelNivel.Add(piso);
-            itemsDelNivel.Add(lateralDerecha);
-            itemsDelNivel.Add(lateralIzquierda);
+            objetosDelNivel.Add(piso);
+            objetosDelNivel.Add(lateralDerecha);
+            objetosDelNivel.Add(lateralIzquierda);
 
             menu = new MenuObjetos(objetosDelUsuario, textMenu);
 
-            construccion = new Construccion(itemsDelNivel, pelota, cajaCreadora, menu, objetosDelUsuario);
-            play = new Play(itemsDelNivel, pelota);
+            construccion = new Construccion(objetosDelNivel, pelota, menu, objetosDelUsuario);
+            play = new Play(objetosDelNivel, pelota);
             etapa = construccion;
 
             textStage.Color = Color.White;
@@ -88,7 +91,7 @@ namespace AlumnoEjemplos.MiGrupo
             {
                 if ((input.keyDown(Key.C)) && (etapa.Equals(play)))
                 {
-                    reiniciar();
+                    pasarAConstruccion();
                 }
                     
             }           
@@ -97,7 +100,10 @@ namespace AlumnoEjemplos.MiGrupo
             etapa.aplicarMovimientos(elapsedTime);
             etapa.render();
 
-            iluminar();
+            foreach (ItemUsuario objeto in objetosDelUsuario)
+            {
+                iluminar(objeto.mesh);
+            }
 
             foreach (ItemUsuario objeto in objetosDelUsuario)
             {
@@ -111,44 +117,49 @@ namespace AlumnoEjemplos.MiGrupo
         }
 
         public void dispose(){
+            foreach (var item in objetosDelNivel)
+            {
+                item.dispose();
+            }
+            fondo.Texture.dispose();
             fondo.dispose();
-            piso.dispose();
+            contenedor.Texture.dispose();
             contenedor.dispose();
-            lateralDerecha.dispose();
-            lateralIzquierda.dispose();
             menu.disposeMenu(objetosDelUsuario.Count);
             pelota.dispose();
         }
-        public void reiniciar()
+        private void pasarAConstruccion()
         {
             pelota.reiniciar();
             etapa = construccion;
             textStage.Text = etapa.getNombre();
         }
-
-        private void iluminar()
+        public void reiniciar()
         {
+            pasarAConstruccion();
             foreach (ItemUsuario objeto in objetosDelUsuario)
             {
-                objeto.mesh.Effect = GuiController.Instance.Shaders.TgcMeshPointLightShader;
+                objeto.enEscena = false;
             }
+        }
 
-            foreach (ItemUsuario objeto in objetosDelUsuario)
-            {
-                //Cargar variables shader de la luz
-                objeto.mesh.Effect.SetValue("lightColor", ColorValue.FromColor(Color.White));
-                objeto.mesh.Effect.SetValue("lightPosition", TgcParserUtils.vector3ToFloat4Array(new Vector3(0, 10.5f, 10)));
-                objeto.mesh.Effect.SetValue("eyePosition", TgcParserUtils.vector3ToFloat4Array(GuiController.Instance.ThirdPersonCamera.getPosition()));
-                objeto.mesh.Effect.SetValue("lightIntensity", 15);
-                objeto.mesh.Effect.SetValue("lightAttenuation", 1);
+        private void iluminar(TgcMesh mesh)
+        {
+           mesh.Effect = GuiController.Instance.Shaders.TgcMeshPointLightShader;
+            
+            //Cargar variables shader de la luz
+            mesh.Effect.SetValue("lightColor", ColorValue.FromColor(Color.White));
+            mesh.Effect.SetValue("lightPosition", TgcParserUtils.vector3ToFloat4Array(new Vector3(0, 10.5f, 10)));
+            mesh.Effect.SetValue("eyePosition", TgcParserUtils.vector3ToFloat4Array(GuiController.Instance.ThirdPersonCamera.getPosition()));
+            mesh.Effect.SetValue("lightIntensity", 15);
+            mesh.Effect.SetValue("lightAttenuation", 1);
 
-                //Cargar variables de shader de Material. El Material en realidad deberia ser propio de cada mesh. Pero en este ejemplo se simplifica con uno comun para todos
-                objeto.mesh.Effect.SetValue("materialEmissiveColor", ColorValue.FromColor(Color.Black));
-                objeto.mesh.Effect.SetValue("materialAmbientColor", ColorValue.FromColor(Color.White));
-                objeto.mesh.Effect.SetValue("materialDiffuseColor", ColorValue.FromColor(Color.White));
-                objeto.mesh.Effect.SetValue("materialSpecularColor", ColorValue.FromColor(Color.White));
-                objeto.mesh.Effect.SetValue("materialSpecularExp", 10f);
-            }
+            //Cargar variables de shader de Material. El Material en realidad deberia ser propio de cada mesh. Pero en este ejemplo se simplifica con uno comun para todos
+            mesh.Effect.SetValue("materialEmissiveColor", ColorValue.FromColor(Color.Black));
+            mesh.Effect.SetValue("materialAmbientColor", ColorValue.FromColor(Color.White));
+            mesh.Effect.SetValue("materialDiffuseColor", ColorValue.FromColor(Color.White));
+            mesh.Effect.SetValue("materialSpecularColor", ColorValue.FromColor(Color.White));
+            mesh.Effect.SetValue("materialSpecularExp", 10f);
         }
     }
 }
