@@ -53,12 +53,11 @@ namespace AlumnoEjemplos.MiGrupo
             objetosDelUsuario = itemsDelUsuario;
             objetosDelNivel = itemsDelNivel;
             TgcBox cajaCreadora = TgcBox.fromSize(new Vector3(-10, 5, 0), new Vector3(1, 1, 0), textPiso);
-
-            contenedor = TgcBox.fromSize(new Vector3(-15.5f, -8.25f, 0.9f), new Vector3(5.5f, 4.5f, 0), textMenu);
+            contenedor = TgcBox.fromSize(new Vector3(-16.05f, -8.25f, 0), new Vector3(5.7f, 4.6f, 0), textMenu);
             fondo = TgcBox.fromSize(new Vector3(2.85f, 0, 0), new Vector3(32, 20.75f, 0), textFondo);
-            piso = new Pared(TgcBox.fromSize(new Vector3(2.85f, -10.25f, 0), new Vector3(32, 0.25f, 1f), textPiso).toMesh("piso"), textPiso);
-            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-13.1f, 0, 0), new Vector3(0.25f, 20.75f, 1f), textParedes).toMesh("lateralDerecha"), textParedes);
-            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(18.8f, 0, 0), new Vector3(0.25f, 20.75f, 1f), textParedes).toMesh("lateralIzquierda"), textParedes);
+            piso = new Pared(TgcBox.fromSize(new Vector3(2.85f, -9.9f, 1), new Vector3(30, 0.1f, 1f), textPiso).toMesh("piso"), textPiso);
+            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-12.42f, 0, 1), new Vector3(0.01f, 20.75f, 1f), textParedes).toMesh("lateralDerecha"), textParedes);
+            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(17.9f, 0, 1), new Vector3(0.01f, 20.75f, 1f), textParedes).toMesh("lateralIzquierda"), textParedes);
 
             objetosDelNivel.Add(piso);
             objetosDelNivel.Add(lateralDerecha);

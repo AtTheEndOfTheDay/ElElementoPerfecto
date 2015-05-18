@@ -107,8 +107,9 @@ namespace AlumnoEjemplos.MiGrupo
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 25);
 
+
             pelotas = new Pelota[2];
-            scene = loader.loadSceneFromFile(EjemploAlumno.alumnoMeshFolder() + "Cannon-TgcScene.xml");
+            scene = loader.loadSceneFromFile(EjemploAlumno.alumnoMeshFolder() + "Elements-TgcScene.xml");
             
             iniciarNivel1();
             iniciarNivel2();
@@ -161,7 +162,7 @@ namespace AlumnoEjemplos.MiGrupo
         }
         private void iniciarNivel1()
         {
-            pelotas[0] = new Pelota(0.5f, new Vector3(16, -8f, 0.25f), metal);
+            pelotas[0] = new Pelota(0.5f, new Vector3(16, -8f, 1), metal);
             cannon = new Cannon(scene.Meshes[0], texturaCannon);
             cannon.mesh.setColor(Color.Black);
             cannon.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
@@ -176,20 +177,20 @@ namespace AlumnoEjemplos.MiGrupo
 
         private void iniciarNivel2()
         {
-            pelotas[1] = new Pelota(1f, new Vector3(10, 5, 0.25f), madera);
-            cannon2 = new Cannon(scene.Meshes[0].clone("Cannon2"), texturaCannon);
+            pelotas[1] = new Pelota(1f, new Vector3(10, 5, 1), madera);
+            cannon2 = new Cannon(scene.Meshes[3], texturaCannon);
             cannon2.mesh.setColor(Color.Black);
             cannon2.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
-            cannon2.mesh.Rotation = new Vector3(0, 0, pi / 4);
+            cannon2.mesh.Rotation = new Vector3(0, 0/2, 0);
             cannon2.llevarAContenedor();
             cannon2.enEscena = false;
 
             List<Item> itemsUsuarioNivel2 = new List<Item>();
             itemsUsuarioNivel2.Add(cannon2); //Importa el orden, por como los muestra el menu
-            Pared obstaculo1 = new Pared(TgcBox.fromSize(new Vector3(-10, -6, 0), new Vector3(5, 0.25f, 1.0f), madera).toMesh("Obstaculo1"), madera);
-            Pared obstaculo2 = new Pared(TgcBox.fromSize(new Vector3(-5, -4, 0), new Vector3(5, 0.25f, 1.0f), madera).toMesh("Obstaculo2"), madera);
-            Pared obstaculo3 = new Pared(TgcBox.fromSize(new Vector3(5, -2, 0), new Vector3(5, 0.25f, 1.0f), madera).toMesh("Obstaculo3"), madera);
-            Pared obstaculo4 = new Pared(TgcBox.fromSize(new Vector3(10, 0, 0), new Vector3(5, 0.25f, 1.0f), madera).toMesh("Obstaculo4"), madera);
+            Pared obstaculo1 = new Pared(TgcBox.fromSize(new Vector3(-10, -6, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo1"), madera);
+            Pared obstaculo2 = new Pared(TgcBox.fromSize(new Vector3(-5, -4, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo2"), madera);
+            Pared obstaculo3 = new Pared(TgcBox.fromSize(new Vector3(5, -2, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo3"), madera);
+            Pared obstaculo4 = new Pared(TgcBox.fromSize(new Vector3(10, 0, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo4"), madera);
             List<Item> itemsNivel2 = new List<Item>();
             itemsNivel2.Add(obstaculo1);
             itemsNivel2.Add(obstaculo2);

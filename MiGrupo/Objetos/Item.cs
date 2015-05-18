@@ -81,7 +81,7 @@ namespace AlumnoEjemplos.MiGrupo
 
         public void llevarAContenedor()
         {
-            mesh.move ( new Vector3 ( -14.75f- mesh.Position.X, -8.5f - mesh.Position.Y, 0));
+            mesh.move ( new Vector3 ( -14.75f- mesh.Position.X, -8.5f - mesh.Position.Y, 1 - mesh.Position.Z));
         }
     }
 }
