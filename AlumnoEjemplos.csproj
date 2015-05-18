@@ -97,6 +97,7 @@
     <Compile Include="MiGrupo\Nivel.cs" />
     <Compile Include="MiGrupo\Pared.cs" />
     <Compile Include="MiGrupo\Pelota.cs" />
+    <Compile Include="MiGrupo\PelotaCollisionManager.cs" />
     <Compile Include="MiGrupo\Play.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

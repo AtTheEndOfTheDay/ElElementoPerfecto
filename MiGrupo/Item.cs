@@ -8,6 +8,7 @@ using TgcViewer.Utils.Input;
 using Microsoft.DirectX;
 
 using TgcViewer.Utils.TgcSceneLoader;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.MiGrupo
 {
@@ -20,5 +21,7 @@ namespace AlumnoEjemplos.MiGrupo
         void aplicarMovimientos(float elapsedTime);
         Vector3 velocidad();
         void dispose();
+        float getCoefRebote();
+        TgcBoundingBox getBB();
     }
 }

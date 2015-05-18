@@ -81,5 +81,15 @@ namespace AlumnoEjemplos.MiGrupo
         {
             mesh.move ( new Vector3 ( -14.75f- mesh.Position.X, -8.5f - mesh.Position.Y, 0));
         }
+
+        TgcBoundingBox Item.getBB()
+        {
+            return mesh.BoundingBox;
+        }
+
+        float Item.getCoefRebote()
+        {
+            return 0.5f;
+        }
     }
 }

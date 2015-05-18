@@ -126,10 +126,10 @@ namespace AlumnoEjemplos.MiGrupo
             itemsUsuarioNivel2.Add(cannon);
             itemsUsuarioNivel2.Add(cannon);
             itemsUsuarioNivel2.Add(cannon);
-            Pared obstaculo1 = new Pared(TgcBox.fromSize(new Vector3(-10, -6, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
-            Pared obstaculo2 = new Pared(TgcBox.fromSize(new Vector3(-5, -4, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
-            Pared obstaculo3 = new Pared(TgcBox.fromSize(new Vector3(5, -2, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
-            Pared obstaculo4 = new Pared(TgcBox.fromSize(new Vector3(10, 0, 0), new Vector3(5, 0.25f, 0.25f), madera), 1);
+            Pared obstaculo1 = new Pared(TgcBox.fromSize(new Vector3(-10, -6, 0), new Vector3(5, 0.25f, 0.25f), madera));
+            Pared obstaculo2 = new Pared(TgcBox.fromSize(new Vector3(-5, -4, 0), new Vector3(5, 0.25f, 0.25f), madera));
+            Pared obstaculo3 = new Pared(TgcBox.fromSize(new Vector3(5, -2, 0), new Vector3(5, 0.25f, 0.25f), madera));
+            Pared obstaculo4 = new Pared(TgcBox.fromSize(new Vector3(10, 0, 0), new Vector3(5, 0.25f, 0.25f), madera));
             List<Item> itemsNivel2 = new List<Item>();
             itemsNivel2.Add(obstaculo1);
             itemsNivel2.Add(obstaculo2);

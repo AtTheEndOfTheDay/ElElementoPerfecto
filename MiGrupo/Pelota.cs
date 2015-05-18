@@ -25,11 +25,12 @@ namespace AlumnoEjemplos.MiGrupo
         private Vector3 velocidadMovimiento;
         private Vector3 velocidadRotacion;
         private Vector3 iniPelota;
-        private Vector3 velocidadInicialMovimiento = new Vector3(0, -1.5f, 0);
+        private Vector3 velocidadInicialMovimiento = new Vector3(-1f, -1.5f, 0);
         private Vector3 velocidadInicialRotacion = new Vector3(0, 0, 0);
 
         public TgcSphere esfera = new TgcSphere();
 
+        private PelotaCollisionManager manejadorDeColiciones = new PelotaCollisionManager();
 
         public Pelota(float radio, Vector3 posicionInicial, TgcTexture textPelota)
         {
@@ -47,31 +48,30 @@ namespace AlumnoEjemplos.MiGrupo
 
         public void interactuar(TgcD3dInput input,float elapsedTime)
         {
-            velocidadMovimiento.X = 0;
+            //velocidadMovimiento.X = 0;
             velocidadRotacion.Z = 0;
 
             if (input.keyDown(Key.A))
             {
-                velocidadMovimiento.X += 1;
+                velocidadMovimiento.X += 1f * elapsedTime;
                 velocidadRotacion.Z += -15;
-                //pelota.rotateZ(-15 * elapsedTime);
             }
             else if (input.keyDown(Key.D))
             {
-                velocidadMovimiento.X = -1;
+                velocidadMovimiento.X -= 1f * elapsedTime;
                 velocidadRotacion.Z = 15;
-                //pelota.rotateZ(15 * elapsedTime);
             }
 
             velocidadMovimiento.Y += -0.5f * elapsedTime;
-            //pelota.rotateX(velocidad_w.X * elapsedTime);
-            //pelota.rotateY(velocidad_w.Y * elapsedTime);
 
         }
 
-        public void aplicarMovimientos(float elapsedTime)
+        public void aplicarMovimientos(float elapsedTime, List<Item> itemsInScenario)
         {
             esfera.rotateZ(velocidadRotacion.Z * elapsedTime);
+
+            velocidadMovimiento = manejadorDeColiciones.ConsiderarColicionesCon(esfera, itemsInScenario, velocidadMovimiento, CONST_VELOCIDAD * elapsedTime, 0);
+
             esfera.move(velocidadMovimiento * CONST_VELOCIDAD * elapsedTime);
         }
 
@@ -80,15 +80,6 @@ namespace AlumnoEjemplos.MiGrupo
 
             esfera.render();
             esfera.updateValues();
-        }
-
-        public void rebotar(Item item, float coef_rebote,Vector3 normal)
-        {
-            if (Vector3.Dot(velocidadMovimiento - item.velocidad(), normal) < 0)
-            {
-                velocidadMovimiento.Y = (-velocidadMovimiento.Y)*coef_rebote; //cambiar esto solo sirve para cuando rebota en el piso
-            }
-            
         }
 
         public void reiniciar()
