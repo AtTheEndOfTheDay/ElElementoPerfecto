@@ -90,10 +90,8 @@ namespace AlumnoEjemplos.MiGrupo
             return textura;
         }
 
-        public void llevarAContenedor()
-        {
-            mesh.move ( new Vector3 ( -15.5f - mesh.Position.X, -8f - mesh.Position.Y, 1 - mesh.Position.Z));
-        }
+        public abstract void llevarAContenedor();
+
 
         public void rotate(Vector3 rotacion)
         {

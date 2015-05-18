@@ -57,5 +57,10 @@ namespace AlumnoEjemplos.MiGrupo
         {
             return 0.5f;
         }
+
+        public override void llevarAContenedor()
+        {
+            mesh.move(new Vector3(-15.75f - mesh.Position.X, -7.5f - mesh.Position.Y, 1 - mesh.Position.Z));
+        }
     }
 }

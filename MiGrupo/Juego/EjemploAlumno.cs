@@ -206,7 +206,7 @@ namespace AlumnoEjemplos.MiGrupo
             //Fin Items del Nivel
 
             //Items del Usuario
-            cannon2 = new Cannon(scene.Meshes[0].clone("Cannon2"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
+            cannon2 = new Cannon(scene.Meshes[0].clone("Cannon2"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi/4));
             List<Item> itemsUsuarioNivel2 = new List<Item>();
             itemsUsuarioNivel2.Add(cannon2);
             //Fin Items del Usuario  

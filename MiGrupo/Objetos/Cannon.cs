@@ -28,20 +28,18 @@ namespace AlumnoEjemplos.MiGrupo
             : base(unMesh, texture)
         {
             mesh.setColor(uncolor);
+            mesh.move(movimiento);
             mesh.Scale = escalado;
             mesh.Rotation = rotacion;
-            mesh.move(movimiento);
-            enEscena = false;
         }
         
         public Cannon(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion)
             : base(unMesh, texture)
         {
             mesh.setColor(uncolor);
+            llevarAContenedor();
             mesh.Scale = escalado;
             mesh.Rotation = rotacion;
-            llevarAContenedor();
-            enEscena = false;
         }
 
         public override Vector3 interactuarConPelota()
@@ -63,6 +61,11 @@ namespace AlumnoEjemplos.MiGrupo
         public override float getCoefRebote(Vector3 normal)
         {
             return 0.25f;
+        }
+
+        public override void llevarAContenedor()
+        {
+            mesh.move(new Vector3(-15f - mesh.Position.X, -8.5f - mesh.Position.Y, 1 - mesh.Position.Z));
         }
         
     }
