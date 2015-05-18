@@ -148,8 +148,8 @@ namespace AlumnoEjemplos.MiGrupo
             {
                 reiniciar(nivelActual);
                 nivelActual.pasaAConstruccion();
-            }
-
+            }    
+            
             nivelActual.render(elapsedTime);
 
         }
@@ -187,23 +187,24 @@ namespace AlumnoEjemplos.MiGrupo
         private void iniciarNivel2()
         {
             pelotas[1] = new Pelota(1f, new Vector3(10, 5, 1), madera);
-            
-            //Items del Nivel
-            cannon2 = new Cannon(scene.Meshes[3], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
-            List<Item> itemsUsuarioNivel2 = new List<Item>();
-            itemsUsuarioNivel2.Add(cannon2);
-            //Fin Items del Nivel
 
-            //Items del Usuario
-            Pared obstaculo1 = new Pared(TgcBox.fromSize(new Vector3(-10, -6, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo1"), madera);
-            Pared obstaculo2 = new Pared(TgcBox.fromSize(new Vector3(-5, -4, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo2"), madera);
-            Pared obstaculo3 = new Pared(TgcBox.fromSize(new Vector3(5, -2, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo3"), madera);
-            Pared obstaculo4 = new Pared(TgcBox.fromSize(new Vector3(10, 0, 1), new Vector3(5, 0.25f, 1), madera).toMesh("Obstaculo4"), madera);
+            //Items del Nivel
+            Pared obstaculo1 = Pared.CrearPared(new Vector3(-10, -6, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, 0), madera, "Obstaculo1");
+            Pared obstaculo2 = Pared.CrearPared(new Vector3(-5, -4, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, 0), madera, "Obstaculo2");
+            Pared obstaculo3 = Pared.CrearPared(new Vector3(5, -2, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, 0), madera, "Obstaculo3");
+            Pared obstaculo4 = Pared.CrearPared(new Vector3(10, 0, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, FastMath.PI / 4), madera, "Obstaculo4");
             List<Item> itemsNivel2 = new List<Item>();
             itemsNivel2.Add(obstaculo1);
             itemsNivel2.Add(obstaculo2);
             itemsNivel2.Add(obstaculo3);
             itemsNivel2.Add(obstaculo4);
+            
+            //Fin Items del Nivel
+
+            //Items del Usuario
+            cannon2 = new Cannon(scene.Meshes[3], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
+            List<Item> itemsUsuarioNivel2 = new List<Item>();
+            itemsUsuarioNivel2.Add(cannon2);
             //Fin Items del Usuario  
 
             nivel2 = new Nivel(2, metal, metal, metal, pelotas[1], itemsNivel2, itemsUsuarioNivel2);

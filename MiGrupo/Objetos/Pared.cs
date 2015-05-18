@@ -20,8 +20,21 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Pared : Item
     {
+        public static Pared CrearPared(Vector3 posicion, Vector3 size, Vector3 rotacion, TgcTexture texture, String nombre)
+        {
+            Pared auxPared;
 
-        public Pared(TgcMesh mesh, TgcTexture texture):base(mesh,texture)
+            TgcMesh auxMesh = TgcBox.fromSize(new Vector3(0, 0, 0), size, texture).toMesh(nombre);
+            auxMesh.Position = posicion;
+            
+            auxPared = new Pared(auxMesh,texture);
+
+            ((Item) auxPared).rotate(rotacion);
+
+            return auxPared;
+        }
+        
+        public Pared(TgcMesh mesh, TgcTexture texture) :base(mesh,texture)
         {
             enEscena = true;
         }

@@ -24,11 +24,15 @@ namespace AlumnoEjemplos.MiGrupo
         public bool enEscena = false;
         public TgcMesh mesh;
         TgcTexture textura;
+        TgcObb orientedBB;
 
         public Item(TgcMesh unMesh, TgcTexture texture)
         {
             mesh = unMesh;
             textura = texture;
+
+            orientedBB = TgcObb.computeFromAABB(mesh.BoundingBox);
+            orientedBB.setRenderColor(Color.Red);
         }
         
         public abstract Vector3 interactuarConPelota();
@@ -56,6 +60,8 @@ namespace AlumnoEjemplos.MiGrupo
         {
             if (enEscena)
             {
+                //mesh.BoundingBox.render();
+                orientedBB.render();
                 mesh.render();
             }
         }
@@ -70,6 +76,11 @@ namespace AlumnoEjemplos.MiGrupo
             return mesh.BoundingBox;
         }
 
+        public TgcObb getOBB()
+        {
+            return orientedBB;
+        }
+
         public abstract float getCoefRebote(Vector3 normal);
 
         public abstract bool debeRebotar(TgcSphere esfera);
@@ -82,6 +93,12 @@ namespace AlumnoEjemplos.MiGrupo
         public void llevarAContenedor()
         {
             mesh.move ( new Vector3 ( -15.5f - mesh.Position.X, -8f - mesh.Position.Y, 1 - mesh.Position.Z));
+        }
+
+        public void rotate(Vector3 rotacion)
+        {
+            mesh.Rotation = rotacion;
+            orientedBB.rotate(rotacion);
         }
     }
 }
