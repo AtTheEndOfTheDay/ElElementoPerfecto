@@ -129,18 +129,15 @@ namespace AlumnoEjemplos.MiGrupo
             {
                 agarrado = false;
             }
-            if (agarrado)
+            if (agarrado && objetoAMover.enEscena)
             {
-                selectedMesh.BoundingBox.render();
+               // selectedMesh.BoundingBox.render();
                objetoAMover.mesh.move(movimiento2 * 0.032f);
                // collisionPointMesh.Position = collisionPoint;
              //   collisionPointMesh.render();
             }
 
-            if (aparece)
-            {
-               elemCreado.render();
-            }
+          //  if (aparece) {elemCreado.render(); }
 
             anteriorMouse = mouseVector;
 
