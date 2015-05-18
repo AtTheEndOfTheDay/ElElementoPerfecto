@@ -22,6 +22,7 @@ namespace AlumnoEjemplos.MiGrupo
     class Cannon : Item
     {
         public float potencia = 0.6f;
+        public bool cargado = false;
         
         public Cannon(TgcMesh mesh, TgcTexture texture)
             : base(mesh, texture)
@@ -36,10 +37,18 @@ namespace AlumnoEjemplos.MiGrupo
 
         public override bool debeRebotar(TgcSphere esfera)
         {
-            if (esfera.Position == mesh.Position)
-                return true;
-            else
+            if (cargado)
+            {
+                cargado = false;
                 return false;
+            }                
+            else
+                return true;
+        }
+
+        public override float getCoefRebote(Vector3 normal)
+        {
+            return 0.25f;
         }
         
     }

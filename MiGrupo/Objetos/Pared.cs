@@ -35,5 +35,9 @@ namespace AlumnoEjemplos.MiGrupo
         {
             return true;
         }
+        public override float getCoefRebote(Vector3 normal)
+        {
+            return 0.5f;
+        }
     }
 }

@@ -70,10 +70,7 @@ namespace AlumnoEjemplos.MiGrupo
             return mesh.BoundingBox;
         }
 
-        public float getCoefRebote()
-        {
-            return 0.5f;
-        }
+        public abstract float getCoefRebote(Vector3 normal);
 
         public abstract bool debeRebotar(TgcSphere esfera);
 

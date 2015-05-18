@@ -52,6 +52,7 @@ namespace AlumnoEjemplos.MiGrupo
         TgcTexture metal = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Metal.jpg");
         TgcTexture texturaCannon = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Cannon.png");
 
+        Pelota[] pelotas;
         TgcSceneLoader loader = new TgcSceneLoader();
         TgcScene scene;
         Cannon cannon;
@@ -106,6 +107,7 @@ namespace AlumnoEjemplos.MiGrupo
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 25);
 
+            pelotas = new Pelota[2];
             scene = loader.loadSceneFromFile(EjemploAlumno.alumnoMeshFolder() + "Cannon-TgcScene.xml");
             
             iniciarNivel1();
@@ -129,12 +131,20 @@ namespace AlumnoEjemplos.MiGrupo
                 iniciarNivel1();
                 nivelActual = nivel1;
             }                   
-            else
-                if (input.keyDown(Key.F2))
+            else if (input.keyDown(Key.F2))
                 {
                     iniciarNivel2();
                     nivelActual = nivel2;
-                }
+            }
+            else if (input.keyDown(Key.Space))
+            {
+                nivelActual.pasaAPlay();
+            }
+            else if (input.keyDown(Key.C))
+            {
+                reiniciar(nivelActual);
+                nivelActual.pasaAConstruccion();
+            }    
             
             nivelActual.render(elapsedTime);
 
@@ -151,20 +161,22 @@ namespace AlumnoEjemplos.MiGrupo
         }
         private void iniciarNivel1()
         {
+            pelotas[0] = new Pelota(0.5f, new Vector3(16, -8f, 0.25f), metal);
             cannon = new Cannon(scene.Meshes[0], texturaCannon);
             cannon.mesh.setColor(Color.Black);
             cannon.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
             cannon.mesh.Rotation = new Vector3(0, 0, pi / 4);
             cannon.mesh.move(new Vector3(16 - cannon.mesh.Position.X, -8f -cannon.mesh.Position.Y, 1f - cannon.mesh.Position.Z));
             cannon.enEscena = true;
+            cannon.cargado = true;
             List<Item> itemsNivel1 = new List<Item>();
             itemsNivel1.Add(cannon);
-            nivel1 = new Nivel(madera, madera, madera, new Pelota(0.5f, new Vector3(16, -8f, 0.25f), metal),
-                                     itemsNivel1, new List<Item>());
+            nivel1 = new Nivel(1, madera, madera, madera, pelotas[0], itemsNivel1, new List<Item>());
         }
 
         private void iniciarNivel2()
         {
+            pelotas[1] = new Pelota(1f, new Vector3(10, 5, 0.25f), madera);
             cannon2 = new Cannon(scene.Meshes[0].clone("Cannon2"), texturaCannon);
             cannon2.mesh.setColor(Color.Black);
             cannon2.mesh.Scale = new Vector3(0.1f, 0.1f, 0.1f);
@@ -183,9 +195,22 @@ namespace AlumnoEjemplos.MiGrupo
             itemsNivel2.Add(obstaculo2);
             itemsNivel2.Add(obstaculo3);
             itemsNivel2.Add(obstaculo4);
-            
-            nivel2 = new Nivel(metal, metal, metal, new Pelota(1f, new Vector3(10, 5, 0.25f), madera),
-                                     itemsNivel2, itemsUsuarioNivel2);
+
+            nivel2 = new Nivel(2, metal, metal, metal, pelotas[1], itemsNivel2, itemsUsuarioNivel2);
+        }
+
+        private void reiniciar(Nivel nivel)
+        {
+            switch (nivel.numeroDeNivel)
+            {
+                case 1:
+                    pelotas[0].reiniciar();
+                    cannon.cargado = true;
+                    break;
+                case 2:
+                    pelotas[1].reiniciar();
+                    break;
+            }
         }
         
     }

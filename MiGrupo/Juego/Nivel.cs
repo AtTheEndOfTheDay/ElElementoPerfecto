@@ -23,6 +23,7 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Nivel
     {
+        public int numeroDeNivel;
         MenuObjetos menu;
         List<Item> objetosDelUsuario;
         List<Item> objetosDelNivel;
@@ -42,11 +43,12 @@ namespace AlumnoEjemplos.MiGrupo
         TgcText2d textStage = new TgcText2d();
         TgcTexture textMenu = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Laja.jpg");
 
-        public Nivel( TgcTexture textFondo, TgcTexture textPiso, TgcTexture textParedes,
+        public Nivel( int numeroLvl, TgcTexture textFondo, TgcTexture textPiso, TgcTexture textParedes,
                      Pelota pelotita, List<Item> itemsDelNivel, List<Item> itemsDelUsuario)
         {
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
-                        
+
+            numeroDeNivel = numeroLvl;
             pelota = pelotita;
             objetosDelUsuario = itemsDelUsuario;
             objetosDelNivel = itemsDelNivel;
@@ -71,7 +73,6 @@ namespace AlumnoEjemplos.MiGrupo
             textStage.Color = Color.White;
             textStage.Position = new Point(0, 0);
             textStage.Text = "Construccion";
-
         }
 
  
@@ -82,20 +83,7 @@ namespace AlumnoEjemplos.MiGrupo
 
             fondo.render();
             contenedor.render();
-            if ((input.keyDown(Key.Space))&&(etapa.Equals(construccion)))
-            {
-                etapa = play;
-                textStage.Text = etapa.getNombre();
-            }
-            else
-            {
-                if ((input.keyDown(Key.C)) && (etapa.Equals(play)))
-                {
-                    pasarAConstruccion();
-                }
-                    
-            }           
-            
+                       
             etapa.interaccion(input,elapsedTime);
             etapa.aplicarMovimientos(elapsedTime);
             etapa.render();
@@ -128,11 +116,18 @@ namespace AlumnoEjemplos.MiGrupo
             menu.disposeMenu(objetosDelUsuario.Count);
             pelota.dispose();
         }
-        private void pasarAConstruccion()
+
+        public void pasaAPlay()
         {
-            pelota.reiniciar();
+            etapa = play;
+            textStage.Text = etapa.getNombre();
+        }
+
+        public void pasaAConstruccion()
+        {   
             etapa = construccion;
             textStage.Text = etapa.getNombre();
         }
+
     }
 }
