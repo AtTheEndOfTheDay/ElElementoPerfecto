@@ -45,11 +45,10 @@ namespace AlumnoEjemplos.MiGrupo
 
             //Esta pensado para una resolucion con aspect ratio 16:9
             //Dibujo Menu
-            ladoIzqMenu = 957; // screenSize.Width * (1 - 0.15f);
-            int anchoMenu = 169; // screenSize.Width - ladoIzqMenu;
-            int altoMenu = 495; //(int)Math.Round((screenSize.Height*0.8f))
+            ladoIzqMenu = screenSize.Width * (1 - 0.15f);
+            float anchoMenu = screenSize.Width - ladoIzqMenu;
             menu.Position = new Vector2(ladoIzqMenu, 0);
-            menu.SrcRect = new Rectangle(0, 0, anchoMenu, altoMenu);
+            menu.SrcRect = new Rectangle(0, 0, (int)Math.Round(anchoMenu), (int)Math.Round((screenSize.Height*0.8f)));
 
             //Dibujo Objetos de Menu
             ladoObjeto = screenSize.Height / ((cantidadObjetos / 2) + 1);
