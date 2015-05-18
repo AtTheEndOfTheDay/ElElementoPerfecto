@@ -16,12 +16,13 @@ namespace AlumnoEjemplos.MiGrupo
     {
         void interactuar(TgcD3dInput input, float elapsedTime);
         void interactuarConPelota(TgcD3dInput input, float elapsedTime, Pelota pelota);
+        void iluminar();
         void render();
         bool esMovil();
         void aplicarMovimientos(float elapsedTime);
         Vector3 velocidad();
         void dispose();
-        float getCoefRebote();
         TgcBoundingBox getBB();
+        float getCoefRebote();
     }
 }

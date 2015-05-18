@@ -129,6 +129,11 @@ namespace AlumnoEjemplos.MiGrupo
         void Etapa.render()
         {
             pelota.render();
+
+            foreach (var item in itemsInScenario)
+            {
+                item.iluminar();
+            }
             
             foreach (var item in itemsInScenario)
             {

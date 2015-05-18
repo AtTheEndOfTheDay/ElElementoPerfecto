@@ -83,6 +83,8 @@ namespace AlumnoEjemplos.MiGrupo
                 pNormal = TgcCollisionUtils.getPlaneNormal(bbFace.Plane);
 
                 //ensanchar las paredes
+
+                //TODO falta ensanchar para los costados (ver dibujo explicativo)
                 for (int i = 0; i < 4; i++)
                 {
                     bbFace.Extremes[i] += Vector3.Multiply(pNormal, bEsfera.Radius);

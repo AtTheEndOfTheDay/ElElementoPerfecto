@@ -97,7 +97,7 @@ namespace AlumnoEjemplos.MiGrupo
                     if (objetosUsuario[i].enEscena == false)
                     {
                         objetosUsuario[i].enEscena = true;
-                        objetosUsuario[i].reiniciarPosicion();
+                        objetosUsuario[i].llevarAContenedor();
                     }
                 }
             }

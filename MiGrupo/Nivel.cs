@@ -102,7 +102,7 @@ namespace AlumnoEjemplos.MiGrupo
 
             foreach (ItemUsuario objeto in objetosDelUsuario)
             {
-                iluminar(objeto.mesh);
+                objeto.iluminar();
             }
 
             foreach (ItemUsuario objeto in objetosDelUsuario)
@@ -141,25 +141,6 @@ namespace AlumnoEjemplos.MiGrupo
             {
                 objeto.enEscena = false;
             }
-        }
-
-        private void iluminar(TgcMesh mesh)
-        {
-           mesh.Effect = GuiController.Instance.Shaders.TgcMeshPointLightShader;
-            
-            //Cargar variables shader de la luz
-            mesh.Effect.SetValue("lightColor", ColorValue.FromColor(Color.White));
-            mesh.Effect.SetValue("lightPosition", TgcParserUtils.vector3ToFloat4Array(new Vector3(0, 10.5f, 10)));
-            mesh.Effect.SetValue("eyePosition", TgcParserUtils.vector3ToFloat4Array(GuiController.Instance.ThirdPersonCamera.getPosition()));
-            mesh.Effect.SetValue("lightIntensity", 15);
-            mesh.Effect.SetValue("lightAttenuation", 1);
-
-            //Cargar variables de shader de Material. El Material en realidad deberia ser propio de cada mesh. Pero en este ejemplo se simplifica con uno comun para todos
-            mesh.Effect.SetValue("materialEmissiveColor", ColorValue.FromColor(Color.Black));
-            mesh.Effect.SetValue("materialAmbientColor", ColorValue.FromColor(Color.White));
-            mesh.Effect.SetValue("materialDiffuseColor", ColorValue.FromColor(Color.White));
-            mesh.Effect.SetValue("materialSpecularColor", ColorValue.FromColor(Color.White));
-            mesh.Effect.SetValue("materialSpecularExp", 10f);
         }
     }
 }
