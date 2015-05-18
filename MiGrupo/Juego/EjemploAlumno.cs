@@ -52,6 +52,7 @@ namespace AlumnoEjemplos.MiGrupo
         TgcTexture metal = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Metal.jpg");
         TgcTexture texturaCannon = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Cannon.png");
         TgcTexture texturaMagnet = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "magnet.png");
+        TgcTexture texturaSpring = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "spring.png");
 
         Pelota[] pelotas;
         TgcSceneLoader loader = new TgcSceneLoader();
@@ -60,6 +61,7 @@ namespace AlumnoEjemplos.MiGrupo
         Cannon cannon;
         Cannon cannon2;
         Magnet magnet1;
+        Spring spring1;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -176,9 +178,11 @@ namespace AlumnoEjemplos.MiGrupo
             //Fin Items del Nivel
 
             //Items del Usuario
-            magnet1 = new Magnet(scene.Meshes[2], texturaMagnet, Color.Black, new Vector3(0.15f, 0.15f, 0.15f), new Vector3(0, pi/2, pi));
+            magnet1 = new Magnet(scene.Meshes[2], texturaMagnet, Color.Black, new Vector3(0.15f, 0.15f, 0.15f), new Vector3(0, pi / 2, pi));
+            spring1 = new Spring(scene.Meshes[3], texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, pi / 2, pi));
             List<Item> itemsUsuario1 = new List<Item>();
             itemsUsuario1.Add(magnet1);
+            itemsUsuario1.Add(spring1);
             //Fin Items del Usuario
 
             nivel1 = new Nivel(1, madera, madera, madera, pelotas[0], itemsNivel1, itemsUsuario1);
@@ -202,7 +206,7 @@ namespace AlumnoEjemplos.MiGrupo
             //Fin Items del Nivel
 
             //Items del Usuario
-            cannon2 = new Cannon(scene.Meshes[3], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
+            cannon2 = new Cannon(scene.Meshes[0].clone("Cannon2"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
             List<Item> itemsUsuarioNivel2 = new List<Item>();
             itemsUsuarioNivel2.Add(cannon2);
             //Fin Items del Usuario  
