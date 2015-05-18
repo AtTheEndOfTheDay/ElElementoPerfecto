@@ -18,12 +18,12 @@ namespace AlumnoEjemplos.MiGrupo
         private Vector3 normalColision;
 
 
-        private Vector3 rebotar(TgcSphere esfera, float coefRebote, Vector3 velocidad, float factorVelocidad, TgcBoundingBox bbObstaculo, Vector3 velocidadObstaculo)
+        private Vector3 rebotar(TgcSphere esfera, float coefRebote, Vector3 velocidad, float factorVelocidad, TgcBoundingBox bbObstaculo)
         {
 
             normalColision = obtenerNormalDeColision(esfera.BoundingSphere, bbObstaculo, Vector3.Multiply(velocidad,factorVelocidad));
 
-            if (Vector3.Dot(velocidad - velocidadObstaculo, normalColision) < 0)
+            if (Vector3.Dot(velocidad, normalColision) < 0)
             {
                 Vector3 ortogColision = new Vector3(-normalColision.Y,normalColision.X,0);
                 Vector3 proyectadoEnNormal;
@@ -56,7 +56,7 @@ namespace AlumnoEjemplos.MiGrupo
                 if (TgcCollisionUtils.testSphereAABB(testSphere, item.getBB()))
                 {
                     if (item.debeRebotar(esfera))
-                        newVelocidad = rebotar(esfera, item.getCoefRebote(), velocidad, factorVelocidad, item.getBB(), item.velocidad());
+                        newVelocidad = rebotar(esfera, item.getCoefRebote(), velocidad, factorVelocidad, item.getBB());
                     else
                         newVelocidad = item.interactuarConPelota();
                     if (!newVelocidad.Equals(velocidad))

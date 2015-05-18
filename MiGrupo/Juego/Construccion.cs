@@ -22,8 +22,8 @@ namespace AlumnoEjemplos.MiGrupo
         private Pelota pelota;
         Vector2 mouseVector;
         Vector2 anteriorMouse;
-        List<ItemUsuario> objetos;
-        ItemUsuario objetoAMover;
+        List<Item> objetos;
+        Item objetoAMover;
 
         TgcPickingRay pickingRay = new TgcPickingRay();
         bool selected = false;
@@ -33,7 +33,7 @@ namespace AlumnoEjemplos.MiGrupo
         TgcBox elemCreado = TgcBox.fromSize(new Vector3(10, 5, 0), new Vector3(1.5f, 1.5f, 0));
         MenuObjetos menu;
 
-        public Construccion(List<Item> unosItems,Pelota unaPelota, MenuObjetos menuActual, List<ItemUsuario> objetosDelUsuario)
+        public Construccion(List<Item> unosItems,Pelota unaPelota, MenuObjetos menuActual, List<Item> objetosDelUsuario)
         {
             itemsInScenario = unosItems;
             pelota = unaPelota;
@@ -62,7 +62,7 @@ namespace AlumnoEjemplos.MiGrupo
             {
                 //Actualizar Ray de colisión en base a posición del mouse
                 pickingRay.updateRay();
-                foreach (ItemUsuario objeto in objetos)
+                foreach (Item objeto in objetos)
                 {
                     TgcBoundingBox aabb = objeto.mesh.BoundingBox;
                     selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
@@ -79,7 +79,7 @@ namespace AlumnoEjemplos.MiGrupo
                 //Actualizar Ray de colisión en base a posición del mouse
                 pickingRay.updateRay();
                //Testear Ray contra el AABB de todos los meshes
-                foreach (ItemUsuario objeto in objetos)
+                foreach (Item objeto in objetos)
                 {
                     TgcBoundingBox aabb = objeto.mesh.BoundingBox;
                     selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);

@@ -24,7 +24,7 @@ namespace AlumnoEjemplos.MiGrupo
     class Nivel
     {
         MenuObjetos menu;
-        List<ItemUsuario> objetosDelUsuario;
+        List<Item> objetosDelUsuario;
         List<Item> objetosDelNivel;
 
         Pelota pelota;
@@ -43,7 +43,7 @@ namespace AlumnoEjemplos.MiGrupo
         TgcTexture textMenu = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Laja.jpg");
 
         public Nivel( TgcTexture textFondo, TgcTexture textPiso, TgcTexture textParedes,
-                     Pelota pelotita, List<Item> itemsDelNivel, List<ItemUsuario> itemsDelUsuario)
+                     Pelota pelotita, List<Item> itemsDelNivel, List<Item> itemsDelUsuario)
         {
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
                         
@@ -54,9 +54,9 @@ namespace AlumnoEjemplos.MiGrupo
 
             contenedor = TgcBox.fromSize(new Vector3(-15.5f, -8.25f, 0.9f), new Vector3(5.5f, 4.5f, 0), textMenu);
             fondo = TgcBox.fromSize(new Vector3(2.85f, 0, 0), new Vector3(32, 20.75f, 0), textFondo);
-            piso = new Pared(TgcBox.fromSize(new Vector3(2.85f, -10.25f, 0), new Vector3(32, 0.25f, 1f), textPiso));
-            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-13.1f, 0, 0), new Vector3(0.25f, 20.75f, 1f), textParedes));
-            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(18.8f, 0, 0), new Vector3(0.25f, 20.75f, 1f), textParedes));
+            piso = new Pared(TgcBox.fromSize(new Vector3(2.85f, -10.25f, 0), new Vector3(32, 0.25f, 1f), textPiso).toMesh("piso"), textPiso);
+            lateralDerecha = new Pared(TgcBox.fromSize(new Vector3(-13.1f, 0, 0), new Vector3(0.25f, 20.75f, 1f), textParedes).toMesh("lateralDerecha"), textParedes);
+            lateralIzquierda = new Pared(TgcBox.fromSize(new Vector3(18.8f, 0, 0), new Vector3(0.25f, 20.75f, 1f), textParedes).toMesh("lateralIzquierda"), textParedes);
 
             objetosDelNivel.Add(piso);
             objetosDelNivel.Add(lateralDerecha);
@@ -100,12 +100,12 @@ namespace AlumnoEjemplos.MiGrupo
             etapa.aplicarMovimientos(elapsedTime);
             etapa.render();
 
-            foreach (ItemUsuario objeto in objetosDelUsuario)
+            foreach (Item objeto in objetosDelUsuario)
             {
                 objeto.iluminar();
             }
 
-            foreach (ItemUsuario objeto in objetosDelUsuario)
+            foreach (Item objeto in objetosDelUsuario)
             {
                 objeto.render();
             }

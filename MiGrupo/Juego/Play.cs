@@ -26,12 +26,6 @@ namespace AlumnoEjemplos.MiGrupo
         void Etapa.interaccion(TgcD3dInput input, float elapsedTime)
         {
             pelota.interactuar(input, elapsedTime);
-
-            foreach (var item in itemsInScenario)
-            {
-                item.interactuar(input,elapsedTime);
-            }
-
         }
 
         void Etapa.aplicarMovimientos(float elapsedTime)

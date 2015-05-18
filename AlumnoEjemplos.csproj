@@ -87,18 +87,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MiGrupo\Cannon.cs" />
-    <Compile Include="MiGrupo\ItemUsuario.cs" />
-    <Compile Include="MiGrupo\Construccion.cs" />
-    <Compile Include="MiGrupo\EjemploAlumno.cs" />
-    <Compile Include="MiGrupo\Etapa.cs" />
-    <Compile Include="MiGrupo\Item.cs" />
-    <Compile Include="MiGrupo\MenuObjetos.cs" />
-    <Compile Include="MiGrupo\Nivel.cs" />
-    <Compile Include="MiGrupo\Pared.cs" />
-    <Compile Include="MiGrupo\Pelota.cs" />
-    <Compile Include="MiGrupo\PelotaCollisionManager.cs" />
-    <Compile Include="MiGrupo\Play.cs" />
+    <Compile Include="MiGrupo\Objetos\Cannon.cs" />
+    <Compile Include="MiGrupo\Objetos\Item.cs" />
+    <Compile Include="MiGrupo\Juego\Construccion.cs" />
+    <Compile Include="MiGrupo\Juego\EjemploAlumno.cs" />
+    <Compile Include="MiGrupo\Juego\Etapa.cs" />
+    <Compile Include="MiGrupo\Juego\MenuObjetos.cs" />
+    <Compile Include="MiGrupo\Juego\Nivel.cs" />
+    <Compile Include="MiGrupo\Objetos\Pared.cs" />
+    <Compile Include="MiGrupo\Objetos\Pelota.cs" />
+    <Compile Include="MiGrupo\Objetos\PelotaCollisionManager.cs" />
+    <Compile Include="MiGrupo\Juego\Play.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

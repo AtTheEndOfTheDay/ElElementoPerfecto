@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Drawing;
 
-
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
-
 
 using TgcViewer;
 using TgcViewer.Example;
@@ -19,31 +18,22 @@ using Microsoft.DirectX.DirectInput;
 
 namespace AlumnoEjemplos.MiGrupo
 {
-    class Cannon : ItemUsuario
+    class Pared : Item
     {
-        public float potencia = 0.6f;
-        
-        public Cannon(TgcMesh mesh, TgcTexture texture)
-            : base(mesh, texture)
-        {
 
-        }
-        public override float getCoefRebote()
+        public Pared(TgcMesh mesh, TgcTexture texture):base(mesh,texture)
         {
-            return 0.5f;
+            enEscena = true;
         }
 
         public override Vector3 interactuarConPelota()
         {
-            return new Vector3(-potencia, potencia, 0);
-        }
-        public override bool debeRebotar(TgcSphere esfera)
-        {
-            if (esfera.Position == mesh.Position)
-                return true;
-            else
-                return false;
+            return new Vector3(0, 0, 0);
         }
         
+        public override bool debeRebotar(TgcSphere esfera)
+        {
+            return true;
+        }
     }
 }

@@ -25,9 +25,9 @@ namespace AlumnoEjemplos.MiGrupo
         float ladoIzqMenu;
         float ladoObjeto;
         int cantidadObjetos;
-        List<ItemUsuario> objetosUsuario;
+        List<Item> objetosUsuario;
 
-        public MenuObjetos(List<ItemUsuario> listaMenu, TgcTexture texturaMenu)
+        public MenuObjetos(List<Item> listaMenu, TgcTexture texturaMenu)
         {
             cantidadObjetos = listaMenu.Count;
             objetosUsuario = listaMenu;

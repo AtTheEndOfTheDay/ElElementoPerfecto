@@ -19,31 +19,20 @@ using Microsoft.DirectX.DirectInput;
 
 namespace AlumnoEjemplos.MiGrupo
 {
-    abstract class ItemUsuario : Item
+    abstract class Item
     {
         public bool enEscena = false;
         public TgcMesh mesh;
         TgcTexture textura;
-        public ItemUsuario(TgcMesh unMesh, TgcTexture texture)
+
+        public Item(TgcMesh unMesh, TgcTexture texture)
         {
             mesh = unMesh;
             textura = texture;
         }
-
-        void Item.interactuar(TgcD3dInput input, float elapsedTime)
-        {
-            //No Implementado
-        }
-
-        Vector3 Item.interactuarConPelota()
-        {
-            return interactuarConPelota();
-        }
+        
         public abstract Vector3 interactuarConPelota();
-        void Item.iluminar()
-        {
-            iluminar();
-        }
+
         public void iluminar()
         {
             mesh.Effect = GuiController.Instance.Shaders.TgcMeshPointLightShader;
@@ -62,11 +51,8 @@ namespace AlumnoEjemplos.MiGrupo
             mesh.Effect.SetValue("materialSpecularColor", ColorValue.FromColor(Color.White));
             mesh.Effect.SetValue("materialSpecularExp", 10f);
         }
-        void Item.render()
-        {
-            render();
-        }
-        internal void render()
+
+        public void render()
         {
             if (enEscena)
             {
@@ -74,30 +60,21 @@ namespace AlumnoEjemplos.MiGrupo
             }
         }
         
-        Vector3 Item.velocidad()
-        { 
-            return new Vector3(0, 0, 0); 
-        }
-        void Item.dispose()
+        public void dispose()
         {
             mesh.dispose();
         }
-        TgcBoundingBox Item.getBB()
+
+        public TgcBoundingBox getBB()
         {
             return mesh.BoundingBox;
         }
 
-        float Item.getCoefRebote()
+        public float getCoefRebote()
         {
-            return getCoefRebote();
+            return 0.5f;
         }
-        
-        public abstract float getCoefRebote();
 
-        bool Item.debeRebotar(TgcSphere esfera)
-        {
-            return debeRebotar(esfera);
-        }
         public abstract bool debeRebotar(TgcSphere esfera);
 
         public TgcTexture getTexture()
@@ -105,7 +82,7 @@ namespace AlumnoEjemplos.MiGrupo
             return textura;
         }
 
-        internal void llevarAContenedor()
+        public void llevarAContenedor()
         {
             mesh.move ( new Vector3 ( -14.75f- mesh.Position.X, -8.5f - mesh.Position.Y, 0));
         }

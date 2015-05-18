@@ -160,7 +160,7 @@ namespace AlumnoEjemplos.MiGrupo
             List<Item> itemsNivel1 = new List<Item>();
             itemsNivel1.Add(cannon);
             nivel1 = new Nivel(madera, madera, madera, new Pelota(0.5f, new Vector3(16, -8f, 0.25f), metal),
-                                     itemsNivel1, new List<ItemUsuario>());
+                                     itemsNivel1, new List<Item>());
         }
 
         private void iniciarNivel2()
@@ -172,12 +172,12 @@ namespace AlumnoEjemplos.MiGrupo
             cannon2.llevarAContenedor();
             cannon2.enEscena = false;
 
-            List<ItemUsuario> itemsUsuarioNivel2 = new List<ItemUsuario>();
+            List<Item> itemsUsuarioNivel2 = new List<Item>();
             itemsUsuarioNivel2.Add(cannon2); //Importa el orden, por como los muestra el menu
-            Pared obstaculo1 = new Pared(TgcBox.fromSize(new Vector3(-10, -6, 0), new Vector3(5, 0.25f, 1.0f), madera));
-            Pared obstaculo2 = new Pared(TgcBox.fromSize(new Vector3(-5, -4, 0), new Vector3(5, 0.25f, 1.0f), madera));
-            Pared obstaculo3 = new Pared(TgcBox.fromSize(new Vector3(5, -2, 0), new Vector3(5, 0.25f, 1.0f), madera));
-            Pared obstaculo4 = new Pared(TgcBox.fromSize(new Vector3(10, 0, 0), new Vector3(5, 0.25f, 1.0f), madera));
+            Pared obstaculo1 = new Pared(TgcBox.fromSize(new Vector3(-10, -6, 0), new Vector3(5, 0.25f, 1.0f), madera).toMesh("Obstaculo1"), madera);
+            Pared obstaculo2 = new Pared(TgcBox.fromSize(new Vector3(-5, -4, 0), new Vector3(5, 0.25f, 1.0f), madera).toMesh("Obstaculo2"), madera);
+            Pared obstaculo3 = new Pared(TgcBox.fromSize(new Vector3(5, -2, 0), new Vector3(5, 0.25f, 1.0f), madera).toMesh("Obstaculo3"), madera);
+            Pared obstaculo4 = new Pared(TgcBox.fromSize(new Vector3(10, 0, 0), new Vector3(5, 0.25f, 1.0f), madera).toMesh("Obstaculo4"), madera);
             List<Item> itemsNivel2 = new List<Item>();
             itemsNivel2.Add(obstaculo1);
             itemsNivel2.Add(obstaculo2);
