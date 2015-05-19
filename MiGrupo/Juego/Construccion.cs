@@ -24,6 +24,8 @@ namespace AlumnoEjemplos.MiGrupo
         Vector2 anteriorMouse;
         List<Item> objetos;
         Item objetoAMover;
+        Item objetoAnterior;
+        bool primeraVez = true;
 
         TgcPickingRay pickingRay = new TgcPickingRay();
         bool selected = false;
@@ -69,6 +71,7 @@ namespace AlumnoEjemplos.MiGrupo
                     {
                         objetoAMover = objeto;
                         objetoAMover.enEscena = false;
+                        objetoAMover.pickeado = false;
                         objetoAMover.llevarAContenedor();
                     }
                 }           
@@ -79,6 +82,7 @@ namespace AlumnoEjemplos.MiGrupo
                 //Actualizar Ray de colisión en base a posición del mouse
                 pickingRay.updateRay();
                //Testear Ray contra el AABB de todos los meshes
+             
                 foreach (Item objeto in objetos)
                 {
                     TgcBoundingBox aabb = objeto.mesh.BoundingBox;
@@ -87,8 +91,14 @@ namespace AlumnoEjemplos.MiGrupo
                     if (selected && objeto.enEscena)
                     {
                         objetoAMover = objeto;
+
+                        if (primeraVez) { objetoAnterior = objetoAMover; }
+
+                        objetoAnterior.pickeado = false;
+                        objetoAMover.pickeado = true;
                         agarrado = true;
-  
+                        primeraVez = false;
+                      
                     }
                 }
 
@@ -108,8 +118,14 @@ namespace AlumnoEjemplos.MiGrupo
             {
                 objetoAMover.move(movimiento2 * 0.032f);
             }
-            anteriorMouse = mouseVector;
 
+            if (!primeraVez)
+            {
+                if (objetoAMover.pickeado)
+                { objetoAMover.getOBB().render(); }
+            }
+            anteriorMouse = mouseVector;
+            objetoAnterior = objetoAMover;
         }
 
         void Etapa.aplicarMovimientos(float elapsedTime)
