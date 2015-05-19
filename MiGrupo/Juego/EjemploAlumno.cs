@@ -51,8 +51,8 @@ namespace AlumnoEjemplos.MiGrupo
         TgcTexture madera = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Madera.jpg");
         TgcTexture metal = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Metal.jpg");
         TgcTexture texturaCannon = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Cannon.png");
-        TgcTexture texturaMagnet = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "magnet.png");
-        TgcTexture texturaSpring = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "spring.png");
+        TgcTexture texturaMagnet = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Magnet.png");
+        TgcTexture texturaSpring = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Spring.png");
 
         Pelota[] pelotas;
         TgcSceneLoader loader = new TgcSceneLoader();
@@ -61,6 +61,7 @@ namespace AlumnoEjemplos.MiGrupo
         Cannon cannon;
         Cannon cannon2;
         Magnet magnet1;
+        Magnet magnet2;
         Spring spring1;
 
         /// <summary>
@@ -134,12 +135,12 @@ namespace AlumnoEjemplos.MiGrupo
             TgcD3dInput input = GuiController.Instance.D3dInput;
             if (input.keyDown(Key.F1))
             {
-                iniciarNivel1();
+                reiniciar(nivel1);
                 nivelActual = nivel1;
             }                   
             else if (input.keyDown(Key.F2))
                 {
-                    iniciarNivel2();
+                    reiniciar(nivel2);
                     nivelActual = nivel2;
             }
             else if (input.keyDown(Key.Space))
@@ -149,7 +150,6 @@ namespace AlumnoEjemplos.MiGrupo
             else if (input.keyDown(Key.C))
             {
                 reiniciar(nivelActual);
-                nivelActual.pasaAConstruccion();
             }    
             
             nivelActual.render(elapsedTime);
@@ -178,10 +178,13 @@ namespace AlumnoEjemplos.MiGrupo
             //Fin Items del Nivel
 
             //Items del Usuario
-            magnet1 = new Magnet(scene.Meshes[2], texturaMagnet, Color.Black, new Vector3(0.15f, 0.15f, 0.15f), new Vector3(0, pi / 2, pi));
-            spring1 = new Spring(scene.Meshes[3], texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, pi / 2, pi));
+            magnet1 = new Magnet(scene.Meshes[3], texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi));
+            magnet2 = new Magnet(scene.Meshes[3].clone("magnet2"), texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi));
+            spring1 = new Spring(scene.Meshes[1], texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
+           // spring1 = new Spring(scene.Meshes[3], texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, pi / 2, pi));
             List<Item> itemsUsuario1 = new List<Item>();
             itemsUsuario1.Add(magnet1);
+            itemsUsuario1.Add(magnet2);
             itemsUsuario1.Add(spring1);
             //Fin Items del Usuario
 
@@ -216,6 +219,7 @@ namespace AlumnoEjemplos.MiGrupo
 
         private void reiniciar(Nivel nivel)
         {
+            nivelActual.pasaAConstruccion();
             switch (nivel.numeroDeNivel)
             {
                 case 1:

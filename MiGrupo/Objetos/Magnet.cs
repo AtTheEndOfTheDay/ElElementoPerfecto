@@ -25,20 +25,18 @@ namespace AlumnoEjemplos.MiGrupo
             : base(unMesh, texture)
         {
             mesh.setColor(uncolor);
+            mesh.move(movimiento);
             mesh.Scale = escalado;
             mesh.Rotation = rotacion;
-            mesh.move(movimiento);
-            enEscena = false;
         }
 
         public Magnet(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion)
             : base(unMesh, texture)
         {
             mesh.setColor(uncolor);
+            llevarAContenedor();
             mesh.Scale = escalado;
             mesh.Rotation = rotacion;
-            llevarAContenedor();
-            enEscena = false;
         }
 
         public override Vector3 interactuarConPelota()

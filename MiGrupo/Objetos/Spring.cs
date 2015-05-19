@@ -26,20 +26,18 @@ namespace AlumnoEjemplos.MiGrupo
         {
             //TODO: agregar tapas
             mesh.setColor(uncolor);
+            mesh.move(movimiento);
             mesh.Scale = escalado;
             mesh.Rotation = rotacion;
-            mesh.move(movimiento);
-            enEscena = false;
         }
 
         public Spring(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion)
             : base(unMesh, texture)
         {
             mesh.setColor(uncolor);
+            llevarAContenedor();
             mesh.Scale = escalado;
             mesh.Rotation = rotacion;
-            llevarAContenedor();
-            enEscena = false;
         }
 
 
