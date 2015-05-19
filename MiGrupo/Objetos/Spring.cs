@@ -21,9 +21,11 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Spring : Item
     {
+        static Vector3 lugarDelContenedor = new Vector3(-16f, -8f, 1);
+
         public static Spring CrearSpring(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion)
         {
-            return CrearSpring(unMesh, texture, uncolor, escalado, rotacion, GetLugarRelativoContenedor(unMesh.Position));
+            return CrearSpring(unMesh, texture, uncolor, escalado, rotacion, lugarDelContenedor- unMesh.Position);
         }
 
         public static Spring CrearSpring(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion, Vector3 movimiento)
@@ -86,9 +88,10 @@ namespace AlumnoEjemplos.MiGrupo
             return 0.5f;
         }
 
-        public static Vector3 GetLugarRelativoContenedor(Vector3 posicion)
+
+        public override Vector3 getLugarDelContenedor()
         {
-            return new Vector3(-16f - posicion.X, -8f - posicion.Y, 1 - posicion.Z);
+            return lugarDelContenedor;
         }
     }
 }

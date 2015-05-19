@@ -60,8 +60,15 @@ namespace AlumnoEjemplos.MiGrupo
         {
             if (enEscena)
             {
-                //mesh.BoundingBox.render();
-                orientedBB.render();
+                if (EjemploAlumno.mostrarBBs)
+                {
+                    mesh.BoundingBox.render();
+                }
+                
+                if (EjemploAlumno.mostrarOBBs)
+                {
+                    orientedBB.render();
+                }
                 mesh.render();
             }
         }
@@ -103,6 +110,12 @@ namespace AlumnoEjemplos.MiGrupo
             orientedBB.move(movement);
         }
 
+        public void llevarAContenedor()
+        {
+            move(getLugarDelContenedor() - mesh.Position);
+        }
+
+        public abstract Vector3 getLugarDelContenedor();
     }
 }
 

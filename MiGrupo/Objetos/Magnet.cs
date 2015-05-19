@@ -21,6 +21,8 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Magnet : Item
     {
+        static Vector3 lugarDelContenedor = new Vector3(-15.75f, -7.5f, 1);
+
         public static Magnet CrearMagnet(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion, Vector3 movimiento)
         {
             Magnet auxMagnet;
@@ -85,6 +87,11 @@ namespace AlumnoEjemplos.MiGrupo
         public static Vector3 GetLugarRelativoContenedor(Vector3 posicion)
         {
             return new Vector3(-15.75f - posicion.X, -7.5f - posicion.Y, 1 - posicion.Z);
+        }
+
+        public override Vector3 getLugarDelContenedor()
+        {
+            return lugarDelContenedor;
         }
     }
 }

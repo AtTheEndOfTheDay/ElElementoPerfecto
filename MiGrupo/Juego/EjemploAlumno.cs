@@ -64,6 +64,9 @@ namespace AlumnoEjemplos.MiGrupo
         Magnet magnet2;
         Spring spring1;
 
+        public static bool mostrarOBBs=true;
+        public static bool mostrarBBs = true;
+
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
         /// Influye en donde se va a haber en el árbol de la derecha de la pantalla.
@@ -121,6 +124,9 @@ namespace AlumnoEjemplos.MiGrupo
             iniciarNivel2();
             
             nivelActual = nivel1;
+
+            GuiController.Instance.Modifiers.addBoolean("Mostrar OBBs", "Mostrar OBBs", true);
+            GuiController.Instance.Modifiers.addBoolean("Mostrar BBs", "Mostrar BBs", true);
         }
 
 
@@ -132,6 +138,10 @@ namespace AlumnoEjemplos.MiGrupo
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
+
+            mostrarOBBs = (bool)GuiController.Instance.Modifiers["Mostrar OBBs"];
+            mostrarBBs = (bool)GuiController.Instance.Modifiers["Mostrar BBs"];
+
             TgcD3dInput input = GuiController.Instance.D3dInput;
             if (input.keyDown(Key.F1))
             {

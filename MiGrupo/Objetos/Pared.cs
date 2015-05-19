@@ -20,6 +20,7 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Pared : Item
     {
+        static Vector3 lugarDelContenedor = new Vector3(-15.5f, -8f, 1);
 
         public static Pared CrearPared(Vector3 posicion, Vector3 size, Vector3 rotacion, TgcTexture texture, String nombre)
         {
@@ -57,6 +58,11 @@ namespace AlumnoEjemplos.MiGrupo
         public static Vector3 GetLugarRelativoContenedor(Vector3 posicion)
         {
             return new Vector3(-15.5f - posicion.X, -8f - posicion.Y, 1 - posicion.Z);
+        }
+
+        public override Vector3 getLugarDelContenedor()
+        {
+            return lugarDelContenedor;
         }
     }
 }

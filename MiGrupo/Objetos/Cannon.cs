@@ -21,6 +21,8 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Cannon : Item
     {
+        static Vector3 lugarDelContenedor = new Vector3(-15f, -8.5f, 1);
+
         public float potencia = 0.6f;
         public bool cargado = false;
 
@@ -74,6 +76,11 @@ namespace AlumnoEjemplos.MiGrupo
         public static Vector3 GetLugarRelativoContenedor(Vector3 posicion)
         {
             return new Vector3(-15f - posicion.X, -8.5f - posicion.Y, 1 - posicion.Z);
+        }
+
+        public override Vector3 getLugarDelContenedor()
+        {
+            return lugarDelContenedor;
         }
 
     }
