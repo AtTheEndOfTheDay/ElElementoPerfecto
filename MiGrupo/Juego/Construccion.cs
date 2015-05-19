@@ -104,7 +104,7 @@ namespace AlumnoEjemplos.MiGrupo
             }
             if (agarrado && objetoAMover.enEscena)
             {
-               objetoAMover.mesh.move(movimiento2 * 0.032f);
+                objetoAMover.move(movimiento2 * 0.032f);
             }
             anteriorMouse = mouseVector;
 

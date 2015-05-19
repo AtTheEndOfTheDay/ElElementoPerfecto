@@ -24,22 +24,30 @@ namespace AlumnoEjemplos.MiGrupo
         public float potencia = 0.6f;
         public bool cargado = false;
 
-        public Cannon(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion, Vector3 movimiento)
-            : base(unMesh, texture)
+
+        public static Cannon CrearCannon(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion)
         {
-            mesh.setColor(uncolor);
-            mesh.move(movimiento);
-            mesh.Scale = escalado;
-            mesh.Rotation = rotacion;
+            return CrearCannon(unMesh, texture, uncolor, escalado, rotacion, GetLugarRelativoContenedor(unMesh.Position));
         }
-        
-        public Cannon(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion)
+
+        public static Cannon CrearCannon(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion, Vector3 movimiento)
+        {
+            Cannon auxCannon;
+
+            unMesh.Scale = escalado;
+
+            auxCannon = new Cannon(unMesh, texture, uncolor);
+
+            ((Item)auxCannon).rotate(rotacion);
+            ((Item)auxCannon).move(movimiento);
+
+            return auxCannon;
+        }
+
+        public Cannon(TgcMesh unMesh, TgcTexture texture, Color uncolor)
             : base(unMesh, texture)
         {
             mesh.setColor(uncolor);
-            llevarAContenedor();
-            mesh.Scale = escalado;
-            mesh.Rotation = rotacion;
         }
 
         public override Vector3 interactuarConPelota()
@@ -68,5 +76,10 @@ namespace AlumnoEjemplos.MiGrupo
             mesh.move(new Vector3(-15f - mesh.Position.X, -8.5f - mesh.Position.Y, 1 - mesh.Position.Z));
         }
         
+        public static Vector3 GetLugarRelativoContenedor(Vector3 posicion)
+        {
+            return new Vector3(-15f - posicion.X, -8.5f - posicion.Y, 1 - posicion.Z);
+        }
+
     }
 }

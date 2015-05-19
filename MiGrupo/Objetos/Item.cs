@@ -98,6 +98,13 @@ namespace AlumnoEjemplos.MiGrupo
             mesh.Rotation = rotacion;
             orientedBB.rotate(rotacion);
         }
+
+        public void move(Vector3 movement)
+        {
+            mesh.move(movement);
+            orientedBB.move(movement);
+        }
+
     }
 }
 

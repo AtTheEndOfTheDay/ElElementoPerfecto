@@ -170,7 +170,8 @@ namespace AlumnoEjemplos.MiGrupo
             pelotas[0] = new Pelota(0.5f, new Vector3(16, -8f, 1), metal);
             
             //Items del Nivel
-            cannon = new Cannon(scene.Meshes[0], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi/4), new Vector3(16, -8f, 1f));
+            cannon = Cannon.CrearCannon(scene.Meshes[0], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4), new Vector3(16, -8f, 1f));
+            //cannon = new Cannon(scene.Meshes[0], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi/4), new Vector3(16, -8f, 1f));
             cannon.enEscena = true;
             cannon.cargado = true;
             List<Item> itemsNivel1 = new List<Item>();
@@ -209,7 +210,9 @@ namespace AlumnoEjemplos.MiGrupo
             //Fin Items del Nivel
 
             //Items del Usuario
-            cannon2 = new Cannon(scene.Meshes[0].clone("Cannon2"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi/4));
+
+            cannon2 = Cannon.CrearCannon(scene.Meshes[0].clone("Cannon2"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4));
+            //cannon2 = new Cannon(scene.Meshes[0].clone("Cannon2"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi/4));
             List<Item> itemsUsuarioNivel2 = new List<Item>();
             itemsUsuarioNivel2.Add(cannon2);
             //Fin Items del Usuario  
