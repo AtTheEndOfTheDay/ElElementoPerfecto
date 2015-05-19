@@ -180,7 +180,7 @@ namespace AlumnoEjemplos.MiGrupo
             pelotas[0] = new Pelota(0.5f, new Vector3(16, -8f, 1), metal);
             
             //Items del Nivel
-            cannon = Cannon.CrearCannon(scene.Meshes[0], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4), new Vector3(16, -8f, 1f));
+            cannon = Cannon.CrearCannon(scene.Meshes[0].clone("cannon1"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4), new Vector3(16, -8f, 1f));
             cannon.enEscena = true;
             cannon.cargado = true;
             List<Item> itemsNivel1 = new List<Item>();
@@ -188,10 +188,10 @@ namespace AlumnoEjemplos.MiGrupo
             //Fin Items del Nivel
 
             //Items del Usuario
-            magnet1 = Magnet.CrearMagnet(scene.Meshes[3], texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi));
+            magnet1 = Magnet.CrearMagnet(scene.Meshes[3].clone("magnet1"), texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
             magnet2 = Magnet.CrearMagnet(scene.Meshes[3].clone("magnet2"), texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi));
 
-            spring1 = Spring.CrearSpring(scene.Meshes[1], texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
+            spring1 = Spring.CrearSpring(scene.Meshes[1].clone("spring1"), texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
             // spring1 = new Spring(scene.Meshes[3], texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, pi / 2, pi));
             List<Item> itemsUsuario1 = new List<Item>();
             itemsUsuario1.Add(magnet1);
@@ -219,7 +219,7 @@ namespace AlumnoEjemplos.MiGrupo
             
             //Fin Items del Nivel
 
-            //Items del Usuario
+            //Items del Usuario 
 
             cannon2 = Cannon.CrearCannon(scene.Meshes[0].clone("Cannon2"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4));
             List<Item> itemsUsuarioNivel2 = new List<Item>();

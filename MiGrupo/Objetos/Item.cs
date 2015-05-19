@@ -101,9 +101,14 @@ namespace AlumnoEjemplos.MiGrupo
 
         public void rotate(Vector3 rotacion)
         {
-            mesh.Rotation = rotacion;
+            Vector3 distanceBetweenCenters = orientedBB.Center - mesh.Position;
+
+            distanceBetweenCenters = Vector3.TransformCoordinate(distanceBetweenCenters, Matrix.RotationYawPitchRoll(rotacion.Y, rotacion.X, rotacion.Z));
+            orientedBB.Center = mesh.Position + distanceBetweenCenters;
+
+            mesh.Rotation += rotacion;
             orientedBB.rotate(rotacion);
-        }
+        } 
 
         public void move(Vector3 movement)
         {
