@@ -18,10 +18,10 @@ namespace AlumnoEjemplos.MiGrupo
         private Vector3 normalColision;
 
 
-        private Vector3 rebotar(TgcSphere esfera, Item item, Vector3 velocidad, float factorVelocidad, TgcBoundingBox bbObstaculo)
+        private Vector3 rebotar(TgcSphere esfera, Item item, Vector3 velocidad, float factorVelocidad)
         {
 
-            normalColision = obtenerNormalDeColision(esfera.BoundingSphere, bbObstaculo, Vector3.Multiply(velocidad,factorVelocidad));
+            normalColision = obtenerNormalDeColision(esfera.BoundingSphere, item.getOBB(), Vector3.Multiply(velocidad,factorVelocidad));
 
             if (Vector3.Dot(velocidad, normalColision) < 0)
             {
@@ -53,10 +53,10 @@ namespace AlumnoEjemplos.MiGrupo
 
             foreach (Item item in itemsInScenario)
             {
-                if (TgcCollisionUtils.testSphereAABB(testSphere, item.getBB()))
+                if (TgcCollisionUtils.testSphereOBB(testSphere, item.getOBB()))
                 {
                     if (item.debeRebotar(esfera))
-                        newVelocidad = rebotar(esfera, item, velocidad, factorVelocidad, item.getBB());
+                        newVelocidad = rebotar(esfera, item, velocidad, factorVelocidad);
                     else
                         newVelocidad = item.interactuarConPelota();
                     if (!newVelocidad.Equals(velocidad))
@@ -72,7 +72,98 @@ namespace AlumnoEjemplos.MiGrupo
         }
 
 
-        private Vector3 obtenerNormalDeColision(TgcBoundingSphere bEsfera, TgcBoundingBox obstaculoBB, Vector3 movementVector)
+        private Vector3[] computeCornersObb(TgcObb obb)
+        {
+            Vector3[] corners = new Vector3[8];
+
+            Vector3 eX = obb.Extents.X * obb.Orientation[0];
+            Vector3 eY = obb.Extents.Y * obb.Orientation[1];
+            Vector3 eZ = obb.Extents.Z * obb.Orientation[2];
+
+            corners[0] = obb.Center - eX - eY - eZ;
+            corners[1] = obb.Center - eX - eY + eZ;
+
+            corners[2] = obb.Center - eX + eY - eZ;
+            corners[3] = obb.Center - eX + eY + eZ;
+
+            corners[4] = obb.Center + eX - eY - eZ;
+            corners[5] = obb.Center + eX - eY + eZ;
+
+            corners[6] = obb.Center + eX + eY - eZ;
+            corners[7] = obb.Center + eX + eY + eZ;
+
+            return corners;
+        }
+
+
+        private TgcBoundingBox.Face[] computeFacesObb(TgcObb obb)
+        {
+            TgcBoundingBox.Face[] auxFaces = new TgcBoundingBox.Face[6];
+            Vector3[] obbCorners = computeCornersObb(obb);
+            Vector3[] normales = new Vector3[6];
+
+            normales[0] = obb.Orientation[1];
+            normales[1] = -obb.Orientation[1];
+
+            normales[2] = obb.Orientation[2];
+            normales[3] = -obb.Orientation[2];
+            
+            normales[4] = obb.Orientation[0];
+            normales[5] = -obb.Orientation[0];
+
+
+            //eY positive
+            auxFaces[0] = new TgcBoundingBox.Face();
+            auxFaces[0].Extremes[0] = obbCorners[2];
+            auxFaces[0].Extremes[1] = obbCorners[3];
+            auxFaces[0].Extremes[2] = obbCorners[6];
+            auxFaces[0].Extremes[3] = obbCorners[7];
+
+            //eY negative 
+            auxFaces[1] = new TgcBoundingBox.Face();
+            auxFaces[1].Extremes[0] = obbCorners[0];
+            auxFaces[1].Extremes[1] = obbCorners[1];
+            auxFaces[1].Extremes[2] = obbCorners[4];
+            auxFaces[1].Extremes[3] = obbCorners[5];
+
+            //eZ positive
+            auxFaces[2] = new TgcBoundingBox.Face();
+            auxFaces[2].Extremes[0] = obbCorners[1];
+            auxFaces[2].Extremes[1] = obbCorners[3];
+            auxFaces[2].Extremes[2] = obbCorners[5];
+            auxFaces[2].Extremes[3] = obbCorners[7];
+
+            //eZ negative 
+            auxFaces[3] = new TgcBoundingBox.Face();
+            auxFaces[3].Extremes[0] = obbCorners[0];
+            auxFaces[3].Extremes[1] = obbCorners[2];
+            auxFaces[3].Extremes[2] = obbCorners[4];
+            auxFaces[3].Extremes[3] = obbCorners[6];
+
+            //eX positive
+            auxFaces[4] = new TgcBoundingBox.Face();
+            auxFaces[4].Extremes[0] = obbCorners[4];
+            auxFaces[4].Extremes[1] = obbCorners[5];
+            auxFaces[4].Extremes[2] = obbCorners[6];
+            auxFaces[4].Extremes[3] = obbCorners[7];
+
+            //eX negative 
+            auxFaces[5] = new TgcBoundingBox.Face();
+            auxFaces[5].Extremes[0] = obbCorners[0];
+            auxFaces[5].Extremes[1] = obbCorners[1];
+            auxFaces[5].Extremes[2] = obbCorners[2];
+            auxFaces[5].Extremes[3] = obbCorners[3];
+
+
+            for (int i = 0; i < 6; i++)
+            {
+                auxFaces[i].Plane = new Plane(normales[i].X, normales[i].Y, normales[i].Z, -Vector3.Dot(auxFaces[i].Extremes[0], normales[i]));
+            }
+
+            return auxFaces;
+        }
+
+        private Vector3 obtenerNormalDeColision(TgcBoundingSphere bEsfera, TgcObb obstaculoOBB, Vector3 movementVector)
         {
             float menorDistancia = float.MaxValue;
             TgcBoundingBox.Face collisionFace = null;
@@ -81,7 +172,7 @@ namespace AlumnoEjemplos.MiGrupo
             Vector3 pNormal;
 
 
-            TgcBoundingBox.Face[] bbFaces = obstaculoBB.computeFaces();
+            TgcBoundingBox.Face[] bbFaces = computeFacesObb(obstaculoOBB);
 
             foreach (TgcBoundingBox.Face bbFace in bbFaces)
             {
