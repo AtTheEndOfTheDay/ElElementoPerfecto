@@ -64,9 +64,10 @@ namespace AlumnoEjemplos.MiGrupo
                 {
                     TgcBoundingBox aabb = objeto.mesh.BoundingBox;
                     selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
-                    objetoAMover = objeto;
+                  
                     if (selected)
                     {
+                        objetoAMover = objeto;
                         objetoAMover.enEscena = false;
                     }
                 }           
@@ -81,9 +82,10 @@ namespace AlumnoEjemplos.MiGrupo
                 {
                     TgcBoundingBox aabb = objeto.mesh.BoundingBox;
                     selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
-                    objetoAMover = objeto;
+                  
                     if (selected)
                     {
+                        objetoAMover = objeto;
                         agarrado = true;
                     }
                 }
