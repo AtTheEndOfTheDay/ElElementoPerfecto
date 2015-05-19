@@ -29,8 +29,6 @@ namespace AlumnoEjemplos.MiGrupo
         bool selected = false;
         bool agarrado = false;
         Vector3 collisionPoint;
-        TgcBox selectedMesh;
-        TgcBox elemCreado = TgcBox.fromSize(new Vector3(10, 5, 0), new Vector3(1.5f, 1.5f, 0));
         MenuObjetos menu;
 
         public Construccion(List<Item> unosItems,Pelota unaPelota, MenuObjetos menuActual, List<Item> objetosDelUsuario)
@@ -66,9 +64,10 @@ namespace AlumnoEjemplos.MiGrupo
                 {
                     TgcBoundingBox aabb = objeto.mesh.BoundingBox;
                     selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
-                    objetoAMover = objeto;
+                  
                     if (selected)
                     {
+                        objetoAMover = objeto;
                         objetoAMover.enEscena = false;
                     }
                 }           
@@ -83,21 +82,18 @@ namespace AlumnoEjemplos.MiGrupo
                 {
                     TgcBoundingBox aabb = objeto.mesh.BoundingBox;
                     selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
-                    objetoAMover = objeto;
+                  
                     if (selected)
                     {
+                        objetoAMover = objeto;
                         agarrado = true;
                     }
                 }
-                //Ejecutar test, si devuelve true se carga el punto de colision collisionPoint
-             //  selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
 
                 if (agarrado)
                 {
-                    selectedMesh = elemCreado;
                    movimiento2.X = -(mouseVector.X - anteriorMouse.X);
                    movimiento2.Y = -(mouseVector.Y - anteriorMouse.Y);
-                   //agarrado = true;
 
                 }
             }
@@ -108,17 +104,10 @@ namespace AlumnoEjemplos.MiGrupo
             }
             if (agarrado && objetoAMover.enEscena)
             {
-               // selectedMesh.BoundingBox.render();
                objetoAMover.mesh.move(movimiento2 * 0.032f);
-               // collisionPointMesh.Position = collisionPoint;
-             //   collisionPointMesh.render();
             }
-
-          //  if (aparece) {elemCreado.render(); }
-
             anteriorMouse = mouseVector;
 
-           // objetoAMover.mesh.move(movimiento2 * 0.345f);
         }
 
         void Etapa.aplicarMovimientos(float elapsedTime)

@@ -19,21 +19,19 @@ using Microsoft.DirectX.DirectInput;
 
 namespace AlumnoEjemplos.MiGrupo
 {
-    class Cannon : Item
+    class Spring : Item
     {
-        public float potencia = 0.6f;
-        public bool cargado = false;
-
-        public Cannon(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion, Vector3 movimiento)
+        public Spring(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion, Vector3 movimiento)
             : base(unMesh, texture)
         {
+            //TODO: agregar tapas
             mesh.setColor(uncolor);
             mesh.move(movimiento);
             mesh.Scale = escalado;
             mesh.Rotation = rotacion;
         }
-        
-        public Cannon(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion)
+
+        public Spring(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion)
             : base(unMesh, texture)
         {
             mesh.setColor(uncolor);
@@ -42,31 +40,27 @@ namespace AlumnoEjemplos.MiGrupo
             mesh.Rotation = rotacion;
         }
 
+
         public override Vector3 interactuarConPelota()
         {
-            return new Vector3(-potencia, potencia, 0);
+            return new Vector3 (0, 0, 0);
+            //TODO
         }
 
         public override bool debeRebotar(TgcSphere esfera)
         {
-            if (cargado)
-            {
-                cargado = false;
-                return false;
-            }                
-            else
-                return true;
+            return true;
+            //TODO
         }
 
         public override float getCoefRebote(Vector3 normal)
         {
-            return 0.25f;
+            return 0.5f;
         }
 
         public override void llevarAContenedor()
         {
-            mesh.move(new Vector3(-15f - mesh.Position.X, -8.5f - mesh.Position.Y, 1 - mesh.Position.Z));
+            mesh.move(new Vector3(-16f - mesh.Position.X, -8f - mesh.Position.Y, 1 - mesh.Position.Z));
         }
-        
     }
 }

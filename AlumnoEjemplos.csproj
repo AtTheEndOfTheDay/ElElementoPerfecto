@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MiGrupo\Objetos\Magnet.cs" />
     <Compile Include="MiGrupo\Objetos\Cannon.cs" />
     <Compile Include="MiGrupo\Objetos\Item.cs" />
     <Compile Include="MiGrupo\Juego\Construccion.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="MiGrupo\Objetos\Pelota.cs" />
     <Compile Include="MiGrupo\Objetos\PelotaCollisionManager.cs" />
     <Compile Include="MiGrupo\Juego\Play.cs" />
+    <Compile Include="MiGrupo\Objetos\Spring.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
