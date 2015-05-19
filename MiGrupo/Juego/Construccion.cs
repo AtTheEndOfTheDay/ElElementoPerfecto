@@ -22,8 +22,9 @@ namespace AlumnoEjemplos.MiGrupo
         private Pelota pelota;
         Vector2 mouseVector;
         Vector2 anteriorMouse;
+        Vector3 movimientoObjeto;
         List<Item> objetos;
-        Item objetoAMover;
+        Item objetoPickeado;
         Item objetoAnterior;
         bool primeraVez = true;
 
@@ -43,94 +44,88 @@ namespace AlumnoEjemplos.MiGrupo
 
         void Etapa.interaccion(TgcD3dInput input, float elapsedTime)
         {
-        
-            //aqui iría lo de arrastrar los objetos de la barra a la pantalla
-            //poder mover la lista en el menu de elementos, etc
-
-        Vector3 movimiento2 = new Vector3(0, 0, 0);
-
+            
+            movimientoObjeto = new Vector3(0, 0, 0);
             mouseVector = new Vector2(GuiController.Instance.D3dInput.Xpos, GuiController.Instance.D3dInput.Ypos);
-         if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
-            {
-             //Actualizar Ray de colisión en base a posición del mouse
-             pickingRay.updateRay();
-             
-             menu.poneloEnPantallaSiToco(mouseVector.X, mouseVector.Y);
-            } 
 
+            //Evalua si clickea un sprite del menu para que el objeto aparezca en el contenedor
+            if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
+            {
+                pickingRay.updateRay();
+                menu.poneloEnPantallaSiToco(mouseVector.X, mouseVector.Y);
+            } 
+            
+            //Evalua si toco el boton derecho para ver si borra
             if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_RIGHT))
             {
-                //Actualizar Ray de colisión en base a posición del mouse
                 pickingRay.updateRay();
                 foreach (Item objeto in objetos)
                 {
                     TgcBoundingBox aabb = objeto.mesh.BoundingBox;
                     selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
-                  
+                
                     if (selected)
                     {
-                        objetoAMover = objeto;
-                        objetoAMover.enEscena = false;
-                        objetoAMover.pickeado = false;
-                        objetoAMover.llevarAContenedor();
+                        objeto.enEscena = false;
+                        objeto.pickeado = false;
+                        objeto.llevarAContenedor();
                     }
                 }           
-            }
-
-            if (input.buttonDown(TgcD3dInput.MouseButtons.BUTTON_LEFT))
-            {
-                //Actualizar Ray de colisión en base a posición del mouse
-                pickingRay.updateRay();
-               //Testear Ray contra el AABB de todos los meshes
+             }
+                
+             //Evalua si debe arrastrar el objeto y lo arrastra
+             if (input.buttonDown(TgcD3dInput.MouseButtons.BUTTON_LEFT))
+             {
+                 pickingRay.updateRay();
              
-                foreach (Item objeto in objetos)
-                {
-                    TgcBoundingBox aabb = objeto.mesh.BoundingBox;
-                    selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
+                 foreach (Item objeto in objetos)
+                 {
+                     TgcBoundingBox aabb = objeto.mesh.BoundingBox;
+                     selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
 
-                    if (selected && objeto.enEscena)
-                    {
-                        objetoAMover = objeto;
+                     if (selected && objeto.enEscena)
+                     {
+                         objetoPickeado = objeto;
 
-                        if (primeraVez) { objetoAnterior = objetoAMover; }
+                         if (objetoAnterior != null)
+                             objetoAnterior.pickeado = false;
+                         objetoPickeado.pickeado = true;
+                         agarrado = true;
+                   
+                     }
+                 }
 
-                        objetoAnterior.pickeado = false;
-                        objetoAMover.pickeado = true;
-                        agarrado = true;
-                        primeraVez = false;
-                      
-                    }
-                }
+                 if (agarrado)
+                 {
+                    movimientoObjeto.X = -(mouseVector.X - anteriorMouse.X);
+                    movimientoObjeto.Y = -(mouseVector.Y - anteriorMouse.Y);
 
-                if (agarrado)
-                {
-                   movimiento2.X = -(mouseVector.X - anteriorMouse.X);
-                   movimiento2.Y = -(mouseVector.Y - anteriorMouse.Y);
-
-                }
-            }
+                 }
+             }
 
             if (input.buttonUp(TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
                 agarrado = false;
             }
-            if (agarrado && objetoAMover.enEscena)
+            
+            if (agarrado && objetoPickeado.enEscena)
             {
-                objetoAMover.move(movimiento2 * 0.032f);
+                objetoPickeado.move(movimientoObjeto * 0.032f);
             }
 
-            if (!primeraVez)
-            {
-                if (objetoAMover.pickeado)
-                { objetoAMover.getOBB().render(); }
+            if (objetoPickeado != null && objetoPickeado.pickeado)
+            { 
+                objetoPickeado.getOBB().render();
+                objetoPickeado.recibiOrdenDelUsuario(input);
             }
+
             anteriorMouse = mouseVector;
-            objetoAnterior = objetoAMover;
+            objetoAnterior = objetoPickeado;
         }
 
         void Etapa.aplicarMovimientos(float elapsedTime)
         {
-            //supongo que nada se mueve por si solo cuando construyo, sino debería ir aquí
+           
         }
 
         void Etapa.render()

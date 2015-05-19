@@ -117,6 +117,19 @@ namespace AlumnoEjemplos.MiGrupo
         }
 
         public abstract Vector3 getLugarDelContenedor();
+
+        public void recibiOrdenDelUsuario(TgcD3dInput input)
+        {
+            //TODO: hacer este metodo abstracto e implementarlo para cada item en particular.
+            if (input.keyDown(Key.RightArrow))
+            {
+                rotate(new Vector3(0, 0, 0.01f));
+            }
+            if (input.keyDown(Key.LeftArrow))
+            {
+                rotate(new Vector3(0, 0, -0.01f));
+            }
+        }
     }
 }
 
