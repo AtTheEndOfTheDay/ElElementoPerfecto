@@ -90,8 +90,6 @@ namespace AlumnoEjemplos.MiGrupo
             return textura;
         }
 
-        public abstract void llevarAContenedor();
-
 
         public void rotate(Vector3 rotacion)
         {

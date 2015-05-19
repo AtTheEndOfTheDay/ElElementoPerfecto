@@ -171,7 +171,6 @@ namespace AlumnoEjemplos.MiGrupo
             
             //Items del Nivel
             cannon = Cannon.CrearCannon(scene.Meshes[0], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4), new Vector3(16, -8f, 1f));
-            //cannon = new Cannon(scene.Meshes[0], texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi/4), new Vector3(16, -8f, 1f));
             cannon.enEscena = true;
             cannon.cargado = true;
             List<Item> itemsNivel1 = new List<Item>();
@@ -179,10 +178,11 @@ namespace AlumnoEjemplos.MiGrupo
             //Fin Items del Nivel
 
             //Items del Usuario
-            magnet1 = new Magnet(scene.Meshes[3], texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi));
-            magnet2 = new Magnet(scene.Meshes[3].clone("magnet2"), texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi));
-            spring1 = new Spring(scene.Meshes[1], texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
-           // spring1 = new Spring(scene.Meshes[3], texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, pi / 2, pi));
+            magnet1 = Magnet.CrearMagnet(scene.Meshes[3], texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi));
+            magnet2 = Magnet.CrearMagnet(scene.Meshes[3].clone("magnet2"), texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi));
+
+            spring1 = Spring.CrearSpring(scene.Meshes[1], texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
+            // spring1 = new Spring(scene.Meshes[3], texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, pi / 2, pi));
             List<Item> itemsUsuario1 = new List<Item>();
             itemsUsuario1.Add(magnet1);
             itemsUsuario1.Add(magnet2);
@@ -212,7 +212,6 @@ namespace AlumnoEjemplos.MiGrupo
             //Items del Usuario
 
             cannon2 = Cannon.CrearCannon(scene.Meshes[0].clone("Cannon2"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4));
-            //cannon2 = new Cannon(scene.Meshes[0].clone("Cannon2"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi/4));
             List<Item> itemsUsuarioNivel2 = new List<Item>();
             itemsUsuarioNivel2.Add(cannon2);
             //Fin Items del Usuario  

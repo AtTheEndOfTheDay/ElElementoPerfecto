@@ -21,6 +21,34 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Spring : Item
     {
+        public static Spring CrearSpring(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion)
+        {
+            return CrearSpring(unMesh, texture, uncolor, escalado, rotacion, GetLugarRelativoContenedor(unMesh.Position));
+        }
+
+        public static Spring CrearSpring(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion, Vector3 movimiento)
+        {
+
+            Spring auxSpring;
+
+            unMesh.Scale = escalado;
+
+            auxSpring = new Spring(unMesh, texture, uncolor);
+
+            ((Item)auxSpring).rotate(rotacion);
+            ((Item)auxSpring).move(movimiento);
+
+            return auxSpring;
+        }
+
+        public Spring(TgcMesh unMesh, TgcTexture texture, Color uncolor)
+            : base(unMesh, texture)
+        {
+            //TODO: agregar tapas
+            mesh.setColor(uncolor);
+        }
+
+        /*
         public Spring(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion, Vector3 movimiento)
             : base(unMesh, texture)
         {
@@ -39,7 +67,7 @@ namespace AlumnoEjemplos.MiGrupo
             mesh.Scale = escalado;
             mesh.Rotation = rotacion;
         }
-
+        */
 
         public override Vector3 interactuarConPelota()
         {
@@ -58,9 +86,9 @@ namespace AlumnoEjemplos.MiGrupo
             return 0.5f;
         }
 
-        public override void llevarAContenedor()
+        public static Vector3 GetLugarRelativoContenedor(Vector3 posicion)
         {
-            mesh.move(new Vector3(-16f - mesh.Position.X, -8f - mesh.Position.Y, 1 - mesh.Position.Z));
+            return new Vector3(-16f - posicion.X, -8f - posicion.Y, 1 - posicion.Z);
         }
     }
 }

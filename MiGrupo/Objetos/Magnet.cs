@@ -21,6 +21,32 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Magnet : Item
     {
+        public static Magnet CrearMagnet(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion, Vector3 movimiento)
+        {
+            Magnet auxMagnet;
+
+            unMesh.Scale = escalado;
+
+            auxMagnet = new Magnet(unMesh, texture, uncolor);
+
+            ((Item)auxMagnet).rotate(rotacion);
+            ((Item)auxMagnet).move(movimiento);
+
+            return auxMagnet;
+        }
+
+        public static Magnet CrearMagnet(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion)
+        { 
+            return CrearMagnet(unMesh, texture, uncolor, escalado, rotacion, GetLugarRelativoContenedor(unMesh.Position));
+        }
+
+        public Magnet(TgcMesh unMesh, TgcTexture texture, Color uncolor)
+            : base(unMesh, texture)
+        {
+            mesh.setColor(uncolor);
+        }
+
+        /*
         public Magnet(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion, Vector3 movimiento)
             : base(unMesh, texture)
         {
@@ -38,7 +64,7 @@ namespace AlumnoEjemplos.MiGrupo
             mesh.Scale = escalado;
             mesh.Rotation = rotacion;
         }
-
+        */
         public override Vector3 interactuarConPelota()
         {
             return new Vector3 (0, 0, 0);
@@ -56,9 +82,9 @@ namespace AlumnoEjemplos.MiGrupo
             return 0.5f;
         }
 
-        public override void llevarAContenedor()
+        public static Vector3 GetLugarRelativoContenedor(Vector3 posicion)
         {
-            mesh.move(new Vector3(-15.75f - mesh.Position.X, -7.5f - mesh.Position.Y, 1 - mesh.Position.Z));
+            return new Vector3(-15.75f - posicion.X, -7.5f - posicion.Y, 1 - posicion.Z);
         }
     }
 }

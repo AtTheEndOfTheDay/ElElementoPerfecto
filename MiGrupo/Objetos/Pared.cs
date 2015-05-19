@@ -20,6 +20,7 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Pared : Item
     {
+
         public static Pared CrearPared(Vector3 posicion, Vector3 size, Vector3 rotacion, TgcTexture texture, String nombre)
         {
             Pared auxPared;
@@ -52,9 +53,10 @@ namespace AlumnoEjemplos.MiGrupo
         {
             return 0.5f;
         }
-        public override void llevarAContenedor()
+
+        public static Vector3 GetLugarRelativoContenedor(Vector3 posicion)
         {
-            mesh.move(new Vector3(-15.5f - mesh.Position.X, -8f - mesh.Position.Y, 1 - mesh.Position.Z));
+            return new Vector3(-15.5f - posicion.X, -8f - posicion.Y, 1 - posicion.Z);
         }
     }
 }

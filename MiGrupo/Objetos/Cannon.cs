@@ -70,11 +70,6 @@ namespace AlumnoEjemplos.MiGrupo
         {
             return 0.25f;
         }
-
-        public override void llevarAContenedor()
-        {
-            mesh.move(new Vector3(-15f - mesh.Position.X, -8.5f - mesh.Position.Y, 1 - mesh.Position.Z));
-        }
         
         public static Vector3 GetLugarRelativoContenedor(Vector3 posicion)
         {
