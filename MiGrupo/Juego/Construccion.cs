@@ -69,6 +69,7 @@ namespace AlumnoEjemplos.MiGrupo
                     {
                         objetoAMover = objeto;
                         objetoAMover.enEscena = false;
+                        objetoAMover.llevarAContenedor();
                     }
                 }           
             }
@@ -82,11 +83,12 @@ namespace AlumnoEjemplos.MiGrupo
                 {
                     TgcBoundingBox aabb = objeto.mesh.BoundingBox;
                     selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
-                  
-                    if (selected)
+
+                    if (selected && objeto.enEscena)
                     {
                         objetoAMover = objeto;
                         agarrado = true;
+  
                     }
                 }
 
