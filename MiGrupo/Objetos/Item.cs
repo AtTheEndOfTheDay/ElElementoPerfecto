@@ -21,7 +21,7 @@ namespace AlumnoEjemplos.MiGrupo
 {
     abstract class Item
     {
-        public bool enEscena = false;
+        bool enEscena = false;
         public TgcMesh mesh;
         TgcTexture textura;
         public TgcObb orientedBB;

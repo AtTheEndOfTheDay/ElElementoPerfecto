@@ -38,7 +38,7 @@ namespace AlumnoEjemplos.MiGrupo
         
         public Pared(TgcMesh mesh, TgcTexture texture) :base(mesh,texture)
         {
-            enEscena = true;
+            setenEscena(true);
         }
 
         public override Vector3 interactuarConPelota()

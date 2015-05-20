@@ -159,11 +159,11 @@ namespace AlumnoEjemplos.MiGrupo
 
         private void rotateItemSelected(TgcD3dInput input, float elapsedTime)
         {
-            if (input.keyDown(Key.RightArrow))
+            if (input.keyDown(Key.D))
             {
                 itemSelected.rotate(new Vector3(0, 0, 3 * elapsedTime));
             }
-            if (input.keyDown(Key.LeftArrow))
+            if (input.keyDown(Key.A))
             {
                 itemSelected.rotate(new Vector3(0, 0, -3 * elapsedTime));
             }
@@ -189,14 +189,14 @@ namespace AlumnoEjemplos.MiGrupo
                 pickingRay.updateRay();
                 foreach (Item objeto in itemsDelUsuario)
                 {
-                    if (objeto.enEscena)
+                    if (objeto.getenEscena())
                     {
                         hitItem = TgcCollisionUtils.intersectRayObb(pickingRay.Ray, objeto.getOBB(), out collisionPoint);
 
                         if (hitItem)
                         {
                             //Lo quito de mi mundo 3D
-                            objeto.enEscena = false;
+                            objeto.setenEscena(false);
                             itemSelected = null;
                             objeto.llevarAContenedor();
                         }
@@ -218,7 +218,7 @@ namespace AlumnoEjemplos.MiGrupo
 
                 foreach (Item item in itemsDelUsuario)
                 {
-                    if (item.enEscena)
+                    if (item.getenEscena())
                     {
                         hitItem = TgcCollisionUtils.intersectRayObb(pickingRay.Ray, item.getOBB(), out collisionPoint);
 

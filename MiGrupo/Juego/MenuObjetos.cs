@@ -92,9 +92,9 @@ namespace AlumnoEjemplos.MiGrupo
                 if ((mouseX > objetos[i].Position.X) && (mouseX < (objetos[i].Position.X + ladoObjeto)) &&
                     (mouseY > objetos[i].Position.Y) && (mouseY < (objetos[i].Position.Y + ladoObjeto)))
                 {
-                    if (objetosUsuario[i].enEscena == false)
+                    if (!objetosUsuario[i].getenEscena())
                     {
-                        objetosUsuario[i].enEscena = true;
+                        objetosUsuario[i].setenEscena(true);
                         objetosUsuario[i].llevarAContenedor();
                     }
                 }
