@@ -27,6 +27,8 @@ namespace AlumnoEjemplos.MiGrupo
         TgcTexture textura;
         public TgcObb orientedBB;
 
+        public Item() { }
+
         public Item(TgcMesh unMesh, TgcTexture texture)
         {
             mesh = unMesh;
@@ -57,7 +59,7 @@ namespace AlumnoEjemplos.MiGrupo
             mesh.Effect.SetValue("materialSpecularExp", 10f);
         }
 
-        public virtual void render()
+        public void render()
         {
             if (enEscena)
             {
@@ -122,6 +124,16 @@ namespace AlumnoEjemplos.MiGrupo
 
         //Cada mesh es distinto, por eso tiene un lugar distinto en el contenedor.
         public abstract Vector3 getLugarDelContenedor();
+
+        public virtual void setenEscena(bool aparece)
+        {
+            enEscena = aparece;
+        }
+
+        public bool getenEscena()
+        {
+            return enEscena;
+        }
 
     }
 }

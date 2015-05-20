@@ -24,7 +24,7 @@ namespace AlumnoEjemplos.MiGrupo
         const float pi = (float)Math.PI;
         static Vector3 lugarDelContenedor = new Vector3(-15f, -8.5f, 1);
 
-        TgcMesh baseCannon;
+        public BaseCannon baseCannon;
         public float potencia = 0.6f;
         public bool cargado = false;
 
@@ -38,11 +38,8 @@ namespace AlumnoEjemplos.MiGrupo
         {
             Cannon auxCannon;
             meshCannon.Scale = escalado;
-            meshBase.Scale = escalado;
-            meshBase.setColor(Color.FromArgb(54, 22, 3));
-            meshBase.rotateY(pi / 2);
 
-            auxCannon = new Cannon(meshCannon, meshBase, texture, uncolor);
+            auxCannon = new Cannon(meshCannon, meshBase, texture, uncolor, escalado);
 
             ((Item)auxCannon).rotate(rotacion);
             ((Item)auxCannon).move(movimiento);
@@ -50,11 +47,11 @@ namespace AlumnoEjemplos.MiGrupo
             return auxCannon;
         }
 
-        public Cannon(TgcMesh unMesh, TgcMesh meshBase, TgcTexture texture, Color uncolor)
+        public Cannon(TgcMesh unMesh, TgcMesh meshBase, TgcTexture texture, Color uncolor, Vector3 escalado)
             : base(unMesh, texture)
         {
             mesh.setColor(uncolor);
-            baseCannon = meshBase;
+            baseCannon = new BaseCannon(meshBase, escalado);
         }
 
         public override Vector3 interactuarConPelota()
@@ -101,34 +98,10 @@ namespace AlumnoEjemplos.MiGrupo
                 base.rotate(rotacion);
         }
 
-        public override void iluminar()
+        public override void setenEscena(bool aparece)
         {
-            baseCannon.Effect = GuiController.Instance.Shaders.TgcMeshPointLightShader;
-
-            //Cargar variables shader de la luz
-            baseCannon.Effect.SetValue("lightColor", ColorValue.FromColor(Color.White));
-            baseCannon.Effect.SetValue("lightPosition", TgcParserUtils.vector3ToFloat4Array(new Vector3(-13.1f, 10.5f, 10)));
-            baseCannon.Effect.SetValue("eyePosition", TgcParserUtils.vector3ToFloat4Array(GuiController.Instance.ThirdPersonCamera.getPosition()));
-            baseCannon.Effect.SetValue("lightIntensity", 15);
-            baseCannon.Effect.SetValue("lightAttenuation", 1);
-
-            //Cargar variables de shader de Material. El Material en realidad deberia ser propio de cada mesh. Pero en este ejemplo se simplifica con uno comun para todos
-            baseCannon.Effect.SetValue("materialEmissiveColor", ColorValue.FromColor(Color.Black));
-            baseCannon.Effect.SetValue("materialAmbientColor", ColorValue.FromColor(Color.White));
-            baseCannon.Effect.SetValue("materialDiffuseColor", ColorValue.FromColor(Color.White));
-            baseCannon.Effect.SetValue("materialSpecularColor", ColorValue.FromColor(Color.White));
-            baseCannon.Effect.SetValue("materialSpecularExp", 10f);
-            base.iluminar();
-        }
-
-        public override void render()
-        {
-            if (enEscena)
-            {
-               mesh.render();
-               orientedBB.render();
-               baseCannon.render();
-            }
+            baseCannon.setenEscena(aparece);
+            base.setenEscena(aparece);
         }
     }
 }
