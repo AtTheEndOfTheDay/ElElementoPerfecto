@@ -50,12 +50,13 @@ namespace AlumnoEjemplos.MiGrupo
             mesh.setColor(uncolor);
         }
 
-        public override Vector3 interactuarConPelota()
+        /*
+        public override Vector3 interactuarConPelota(Pelota pelota, float elapsedTime)
         {
             return new Vector3 (0, 0, 0);
             //TODO
         }
-
+        */
         public override bool debeRebotar(TgcSphere esfera)
         {
             return true;

@@ -21,6 +21,8 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Magnet : Item
     {
+        const float MIN_COS_ATRACTION = 0.7071f; //coseno de 45
+
         static Vector3 lugarDelContenedor = new Vector3(-15.75f, -7.5f, 1);
 
         public static Magnet CrearMagnet(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion, Vector3 movimiento)
@@ -48,10 +50,18 @@ namespace AlumnoEjemplos.MiGrupo
             mesh.setColor(uncolor);
         }
 
-        public override Vector3 interactuarConPelota()
+        public override void interactuarConPelota(Pelota pelota, float elapsedTime)
         {
-            return new Vector3 (0, 0, 0);
-            //TODO
+            Vector3 distanceWithBall = pelota.esfera.Position - mesh.Position;
+            Vector3 normalDistance = Vector3.Normalize(distanceWithBall);
+            Vector3 directionMagnet = Vector3.TransformCoordinate(new Vector3(0,1,0),Matrix.RotationYawPitchRoll(mesh.Rotation.Y,mesh.Rotation.X,mesh.Rotation.Z));
+
+
+            if(Vector3.Dot(normalDistance,directionMagnet)>MIN_COS_ATRACTION)
+            {
+                pelota.aumentarVelocidad(-normalDistance * (0.5f / distanceWithBall.LengthSq()) * elapsedTime * 100);
+            }
+
         }
 
         public override bool debeRebotar(TgcSphere esfera)

@@ -54,20 +54,18 @@ namespace AlumnoEjemplos.MiGrupo
             baseCannon = new BaseCannon(meshBase, escalado);
         }
 
-        public override Vector3 interactuarConPelota()
+        public override void interactuarConPelota(Pelota pelota, float elapsedTime)
         {
-            return new Vector3(-potencia, potencia, 0);
+            if (cargado)
+            {
+                pelota.aumentarVelocidad(new Vector3(-potencia, potencia, 0));
+                cargado = false;
+            }
         }
 
         public override bool debeRebotar(TgcSphere esfera)
         {
-            if (cargado)
-            {
-                cargado = false;
-                return false;
-            }                
-            else
-                return true;
+            return !cargado;
         }
 
         public override float getCoefRebote(Vector3 normal)
