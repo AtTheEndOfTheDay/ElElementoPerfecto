@@ -29,6 +29,8 @@ namespace AlumnoEjemplos.MiGrupo
         TgcTexture texturaCannon = TgcTexture.createTexture(alumnoTextureFolder() + "Cannon.png");
         TgcTexture texturaMagnet = TgcTexture.createTexture(alumnoTextureFolder() + "Magnet.png");
         TgcTexture texturaSpring = TgcTexture.createTexture(alumnoTextureFolder() + "Spring.png");
+        TgcTexture texturaPasarDeNivel = TgcTexture.createTexture(alumnoTextureFolder() + "PasasteDeNivel.jpg");
+        TgcTexture texturaGanaste = TgcTexture.createTexture(alumnoTextureFolder() + "Ganaste!!!.jpg");
 
         TgcSceneLoader loader = new TgcSceneLoader();
         TgcScene scene;
@@ -41,6 +43,7 @@ namespace AlumnoEjemplos.MiGrupo
         Magnet magnet1;
         Magnet magnet2;
         Spring spring1;
+
 
         public static string alumnoTextureFolder()
         {
@@ -76,32 +79,18 @@ namespace AlumnoEjemplos.MiGrupo
             itemsDeNivel.Add(lateralIzquierda);
         }
 
-        public MenuObjetos menuNivel(List<Item> itemsDelUsuario)
+        public void iniciarNivel(int nivel, out TgcSprite cartel, out TgcBox objetoGanador, out Pelota pelota, List<Item> itemsDeNivel, List<Item> itemsDelUsuario, out MenuObjetos menu, TgcBox fondo, TgcBox contenedor)
         {
-
-            return new MenuObjetos(itemsDelUsuario, laja);
-        }
-
-        public Pelota pelotaNivel(int nivel)
-        {
+            cartel = new TgcSprite();
+            Size screenSize = GuiController.Instance.Panel3d.Size;
+            cartel.SrcRect = new Rectangle();
+            cartel.Position = new Vector2((int)Math.Round(screenSize.Width * 0.2f), (int)Math.Round(screenSize.Height * 0.4f));
             switch (nivel)
             {
                 case 1:
-                    return new Pelota(0.5f, new Vector3(16, -8, 1), metal);
-                case 2:
-                    return new Pelota(1f, new Vector3(10, 5, 1), madera);
-                default:
-                    return new Pelota(0.5f, new Vector3(16, -8, 1), metal);
-            }
-        }
-
-
-        public void iniciarNivel(int nivel, List<Item> itemsDeNivel, List<Item> itemsDelUsuario, MenuObjetos menu, TgcBox fondo, TgcBox contenedor)
-        {
-            switch (nivel)
-            {
-                case 1:
-
+                    objetoGanador = TgcBox.fromSize(new Vector3(-5, -8, 1), new Vector3(1, 1, 1), Color.Blue);
+                    pelota = new Pelota(0.5f, new Vector3(16, -8, 1), metal);
+                    cartel.Texture = texturaPasarDeNivel;
                     //Items del Usuario
                     itemsDelUsuario.Clear();
                     magnet1 = Magnet.CrearMagnet(scene.Meshes[3].clone("magnet1"), texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
@@ -126,6 +115,10 @@ namespace AlumnoEjemplos.MiGrupo
                     fondo.setTexture(madera);
                     break;
                 case 2:
+
+                    objetoGanador = TgcBox.fromSize(new Vector3(-10, -4, 1), new Vector3(1, 1, 1), Color.Blue);
+                    pelota = new Pelota(1f, new Vector3(10, 5, 1), madera);
+                    cartel.Texture = texturaGanaste;
                     //Items del Usuario 
                     itemsDelUsuario.Clear();
                     cannon2 = Cannon.CrearCannon(scene.Meshes[0].clone("Cannon2"), scene.Meshes[2].clone("baseCannon1"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4));
@@ -148,8 +141,14 @@ namespace AlumnoEjemplos.MiGrupo
                     
                     fondo.setTexture(metal);
                     break;
+                default:
+
+                    objetoGanador = TgcBox.fromSize(new Vector3(-5, -8, 1), new Vector3(1, 1, 1), Color.Blue);
+                    pelota = new Pelota(0.5f, new Vector3(16, -8, 1), metal);
+                    break;
             }
-            
+
+            menu = new MenuObjetos(itemsDelUsuario, laja);
         }
 
         public void reiniciar(int nivel, Pelota pelota) 
@@ -160,7 +159,7 @@ namespace AlumnoEjemplos.MiGrupo
                     case 1:
                         cannon.cargado = true; 
                         break; 
-                    case 2:                        
+                    case 2:   
                         break; 
                 } 
             } 
