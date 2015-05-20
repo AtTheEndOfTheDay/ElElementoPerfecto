@@ -36,6 +36,7 @@ namespace AlumnoEjemplos.MiGrupo
         TgcScene scene;
 
         Pared piso;
+        Pared techo;
         Pared lateralDerecha;
         Pared lateralIzquierda;
         Cannon cannon;
@@ -72,9 +73,11 @@ namespace AlumnoEjemplos.MiGrupo
         private void setParedes(TgcTexture textura, List<Item> itemsDeNivel)
         {
             piso = Pared.CrearPared(new Vector3(2.85f, -9.9f, 1), new Vector3(30, 0.1f, 1f), new Vector3(0, 0, 0), textura, "piso");
+            techo  = Pared.CrearPared(new Vector3(2.85f, 9.9f, 1), new Vector3(30, 0.1f, 1f), new Vector3(0, 0, 0), textura, "piso");
             lateralDerecha = Pared.CrearPared(new Vector3(-12.42f, 0, 1), new Vector3(0.01f, 20.75f, 1f), new Vector3(0, 0, 0), textura, "lateralDerecha");
             lateralIzquierda = Pared.CrearPared(new Vector3(17.9f, 0, 1), new Vector3(0.01f, 20.75f, 1f), new Vector3(0, 0, 0), textura, "lateralIzquierda");
             itemsDeNivel.Add(piso);
+            itemsDeNivel.Add(techo);
             itemsDeNivel.Add(lateralDerecha);
             itemsDeNivel.Add(lateralIzquierda);
         }
@@ -88,7 +91,7 @@ namespace AlumnoEjemplos.MiGrupo
             switch (nivel)
             {
                 case 1:
-                    objetoGanador = TgcBox.fromSize(new Vector3(-5, -8, 1), new Vector3(1, 1, 1), Color.Blue);
+                    objetoGanador = TgcBox.fromSize(new Vector3(6, 6, 1), new Vector3(1, 1, 1), Color.Blue);
                     pelota = new Pelota(0.5f, new Vector3(16, -8, 1), metal);
                     cartel.Texture = texturaPasarDeNivel;
                     //Items del Usuario
