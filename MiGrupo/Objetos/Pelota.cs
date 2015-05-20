@@ -21,7 +21,7 @@ namespace AlumnoEjemplos.MiGrupo
     class Pelota
     {
         const float CONST_VELOCIDAD = 10f;
-        const float CONST_GRAVITACIONAL = 1f;
+        const float CONST_GRAVITACIONAL = 1.6f;
         
         private Vector3 velocidadMovimiento;
         private Vector3 velocidadRotacion;

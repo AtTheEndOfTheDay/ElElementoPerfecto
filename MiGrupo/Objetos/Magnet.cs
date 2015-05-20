@@ -22,6 +22,7 @@ namespace AlumnoEjemplos.MiGrupo
     class Magnet : Item
     {
         const float MIN_COS_ATRACTION = 0.7071f; //coseno de 45
+        const float CONS_ATRACTION = 150;
 
         static Vector3 lugarDelContenedor = new Vector3(-15.75f, -7.5f, 1);
 
@@ -59,7 +60,7 @@ namespace AlumnoEjemplos.MiGrupo
 
             if(Vector3.Dot(normalDistance,directionMagnet)>MIN_COS_ATRACTION)
             {
-                pelota.aumentarVelocidad(-normalDistance * (0.5f / distanceWithBall.LengthSq()) * elapsedTime * 100);
+                pelota.aumentarVelocidad(-normalDistance * (0.5f / distanceWithBall.LengthSq()) * elapsedTime * CONS_ATRACTION);
             }
 
         }
