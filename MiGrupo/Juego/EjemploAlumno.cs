@@ -108,7 +108,7 @@ namespace AlumnoEjemplos.MiGrupo
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 25);
 
-            fondo = TgcBox.fromSize(new Vector3(2.85f, 0, 0), new Vector3(32, 20.75f, 0));
+            fondo = TgcBox.fromSize(new Vector3(3, 0.2f, -2), new Vector3(33.5f, 23, 0));
             contenedor = TgcBox.fromSize(new Vector3(-16.05f, -8.25f, 0), new Vector3(5.7f, 4.6f, 0), TgcTexture.createTexture(GuiController.Instance.AlumnoEjemplosMediaDir + "Texturas\\Laja.jpg"));
 
             setNivel();

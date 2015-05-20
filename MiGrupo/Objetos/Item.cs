@@ -25,7 +25,7 @@ namespace AlumnoEjemplos.MiGrupo
         public bool pickeado = false;
         public TgcMesh mesh;
         TgcTexture textura;
-        TgcObb orientedBB;
+        public TgcObb orientedBB;
 
         public Item(TgcMesh unMesh, TgcTexture texture)
         {
@@ -38,7 +38,7 @@ namespace AlumnoEjemplos.MiGrupo
         
         public abstract Vector3 interactuarConPelota();
 
-        public void iluminar()
+        public  virtual void iluminar()
         {
             mesh.Effect = GuiController.Instance.Shaders.TgcMeshPointLightShader;
 
@@ -57,7 +57,7 @@ namespace AlumnoEjemplos.MiGrupo
             mesh.Effect.SetValue("materialSpecularExp", 10f);
         }
 
-        public void render()
+        public virtual void render()
         {
             if (enEscena)
             {
@@ -98,7 +98,7 @@ namespace AlumnoEjemplos.MiGrupo
             return textura;
         }
 
-        public void rotate(Vector3 rotacion)
+        public virtual void rotate(Vector3 rotacion)
         {
             Vector3 distanceBetweenCenters = orientedBB.Center - mesh.Position;
 
@@ -109,7 +109,7 @@ namespace AlumnoEjemplos.MiGrupo
             orientedBB.rotate(rotacion);
         } 
 
-        public void move(Vector3 movement)
+        public virtual void move(Vector3 movement)
         {
             mesh.move(movement);
             orientedBB.move(movement);
