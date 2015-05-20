@@ -25,7 +25,7 @@ namespace AlumnoEjemplos.MiGrupo
         static Vector3 lugarDelContenedor = new Vector3(-15f, -8.5f, 1);
 
         public BaseCannon baseCannon;
-        public float potencia = 0.6f;
+        public float potencia = 1;
         public bool cargado = false;
 
 
@@ -58,7 +58,7 @@ namespace AlumnoEjemplos.MiGrupo
         {
             if (cargado)
             {
-                pelota.aumentarVelocidad(new Vector3(-potencia, potencia, 0));
+                pelota.aumentarVelocidad(new Vector3(-(potencia * (float)Math.Sin(mesh.Rotation.Z)), (potencia * (float)Math.Cos(mesh.Rotation.Z)), 0));
                 cargado = false;
             }
         }
@@ -92,7 +92,7 @@ namespace AlumnoEjemplos.MiGrupo
         public override void rotate(Vector3 rotacion)
         {
             Vector3 siguienteRotacion = mesh.Rotation + rotacion;
-            if ((siguienteRotacion.Z < pi / 2) && (siguienteRotacion.Z > -pi / 2))
+            if ((siguienteRotacion.Z <= pi / 2) && (siguienteRotacion.Z >= -pi / 2))
                 base.rotate(rotacion);
         }
 
