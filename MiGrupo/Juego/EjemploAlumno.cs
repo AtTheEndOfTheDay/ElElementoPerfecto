@@ -55,15 +55,14 @@ namespace AlumnoEjemplos.MiGrupo
         List<Item> itemsDeNivel = new List<Item>();
 
         Action<TgcD3dInput, float> etapa;
-        Vector2 mouseVector;
-        Vector2 anteriorMouse;
-        Vector3 movimientoObjeto;
-        Item objetoPickeado;
-        Item objetoAnterior;
+        
+        Item itemSelected = null;
         TgcPickingRay pickingRay = new TgcPickingRay();
-        bool selected = false;
-        bool agarrado = false;
-        Vector3 collisionPoint;
+        Vector3 distanceBetweenPickAndCenter;
+        bool hitItem = false;
+        bool dragging = false;
+        bool firstPickInItem = true;
+
 
         TgcText2d textStage = new TgcText2d();
 
@@ -128,6 +127,8 @@ namespace AlumnoEjemplos.MiGrupo
             textStage.Position = new Point(0, 0);
             textStage.Text = "Construccion";
 
+            itemSelected = null;
+
             items = new List<Item>();
             foreach (Item item in itemsDeNivel)
                 items.Add(item);
@@ -142,21 +143,36 @@ namespace AlumnoEjemplos.MiGrupo
 
         void construccion(TgcD3dInput input, float elapsedTime)
         {
-            movimientoObjeto = new Vector3(0, 0, 0);
-            mouseVector = new Vector2(GuiController.Instance.D3dInput.Xpos, GuiController.Instance.D3dInput.Ypos);
+            evaluoClickEnMenu(input);
 
-            evaluoClickEnMenu();
+            borrarSiClickea(input);
 
-            borrarSiClickea();
+            pickDragAndDrop(input);
 
-            pickDragAndDrop(input, elapsedTime);
-             
-            anteriorMouse = mouseVector;
-            objetoAnterior = objetoPickeado;
+            if (itemSelected != null)
+            {
+                rotateItemSelected(input,elapsedTime);
+                itemSelected.getOBB().render();
+            }
+
         }
 
-        private void evaluoClickEnMenu()
+        private void rotateItemSelected(TgcD3dInput input, float elapsedTime)
         {
+            if (input.keyDown(Key.RightArrow))
+            {
+                itemSelected.rotate(new Vector3(0, 0, 3 * elapsedTime));
+            }
+            if (input.keyDown(Key.LeftArrow))
+            {
+                itemSelected.rotate(new Vector3(0, 0, -3 * elapsedTime));
+            }
+        }
+
+        private void evaluoClickEnMenu(TgcD3dInput input)
+        {
+            Vector2 mouseVector = new Vector2(GuiController.Instance.D3dInput.Xpos, GuiController.Instance.D3dInput.Ypos);
+
             if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
                 pickingRay.updateRay();
@@ -164,80 +180,88 @@ namespace AlumnoEjemplos.MiGrupo
             } 
         }
 
-        private void borrarSiClickea()
+        private void borrarSiClickea(TgcD3dInput input)
         {
-            if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_RIGHT))
+            Vector3 collisionPoint;
+
+            if (input.buttonDown(TgcD3dInput.MouseButtons.BUTTON_RIGHT))
             {
                 pickingRay.updateRay();
                 foreach (Item objeto in itemsDelUsuario)
                 {
-                    TgcBoundingBox aabb = objeto.mesh.BoundingBox;
-                    selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
-
-                    if (selected)
+                    if (objeto.enEscena)
                     {
-                        objeto.enEscena = false;
-                        objeto.pickeado = false;
-                        objeto.llevarAContenedor();
+                        hitItem = TgcCollisionUtils.intersectRayObb(pickingRay.Ray, objeto.getOBB(), out collisionPoint);
+
+                        if (hitItem)
+                        {
+                            //Lo quito de mi mundo 3D
+                            objeto.enEscena = false;
+                            itemSelected = null;
+                            objeto.llevarAContenedor();
+                        }
                     }
+
                 }
             }
         }
 
-        private void pickDragAndDrop(TgcD3dInput input, float elapsedTime)
+        private void pickDragAndDrop(TgcD3dInput input)
         {
+            float instanteT;
+            Vector3 pickPoint = new Vector3(0, 0, 0);
+            Vector3 collisionPoint;
+            
             if (input.buttonDown(TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
                 pickingRay.updateRay();
 
-                foreach (Item objeto in itemsDelUsuario)
+                foreach (Item item in itemsDelUsuario)
                 {
-                    TgcBoundingBox aabb = objeto.mesh.BoundingBox;
-                    selected = TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, aabb, out collisionPoint);
-
-                    if (selected && objeto.enEscena)
+                    if (item.enEscena)
                     {
-                        objetoPickeado = objeto;
+                        hitItem = TgcCollisionUtils.intersectRayObb(pickingRay.Ray, item.getOBB(), out collisionPoint);
 
-                        if (objetoAnterior != null)
-                            objetoAnterior.pickeado = false;
-                        objetoPickeado.pickeado = true;
-                        agarrado = true;
+                        if (hitItem)
+                        {
+                            if (!dragging)
+                            {
+                                dragging = true;
 
+                                if (item != itemSelected)
+                                {
+                                    //selecciono nuevo item
+                                    itemSelected = item;
+                                }
+
+                                firstPickInItem = true;
+                            }
+                        }
                     }
                 }
 
-                if (agarrado)
+                if (dragging)
                 {
-                    movimientoObjeto.X = -(mouseVector.X - anteriorMouse.X);
-                    movimientoObjeto.Y = -(mouseVector.Y - anteriorMouse.Y);
+                    dragging = TgcCollisionUtils.intersectRayPlane(pickingRay.Ray, new Plane(0, 0, 1, -itemSelected.getPosition().Z), out instanteT, out pickPoint);
+                }
 
+                if (dragging)
+                {
+                    if (firstPickInItem)
+                    {
+                        distanceBetweenPickAndCenter = pickPoint - itemSelected.getPosition();
+                        firstPickInItem = false;
+                    }
+
+                    itemSelected.setPosition(pickPoint - distanceBetweenPickAndCenter);
                 }
             }
 
             if (input.buttonUp(TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
-                agarrado = false;
+                dragging = false;
             }
 
-            if (agarrado && objetoPickeado.enEscena)
-            {
-                objetoPickeado.move(movimientoObjeto * 0.032f);
-            }
-
-            if (objetoPickeado != null && objetoPickeado.pickeado)
-            {
-                objetoPickeado.getOBB().render();
-                if (input.keyDown(Key.D))
-                {
-                    objetoPickeado.rotate(new Vector3(0, 0, 3 * elapsedTime));
-                }
-                if (input.keyDown(Key.A))
-                {
-                    objetoPickeado.rotate(new Vector3(0, 0, -3 * elapsedTime));
-                }
-            }
-            
         }
 
         void play(TgcD3dInput input, float elapsedTime)
