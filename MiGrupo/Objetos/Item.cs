@@ -22,7 +22,6 @@ namespace AlumnoEjemplos.MiGrupo
     abstract class Item
     {
         public bool enEscena = false;
-        public bool pickeado = false;
         public TgcMesh mesh;
         TgcTexture textura;
         public TgcObb orientedBB;
@@ -109,7 +108,17 @@ namespace AlumnoEjemplos.MiGrupo
 
             mesh.Rotation += rotacion;
             orientedBB.rotate(rotacion);
-        } 
+        }
+
+        public Vector3 getPosition()
+        {
+            return mesh.Position;
+        }
+
+        public void setPosition(Vector3 newPosition)
+        {
+            move(newPosition - mesh.Position);
+        }
 
         public virtual void move(Vector3 movement)
         {
