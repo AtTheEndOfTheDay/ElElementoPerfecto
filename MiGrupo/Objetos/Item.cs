@@ -98,7 +98,6 @@ namespace AlumnoEjemplos.MiGrupo
             return textura;
         }
 
-
         public void rotate(Vector3 rotacion)
         {
             Vector3 distanceBetweenCenters = orientedBB.Center - mesh.Position;
@@ -121,20 +120,9 @@ namespace AlumnoEjemplos.MiGrupo
             move(getLugarDelContenedor() - mesh.Position);
         }
 
+        //Cada mesh es distinto, por eso tiene un lugar distinto en el contenedor.
         public abstract Vector3 getLugarDelContenedor();
 
-        public void recibiOrdenDelUsuario(TgcD3dInput input)
-        {
-            //TODO: hacer este metodo abstracto e implementarlo para cada item en particular.
-            if (input.keyDown(Key.RightArrow))
-            {
-                rotate(new Vector3(0, 0, 0.005f));
-            }
-            if (input.keyDown(Key.LeftArrow))
-            {
-                rotate(new Vector3(0, 0, -0.005f));
-            }
-        }
     }
 }
 

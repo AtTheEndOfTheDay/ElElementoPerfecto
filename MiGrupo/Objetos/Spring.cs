@@ -50,27 +50,6 @@ namespace AlumnoEjemplos.MiGrupo
             mesh.setColor(uncolor);
         }
 
-        /*
-        public Spring(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion, Vector3 movimiento)
-            : base(unMesh, texture)
-        {
-            //TODO: agregar tapas
-            mesh.setColor(uncolor);
-            mesh.move(movimiento);
-            mesh.Scale = escalado;
-            mesh.Rotation = rotacion;
-        }
-
-        public Spring(TgcMesh unMesh, TgcTexture texture, Color uncolor, Vector3 escalado, Vector3 rotacion)
-            : base(unMesh, texture)
-        {
-            mesh.setColor(uncolor);
-            llevarAContenedor();
-            mesh.Scale = escalado;
-            mesh.Rotation = rotacion;
-        }
-        */
-
         public override Vector3 interactuarConPelota()
         {
             return new Vector3 (0, 0, 0);

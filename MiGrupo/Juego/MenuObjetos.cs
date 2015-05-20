@@ -19,13 +19,14 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class MenuObjetos 
     {
-        private TgcSprite menu;
-        private TgcSprite[] objetos;
+
+        List<Item> objetosUsuario;
+        TgcSprite menu;
+        TgcSprite[] objetos;
         Size screenSize = GuiController.Instance.Panel3d.Size;
         float ladoIzqMenu;
         float ladoObjeto;
         int cantidadObjetos;
-        List<Item> objetosUsuario;
 
         public MenuObjetos(List<Item> listaMenu, TgcTexture texturaMenu)
         {
@@ -42,8 +43,6 @@ namespace AlumnoEjemplos.MiGrupo
             for (var i = 0; i < cantidadObjetos; i++)
                 objetos[i].Texture = listaMenu[i].getTexture();
             
-
-            //Esta pensado para una resolucion con aspect ratio 16:9
             //Dibujo Menu
             ladoIzqMenu = screenSize.Width * (1 - 0.15f);
             float anchoMenu = screenSize.Width - ladoIzqMenu;
@@ -77,11 +76,9 @@ namespace AlumnoEjemplos.MiGrupo
 
         public void disposeMenu(int cantidadObjetos)
         {
-            menu.Texture.dispose();
             menu.dispose();
             for (var i = 0; i < cantidadObjetos; i++)
             {
-                objetos[i].Texture.dispose();
                 objetos[i].dispose();
             }
                 
@@ -89,6 +86,7 @@ namespace AlumnoEjemplos.MiGrupo
 
         internal void poneloEnPantallaSiToco(float mouseX, float mouseY)
         {
+            //Reviso por cada sprite en el menu, si clickeo en uno para renderizar ese objeto
             for (var i = 0; i < cantidadObjetos;  i++)
             {
                 if ((mouseX > objetos[i].Position.X) && (mouseX < (objetos[i].Position.X + ladoObjeto)) &&

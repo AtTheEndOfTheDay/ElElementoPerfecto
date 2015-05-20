@@ -43,29 +43,23 @@ namespace AlumnoEjemplos.MiGrupo
 
     public class EjemploAlumno : TgcExample
     {
-        float pi = (float)Math.PI;
-        Nivel nivelActual;
-        Nivel nivel1;
-        Nivel nivel2;
+        NivelFactory fabricaDeNiveles = new NivelFactory();
 
-        TgcTexture madera = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Madera.jpg");
-        TgcTexture metal = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Metal.jpg");
-        TgcTexture texturaCannon = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Cannon.png");
-        TgcTexture texturaMagnet = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Magnet.png");
-        TgcTexture texturaSpring = TgcTexture.createTexture(EjemploAlumno.alumnoTextureFolder() + "Spring.png");
+        int numeroDeNivel = 1;
+        TgcBox fondo;
+        MenuObjetos menu;
+        TgcBox contenedor;
+        Pelota pelota;
+        List<Item> itemsDelUsuario = new List<Item>();
+        List<Item> itemsDeNivel = new List<Item>();
+        //Action<TgcD3dInput, float> etapa;  TODO: revisar...no puedo inicializar una vez al principio me falta el elapsed time
+        Etapa etapa;
+        Construccion construccion;
+        Play play;
+        TgcText2d textStage = new TgcText2d();
 
-        Pelota[] pelotas;
-        TgcSceneLoader loader = new TgcSceneLoader();
-        TgcScene scene;
-
-        Cannon cannon;
-        Cannon cannon2;
-        Magnet magnet1;
-        Magnet magnet2;
-        Spring spring1;
-
-        public static bool mostrarOBBs=true;
-        public static bool mostrarBBs = true;
+        public static bool mostrarOBBs=false;
+        public static bool mostrarBBs = false;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -92,14 +86,6 @@ namespace AlumnoEjemplos.MiGrupo
             return "MiIdea - Descripcion de la idea";
         }
 
-        public static string alumnoTextureFolder()
-        {
-            return GuiController.Instance.AlumnoEjemplosMediaDir + "Texturas\\";
-        }
-        public static string alumnoMeshFolder()
-        {
-            return GuiController.Instance.AlumnoEjemplosMediaDir + "MeshCreator\\Meshes\\";
-        }
 
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
@@ -107,28 +93,44 @@ namespace AlumnoEjemplos.MiGrupo
         /// Borrar todo lo que no haga falta
         /// </summary>
         public override void init()
-        {
-            //Propios de cada nivel, delegar al nivel
-                   
-            
+        {          
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
             
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 25);
 
+            fondo = TgcBox.fromSize(new Vector3(2.85f, 0, 0), new Vector3(32, 20.75f, 0));
+            contenedor = TgcBox.fromSize(new Vector3(-16.05f, -8.25f, 0), new Vector3(5.7f, 4.6f, 0), TgcTexture.createTexture(GuiController.Instance.AlumnoEjemplosMediaDir + "Texturas\\Laja.jpg"));
 
-            pelotas = new Pelota[2];
-            scene = loader.loadSceneFromFile(EjemploAlumno.alumnoMeshFolder() + "Elements-TgcScene.xml");
-            
-            iniciarNivel1();
-            iniciarNivel2();
-            
-            nivelActual = nivel1;
-
+            setNivel();
+           
             GuiController.Instance.Modifiers.addBoolean("Mostrar OBBs", "Mostrar OBBs", true);
             GuiController.Instance.Modifiers.addBoolean("Mostrar BBs", "Mostrar BBs", true);
         }
 
+        private void setNivel()
+        {
+            pelota = fabricaDeNiveles.pelotaNivel(numeroDeNivel);
+            fabricaDeNiveles.iniciarNivel(numeroDeNivel, itemsDeNivel, itemsDelUsuario, menu, fondo, contenedor);
+            menu = fabricaDeNiveles.menuNivel(itemsDelUsuario);
+            construccion = new Construccion(itemsDelUsuario, pelota, menu);
+            play = new Play(itemsDeNivel, itemsDelUsuario, pelota);
+
+            etapa = construccion;
+            textStage.Color = Color.White;
+            textStage.Position = new Point(0, 0);
+            textStage.Text = "Construccion";
+
+            foreach (Item objeto in itemsDelUsuario)
+            {
+                objeto.iluminar();
+            }
+
+            foreach (Item objeto in itemsDeNivel)
+            {
+                objeto.iluminar();
+            }
+        }
 
         /// <summary>
         /// Método que se llama cada vez que hay que refrescar la pantalla.
@@ -145,25 +147,49 @@ namespace AlumnoEjemplos.MiGrupo
             TgcD3dInput input = GuiController.Instance.D3dInput;
             if (input.keyDown(Key.F1))
             {
-                reiniciar(nivel1);
-                nivelActual = nivel1;
+                numeroDeNivel = 1;
+                setNivel();
             }                   
             else if (input.keyDown(Key.F2))
-                {
-                    reiniciar(nivel2);
-                    nivelActual = nivel2;
+            {
+                numeroDeNivel = 2;
+                setNivel();
             }
             else if (input.keyDown(Key.Space))
             {
-                nivelActual.pasaAPlay();
+                etapa = play;
+                textStage.Text = etapa.getNombre();
             }
             else if (input.keyDown(Key.C))
             {
-                reiniciar(nivelActual);
-            }    
-            
-            nivelActual.render(elapsedTime);
+                fabricaDeNiveles.reiniciar(numeroDeNivel, pelota);
+                etapa = construccion;
+                textStage.Text = etapa.getNombre();
+            }
 
+            etapa.interaccion(input, elapsedTime);
+
+            fondo.render();
+            contenedor.render();
+
+            foreach (Item objeto in itemsDelUsuario)
+            {
+                objeto.iluminar();
+                objeto.render();
+            }
+            
+            foreach (Item objeto in itemsDeNivel)
+            {
+                objeto.iluminar();
+                objeto.render();
+            }
+
+            pelota.render();
+
+            GuiController.Instance.Drawer2D.beginDrawSprite();
+            menu.renderMenu(itemsDelUsuario.Count);
+            textStage.render();
+            GuiController.Instance.Drawer2D.endDrawSprite();
         }
 
         /// <summary>
@@ -172,77 +198,10 @@ namespace AlumnoEjemplos.MiGrupo
         /// </summary>
         public override void close()
         {
-            nivel1.dispose();
-            nivel2.dispose();
+            pelota.dispose();
+            fondo.dispose();
+            contenedor.dispose();
+            fabricaDeNiveles.dispose();
         }
-        private void iniciarNivel1()
-        {
-            pelotas[0] = new Pelota(0.5f, new Vector3(16, -8f, 1), metal);
-            
-            //Items del Nivel
-            cannon = Cannon.CrearCannon(scene.Meshes[0].clone("cannon1"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4), new Vector3(16, -8f, 1f));
-            cannon.enEscena = true;
-            cannon.cargado = true;
-            List<Item> itemsNivel1 = new List<Item>();
-            itemsNivel1.Add(cannon);
-            //Fin Items del Nivel
-
-            //Items del Usuario
-            magnet1 = Magnet.CrearMagnet(scene.Meshes[3].clone("magnet1"), texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
-            magnet2 = Magnet.CrearMagnet(scene.Meshes[3].clone("magnet2"), texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi));
-
-            spring1 = Spring.CrearSpring(scene.Meshes[1].clone("spring1"), texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
-            // spring1 = new Spring(scene.Meshes[3], texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, pi / 2, pi));
-            List<Item> itemsUsuario1 = new List<Item>();
-            itemsUsuario1.Add(magnet1);
-            itemsUsuario1.Add(magnet2);
-            itemsUsuario1.Add(spring1);
-            //Fin Items del Usuario
-
-            nivel1 = new Nivel(1, madera, madera, madera, pelotas[0], itemsNivel1, itemsUsuario1);
-        }
-
-        private void iniciarNivel2()
-        {
-            pelotas[1] = new Pelota(1f, new Vector3(10, 5, 1), madera);
-
-            //Items del Nivel
-            Pared obstaculo1 = Pared.CrearPared(new Vector3(-10, -6, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, 0), madera, "Obstaculo1");
-            Pared obstaculo2 = Pared.CrearPared(new Vector3(-5, -4, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, 0), madera, "Obstaculo2");
-            Pared obstaculo3 = Pared.CrearPared(new Vector3(5, -2, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, 0), madera, "Obstaculo3");
-            Pared obstaculo4 = Pared.CrearPared(new Vector3(10, 0, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, FastMath.PI / 4), madera, "Obstaculo4");
-            List<Item> itemsNivel2 = new List<Item>();
-            itemsNivel2.Add(obstaculo1);
-            itemsNivel2.Add(obstaculo2);
-            itemsNivel2.Add(obstaculo3);
-            itemsNivel2.Add(obstaculo4);
-            
-            //Fin Items del Nivel
-
-            //Items del Usuario 
-
-            cannon2 = Cannon.CrearCannon(scene.Meshes[0].clone("Cannon2"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4));
-            List<Item> itemsUsuarioNivel2 = new List<Item>();
-            itemsUsuarioNivel2.Add(cannon2);
-            //Fin Items del Usuario  
-
-            nivel2 = new Nivel(2, metal, metal, metal, pelotas[1], itemsNivel2, itemsUsuarioNivel2);
-        }
-
-        private void reiniciar(Nivel nivel)
-        {
-            nivelActual.pasaAConstruccion();
-            switch (nivel.numeroDeNivel)
-            {
-                case 1:
-                    pelotas[0].reiniciar();
-                    cannon.cargado = true;
-                    break;
-                case 2:
-                    pelotas[1].reiniciar();
-                    break;
-            }
-        }
-        
     }
 }

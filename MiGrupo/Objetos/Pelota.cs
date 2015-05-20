@@ -48,7 +48,6 @@ namespace AlumnoEjemplos.MiGrupo
 
         public void interactuar(TgcD3dInput input,float elapsedTime)
         {
-            //velocidadMovimiento.X = 0;
             velocidadRotacion.Z = 0;
 
             if (input.keyDown(Key.A))
@@ -88,6 +87,7 @@ namespace AlumnoEjemplos.MiGrupo
             velocidadMovimiento = velocidadInicialMovimiento;
             velocidadRotacion = velocidadInicialRotacion;
         }
+
         public void dispose()
         {
             esfera.dispose();

@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MiGrupo\Juego\NivelFactory.cs" />
     <Compile Include="MiGrupo\Objetos\Magnet.cs" />
     <Compile Include="MiGrupo\Objetos\Cannon.cs" />
     <Compile Include="MiGrupo\Objetos\Item.cs" />
@@ -94,7 +95,6 @@
     <Compile Include="MiGrupo\Juego\EjemploAlumno.cs" />
     <Compile Include="MiGrupo\Juego\Etapa.cs" />
     <Compile Include="MiGrupo\Juego\MenuObjetos.cs" />
-    <Compile Include="MiGrupo\Juego\Nivel.cs" />
     <Compile Include="MiGrupo\Objetos\Pared.cs" />
     <Compile Include="MiGrupo\Objetos\Pelota.cs" />
     <Compile Include="MiGrupo\Objetos\PelotaCollisionManager.cs" />

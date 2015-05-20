@@ -14,15 +14,12 @@ namespace AlumnoEjemplos.MiGrupo
 {
     class Play : Etapa
     {
-        private List<Item> itemsDelNivel;
-        private List<Item> itemsDelUsuario;
         private List<Item> items = new List<Item>();
         private Pelota pelota;
 
-        public Play(List<Item> itemsNivel, List<Item> itemsUsuario, Pelota unaPelota)
+        public Play(List<Item> itemsDelNivel, List<Item> itemsDelUsuario, Pelota unaPelota)
         {
-            itemsDelNivel = itemsNivel ;
-            itemsDelUsuario = itemsUsuario;
+            //Creo una lista generica con todos los items del nivel
             foreach (Item item in itemsDelNivel)
                 items.Add(item);
             foreach (Item item in itemsDelUsuario)
@@ -33,22 +30,8 @@ namespace AlumnoEjemplos.MiGrupo
         void Etapa.interaccion(TgcD3dInput input, float elapsedTime)
         {
             pelota.interactuar(input, elapsedTime);
-        }
 
-        void Etapa.aplicarMovimientos(float elapsedTime)
-        {
             pelota.aplicarMovimientos(elapsedTime, items);
-
-        }
-
-        void Etapa.render()
-        {
-            pelota.render();
-
-            foreach (var item in items)
-            {
-                item.render();
-            }
         }
 
         String Etapa.getNombre()

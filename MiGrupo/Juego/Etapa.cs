@@ -8,13 +8,7 @@ namespace AlumnoEjemplos.MiGrupo
 {
     interface Etapa
     {
-        void render();
-
         void interaccion(TgcD3dInput input, float elapsedTime);
-
-        void aplicarMovimientos(float elapsedTime);
-
         String getNombre();
-
     }
 }
