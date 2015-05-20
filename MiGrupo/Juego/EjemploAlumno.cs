@@ -345,6 +345,11 @@ namespace AlumnoEjemplos.MiGrupo
         {
             pelota.interactuar(input, elapsedTime);
 
+            foreach (Item item in items)
+            {
+                item.interactuarConPelota(pelota,elapsedTime);
+            }
+
             pelota.aplicarMovimientos(elapsedTime, items);
         }
 

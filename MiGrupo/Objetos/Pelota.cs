@@ -21,11 +21,12 @@ namespace AlumnoEjemplos.MiGrupo
     class Pelota
     {
         const float CONST_VELOCIDAD = 10f;
+        const float CONST_GRAVITACIONAL = 1f;
         
         private Vector3 velocidadMovimiento;
         private Vector3 velocidadRotacion;
         private Vector3 iniPelota;
-        private Vector3 velocidadInicialMovimiento = new Vector3(0, -1.5f, 0);
+        private Vector3 velocidadInicialMovimiento = new Vector3(0, 0, 0);
         private Vector3 velocidadInicialRotacion = new Vector3(0, 0, 0);
 
         public TgcSphere esfera = new TgcSphere();
@@ -46,6 +47,11 @@ namespace AlumnoEjemplos.MiGrupo
            
         }
 
+        public void aumentarVelocidad(Vector3 velocidadAdicional)
+        {
+            velocidadMovimiento += velocidadAdicional;
+        }
+
         public void interactuar(TgcD3dInput input,float elapsedTime)
         {
             velocidadRotacion.Z = 0;
@@ -61,7 +67,7 @@ namespace AlumnoEjemplos.MiGrupo
                 velocidadRotacion.Z = 15;
             }
 
-            velocidadMovimiento.Y += -0.5f * elapsedTime;
+            velocidadMovimiento.Y += -0.5f * CONST_GRAVITACIONAL * elapsedTime;
 
         }
 

@@ -36,8 +36,9 @@ namespace AlumnoEjemplos.MiGrupo
             orientedBB = TgcObb.computeFromAABB(mesh.BoundingBox);
             orientedBB.setRenderColor(Color.Red);
         }
-        
-        public abstract Vector3 interactuarConPelota();
+
+        public virtual void interactuarConPelota(Pelota pelota, float elapsedTime)
+        { }
 
         public  virtual void iluminar()
         {

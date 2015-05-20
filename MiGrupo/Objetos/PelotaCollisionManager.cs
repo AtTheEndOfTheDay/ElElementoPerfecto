@@ -57,8 +57,10 @@ namespace AlumnoEjemplos.MiGrupo
                 {
                     if (item.debeRebotar(esfera))
                         newVelocidad = rebotar(esfera, item, velocidad, factorVelocidad);
+                    /*
                     else
                         newVelocidad = item.interactuarConPelota();
+                    */
                     if (!newVelocidad.Equals(velocidad))
                     {
                         newVelocidad = ConsiderarColicionesCon(esfera, itemsInScenario, newVelocidad, factorVelocidad, nivelRecursivo + 1);

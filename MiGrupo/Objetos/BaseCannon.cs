@@ -35,11 +35,13 @@ namespace AlumnoEjemplos.MiGrupo
             mesh.Scale = escalado;
         }
 
-        public override Vector3 interactuarConPelota()
+        /*
+        public override void interactuarConPelota(Pelota pelota, float elapsedTime)
         {
             return new Vector3(0, 0, 0);
             //TODO
         }
+        */
 
         public override bool debeRebotar(TgcSphere esfera)
         {
