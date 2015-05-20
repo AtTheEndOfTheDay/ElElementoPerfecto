@@ -104,7 +104,7 @@ namespace AlumnoEjemplos.MiGrupo
                     //Items del Nivel
                     itemsDeNivel.Clear();
                     setParedes(madera, itemsDeNivel);
-                    cannon = Cannon.CrearCannon(scene.Meshes[0].clone("cannon1"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4), new Vector3(16, -8f, 1f));
+                    cannon = Cannon.CrearCannon(scene.Meshes[0].clone("cannon1"), scene.Meshes[2].clone("baseCannon1"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4), new Vector3 (16, -8f, 1f));
                     cannon.enEscena = true;
                     cannon.cargado = true;
                     itemsDeNivel.Add(cannon);
@@ -138,7 +138,7 @@ namespace AlumnoEjemplos.MiGrupo
 
                     //Items del Usuario 
                     itemsDelUsuario.Clear();
-                    cannon2 = Cannon.CrearCannon(scene.Meshes[0].clone("Cannon2"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4));
+                    cannon2 = Cannon.CrearCannon(scene.Meshes[0].clone("Cannon2"), scene.Meshes[2].clone("baseCannon1"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4));
                     itemsDelUsuario.Add(cannon2);
                     //Fin Items del Usuario  
 
