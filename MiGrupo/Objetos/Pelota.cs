@@ -78,6 +78,8 @@ namespace AlumnoEjemplos.MiGrupo
             velocidadMovimiento = manejadorDeColiciones.ConsiderarColicionesCon(esfera, itemsInScenario, velocidadMovimiento, CONST_VELOCIDAD * elapsedTime, 0);
 
             esfera.move(velocidadMovimiento * CONST_VELOCIDAD * elapsedTime);
+
+            esfera.rotateZ(-velocidadMovimiento.X / esfera.Radius * CONST_VELOCIDAD * elapsedTime);
         }
 
         public void render()

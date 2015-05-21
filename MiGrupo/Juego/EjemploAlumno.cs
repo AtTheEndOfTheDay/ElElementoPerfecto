@@ -152,6 +152,16 @@ namespace AlumnoEjemplos.MiGrupo
                 numeroDeNivel = 3;
                 setNivel();
             }
+            else if (input.keyDown(Key.F4))
+            {
+                numeroDeNivel = 4;
+                setNivel();
+            }
+            else if (input.keyDown(Key.F5))
+            {
+                numeroDeNivel = 5;
+                setNivel();
+            }
             else if ((TgcCollisionUtils.testSphereAABB(pelota.esfera.BoundingSphere, objetoGanador.BoundingBox)))
             {
                 etapa = ganador;
@@ -159,13 +169,13 @@ namespace AlumnoEjemplos.MiGrupo
             else if (input.keyDown(Key.Space))
             {
                 etapa = play;
-                textStage.Text = "Play";
+                textStage.Text = "Play - Presione C para volver a la etapa de construccion";
             }
             else if (input.keyDown(Key.C))
             {
                 fabricaDeNiveles.reiniciar(numeroDeNivel, pelota);
                 etapa = construccion;
-                textStage.Text = "Construccion";
+                textStage.Text = "Construccion - Presione espacio para empezar";
             }
 
             etapa(input, elapsedTime);
@@ -213,7 +223,7 @@ namespace AlumnoEjemplos.MiGrupo
             etapa = construccion;
             textStage.Color = Color.White;
             textStage.Position = new Point(0, 0);
-            textStage.Text = "Construccion";
+            textStage.Text = "Construccion - Presione espacio para empezar";
 
             itemSelected = null;
 
@@ -410,9 +420,17 @@ namespace AlumnoEjemplos.MiGrupo
             cartelGanador.render();
             GuiController.Instance.Drawer2D.endDrawSprite();
 
+            textStage.Text = "Yey!!! \\O/";
+
+            if (input.keyDown(Key.R))
+            {
+                fabricaDeNiveles.reiniciar(numeroDeNivel, pelota);
+                etapa = construccion;
+                textStage.Text = "Construccion - Presione espacio para empezar";
+            }
             if (input.keyDown(Key.Return))
             {
-                if (numeroDeNivel == 3)
+                if (numeroDeNivel == 5)
                     numeroDeNivel = 0;
                 numeroDeNivel++;
                 setNivel();
