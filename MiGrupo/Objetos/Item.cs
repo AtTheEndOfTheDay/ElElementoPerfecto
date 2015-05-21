@@ -34,7 +34,7 @@ namespace AlumnoEjemplos.MiGrupo
             textura = texture;
 
             orientedBB = TgcObb.computeFromAABB(mesh.BoundingBox);
-            orientedBB.setRenderColor(Color.Red);
+            orientedBB.setRenderColor(Color.Blue);
         }
 
         public virtual void interactuarConPelota(Pelota pelota, float elapsedTime)
@@ -143,6 +143,11 @@ namespace AlumnoEjemplos.MiGrupo
         public bool getenEscena()
         {
             return enEscena;
+        }
+
+        public bool estaEnContenedor()
+        {
+            return getPosition() == getLugarDelContenedor();
         }
 
     }

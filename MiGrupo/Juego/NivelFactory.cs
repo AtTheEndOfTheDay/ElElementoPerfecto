@@ -25,6 +25,7 @@ namespace AlumnoEjemplos.MiGrupo
 
         TgcTexture madera = TgcTexture.createTexture(alumnoTextureFolder() + "Madera.jpg");
         TgcTexture metal = TgcTexture.createTexture(alumnoTextureFolder() + "Metal.jpg");
+        TgcTexture metal2 = TgcTexture.createTexture(alumnoTextureFolder() + "METAL_t.jpg");
         TgcTexture laja = TgcTexture.createTexture(alumnoTextureFolder() + "Laja.jpg");
         TgcTexture texturaCannon = TgcTexture.createTexture(alumnoTextureFolder() + "Cannon.png");
         TgcTexture texturaMagnet = TgcTexture.createTexture(alumnoTextureFolder() + "Magnet.png");
@@ -39,11 +40,16 @@ namespace AlumnoEjemplos.MiGrupo
         Pared techo;
         Pared lateralDerecha;
         Pared lateralIzquierda;
-        Cannon cannon;
-        Cannon cannon2;
-        Magnet magnet1;
-        Magnet magnet2;
-        Spring spring1;
+        
+        //Lvl2
+        Cannon lvl1Cannon;
+        Magnet lvl1Magnet;
+        
+        //Lvl2
+        Magnet lvl2Magnet;
+        Magnet lvl2Magnet2;
+        Spring lvl2Spring;
+        Spring lvl2Spring2;
 
 
         public static string alumnoTextureFolder()
@@ -61,21 +67,25 @@ namespace AlumnoEjemplos.MiGrupo
             piso.dispose();
             lateralDerecha.dispose();
             lateralIzquierda.dispose();
-            cannon.dispose();
-            cannon2.dispose();
-            magnet1.dispose();
-            magnet2.dispose();
-            spring1.dispose();
-
+            lvl1Cannon.dispose();
+            lvl1Magnet.dispose();
+            if (lvl2Magnet2 != null)
+            {
+                lvl2Magnet.dispose();
+                lvl2Magnet2.dispose();
+                lvl2Spring.dispose();
+                lvl2Spring2.dispose();
+            }
+            
             scene.disposeAll();
         }
 
         private void setParedes(TgcTexture textura, List<Item> itemsDeNivel)
         {
-            piso = Pared.CrearPared(new Vector3(2.85f, -9.9f, 1), new Vector3(30, 0.1f, 1f), new Vector3(0, 0, 0), textura, "piso");
-            techo  = Pared.CrearPared(new Vector3(2.85f, 9.9f, 1), new Vector3(30, 0.1f, 1f), new Vector3(0, 0, 0), textura, "piso");
-            lateralDerecha = Pared.CrearPared(new Vector3(-12.42f, 0, 1), new Vector3(0.01f, 20.75f, 1f), new Vector3(0, 0, 0), textura, "lateralDerecha");
-            lateralIzquierda = Pared.CrearPared(new Vector3(17.9f, 0, 1), new Vector3(0.01f, 20.75f, 1f), new Vector3(0, 0, 0), textura, "lateralIzquierda");
+            piso = Pared.CrearPared(new Vector3(2.7f, -9.9f, 1), new Vector3(30.4f, 0.1f, 1f), new Vector3(0, 0, 0), textura, "piso");
+            techo  = Pared.CrearPared(new Vector3(2.7f, 9.9f, 1), new Vector3(30.4f, 0.1f, 1f), new Vector3(0, 0, 0), textura, "piso");
+            lateralDerecha = Pared.CrearPared(new Vector3(-12.42f, 0, 1), new Vector3(0.01f, 20f, 1f), new Vector3(0, 0, 0), textura, "lateralDerecha");
+            lateralIzquierda = Pared.CrearPared(new Vector3(17.9f, 0, 1), new Vector3(0.01f, 20f, 1f), new Vector3(0, 0, 0), textura, "lateralIzquierda");
             itemsDeNivel.Add(piso);
             itemsDeNivel.Add(techo);
             itemsDeNivel.Add(lateralDerecha);
@@ -91,61 +101,87 @@ namespace AlumnoEjemplos.MiGrupo
             switch (nivel)
             {
                 case 1:
-                    objetoGanador = TgcBox.fromSize(new Vector3(6, 6, 1), new Vector3(1, 1, 1), Color.Blue);
+                    objetoGanador = TgcBox.fromSize(new Vector3(-3, -2, 1), new Vector3(1, 1, 1), Color.FromArgb(125, Color.RoyalBlue));
+                    objetoGanador.AlphaBlendEnable = true;
                     pelota = new Pelota(0.5f, new Vector3(16, -8, 1), metal);
                     cartel.Texture = texturaPasarDeNivel;
+
                     //Items del Usuario
                     itemsDelUsuario.Clear();
-                    magnet1 = Magnet.CrearMagnet(scene.Meshes[3].clone("magnet1"), texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
-                    magnet2 = Magnet.CrearMagnet(scene.Meshes[3].clone("magnet2"), texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi));
-                    spring1 = Spring.CrearSpring(scene.Meshes[1].clone("spring1"), texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
-                    itemsDelUsuario.Add(magnet1);
-                    itemsDelUsuario.Add(magnet2);
-                    itemsDelUsuario.Add(spring1);
+                    lvl1Magnet = Magnet.CrearMagnet(scene.Meshes[3].clone("lvl1Magnet"), texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi));
+                    itemsDelUsuario.Add(lvl1Magnet);
                     //Fin Items del Usuario;
     
                     //Items del Nivel
                     itemsDeNivel.Clear();
                     setParedes(madera, itemsDeNivel);
-                    cannon = Cannon.CrearCannon(scene.Meshes[0].clone("cannon1"), scene.Meshes[2].clone("baseCannon1"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4), new Vector3 (16, -8f, 1f));
-                    cannon.setenEscena(true);
-                    cannon.cargado = true;
-                    itemsDeNivel.Add(cannon);
-                    itemsDeNivel.Add(cannon.baseCannon);
+                    Pared lvl1Obstaculo = Pared.CrearPared(new Vector3(-3, -4, 1), new Vector3(3.5f, 0.25f, 1), new Vector3(0, 0, 0), madera, "lvl1Obstaculo");
+                    Pared lvl1Obstaculo1 = Pared.CrearPared(new Vector3(0, -3, 1), new Vector3(2, 0.25f, 1), new Vector3(0, 0, pi / 4), madera, "lvl1Obstaculo1");
+                    Pared lvl1Obstaculo2 = Pared.CrearPared(new Vector3(0, -1, 1), new Vector3(0.25f, 2, 1), new Vector3(0, 0, pi / 4), madera, "lvl1Obstaculo2");
+                    Pared lvl1Obstaculo3 = Pared.CrearPared(new Vector3(-1.5f, 6, 1), new Vector3(0.25f, 7.75f, 1), new Vector3(0, 0, 0), madera, "lvl1Obstaculo3");
+                    Pared lvl1Obstaculo4 = Pared.CrearPared(new Vector3(-5, 3f, 1), new Vector3(0.25f, 13.5f, 1), new Vector3(0, 0, 0), madera, "lvl1Obstaculo4");
+                    lvl1Cannon = Cannon.CrearCannon(scene.Meshes[0].clone("cannon1"), scene.Meshes[2].clone("baseCannon1"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 1.03f ), new Vector3 (16, -8f, 1f));
+                    lvl1Cannon.setenEscena(true);
+                    lvl1Cannon.cargado = true;
+                    lvl1Cannon.potencia = 2;
+                    itemsDeNivel.Add(lvl1Obstaculo);
+                    itemsDeNivel.Add(lvl1Obstaculo1);
+                    itemsDeNivel.Add(lvl1Obstaculo2);
+                    itemsDeNivel.Add(lvl1Obstaculo3);
+                    itemsDeNivel.Add(lvl1Obstaculo4);
+                    itemsDeNivel.Add(lvl1Cannon);
+                    itemsDeNivel.Add(lvl1Cannon.baseCannon);
                     //Fin Items del Nivel
 
 
                     fondo.setTexture(madera);
                     break;
-                case 2:
 
-                    objetoGanador = TgcBox.fromSize(new Vector3(-10, -4, 1), new Vector3(1, 1, 1), Color.Blue);
-                    pelota = new Pelota(1f, new Vector3(10, 5, 1), madera);
+                case 2:
+                    objetoGanador = TgcBox.fromSize(new Vector3(13, 0, 1), new Vector3(1, 1, 1), Color.FromArgb(101, Color.Blue));
+                    objetoGanador.AlphaBlendEnable = true;
+                    pelota = new Pelota(0.5f, new Vector3(12, 8, 1), metal2);
                     cartel.Texture = texturaGanaste;
+
                     //Items del Usuario 
                     itemsDelUsuario.Clear();
-                    cannon2 = Cannon.CrearCannon(scene.Meshes[0].clone("Cannon2"), scene.Meshes[2].clone("baseCannon1"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi / 4));
-                    itemsDelUsuario.Add(cannon2);
+                    lvl2Magnet = Magnet.CrearMagnet(scene.Meshes[3].clone("lvl2Magnet"), texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi));
+                    lvl2Magnet2 = Magnet.CrearMagnet(scene.Meshes[3].clone("lvl2Magnet2"), texturaMagnet, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, pi));
+                    lvl2Spring = Spring.CrearSpring(scene.Meshes[1].clone("spring1"), texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
+                    lvl2Spring2 = Spring.CrearSpring(scene.Meshes[1].clone("lvl2Spring2"), texturaSpring, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0));
+                    itemsDelUsuario.Add(lvl2Magnet);
+                    itemsDelUsuario.Add(lvl2Magnet2);
+                    itemsDelUsuario.Add(lvl2Spring);
+                    itemsDelUsuario.Add(lvl2Spring2);
                     //Fin Items del Usuario  
                 
                     //Items del Nivel
                     itemsDeNivel.Clear();
                     setParedes(metal, itemsDeNivel);
-                    Pared obstaculo1 = Pared.CrearPared(new Vector3(-10, -6, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, 0), madera, "Obstaculo1");
-                    Pared obstaculo2 = Pared.CrearPared(new Vector3(-5, -4, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, 0), madera, "Obstaculo2");
-                    Pared obstaculo3 = Pared.CrearPared(new Vector3(5, -2, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, 0), madera, "Obstaculo3");
-                    Pared obstaculo4 = Pared.CrearPared(new Vector3(10, 0, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, FastMath.PI / 4), madera, "Obstaculo4");
-                    itemsDeNivel.Add(obstaculo1);
-                    itemsDeNivel.Add(obstaculo2);
-                    itemsDeNivel.Add(obstaculo3);
-                    itemsDeNivel.Add(obstaculo4);
-                    itemsDeNivel.Add(cannon2.baseCannon);
+                    Pared lvl2Obstaculo = Pared.CrearPared(new Vector3(1.5f, -2, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, 0), madera, "lvl2Obstaculo");
+                    Pared lvl2obstaculo1 = Pared.CrearPared(new Vector3(-4.5f, 2, 1), new Vector3(7, 0.25f, 1), new Vector3(0, 0, 0), madera, "lvl2obstaculo1");
+                    Pared lvl2Obstaculo2 = Pared.CrearPared(new Vector3(7, 2, 1), new Vector3(6, 0.25f, 1), new Vector3(0, 0, 0), madera, "lvl2Obstaculo2");
+                    Pared lvl2Obstaculo3 = Pared.CrearPared(new Vector3(12, 4, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, FastMath.PI / 4), madera, "lvl2Obstaculo3");
+                    Pared lvl2Obstaculo4 = Pared.CrearPared(new Vector3(-8, -1, 1), new Vector3(6, 0.25f, 1), new Vector3(0, 0, FastMath.PI / 2), madera, "lvl2Obstaculo4");
+                    Pared lvl2Obstaculo5 = Pared.CrearPared(new Vector3(4, 0, 1), new Vector3(4, 0.25f, 1), new Vector3(0, 0, FastMath.PI / 2), madera, "lvl2Obstaculo5");
+                    Pared lvl2Obstaculo6 = Pared.CrearPared(new Vector3(-1, 0, 1), new Vector3(4, 0.25f, 1), new Vector3(0, 0, FastMath.PI / 2), madera, "lvl2Obstaculo6");
+                    Pared lvl2Obstaculo7 = Pared.CrearPared(new Vector3(-10, -5, 1), new Vector3(5, 0.25f, 1), new Vector3(0, 0, -FastMath.PI / 4), madera, "lvl2Obstaculo7");
+                    Pared lvl2Obstaculo8 = Pared.CrearPared(new Vector3(1.5f, -7f, 1), new Vector3(19, 0.25f, 1), new Vector3(0, 0, 0), madera, "lvl2Obstaculo8");
+                    itemsDeNivel.Add(lvl2Obstaculo);
+                    itemsDeNivel.Add(lvl2obstaculo1);
+                    itemsDeNivel.Add(lvl2Obstaculo2);
+                    itemsDeNivel.Add(lvl2Obstaculo3);
+                    itemsDeNivel.Add(lvl2Obstaculo4);
+                    itemsDeNivel.Add(lvl2Obstaculo5);
+                    itemsDeNivel.Add(lvl2Obstaculo6);
+                    itemsDeNivel.Add(lvl2Obstaculo7);
+                    itemsDeNivel.Add(lvl2Obstaculo8);
                     //Fin Items del Nivel
                     
                     fondo.setTexture(metal);
                     break;
-                default:
 
+                default:
                     objetoGanador = TgcBox.fromSize(new Vector3(-5, -8, 1), new Vector3(1, 1, 1), Color.Blue);
                     pelota = new Pelota(0.5f, new Vector3(16, -8, 1), metal);
                     break;
@@ -160,7 +196,7 @@ namespace AlumnoEjemplos.MiGrupo
                 switch (nivel) 
                 { 
                     case 1:
-                        cannon.cargado = true; 
+                        lvl1Cannon.cargado = true; 
                         break; 
                     case 2:   
                         break; 
