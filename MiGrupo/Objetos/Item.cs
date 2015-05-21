@@ -59,7 +59,7 @@ namespace AlumnoEjemplos.MiGrupo
             mesh.Effect.SetValue("materialSpecularExp", 10f);
         }
 
-        public void render()
+        public virtual void render()
         {
             if (enEscena)
             {
@@ -76,7 +76,7 @@ namespace AlumnoEjemplos.MiGrupo
             }
         }
         
-        public void dispose()
+        public virtual void dispose()
         {
             mesh.dispose();
         }
