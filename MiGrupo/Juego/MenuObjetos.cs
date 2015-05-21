@@ -87,18 +87,31 @@ namespace AlumnoEjemplos.MiGrupo
         internal void poneloEnPantallaSiToco(float mouseX, float mouseY)
         {
             //Reviso por cada sprite en el menu, si clickeo en uno para renderizar ese objeto
-            for (var i = 0; i < cantidadObjetos;  i++)
+            for (var i = 0; i < cantidadObjetos; i++)
             {
                 if ((mouseX > objetos[i].Position.X) && (mouseX < (objetos[i].Position.X + ladoObjeto)) &&
                     (mouseY > objetos[i].Position.Y) && (mouseY < (objetos[i].Position.Y + ladoObjeto)))
                 {
                     if (!objetosUsuario[i].getenEscena())
                     {
+                        quitarObjetosDelContenedor();
+
                         objetosUsuario[i].setenEscena(true);
                         objetosUsuario[i].llevarAContenedor();
                     }
                 }
             }
+        }
+
+        private void quitarObjetosDelContenedor()
+        {
+            for (int i = 0; i < cantidadObjetos; i++)
+            {
+                if ((objetosUsuario[i].getenEscena()) && (objetosUsuario[i].estaEnContenedor()))
+                {
+                    objetosUsuario[i].setenEscena(false);
+                }
+            } 
         }
     }
 }

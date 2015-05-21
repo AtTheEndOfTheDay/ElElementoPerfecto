@@ -145,6 +145,11 @@ namespace AlumnoEjemplos.MiGrupo
             return enEscena;
         }
 
+        public bool estaEnContenedor()
+        {
+            return getPosition() == getLugarDelContenedor();
+        }
+
     }
 }
 
