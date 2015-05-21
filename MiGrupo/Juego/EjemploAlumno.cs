@@ -162,6 +162,11 @@ namespace AlumnoEjemplos.MiGrupo
                 numeroDeNivel = 5;
                 setNivel();
             }
+            else if (input.keyDown(Key.F6))
+            {
+                numeroDeNivel = 6;
+                setNivel();
+            }
             else if ((TgcCollisionUtils.testSphereAABB(pelota.esfera.BoundingSphere, objetoGanador.BoundingBox)))
             {
                 etapa = ganador;
@@ -430,7 +435,7 @@ namespace AlumnoEjemplos.MiGrupo
             }
             if (input.keyDown(Key.Return))
             {
-                if (numeroDeNivel == 5)
+                if (numeroDeNivel == 6)
                     numeroDeNivel = 0;
                 numeroDeNivel++;
                 setNivel();
