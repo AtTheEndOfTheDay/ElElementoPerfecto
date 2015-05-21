@@ -224,7 +224,7 @@ namespace AlumnoEjemplos.MiGrupo
                 }
 
                 //Si el punto intersectado con el plano no esta incluido en la cara => descarto la cara
-                if (!pointInBounbingBoxFace(puntoDeInterseccion, bbFaceTransformada))
+                if (!pointInOBBFace(puntoDeInterseccion, bbFaceTransformada, obstaculoOBB))
                 {
                     continue;
                 }
@@ -250,13 +250,19 @@ namespace AlumnoEjemplos.MiGrupo
             }
         }
 
-        private bool pointInBounbingBoxFace(Vector3 p, TgcBoundingBox.Face bbFace)
-        {
-            Vector3 min = bbFace.Extremes[0];
-            Vector3 max = bbFace.Extremes[3];
 
-            return p.X >= min.X && p.Y >= min.Y && p.Z >= min.Z &&
-               p.X <= max.X && p.Y <= max.Y && p.Z <= max.Z;
+        private bool pointInOBBFace(Vector3 pPrima, TgcBoundingBox.Face bbFace, TgcObb obb)
+        {
+            const float TOLERANCIA = 0.001f;
+
+            Vector3 p = obb.toObbSpace(pPrima);
+
+            Vector3 min = obb.toObbSpace(bbFace.Extremes[0]);
+            Vector3 max = obb.toObbSpace(bbFace.Extremes[3]);
+
+            return (p.X - min.X) >= -TOLERANCIA && (p.Y - min.Y) >= -TOLERANCIA && (p.Z - min.Z) >= -TOLERANCIA &&
+                (p.X - max.X) <= TOLERANCIA && (p.X - max.X) <= TOLERANCIA && (p.X - max.X) <= TOLERANCIA;
+
         }
 
 
