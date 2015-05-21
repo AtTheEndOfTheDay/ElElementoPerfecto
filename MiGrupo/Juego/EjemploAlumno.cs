@@ -110,9 +110,14 @@ namespace AlumnoEjemplos.MiGrupo
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, 0, 0), 0, 25);
 
-            fondo = TgcBox.fromSize(new Vector3(3, 0.2f, -2), new Vector3(33.5f, 23, 0));
-            contenedor = TgcBox.fromSize(new Vector3(-16.05f, -8.25f, 0), new Vector3(5.7f, 4.6f, 0), TgcTexture.createTexture(GuiController.Instance.AlumnoEjemplosMediaDir + "Texturas\\Laja.jpg"));
-           
+            fondo = TgcBox.fromSize(new Vector3(3, 0.2f, -2), new Vector3(40, 30, 0));
+
+            Size screenSize = GuiController.Instance.Panel3d.Size;
+            if ((screenSize.Width * 9 / screenSize.Height * 16) == 1) 
+                contenedor = TgcBox.fromSize(new Vector3(-16.05f, -8.25f, 0), new Vector3(5.7f, 4.6f, 0), TgcTexture.createTexture(GuiController.Instance.AlumnoEjemplosMediaDir + "Texturas\\Laja.jpg"));
+            else
+                contenedor = TgcBox.fromSize(new Vector3(-16.65f, -8.25f, 0), new Vector3(6f, 4.6f, 0), TgcTexture.createTexture(GuiController.Instance.AlumnoEjemplosMediaDir + "Texturas\\Laja.jpg"));
+            
             setNivel();
            
             GuiController.Instance.Modifiers.addBoolean("Mostrar OBBs", "Mostrar OBBs", false);
@@ -140,6 +145,11 @@ namespace AlumnoEjemplos.MiGrupo
             else if (input.keyDown(Key.F2))
             {
                 numeroDeNivel = 2;
+                setNivel();
+            }
+            else if (input.keyDown(Key.F3))
+            {
+                numeroDeNivel = 3;
                 setNivel();
             }
             else if ((TgcCollisionUtils.testSphereAABB(pelota.esfera.BoundingSphere, objetoGanador.BoundingBox)))
@@ -198,7 +208,7 @@ namespace AlumnoEjemplos.MiGrupo
 
         private void setNivel()
         {
-            fabricaDeNiveles.iniciarNivel(numeroDeNivel, out cartelGanador, out objetoGanador, out pelota, itemsDeNivel, itemsDelUsuario, out menu, fondo, contenedor);
+            fabricaDeNiveles.iniciarNivel(numeroDeNivel, out cartelGanador, out objetoGanador, out pelota, itemsDeNivel, itemsDelUsuario, out menu, fondo);
 
             etapa = construccion;
             textStage.Color = Color.White;
@@ -402,7 +412,7 @@ namespace AlumnoEjemplos.MiGrupo
 
             if (input.keyDown(Key.Return))
             {
-                if (numeroDeNivel == 2)
+                if (numeroDeNivel == 3)
                     numeroDeNivel = 0;
                 numeroDeNivel++;
                 setNivel();
