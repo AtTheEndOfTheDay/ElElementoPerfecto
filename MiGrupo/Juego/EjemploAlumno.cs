@@ -62,11 +62,12 @@ namespace AlumnoEjemplos.MiGrupo
         bool hitItem = false;
         bool dragging = false;
         bool firstPickInItem = true;
+        bool itemInRestrictedArea = false;
 
 
         TgcText2d textStage = new TgcText2d();
 
-        public static bool mostrarOBBs=false;
+        public static bool mostrarOBBs = false;
         public static bool mostrarBBs = false;
 
         TgcBox objetoGanador;
@@ -114,8 +115,8 @@ namespace AlumnoEjemplos.MiGrupo
            
             setNivel();
            
-            GuiController.Instance.Modifiers.addBoolean("Mostrar OBBs", "Mostrar OBBs", true);
-            GuiController.Instance.Modifiers.addBoolean("Mostrar BBs", "Mostrar BBs", true);
+            GuiController.Instance.Modifiers.addBoolean("Mostrar OBBs", "Mostrar OBBs", false);
+            GuiController.Instance.Modifiers.addBoolean("Mostrar BBs", "Mostrar BBs", false);
         }
 
         /// <summary>
@@ -229,6 +230,7 @@ namespace AlumnoEjemplos.MiGrupo
             if (itemSelected != null)
             {
                 rotateItemSelected(input, elapsedTime);
+                
                 itemSelected.getOBB().render();
             }
 
@@ -264,18 +266,18 @@ namespace AlumnoEjemplos.MiGrupo
                 if (input.buttonDown(TgcD3dInput.MouseButtons.BUTTON_RIGHT))
                 {
                     pickingRay.updateRay();
-                    foreach (Item objeto in itemsDelUsuario)
+                    foreach (Item item in itemsDelUsuario)
                     {
-                        if (objeto.getenEscena())
+                        if (item.getenEscena())
                         {
-                            hitItem = TgcCollisionUtils.intersectRayObb(pickingRay.Ray, objeto.getOBB(), out collisionPoint);
+                            hitItem = TgcCollisionUtils.intersectRayObb(pickingRay.Ray, item.getOBB(), out collisionPoint);
 
                             if (hitItem)
                             {
                                 //Lo quito de mi mundo 3D
-                                objeto.setenEscena(false);
+                                item.setenEscena(false);
                                 itemSelected = null;
-                                objeto.llevarAContenedor();
+                                item.llevarAContenedor();
                             }
                         }
 
@@ -288,7 +290,7 @@ namespace AlumnoEjemplos.MiGrupo
                 float instanteT;
                 Vector3 pickPoint = new Vector3(0, 0, 0);
                 Vector3 collisionPoint;
-
+                                
                 if (input.buttonDown(TgcD3dInput.MouseButtons.BUTTON_LEFT))
                 {
                     pickingRay.updateRay();
@@ -299,20 +301,14 @@ namespace AlumnoEjemplos.MiGrupo
                         {
                             hitItem = TgcCollisionUtils.intersectRayObb(pickingRay.Ray, item.getOBB(), out collisionPoint);
 
-                            if (hitItem)
+                            if ((hitItem) && (!dragging))
                             {
-                                if (!dragging)
+                                dragging = true;
+                                if (item != itemSelected)
                                 {
-                                    dragging = true;
-
-                                    if (item != itemSelected)
-                                    {
-                                        //selecciono nuevo item
-                                        itemSelected = item;
-                                    }
-
-                                    firstPickInItem = true;
+                                    itemSelected = item;
                                 }
+                                firstPickInItem = true;
                             }
                         }
                     }
@@ -324,19 +320,63 @@ namespace AlumnoEjemplos.MiGrupo
 
                     if (dragging)
                     {
+                        Vector3 puntoAnterior;
+
                         if (firstPickInItem)
                         {
                             distanceBetweenPickAndCenter = pickPoint - itemSelected.getPosition();
                             firstPickInItem = false;
                         }
 
+                        puntoAnterior = itemSelected.getPosition();
+
                         itemSelected.setPosition(pickPoint - distanceBetweenPickAndCenter);
+
+
+
+                        if ((itemSelected.getPosition().X < -12.42f) || (itemSelected.getPosition().X > 17.9f) || (itemSelected.getPosition().Y < -9.9f) || (itemSelected.getPosition().Y > 9.9f))
+                        {
+                            itemInRestrictedArea = true;
+                        }
+                        else
+                        {
+                            itemInRestrictedArea = false;
+
+                            foreach (Item item in items)
+                            {
+                                if ((item != itemSelected) && (item.getenEscena()))
+                                {
+                                    if (TgcCollisionUtils.testObbObb(item.getOBB(), itemSelected.getOBB()))
+                                    {
+                                        itemInRestrictedArea = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (itemInRestrictedArea)
+                        {
+                            itemSelected.getOBB().setRenderColor(Color.Red);
+                        }
+                        else
+                        {
+                            itemSelected.getOBB().setRenderColor(Color.Blue);
+                        }
                     }
                 }
 
                 if (input.buttonUp(TgcD3dInput.MouseButtons.BUTTON_LEFT))
                 {
                     dragging = false;
+
+                    if (itemInRestrictedArea)
+                    {
+                        itemSelected.llevarAContenedor();
+                        itemInRestrictedArea = false;
+
+                        itemSelected.getOBB().setRenderColor(Color.Blue);
+                    }
+                        
                 }
 
             }
