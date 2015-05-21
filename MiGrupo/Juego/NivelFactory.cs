@@ -82,10 +82,10 @@ namespace AlumnoEjemplos.MiGrupo
 
         private void setParedes(TgcTexture textura, List<Item> itemsDeNivel)
         {
-            piso = Pared.CrearPared(new Vector3(2.85f, -9.9f, 1), new Vector3(30, 0.1f, 1f), new Vector3(0, 0, 0), textura, "piso");
-            techo  = Pared.CrearPared(new Vector3(2.85f, 9.9f, 1), new Vector3(30, 0.1f, 1f), new Vector3(0, 0, 0), textura, "piso");
-            lateralDerecha = Pared.CrearPared(new Vector3(-12.42f, 0, 1), new Vector3(0.01f, 20.75f, 1f), new Vector3(0, 0, 0), textura, "lateralDerecha");
-            lateralIzquierda = Pared.CrearPared(new Vector3(17.9f, 0, 1), new Vector3(0.01f, 20.75f, 1f), new Vector3(0, 0, 0), textura, "lateralIzquierda");
+            piso = Pared.CrearPared(new Vector3(2.7f, -9.9f, 1), new Vector3(30.4f, 0.1f, 1f), new Vector3(0, 0, 0), textura, "piso");
+            techo  = Pared.CrearPared(new Vector3(2.7f, 9.9f, 1), new Vector3(30.4f, 0.1f, 1f), new Vector3(0, 0, 0), textura, "piso");
+            lateralDerecha = Pared.CrearPared(new Vector3(-12.42f, 0, 1), new Vector3(0.01f, 20f, 1f), new Vector3(0, 0, 0), textura, "lateralDerecha");
+            lateralIzquierda = Pared.CrearPared(new Vector3(17.9f, 0, 1), new Vector3(0.01f, 20f, 1f), new Vector3(0, 0, 0), textura, "lateralIzquierda");
             itemsDeNivel.Add(piso);
             itemsDeNivel.Add(techo);
             itemsDeNivel.Add(lateralDerecha);
@@ -118,8 +118,8 @@ namespace AlumnoEjemplos.MiGrupo
                     Pared lvl1Obstaculo = Pared.CrearPared(new Vector3(-3, -4, 1), new Vector3(3.5f, 0.25f, 1), new Vector3(0, 0, 0), madera, "lvl1Obstaculo");
                     Pared lvl1Obstaculo1 = Pared.CrearPared(new Vector3(0, -3, 1), new Vector3(2, 0.25f, 1), new Vector3(0, 0, pi / 4), madera, "lvl1Obstaculo1");
                     Pared lvl1Obstaculo2 = Pared.CrearPared(new Vector3(0, -1, 1), new Vector3(0.25f, 2, 1), new Vector3(0, 0, pi / 4), madera, "lvl1Obstaculo2");
-                    Pared lvl1Obstaculo3 = Pared.CrearPared(new Vector3(-1.5f, 6, 1), new Vector3(0.25f, 8, 1), new Vector3(0, 0, 0), madera, "lvl1Obstaculo3");
-                    Pared lvl1Obstaculo4 = Pared.CrearPared(new Vector3(-5, 3.5f, 1), new Vector3(0.25f, 14, 1), new Vector3(0, 0, 0), madera, "lvl1Obstaculo4");
+                    Pared lvl1Obstaculo3 = Pared.CrearPared(new Vector3(-1.5f, 6, 1), new Vector3(0.25f, 7.75f, 1), new Vector3(0, 0, 0), madera, "lvl1Obstaculo3");
+                    Pared lvl1Obstaculo4 = Pared.CrearPared(new Vector3(-5, 3f, 1), new Vector3(0.25f, 13.5f, 1), new Vector3(0, 0, 0), madera, "lvl1Obstaculo4");
                     lvl1Cannon = Cannon.CrearCannon(scene.Meshes[0].clone("cannon1"), scene.Meshes[2].clone("baseCannon1"), texturaCannon, Color.Black, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 1.03f ), new Vector3 (16, -8f, 1f));
                     lvl1Cannon.setenEscena(true);
                     lvl1Cannon.cargado = true;
