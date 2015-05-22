@@ -123,6 +123,22 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="AlumnoMedia\MeshCreator\Meshes\Elements-TgcScene.xml" />
+    <Content Include="AlumnoMedia\MeshCreator\Meshes\Textures\Magnet.bmp" />
+    <Content Include="AlumnoMedia\Texturas\Cannon.png" />
+    <Content Include="AlumnoMedia\Texturas\Ganaste!!!.jpg" />
+    <Content Include="AlumnoMedia\Texturas\Laja.jpg" />
+    <Content Include="AlumnoMedia\Texturas\Madera.jpg" />
+    <Content Include="AlumnoMedia\Texturas\Magnet.png" />
+    <Content Include="AlumnoMedia\Texturas\Metal.jpg" />
+    <Content Include="AlumnoMedia\Texturas\METAL_t.jpg" />
+    <Content Include="AlumnoMedia\Texturas\PasasteDeNivel.jpg" />
+    <Content Include="AlumnoMedia\Texturas\Spring.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
