@@ -140,9 +140,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 Rotation = _IsRotationA ? _RotationB : _RotationA;
                 _IsRotationA = !_IsRotationA;
             }
-            if (input.keyDown(Key.E))
+            if (input.keyDown(Key.D))
                 _BuildRotation(deltaTime, _Base.Rotation.Z - FastMath.PI_HALF);
-            else if (input.keyDown(Key.Q))
+            else if (input.keyDown(Key.A))
                 _BuildRotation(deltaTime, _Base.Rotation.Z + FastMath.PI_HALF);
         }
         private void _BuildRotation(Single deltaTime, Single to)
@@ -165,8 +165,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         private readonly TgcObb _ObbLoad;
         private readonly Single _Force = 100f;
-        //_Base.Rotation=baseR;
-        //_BaseCollider.Orientation = Matrix.RotationYawPitchRoll(baseR.Y, baseR.X, baseR.Z);
         private readonly MeshUnRotatedPart _Base;
         private readonly ObbTranslatedUnRotatedCollider _BaseCollider;
         private Vector3 _RotationA = Vector3.Empty;
