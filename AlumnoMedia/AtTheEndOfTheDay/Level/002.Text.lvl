@@ -17,6 +17,7 @@ Wall=60,55,0;1,1,1;"fondo1.jpg"
 
 Wall=0,0,30;100,100,1;#FF000000
 Wall=95,0,0;0.4,21,1;"fondo3.jpg"
+Wall=140,0,26.9;8,23,1;"paredfuturistica.jpg"
 Wall=0,0,27;42,23,1;"fondo3.jpg"
 Wall=0,+84,0;39,0.4,1;"fondo3.jpg"
 Wall=0,-83,0;39,0.4,1;"fondo3.jpg"

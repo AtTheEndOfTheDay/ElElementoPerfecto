@@ -166,6 +166,7 @@
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Cannon.png" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Wall.png" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Grass.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\paredfuturistica.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\QuakeWall.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\QuakeWall2.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\QuakeWall3.jpg" />
