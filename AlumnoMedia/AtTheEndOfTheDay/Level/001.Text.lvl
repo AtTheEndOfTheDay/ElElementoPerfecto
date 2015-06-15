@@ -1,0 +1,61 @@
+﻿[Level]
+CameraPosition=0,0,-200
+CameraTarget=0,0,0
+LightPosition=500,500,-500
+LightIntensity=500
+PlanePoint=0,0,0
+PlaneNormal=0,0,1
+
+[Goal]
+GameCollision=2;3
+
+[Game]
+Gravitor=0,-98,0
+Menu=120,0,0;2,7,1;20,-20,20
+Ball=0,70,0;1;"Pokeball.jpg"
+Wall=85,70,0;1,1,1;#FF0000FF
+
+Wall=0,+81,0;40,1,1;"Wood.jpg"
+Wall=0,-81,0;40,1,1;"Wood.jpg"
+Wall=-153,0,0;1,21,1;"Wood.jpg"
+Wall=+153,0,0;1,21,1;"Wood.jpg"
+Wall=95,0,0;.5,21,1;"Wood.jpg"
+Wall=0,0,27;41,21,1;"Wood.jpg"
+
+Cannon=0,-50,0
+
+[User]
+Cannon=
+Magnet=5;1.5
+Wall=#FFFF00FF
+Ball=#FFFF00FF
+
+[Test]
+//Only [Level][Goal][Game][User] are taken into account.
+//Every other section its just ignored.
+***************************************************************************************************************************************
+16:9 -> 200=(70, 36) -> 200=(148, 77) -> 300=(226, 120)
+4:3  -> 100=(52, 36) -> 200=(110, 77) -> 300=(168, 120)
+(16:9) * 1.33 = (4:3)
+
+//Color Walls
+Wall=#FFBBAAAA
+Wall=#FFAABBAA
+Wall=#FFAAAABB
+Wall=#FFCCAAAA
+Wall=#FFAACCAA
+Wall=#FFAAAACC
+Wall=#FFDDAAAA
+Wall=#FFAADDAA
+Wall=#FFAAAADD
+
+//Constructors (*Vector3;Single;"String";#Color(Hexa)[;optional])
+Gravitor=*acceleration
+Wall=[*position;*scale;*rotation];"material"
+Wall=[*position;*scale;*rotation];#color
+Wall=[*position;*scale;*rotation]
+Ball=[*position;*velocity][;radius;mass];"material"
+Ball=[*position;*velocity][;radius;mass];#color
+Ball=[*position;*velocity][;radius;mass]
+Magnet=[force][;*position;*rotation][;scale]
+Cannon=[force][;*position;*rotation;*rotationA;*rotationB][;scale]

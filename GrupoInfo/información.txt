@@ -1,0 +1,23 @@
+Archivo “información.txt” que contenga la siguiente información:
+integrantes del grupo con nombres, legajos y mail, líder del grupo y nombre del grupo.
+o Una foto del rostro de cada integrante del grupo (tipo carnet).
+	Debe haber una foto individual por cada integrante. El nombre de la foto debe ser “Nombre Apelido Legajo”.
+	Las fotos deben estar en formato JPG con dimensiones de 300x300 pixels.
+	Por favor escalar correctamente las imágenes, sin estropear las proporciones (ver Aspect Ratio, Unidad 2).
+o Tres capturas de pantalla mostrando momentos relevantes del Ejemplo Creativo.
+	Las capturas deben ser en formato JPG con dimensiones de 500x500 pixels.
+	Solo se debe capturar el recuadro 3D de la aplicación (sin barra de Modifiers, consola de mensajes, listado de ejemplos, etc.).
+	Las capturas deben tener el nombre “Captura Grupo N”, donde N es 1, 2 y 3 para cada una de las capturas respectivas. 
+
+Documento “EstrategiaAlumno.pdf”:
+	documento en formato PDF que explique el objetivo, la idea, las herramientas utilizadas,
+	las técnicas de optimización y todas las decisiones de diseño tomadas en el desarrollo del ejemplo creativo.
+	No es necesario explicar cada línea de código del TP, sino que se pide una explicación general de lo que se intentó hacer.
+	Debe poseer carátula. Debe explicar la idea elegida, el uso del teclado y otros controles necesarios para poder probar la aplicación.
+	Debe explicar cómo finalizar o terminar el ejemplo cumpliendo con su objetivo.
+
+Todas estas carpetas deberán ser comprimidas en un archivo con formato ZIP que respete la siguiente nomenclatura:  
+TP2C2014<b><Curso><b><NombreGrupo>
+
+Entrega: tgc.entregas@gmail.com
+

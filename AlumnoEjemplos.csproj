@@ -87,17 +87,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MiGrupo\Juego\NivelFactory.cs" />
-    <Compile Include="MiGrupo\Objetos\BaseCannon.cs" />
-    <Compile Include="MiGrupo\Objetos\Magnet.cs" />
-    <Compile Include="MiGrupo\Objetos\Cannon.cs" />
-    <Compile Include="MiGrupo\Objetos\Item.cs" />
-    <Compile Include="MiGrupo\Juego\EjemploAlumno.cs" />
-    <Compile Include="MiGrupo\Juego\MenuObjetos.cs" />
-    <Compile Include="MiGrupo\Objetos\Pared.cs" />
-    <Compile Include="MiGrupo\Objetos\Pelota.cs" />
-    <Compile Include="MiGrupo\Objetos\PelotaCollisionManager.cs" />
-    <Compile Include="MiGrupo\Objetos\Spring.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Extension\SingleExtension.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Game\Game.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Extension\TgcObbExtension.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Extension\MatrixExtension.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Menu.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Cannon.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\CompositeCollider.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\HollowObbCollider.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\ObbTranslatedUnRotatedCollider.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\ObbTranslatedCollider.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\IPart.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\Collision\Contact.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\Collision\ItemCollision.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\Collision\Collision.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Gravitor.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Magnet.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\MeshUnRotatedPart.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\MeshTransformedPart.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\ObbPart.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\MeshPart.cs" />
+    <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\001.Text.lvl" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Extension\Vector3Extension.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Extension\StringExtension.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Ball.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\SphereCollider.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\ObbCollider.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\MeshStaticPart.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\Collider.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Extension\TypeExtension.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Goal\GameCollision.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Goal\IGoal.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Game\Level.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Game\Item.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Game\ThePerfectElementExample.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Interactive.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Old\Spring.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Wall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -124,20 +150,40 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AlumnoMedia\MeshCreator\Meshes\Elements-TgcScene.xml" />
-    <Content Include="AlumnoMedia\MeshCreator\Meshes\Textures\Magnet.bmp" />
-    <Content Include="AlumnoMedia\Texturas\Cannon.png" />
-    <Content Include="AlumnoMedia\Texturas\Ganaste!!!.jpg" />
-    <Content Include="AlumnoMedia\Texturas\Laja.jpg" />
-    <Content Include="AlumnoMedia\Texturas\Madera.jpg" />
-    <Content Include="AlumnoMedia\Texturas\Magnet.png" />
-    <Content Include="AlumnoMedia\Texturas\Metal.jpg" />
-    <Content Include="AlumnoMedia\Texturas\METAL_t.jpg" />
-    <Content Include="AlumnoMedia\Texturas\PasasteDeNivel.jpg" />
-    <Content Include="AlumnoMedia\Texturas\Spring.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\Items.xml" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\Texture\BlankMaterial.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\Texture\NegativeMaterial.bmp" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\Texture\NeutralMaterial.bmp" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\Texture\PositiveMaterial.bmp" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Cannon.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Wall.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Grass.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\QuakeWall.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\QuakeWall2.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\QuakeWall3.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Dirt.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Tile.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Pokeball.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\WoodenBox1.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\WoodenBox2.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\WoodenBox3.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\WoodenBox4.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Win.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Flagstone.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Wood.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Magnet.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\MetalScratched.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\MetalDotted.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Level.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Spring.png" />
+    <Content Include="GrupoInfo\información.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Estrategia\" />
+    <Folder Include="SRC\AtTheEndOfTheDay\Test\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
