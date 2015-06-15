@@ -11,6 +11,7 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -27,6 +28,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         private readonly String _MaterialFolder;
         private readonly String _SignFolder;
+        private readonly String _SoundFolder;
         private readonly TgcScene _Scene;
         private readonly Level[] _Levels;
         private readonly Dx3D.Effect _LightShader = GuiController.Instance.Shaders.TgcMeshPointLightShader.Clone(GuiController.Instance.D3dDevice);
@@ -51,6 +53,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _LoadShaders();
             _MaterialFolder = mediaFolder + "Texture\\Material\\";
             _SignFolder = mediaFolder + "Texture\\Sign\\";
+            _SoundFolder = mediaFolder + "Sound\\";
             _Scene = new TgcSceneLoader().loadSceneFromFile(mediaFolder + "Mesh\\Items.xml");
             foreach (var mesh in _Scene.Meshes)
             {
@@ -82,7 +85,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     item.Init(game, user);
                 var levelSection = sections.FirstOrDefault(s => s.StartsWith(_LevelLabel));
                 var props = levelSection.Substring(_LevelLabel.Length).Split('\n');
-                return new Level(game, user, goal).LoadFieldsFromText(props);
+                return new Level(game, user, goal, (_SignFolder + "Win.png")).LoadFieldsFromText(props);
             }
             catch (ArrayTypeMismatchException e) { throw e; }
             catch (Exception e) { throw new Exception("Wrong level file format.", e); }
@@ -132,7 +135,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (level.IsComplete)
             {
                 if (input.keyDown(Key.R))
-                    level.Load();
+                    level.RollBack();
                 else if (input.keyDown(Key.Return))
                 {
                     _LevelIndex++;
@@ -173,6 +176,26 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             foreach (var level in _Levels)
                 level.Dispose();
         }
+
+        public TgcStaticSound sound;
+        TgcMp3Player player = GuiController.Instance.Mp3Player;
+
+        public void cargarSonido(){
+            sound = new TgcStaticSound();
+            sound.loadSound(_SoundFolder + "Crash Bandicoot 2.wav");
+            //player.FileName = (_SoundFolder + "Crash Bandicoot 2   Rock It, Pack Attack Music.mp3");
+
+        }
+
+        public void reproducir()
+        {
+            TgcMp3Player.States currentState = player.getStatus();
+            //if (currentState == TgcMp3Player.States.Open)
+            //{player.play(true);}
+            sound.play(true);
+        }
+
+
         #endregion GamePlay
     }
 }

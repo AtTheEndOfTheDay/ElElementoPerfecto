@@ -130,6 +130,8 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Old\Spring.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Wall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\Thumbs.db" />
+    <None Include="Game.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TgcViewer\TgcViewer.csproj">
@@ -166,26 +168,18 @@
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\Crash Bandicoot 2   Rock It, Pack Attack Music.mp3" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\pasar nivel.wav" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\resorte 2.wav" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Cannon.png" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Wall.png" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Grass.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\paredfuturistica.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\QuakeWall.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\QuakeWall2.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\QuakeWall3.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Dirt.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Tile.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Pokeball.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\WoodenBox1.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\WoodenBox2.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\WoodenBox3.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\WoodenBox4.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Flagstone.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Wood.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Magnet.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Fondo.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\FondoMenu.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\MetalScratched.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\MetalDotted.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Spring.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\BlueFuturisticWall.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\Fondo.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\Fondos.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\FuturisticWall.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\MetalPlate.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\Pokeball.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\Wood.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Walls.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\WinItem.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Level.png" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Win.png" />
     <Content Include="GrupoInfo\información.txt" />

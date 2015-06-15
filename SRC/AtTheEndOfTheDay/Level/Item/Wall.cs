@@ -21,6 +21,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     {
         #region Constructors
         private const String _MeshName = "Wall";
+        private const Single _MinScaleXFactor = 0.5f;
+        private const Single _MaxScaleXFactor = 2;
 
         #region TexturedConstructors
         public Wall(Game game, String material)
@@ -56,6 +58,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Add(new MeshStaticPart(mesh));
             Add(new ObbCollider(mesh));
             Scale = scale;
+            _MinSacleX = scale.X * _MinScaleXFactor;
+            _MaxSacleX = scale.X * _MaxScaleXFactor;
             Rotation = rotation;
             Position = position;
         }
@@ -63,22 +67,20 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constructors
 
         #region ItemMethods
+        private readonly Single _MinSacleX;
+        private readonly Single _MaxSacleX;
         public override void Build(Single deltaTime)
         {
             var input = GuiController.Instance.D3dInput;
             var stepS = deltaTime * BuildScalingSpeed;
-            if (input.keyDown(Key.D))
-                Scale = Scale.AddX(stepS);
-            else if (input.keyDown(Key.A))
-                Scale = Scale.AdvanceX(stepS, BuildMinScale.X);
-            if (input.keyDown(Key.W))
-                Scale = Scale.AddY(stepS);
-            else if (input.keyDown(Key.S))
-                Scale = Scale.AdvanceY(stepS, BuildMinScale.Y);
-            var stepR = deltaTime * BuildRotationSpeed;
             if (input.keyDown(Key.E))
-                Rotation = Rotation.AddZ(-stepR);
+                Scale = Scale.AdvanceX(stepS, _MaxSacleX);
             else if (input.keyDown(Key.Q))
+                Scale = Scale.AdvanceX(stepS, _MinSacleX);
+            var stepR = deltaTime * BuildRotationSpeed;
+            if (input.keyDown(Key.D))
+                Rotation = Rotation.AddZ(-stepR);
+            else if (input.keyDown(Key.A))
                 Rotation = Rotation.AddZ(stepR);
         }
         #endregion ItemMethods

@@ -15,8 +15,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Collider ColliderA { get; private set; }
         public Collider ColliderB { get; private set; }
         public readonly Contact[] Contacts;
-        public readonly Single Friction;
-        public readonly Single Restitution;
+        public Single Friction;
+        public Single Restitution;
         public Collision(Collider colliderA, Collider colliderB, params Contact[] contacts)
         {
             ColliderA = colliderA;

@@ -66,9 +66,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             var input = GuiController.Instance.D3dInput;
             var stepR = deltaTime * BuildRotationSpeed;
-            if (input.keyDown(Key.E))
+            if (input.keyDown(Key.D))
                 Rotation = Rotation.AddZ(-stepR);
-            else if (input.keyDown(Key.Q))
+            else if (input.keyDown(Key.A))
                 Rotation = Rotation.AddZ(stepR);
         }
         private readonly TgcObb _Obb;

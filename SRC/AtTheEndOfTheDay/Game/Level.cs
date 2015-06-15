@@ -32,7 +32,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class Level
     {
         #region Constructors
-        public Level(IList<Item> game, IList<Item> user, IEnumerable<IGoal> goal)
+        public Level(IList<Item> game, IList<Item> user, IEnumerable<IGoal> goal, String sign)
         {
             _Stage = _Building;
             _Game = game;
@@ -44,6 +44,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _Menu.Add(user);
             }
             catch (Exception e) { throw new Exception("Menu not found.", e); }
+            //TODO: pasarlo al .lvl y que el parser devuelva el string o directamente el TgcSprite mejor.
+            _WinSign.Texture = TgcTexture.createTexture(sign);
+            _WinSign.Scaling = new Vector2(0.5f, 0.5f);
+            _WinSign.Position = new Vector2(300, 200);
         }
         #endregion Constructors
 
@@ -51,6 +55,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private Item _Selected = null;
         private Color _SelectedColor = Color.Green;
         private Action<Single> _Stage = null;
+        private TgcSprite _WinSign = new TgcSprite();
         public Boolean IsComplete { get; private set; }
         private readonly TgcPickingRay _PickingRay = new TgcPickingRay();
 
@@ -102,16 +107,23 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region GamePlay
         public void Load()
         {
-            IsComplete = false;
             _DeactivateAll();
-            _RollBack();
+            RollBack();
+        }
+        public void RollBack()
+        {
+            _Stage = _Building;
+            IsComplete = false;
+            foreach (var item in _Game)
+                item.LoadValues();
         }
         public void Play(Single deltaTime)
         {
             if (IsComplete) return;
             _StageControl();
-            if (_Stage == null) return;
-            _Stage(deltaTime);
+            if (_Stage == null)
+                _Menu.Animate(deltaTime);
+            else _Stage(deltaTime);
         }
         public void SetCamera()
         {
@@ -127,6 +139,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public void Render(Dx3D.Effect shader)
         {
+            if (IsComplete)
+            {
+                GuiController.Instance.Drawer2D.beginDrawSprite();
+                _WinSign.render();
+                GuiController.Instance.Drawer2D.endDrawSprite();
+            }
             foreach (var item in _Game)
                 item.Render(shader);
             if (_Selected != null)
@@ -159,13 +177,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 else _Stage = _Simulation;
             }
             else if (input.keyPressed(Key.C))
-                _RollBack();
-        }
-        private void _RollBack()
-        {
-            _Stage = _Building;
-            foreach (var item in _Game)
-                item.LoadValues();
+                RollBack();
         }
 
         private void _Building(Single deltaTime)
@@ -209,6 +221,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             var input = GuiController.Instance.D3dInput;
             var left = TgcD3dInput.MouseButtons.BUTTON_LEFT;
+            var right = TgcD3dInput.MouseButtons.BUTTON_RIGHT;
             if (input.buttonPressed(left))
             {
                 _PickingRay.updateRay();
@@ -220,12 +233,23 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     picked = _Menu.Pick(ray);
                 _Selected = picked;
             }
+            else if (input.buttonPressed(right))
+            {
+                _PickingRay.updateRay();
+                var ray = _PickingRay.Ray;
+                var picked = _Actives.FirstOrDefault(i => i.Intercepts(ray));
+                if (picked != null)
+                {
+                    _Deactivate(picked);
+                    _Menu.Add(picked);
+                }
+            }
         }
 
         private void _Build(Single deltaTime)
         {
             _PickingRay.updateRay();
-            float t; Vector3 position;
+            Single t; Vector3 position;
             TgcCollisionUtils.intersectRayPlane(_PickingRay.Ray, _Plane, out t, out position);
             _Selected.Build(deltaTime);
             _Selected.Position = position;
