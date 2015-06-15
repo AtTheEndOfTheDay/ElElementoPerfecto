@@ -82,7 +82,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     item.Init(game, user);
                 var levelSection = sections.FirstOrDefault(s => s.StartsWith(_LevelLabel));
                 var props = levelSection.Substring(_LevelLabel.Length).Split('\n');
-                return new Level(game, user, goal).LoadFieldsFromText(props);
+                return new Level(game, user, goal, (_SignFolder + "Win.png")).LoadFieldsFromText(props);
             }
             catch (ArrayTypeMismatchException e) { throw e; }
             catch (Exception e) { throw new Exception("Wrong level file format.", e); }

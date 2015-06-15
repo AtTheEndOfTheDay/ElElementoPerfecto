@@ -32,7 +32,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class Level
     {
         #region Constructors
-        public Level(IList<Item> game, IList<Item> user, IEnumerable<IGoal> goal)
+        public Level(IList<Item> game, IList<Item> user, IEnumerable<IGoal> goal, String sign)
         {
             _Stage = _Building;
             _Game = game;
@@ -44,6 +44,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _Menu.Add(user);
             }
             catch (Exception e) { throw new Exception("Menu not found.", e); }
+            //TODO: pasarlo al .lvl y que el parser devuelva el string o directamente el TgcSprite mejor.
+            _WinSign.Texture = TgcTexture.createTexture(sign);
+            _WinSign.Scaling = new Vector2(0.5f, 0.5f);
+            _WinSign.Position = new Vector2(300, 200);
         }
         #endregion Constructors
 
@@ -51,6 +55,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private Item _Selected = null;
         private Color _SelectedColor = Color.Green;
         private Action<Single> _Stage = null;
+        private TgcSprite _WinSign = new TgcSprite();
         public Boolean IsComplete { get; private set; }
         private readonly TgcPickingRay _PickingRay = new TgcPickingRay();
 
@@ -134,6 +139,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public void Render(Dx3D.Effect shader)
         {
+            if (IsComplete)
+            {
+                GuiController.Instance.Drawer2D.beginDrawSprite();
+                _WinSign.render();
+                GuiController.Instance.Drawer2D.endDrawSprite();
+            }
             foreach (var item in _Game)
                 item.Render(shader);
             if (_Selected != null)
