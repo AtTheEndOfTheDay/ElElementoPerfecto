@@ -12,7 +12,6 @@ GameCollision=2;3
 [Game]
 Gravitor=0,-98,0
 Menu=120,0,0;2,7,1;20,-20,20
-Ball=-130,0,0;1;"MetalScratched.jpg"
 Wall=0,-20,0;1,1,1;"fondo 1.jpg"
 
 Wall=0,0,30;100,100,1;#FF000000

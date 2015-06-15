@@ -127,6 +127,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public void Play(Single deltaTime)
         {
             TgcD3dInput input = GuiController.Instance.D3dInput;
+            lvlHack(input);
             var level = _Levels[_LevelIndex];
             if (level.IsComplete)
             {
@@ -149,6 +150,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _LightShader.SetValue("materialSpecularColor", ColorValue.FromColor(Color.White));
             //level.Render(_LightShader);
         }
+
+        public void lvlHack(TgcD3dInput input)
+        {
+            if (input.keyDown(Key.F1))
+                _LevelIndex = 0;
+            else if (input.keyDown(Key.F2))
+                _LevelIndex = 1;
+        }
+
         public void Dispose()
         {
             _Scene.disposeAll();
