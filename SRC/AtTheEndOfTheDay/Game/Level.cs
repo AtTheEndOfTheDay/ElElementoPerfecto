@@ -102,16 +102,23 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region GamePlay
         public void Load()
         {
-            IsComplete = false;
             _DeactivateAll();
-            _RollBack();
+            RollBack();
+        }
+        public void RollBack()
+        {
+            _Stage = _Building;
+            IsComplete = false;
+            foreach (var item in _Game)
+                item.LoadValues();
         }
         public void Play(Single deltaTime)
         {
             if (IsComplete) return;
             _StageControl();
-            if (_Stage == null) return;
-            _Stage(deltaTime);
+            if (_Stage == null)
+                _Menu.Animate(deltaTime);
+            else _Stage(deltaTime);
         }
         public void SetCamera()
         {
@@ -159,13 +166,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 else _Stage = _Simulation;
             }
             else if (input.keyPressed(Key.C))
-                _RollBack();
-        }
-        private void _RollBack()
-        {
-            _Stage = _Building;
-            foreach (var item in _Game)
-                item.LoadValues();
+                RollBack();
         }
 
         private void _Building(Single deltaTime)
@@ -225,7 +226,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private void _Build(Single deltaTime)
         {
             _PickingRay.updateRay();
-            float t; Vector3 position;
+            Single t; Vector3 position;
             TgcCollisionUtils.intersectRayPlane(_PickingRay.Ray, _Plane, out t, out position);
             _Selected.Build(deltaTime);
             _Selected.Position = position;

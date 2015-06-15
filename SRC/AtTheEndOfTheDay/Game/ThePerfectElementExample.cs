@@ -90,10 +90,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             _SetModifiers();
             _Game.Play(elapsedTime);
-            //GuiController.Instance.Drawer2D.beginDrawSprite();
-            //menu.renderMenu(itemsDelUsuario.Count);
-            //textStage.render();
-            //GuiController.Instance.Drawer2D.endDrawSprite();
         }
         /// <summary>
         /// Método que se llama cuando termina la ejecución del ejemplo.

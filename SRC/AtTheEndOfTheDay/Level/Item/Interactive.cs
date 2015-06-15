@@ -24,9 +24,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             Mass = 1;
             //ScaleChanged -= Interactive_ScaleChanged;
-            ScaleChanged += Interactive_ScaleChanged;
+            ScaleChanged += InteractiveScaleChanged;
         }
-        private void Interactive_ScaleChanged(Item item)
+        private void InteractiveScaleChanged(Item item)
         {
             UpdateBody();
         }
@@ -35,16 +35,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region ResetMethods
         private Vector3 _SavedVelocity;
         private Vector3 _SavedAngularVelocity;
-        private Vector3 _SavedImpulse;
-        private Vector3 _SavedTorque;
+        private Vector3 _SavedMomentum;
+        private Vector3 _SavedAngularMomentum;
         private Single _SavedMass;
         public override void SaveValues()
         {
             base.SaveValues();
             _SavedVelocity = Velocity;
             _SavedAngularVelocity = AngularVelocity;
-            _SavedImpulse = Momentum;
-            _SavedTorque = AngularMomentum;
+            _SavedMomentum = Momentum;
+            _SavedAngularMomentum = AngularMomentum;
             _SavedMass = Mass;
         }
         public override void LoadValues()
@@ -52,8 +52,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             base.LoadValues();
             Velocity = _SavedVelocity;
             AngularVelocity = _SavedAngularVelocity;
-            Momentum = _SavedImpulse;
-            AngularMomentum = _SavedTorque;
+            Momentum = _SavedMomentum;
+            AngularMomentum = _SavedAngularMomentum;
             Mass = _SavedMass;
         }
         #endregion ResetMethods

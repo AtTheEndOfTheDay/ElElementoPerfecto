@@ -24,7 +24,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         protected const Single BuildScalingSpeed = 4.5f;
         protected static readonly Vector3 BuildMinScale = .2f * Vector3Extension.One;
 
-        public static readonly Vector3 DefaultScale = new Vector3(1, 1, 1);
+        public static readonly Vector3 DefaultScale = Vector3Extension.One;
         public static readonly Vector3 DefaultRotation = Vector3.Empty;
         public static readonly Vector3 DefaultPosition = Vector3.Empty;
         public static readonly Matrix DefaultScaleMatrix = Matrix.Scaling(DefaultScale);
@@ -137,7 +137,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
 
         public Matrix RenderMatrix { get; private set; }
-        public virtual void Render(Dx3D.Effect shader = null)
+        public virtual void Render(Dx3D.Effect shader)
         {
             RenderMatrix = ScaleMatrix * RotationMatrix * PositionMatrix;
             foreach (var p in _Parts)
@@ -218,7 +218,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     if (weight > 0)
                     {
                         var ortho = normal.Orthonormal(velocity);
-                        //var orthoVel = Vector3.Dot(ortho, velocity);
                         interactive.AddForceAt(r, weight * (normal - collision.Friction * ortho));
                         reacted = true;
                     }

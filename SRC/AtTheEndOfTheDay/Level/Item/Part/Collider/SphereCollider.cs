@@ -39,7 +39,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             if (Collider.IsVisible)
             {
-                //Sphere.Effect = shader;
+                //TODO:Sphere.Effect = shader;
                 Sphere.render();
             }
         }
@@ -50,6 +50,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         public Single Scale = GetSingleScale(Item.DefaultScale);
         public Vector3 Position = Item.DefaultPosition;
+
         protected virtual void ItemScaleChanged(Item item)
         {
             Scale = GetSingleScale(item.Scale);

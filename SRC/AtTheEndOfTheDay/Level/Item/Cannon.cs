@@ -189,6 +189,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             );
             if (r == _RotationF)
             {
+                //TODO: PARTICULAS ACA GUSTAVO !!!
                 var d = _ObbLoad.Orientation[1];
                 _Load.Position += d * (_ObbExtents.Y + 1);
                 _Load.Velocity = d * _Force;

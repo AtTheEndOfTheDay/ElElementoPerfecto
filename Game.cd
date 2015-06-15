@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Game" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAIAAACABADBEAAAAIBAExBAgAAgAgCAAACBAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Game\Game.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Item" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>iBIAAAIAACAwBYAgAAIgpAxRAIUBgBhAABACAAAACFI=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Game\Item.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Level" Collapsed="true">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQAAoAKAATCwJAAIBAACAACgQAJAAAEIgBQACAAEEIA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Game\Level.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Interactive" Collapsed="true">
+    <Position X="3.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAJgABACAJQIgAgBAgAABSAACkQBA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Interactive.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.ThePerfectElementExample" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAgAAACBAAAIAAIAEAAAQAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Game\ThePerfectElementExample.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Ball" Collapsed="true">
+    <Position X="5.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Ball.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Cannon" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAYQQAAUA4AAAAAEQCAAQAAIAZgCAAgCAACABAAEA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Cannon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Gravitor" Collapsed="true">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Item" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.25" Y="1.062" />
+        <Point X="4.25" Y="1.45" />
+        <Point X="8" Y="1.45" />
+        <Point X="8" Y="1.191" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Gravitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Magnet" Collapsed="true">
+    <Position X="9" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAAAAEA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Magnet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Menu" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Item" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.25" Y="1.062" />
+        <Point X="4.25" Y="1.45" />
+        <Point X="6.25" Y="1.45" />
+        <Point X="6.25" Y="1.191" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAADAAAAAAAAAABAwAAAAAhAAAABAAAABAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Wall" Collapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Wall.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.MeshPart" Collapsed="true">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAEAIAAAAAAAAAAIAAAAAAARAAgAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\MeshPart.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.MeshStaticPart" Collapsed="true">
+    <Position X="5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAIAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\MeshStaticPart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.MeshTransformedPart" Collapsed="true">
+    <Position X="5" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIIgAgIAAAAAAIAAQAAAQBAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\MeshTransformedPart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.MeshUnRotatedPart" Collapsed="true">
+    <Position X="7.5" Y="5.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\MeshUnRotatedPart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Collider" Collapsed="true">
+    <Position X="0.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAACAAEAIAAAAAAQQAAIAAABEAABAAgAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\Collider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.CompositeCollider" Collapsed="true">
+    <Position X="2.5" Y="9.5" Width="1.75" />
+    <InheritanceLine Type="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Collider" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="8.562" />
+        <Point X="1.25" Y="9.875" />
+        <Point X="2.5" Y="9.875" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAACAAAAIAAAAAAAQAAIAAABAQABAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\CompositeCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.HollowObbCollider" Collapsed="true">
+    <Position X="4.75" Y="9.5" Width="2.25" />
+    <InheritanceLine Type="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.CompositeCollider" FixedFromPoint="true">
+      <Path>
+        <Point X="4.25" Y="9.875" />
+        <Point X="4.75" Y="9.875" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\HollowObbCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.ObbCollider" Collapsed="true">
+    <Position X="2.5" Y="8.75" Width="1.75" />
+    <InheritanceLine Type="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Collider" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="8.562" />
+        <Point X="1.25" Y="9.125" />
+        <Point X="2.5" Y="9.125" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAIIACAQAIIgAiIAAAQAAIAAQBAAQBABAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\ObbCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.ObbTranslatedCollider" Collapsed="true">
+    <Position X="4.75" Y="8.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAwAAAIAAAAAAQAAAQAAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\ObbTranslatedCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.ObbTranslatedUnRotatedCollider" Collapsed="true">
+    <Position X="7" Y="8.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\ObbTranslatedUnRotatedCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.SphereCollider" Collapsed="true">
+    <Position X="2.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAIAACAQAAIgAAcAAAQAAIAAQBAAQBAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\SphereCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.ItemCollision" Collapsed="true">
+    <Position X="0.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAEAAAAAAAAAAAAIBAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\Collision\ItemCollision.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Collision" Collapsed="true">
+    <Position X="2.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAEAAAAAAAAAAAAAAAQAAAAAAAAEQAAAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\Collision\Collision.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.Contact" Collapsed="true">
+    <Position X="4" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAkAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\Collision\Contact.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.GameCollision" Collapsed="true">
+    <Position X="2.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Goal\GameCollision.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.IPart" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAIAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Item\Part\IPart.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement.IGoal" Collapsed="true">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SRC\AtTheEndOfTheDay\Level\Goal\IGoal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

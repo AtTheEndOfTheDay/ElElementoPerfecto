@@ -132,7 +132,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (level.IsComplete)
             {
                 if (input.keyDown(Key.R))
-                    level.Load();
+                    level.RollBack();
                 else if (input.keyDown(Key.Return))
                 {
                     _LevelIndex++;

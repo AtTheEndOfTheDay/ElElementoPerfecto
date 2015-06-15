@@ -41,7 +41,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             if (Collider.IsVisible)
             {
-                //Obb.Effect = shader;
+                //TODO:Obb.Effect = shader;
                 Obb.render();
             }
         }
@@ -110,6 +110,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         private Collision _ObbCollide(ObbCollider oc)
         {
+            //TODO: Obb Collide Obb
             return null;
         }
         #endregion ColliderMethods
