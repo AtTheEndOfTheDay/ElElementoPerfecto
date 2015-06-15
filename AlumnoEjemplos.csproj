@@ -156,6 +156,12 @@
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\Texture\NegativeMaterial.bmp" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\Texture\NeutralMaterial.bmp" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\Texture\PositiveMaterial.bmp" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\BertycoX   The Signal.mp3" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\cambio gravedad.wav" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\choque cualquiera.wav" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\Crash Bandicoot 2   Rock It, Pack Attack Music.mp3" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\pasar nivel.wav" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\resorte 2.wav" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Cannon.png" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Wall.png" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Grass.jpg" />
@@ -169,14 +175,14 @@
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\WoodenBox2.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\WoodenBox3.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\WoodenBox4.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Win.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Flagstone.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Wood.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Magnet.png" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\MetalScratched.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\MetalDotted.jpg" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Level.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Item\Spring.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Level.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Win.png" />
     <Content Include="GrupoInfo\información.txt" />
   </ItemGroup>
   <ItemGroup>
