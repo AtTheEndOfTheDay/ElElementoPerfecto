@@ -1,0 +1,71 @@
+﻿[Level]
+CameraPosition=0,0,-200
+CameraTarget=0,0,0
+LightPosition=500,500,-500
+LightIntensity=500
+PlanePoint=0,0,0
+PlaneNormal=0,0,1
+
+[Goal]
+GameCollision=2;3
+
+[Game]
+Gravitor=0,-98,0
+Menu=120,0,0;2,7,1;20,-20,20
+Ball=-110,70,0;1;"MetalScratched.jpg"
+Wall=-110,-10,0;1,1,1;"fondo1.jpg"
+
+Wall=0,0,30;100,100,1;#FF000000
+Wall=95,0,0;0.4,21,1;"fondo3.jpg"
+Wall=0,0,27;42,23,1;"fondo3.jpg"
+Wall=0,+84,0;39,0.4,1;"fondo3.jpg"
+Wall=0,-83,0;39,0.4,1;"fondo3.jpg"
+Wall=-154,0,0;0.4,21,1;"fondo3.jpg"
+Wall=+155,0,0;0.4,21,1;"fondo3.jpg"
+
+
+Wall=-10,10,0;0.4,4,1;"fondo3.jpg"
+Wall=-50,10,0;0.4,4,1;"fondo3.jpg"
+Wall=44,1,0;0.4,6,1;"fondo3.jpg"
+Wall=-72,25,0;5.5,0.4,1;"fondo3.jpg"
+Wall=17,25,0;7,0.4,1;"fondo3.jpg"
+Wall=-30,-4.5,0;5,0.4,1;"fondo3.jpg"
+Wall=-20,-60,0;18,0.4,1;"fondo3.jpg"
+Wall=72,-40,0;7.5,0.4,1;0,0,0.78;"fondo3.jpg"
+Wall=-115,45,0;7.5,0.4,1;0,0,-0.78;"fondo3.jpg"
+
+
+[User]
+Magnet=3;1.25
+Magnet=3;1.25
+
+
+[Test]
+//Only [Level][Goal][Game][User] are taken into account.
+//Every other section its just ignored.
+***************************************************************************************************************************************
+16:9 -> 200=(70, 36) -> 200=(148, 77) -> 300=(226, 120)
+4:3  -> 100=(52, 36) -> 200=(110, 77) -> 300=(168, 120)
+(16:9) * 1.33 = (4:3)
+
+//Color Walls
+Wall=#FFBBAAAA
+Wall=#FFAABBAA
+Wall=#FFAAAABB
+Wall=#FFCCAAAA
+Wall=#FFAACCAA
+Wall=#FFAAAACC
+Wall=#FFDDAAAA
+Wall=#FFAADDAA
+Wall=#FFAAAADD
+
+//Constructors (*Vector3;Single;"String";#Color(Hexa)[;optional])
+Gravitor=*acceleration
+Wall=[*position;*scale;*rotation];"material"
+Wall=[*position;*scale;*rotation];#color
+Wall=[*position;*scale;*rotation]
+Ball=[*position;*velocity][;radius;mass];"material"
+Ball=[*position;*velocity][;radius;mass];#color
+Ball=[*position;*velocity][;radius;mass]
+Magnet=[force][;*position;*rotation][;scale]
+Cannon=[force][;*position;*rotation;*rotationA;*rotationB][;scale]

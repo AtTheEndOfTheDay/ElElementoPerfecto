@@ -210,6 +210,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             var input = GuiController.Instance.D3dInput;
             var left = TgcD3dInput.MouseButtons.BUTTON_LEFT;
+            var right = TgcD3dInput.MouseButtons.BUTTON_RIGHT;
             if (input.buttonPressed(left))
             {
                 _PickingRay.updateRay();
@@ -220,6 +221,17 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 else if (_Menu.Intercepts(ray))
                     picked = _Menu.Pick(ray);
                 _Selected = picked;
+            }
+            else if (input.buttonPressed(right))
+            {
+                _PickingRay.updateRay();
+                var ray = _PickingRay.Ray;
+                var picked = _Actives.FirstOrDefault(i => i.Intercepts(ray));
+                if (picked != null)
+                {
+                    _Deactivate(picked);
+                    _Menu.Add(picked);
+                }
             }
         }
 
