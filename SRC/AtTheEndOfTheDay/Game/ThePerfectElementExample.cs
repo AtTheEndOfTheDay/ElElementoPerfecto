@@ -79,6 +79,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             _AddModifiers();
             _Game = new Game(GuiController.Instance.AlumnoEjemplosMediaDir + "AtTheEndOfTheDay\\");
+            _Game.cargarSonido();
         }
         /// <summary>
         /// Método que se llama cada vez que hay que refrescar la pantalla.
@@ -90,6 +91,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             _SetModifiers();
             _Game.Play(elapsedTime);
+            _Game.reproducir();
         }
         /// <summary>
         /// Método que se llama cuando termina la ejecución del ejemplo.

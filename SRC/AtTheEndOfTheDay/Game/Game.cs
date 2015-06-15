@@ -11,6 +11,7 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -27,6 +28,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         private readonly String _MaterialFolder;
         private readonly String _SignFolder;
+        private readonly String _SoundFolder;
         private readonly TgcScene _Scene;
         private readonly Level[] _Levels;
         private readonly Dx3D.Effect _LightShader = GuiController.Instance.Shaders.TgcMeshPointLightShader.Clone(GuiController.Instance.D3dDevice);
@@ -51,6 +53,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _LoadShaders();
             _MaterialFolder = mediaFolder + "Texture\\Material\\";
             _SignFolder = mediaFolder + "Texture\\Sign\\";
+            _SoundFolder = mediaFolder + "Sound\\";
             _Scene = new TgcSceneLoader().loadSceneFromFile(mediaFolder + "Mesh\\Items.xml");
             foreach (var mesh in _Scene.Meshes)
             {
@@ -173,6 +176,19 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             foreach (var level in _Levels)
                 level.Dispose();
         }
+
+        public TgcStaticSound sound;
+        public void cargarSonido(){
+            sound = new TgcStaticSound();
+            sound.loadSound(_SoundFolder + "Crash Bandicoot 2.wav");
+        }
+
+        public void reproducir()
+        {
+            sound.play(true);
+        }
+
+
         #endregion GamePlay
     }
 }
