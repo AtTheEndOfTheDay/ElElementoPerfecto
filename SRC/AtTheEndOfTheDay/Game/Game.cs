@@ -178,13 +178,20 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
 
         public TgcStaticSound sound;
+        TgcMp3Player player = GuiController.Instance.Mp3Player;
+
         public void cargarSonido(){
             sound = new TgcStaticSound();
             sound.loadSound(_SoundFolder + "Crash Bandicoot 2.wav");
+            //player.FileName = (_SoundFolder + "Crash Bandicoot 2   Rock It, Pack Attack Music.mp3");
+
         }
 
         public void reproducir()
         {
+            TgcMp3Player.States currentState = player.getStatus();
+            //if (currentState == TgcMp3Player.States.Open)
+            //{player.play(true);}
             sound.play(true);
         }
 
