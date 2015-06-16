@@ -125,12 +125,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             textureHeight = texture.Height;
             uTile = frameSize.Width / textureWidth;
             vTile = frameSize.Height / textureHeight;
-            int realTotalFrames = (int)(1 / vTile) * (int)(1 / uTile);
-            /*if (realTotalFrames > totalFrames)
-            {
-                throw new Exception("Error en AnimatedWall. No coinciden la cantidad de frames y el tamaño de la textura: " + totalFrames);
-            }
-            */
             //Quad
             texturedQuad = new TexturedQuad(quadPosition, quadSize, Vector3.Empty, texture, uTile, vTile);
             texturedQuad.AlphaBlendEnable = true;
@@ -165,7 +159,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (playing)
             {
                 currentTime += GuiController.Instance.ElapsedTime;
-                if (currentTime > animationTimeLenght)
+                if ((currentTime > animationTimeLenght) && (totalFrames != 0))
                 {
                     //Reiniciar al llegar al final
                     currentTime = 0;
@@ -174,13 +168,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
              
             }
 
+            int realTotalFrames = (int)(1 / vTile) * (int)(1 / uTile);
             //Obtener cuadro actual
-            if (currentFrame != (int)(currentTime * frameRate) + firstFrame)
+            if (currentFrame != ((int)(currentTime * frameRate) + firstFrame) % realTotalFrames)
             {
-                currentFrame = (int)(currentTime * frameRate) + firstFrame;
+                currentFrame = (int)(currentTime * frameRate) + firstFrame % realTotalFrames;
 
                 texturedQuad.UVOffset = new Vector2(uTile * (currentFrame % (int)(1 / uTile)), vTile * (currentFrame / (int)(1 / uTile)));
-                //texturedQuad.updateValues();
             }
         }
 
@@ -191,6 +185,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             enabled = true;
         }
 
+        public void stopAnimation()
+        {
+            currentTime = 0;
+            enabled = false;
+        }
 
         /// <summary>
         /// Renderizar Sprite.

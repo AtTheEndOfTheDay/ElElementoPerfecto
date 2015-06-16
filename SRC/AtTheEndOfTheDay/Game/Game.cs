@@ -171,6 +171,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _LevelIndex = 4;
             else if (input.keyDown(Key.F6))
                 _LevelIndex = 5;
+            else if (input.keyDown(Key.F7))
+                _LevelIndex = 6;
+            else if (input.keyDown(Key.F8))
+                _LevelIndex = 7;
         }
 
         public void Dispose()

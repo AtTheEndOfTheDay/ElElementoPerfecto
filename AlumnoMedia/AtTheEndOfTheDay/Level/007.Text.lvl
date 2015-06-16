@@ -1,0 +1,72 @@
+﻿[Level]
+CameraPosition=0,0,-200
+CameraTarget=0,0,0
+LightPosition=500,500,-500
+LightIntensity=500
+PlanePoint=0,0,0
+PlaneNormal=0,0,1
+
+[Goal]
+GameCollision=2;3
+
+[Game]
+Gravitor=0,-98,0
+Menu=120,0,0;2,7,1;20,-20,20
+Ball=-130,0,0;1;"Pelota.jpg"
+Wall=30,20,0;1,1,1;"WinItem.jpg"
+
+Wall=0,0,30;100,100,1;#FF000000
+Wall=0,0,27;42,23,1;"Fondo.jpg"
+Wall=140,0,26.9;8,23,1;"FondoMenu.jpg"
+Wall=95,0,0;0.4,21,1;"Walls.jpg"
+Wall=0,+84,0;39,0.4,1;"Walls.jpg"
+Wall=0,-83,0;39,0.4,1;"Walls.jpg"
+Wall=-154,0,0;0.4,21,1;"Walls.jpg"
+Wall=+155,0,0;0.4,21,1;"Walls.jpg"
+
+
+Wall=-100,20,0;0.4,15,1;"Walls.jpg"
+Wall=-12,28,0;12,0.4,1;"Walls.jpg"
+Wall=-30,-38,0;17,0.4,1;"Walls.jpg"
+Wall=38,-5,0;0.4,8.5,1;"Walls.jpg"
+
+Wall=-65,22,0;2,0.4,1;0,0,0.78;"Walls.jpg"
+Wall=-95,22,0;2.5,0.4,1;0,0,-0.78;"Walls.jpg"
+
+[User]
+Cannon=2;-130,-62,0;0,0,0;0,0,-0.90;
+Cannon=2;-130,-62,0;0,0,0;0,0,-0.90;
+Cannon=2;-130,-62,0;0,0,0;0,0,-0.90;
+Wall=-65,22,0;5,0.4,1;0,0,0.78;"Walls.jpg"
+
+
+
+[Test]
+//Only [Level][Goal][Game][User] are taken into account.
+//Every other section its just ignored.
+***************************************************************************************************************************************
+16:9 -> 200=(70, 36) -> 200=(148, 77) -> 300=(226, 120)
+4:3  -> 100=(52, 36) -> 200=(110, 77) -> 300=(168, 120)
+(16:9) * 1.33 = (4:3)
+
+//Color Walls
+Wall=#FFBBAAAA
+Wall=#FFAABBAA
+Wall=#FFAAAABB
+Wall=#FFCCAAAA
+Wall=#FFAACCAA
+Wall=#FFAAAACC
+Wall=#FFDDAAAA
+Wall=#FFAADDAA
+Wall=#FFAAAADD
+
+//Constructors (*Vector3;Single;"String";#Color(Hexa)[;optional])
+Gravitor=*acceleration
+Wall=[*position;*scale;*rotation];"material"
+Wall=[*position;*scale;*rotation];#color
+Wall=[*position;*scale;*rotation]
+Ball=[*position;*velocity][;radius;mass];"material"
+Ball=[*position;*velocity][;radius;mass];#color
+Ball=[*position;*velocity][;radius;mass]
+Magnet=[force][;*position;*rotation][;scale]
+Cannon=[force][;*position;*rotation;*rotationA;*rotationB][;scale]
