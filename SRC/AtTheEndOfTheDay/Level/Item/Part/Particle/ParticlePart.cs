@@ -5,15 +5,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     class ParticlePart : IPart
     {
         protected readonly AnimatedQuad animatedQuad;
+         public TgcStaticSound efecto;
         public ParticlePart(AnimatedQuad animatedQuad)
         {
             this.animatedQuad = animatedQuad;
+        }
+
+        public ParticlePart(AnimatedQuad animatedQuad,TgcStaticSound sound)
+        {
+          this.animatedQuad = animatedQuad;
+             efecto=sound;
         }
 
         public virtual void Attach(Item item)
@@ -60,11 +68,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public virtual void initParticle()
         {
             animatedQuad.initAnimation();
+            //efecto.play(false);
         }
 
         public virtual void stopParticle()
         {
             animatedQuad.stopAnimation();
+            //efecto.stop();
         }
 
         public void Render(Item item, Effect shader)
@@ -74,6 +84,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public void Dispose()
         {
             animatedQuad.dispose();
+            //efecto.dispose();
         }
 
     }

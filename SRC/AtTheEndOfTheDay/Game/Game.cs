@@ -191,7 +191,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         public void cargarSonido(){
             sound = new TgcStaticSound();
-            sound.loadSound(_SoundFolder + "Crash Bandicoot 2.wav");
+            sound.loadSound(_SoundFolder + "Crash Bandicoot 2.wav",-1500);
             //player.FileName = (_SoundFolder + "Crash Bandicoot 2   Rock It, Pack Attack Music.mp3");
 
         }
