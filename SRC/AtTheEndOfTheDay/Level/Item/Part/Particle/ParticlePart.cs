@@ -52,9 +52,24 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             animatedQuad.Position = Position = item.Position ;
         }
 
+        public virtual void updateParticle()
+        {
+            animatedQuad.update();
+        }
+
+        public virtual void initParticle()
+        {
+            animatedQuad.initAnimation();
+        }
+
+        public virtual void stopParticle()
+        {
+            animatedQuad.stopAnimation();
+        }
+
         public void Render(Item item, Effect shader)
         {
-            animatedQuad.updateAndRender();
+            animatedQuad.render();
         }
         public void Dispose()
         {
