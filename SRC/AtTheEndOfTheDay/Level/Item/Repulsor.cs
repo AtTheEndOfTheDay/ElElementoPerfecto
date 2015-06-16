@@ -48,7 +48,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             : this(game, force, position, Vector3.Empty, radius) { }
         public Repulsor(Game game, Single force, Vector3 position, Vector3 rotation, Single radius)
         {
-            var mesh = game.GetMesh("Ball");//TODO: Make Mesh
+            var mesh = game.NewMesh("Ball", Color.FromArgb(0,75,0,0));//TODO: Make Mesh
             Add(new MeshStaticPart(mesh)); 
             Add(new SphereCollider(mesh));
             Scale = radius * Vector3Extension.One;

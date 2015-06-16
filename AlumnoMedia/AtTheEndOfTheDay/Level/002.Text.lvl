@@ -28,6 +28,7 @@ Wall=+155,0,0;0.4,21,1;"Walls.jpg"
 Magnet=3;1.25
 Magnet=3;1.25
 Magnet=3;1.25
+BlackHole=1;1
 
 [Test]
 //Only [Level][Goal][Game][User] are taken into account.
