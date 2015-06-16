@@ -182,10 +182,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _Scene.disposeAll();
             foreach (var level in _Levels)
                 level.Dispose();
+            sound.dispose();
+            //player.closeFile();            
         }
 
         public TgcStaticSound sound;
-        TgcMp3Player player = GuiController.Instance.Mp3Player;
+        //TgcMp3Player player = GuiController.Instance.Mp3Player;
 
         public void cargarSonido(){
             sound = new TgcStaticSound();
@@ -203,10 +205,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         public void reproducir()
         {
-            TgcMp3Player.States currentState = player.getStatus();
+            sound.play(true);
+            //TgcMp3Player.States currentState = player.getStatus();
             //if (currentState == TgcMp3Player.States.Open)
             //{player.play(true);}
-            sound.play(true);
         }
 
 
