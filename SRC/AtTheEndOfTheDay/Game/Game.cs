@@ -184,14 +184,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _Scene.disposeAll();
             foreach (var level in _Levels)
                 level.Dispose();
+            sound.dispose();
+            //player.closeFile();            
         }
 
         public TgcStaticSound sound;
-        TgcMp3Player player = GuiController.Instance.Mp3Player;
+        //TgcMp3Player player = GuiController.Instance.Mp3Player;
 
         public void cargarSonido(){
             sound = new TgcStaticSound();
-            sound.loadSound(_SoundFolder + "Crash Bandicoot 2.wav");
+            sound.loadSound(_SoundFolder + "Crash Bandicoot 2.wav",-1500);
             //player.FileName = (_SoundFolder + "Crash Bandicoot 2   Rock It, Pack Attack Music.mp3");
 
         }
@@ -202,13 +204,18 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             return _ParticleFolder;
         }
 
+        public String getSoundFolder()
+        {
+            return _SoundFolder;
+        }
+
 
         public void reproducir()
         {
-            TgcMp3Player.States currentState = player.getStatus();
+            sound.play(true);
+            //TgcMp3Player.States currentState = player.getStatus();
             //if (currentState == TgcMp3Player.States.Open)
             //{player.play(true);}
-            sound.play(true);
         }
 
 

@@ -14,6 +14,7 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -77,10 +78,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             var bodyMesh = game.GetMesh("Cannon");
             var baseMesh = game.GetMesh("CannonBase");
-            _Smoke = new AnimatedQuad(game.getParticleFolder() + "ExplosionDarkBlue.png", new Size(146, 146), 47, 15, new Vector2(25, 25), Item.DefaultPosition + new Vector3(0, 35, -4), 2);
+            TgcStaticSound efecto = new TgcStaticSound();
+            efecto.loadSound(game.getSoundFolder() + "cañon.wav");
+            _Smoke = new TranslatedParticlePart(new AnimatedQuad(game.getParticleFolder() + "ExplosionGrey.png", new Size(146, 146), 47, 15, new Vector2(25, 25), Item.DefaultPosition + new Vector3(0, 35, -4), 2),efecto);
             _ObbLoad = new TgcObb() { Extents = _ObbExtents };
             _ObbLoad.SetOrientation();
-            Add(new TranslatedParticlePart(_Smoke));
+            Add(_Smoke);
             Add(new ObbPart(_ObbLoad));
             Add(new MeshStaticPart(bodyMesh));
             var bodyObb = TgcObb.computeFromAABB(bodyMesh.BoundingBox);
@@ -116,6 +119,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public override void LoadValues()
         {
+            _Smoke.stopParticle();
             base.LoadValues();
             _Base.Rotation = _BaseRotationSaved;
             _Load = null;
@@ -165,7 +169,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             else _RotationB = r;
         }
 
-        private readonly AnimatedQuad _Smoke;
+        private readonly TranslatedParticlePart _Smoke;
         private readonly TgcObb _ObbLoad;
         private readonly Single _Force = 100f;
         private readonly MeshUnRotatedPart _Base;
@@ -175,6 +179,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private Vector3 _RotationF = Vector3.Empty;
         public override void Animate(Single deltaTime)
         {
+            _Smoke.updateParticle();
+
             if (_Load == null) return;
             _Load.Position = Position;
             _Load.Velocity = Vector3.Empty;
@@ -190,8 +196,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             );
             if (r == _RotationF)
             {
-                //TODO: PARTICULAS ACA GUSTAVO !!!
-                _Smoke.initAnimation();
+                _Smoke.initParticle();
                 var d = _ObbLoad.Orientation[1];
                 _Load.Position += d * (_ObbExtents.Y + 1);
                 _Load.Velocity = d * _Force;

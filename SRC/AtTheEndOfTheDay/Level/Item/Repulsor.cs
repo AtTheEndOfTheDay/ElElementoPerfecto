@@ -48,7 +48,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             : this(game, force, position, Vector3.Empty, radius) { }
         public Repulsor(Game game, Single force, Vector3 position, Vector3 rotation, Single radius)
         {
-            var mesh = game.GetMesh("Ball");//TODO: Make Mesh
+            var mesh = game.NewMesh("Ball", Color.FromArgb(0,75,0,0));//TODO: Make Mesh
             Add(new MeshStaticPart(mesh)); 
             Add(new SphereCollider(mesh));
             Scale = radius * Vector3Extension.One;
@@ -59,13 +59,24 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         #region ItemMethods
         private readonly Single _Force = 100000f;
-        private readonly Single _RepulsionDistance = 1000f;//TODO: que lo levante del .lvl
+        private readonly Single _RepulsionDistance = 100f;
+        private Single _RepulsionFactor;
+        private Single _RepulsionFactorPow2;
+        public Single RepulsionFactor
+        {
+            get { return _RepulsionFactor; }
+            set
+            {
+                _RepulsionFactor = value;
+                _RepulsionFactorPow2 = value * value;
+            }
+        }//TODO: que lo levante del .lvl
         public override void Act(Interactive interactive, Single deltaTime)
         {
             var n = interactive.Position - Position;
             var d2 = n.LengthSq();
             n.Normalize();
-            if (d2 < _RepulsionDistance)
+            if (d2 < _RepulsionDistance * 25/*_RepulsionFactorPow2*/)
                 interactive.Momentum += n * (_Force / d2);
         }
         #endregion ItemMethods

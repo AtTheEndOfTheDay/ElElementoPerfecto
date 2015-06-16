@@ -185,6 +185,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             enabled = true;
         }
 
+        public void keepPlaying()
+        {
+            if (enabled)
+                return;
+            initAnimation();
+        }
+
         public void stopAnimation()
         {
             currentTime = 0;
