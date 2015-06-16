@@ -7,12 +7,57 @@ using System.Text;
 using TgcViewer;
 using TgcViewer.Utils.TgcGeometry;
 using TgcViewer.Utils.TgcSceneLoader;
+using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 
-namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
+namespace AlumnoEjemplos.MiGrupo.Objetos
 {
-    class AnimatedQuad
+    class AnimatedWall
     {
+        
+        /*
+        TgcPlaneWall explosion;
+        TgcTexture expTexture = TgcTexture.createTexture(alumnoTextureFolder() + "Explosion.png");
+        float timeLastFrame;
+        int framesPerSecond = 16;
+        int actualFrame = 0;
+        int amountOfFrames = 16;
+        float timeOfAnimation = 1f;
+        float timeFromBeginning = 0f;
+        float tile
+
+        public Explosion() 
+        {
+            explosion = new TgcPlaneWall(new Vector3(0, 0, 0), new Vector3(2, 2, 0), TgcPlaneWall.Orientations.XYplane, expTexture, 0.25f, 0.25f);
+            timeLastFrame = 0f;
+        }
+
+        public void initAnimation() 
+        {
+            timeFromBeginning = 0;
+        }
+
+        public void render(float elapsedTime) {
+            
+            timeFromBeginning += elapsedTime;
+            if(timeOfAnimation >= timeFromBeginning)
+            {
+                actualFrame = (int)Math.Floor(timeFromBeginning * framesPerSecond) % amountOfFrames;
+            
+                explosion.UVOffset = Vector3
+            }
+            
+
+
+
+        }
+
+
+        public static string alumnoTextureFolder()
+        {
+            return GuiController.Instance.AlumnoEjemplosMediaDir + "Texturas\\";
+        }*/
+
         Size frameSize;
         int totalFrames;
         float currentTime;
@@ -43,7 +88,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             set { playing = value; }
         }
 
-        TexturedQuad texturedQuad;
+        TgcPlaneWall wall;
+        /// <summary>
+        /// Sprite con toda la textura a animar
+        /// </summary>
+        /*
+        public TgcPlaneWall Wall
+        {
+            get { return wall; }
+        }*/
 
         protected float frameRate;
         /// <summary>
@@ -67,10 +120,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         /// <summary>
         /// Posicion del sprite
         /// </summary>
+        public Vector3 Origin
+        {
+            get { return wall.Origin; }
+            set { wall.Origin = value; }
+        }
+
         public Vector3 Position
         {
-            get { return texturedQuad.Position; }
-            set { texturedQuad.Position = value; }
+            get { return wall.Origin + Vector3.Multiply(wall.Size, 0.5f); }
+            set { wall.Origin = value - Vector3.Multiply(wall.Size, 0.5f); }
         }
 
 
@@ -87,18 +146,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         /// <summary>
         /// Angulo de rotación en radianes
         /// </summary>
-        
-        public Vector3 Rotation
+        /*
+        public float Rotation
         {
-            get { return texturedQuad.Rotation; }
-            set { texturedQuad.Rotation = value; }
+            get { return wall.Rotation; }
+            set { sprite.Rotation = value; }
         }
-        
-        public Vector2 Size
-        {
-            get { return texturedQuad.Size; }
-            set { texturedQuad.Size = value; }
-        }
+        */
         /// <summary>
         /// Crear un nuevo Wall animado
         /// </summary>
@@ -106,7 +160,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         /// <param name="frameSize">tamaño de un tile de la animacion</param>
         /// <param name="totalFrames">cantidad de frames que tiene la animacion</param>
         /// <param name="frameRate">velocidad en cuadros por segundo</param>
-        public AnimatedQuad(string texturePath, Size frameSize, int totalFrames, float frameRate, Vector2 quadSize, Vector3 quadPosition, int firstFrame)
+        public AnimatedWall(string texturePath, Size frameSize, int totalFrames, float frameRate, Vector3 wallSize, Vector3 originWall, int firstFrame)
         {
             this.enabled = false;
             this.currentFrame = firstFrame;
@@ -131,9 +185,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 throw new Exception("Error en AnimatedWall. No coinciden la cantidad de frames y el tamaño de la textura: " + totalFrames);
             }
             */
-            //Quad
-            texturedQuad = new TexturedQuad(quadPosition, quadSize, Vector3.Empty, texture, uTile, vTile);
-            texturedQuad.AlphaBlendEnable = true;
+            //Wall
+            wall = new TgcPlaneWall(originWall, wallSize, TgcPlaneWall.Orientations.XYplane, texture, uTile, vTile);
+            wall.AlphaBlendEnable = true;
 
             setFrameRate(frameRate);
         }
@@ -150,7 +204,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         public void updateValues()
         {
-            texturedQuad.updateValues();
+            wall.updateValues();
         }
 
         /// <summary>
@@ -179,8 +233,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             {
                 currentFrame = (int)(currentTime * frameRate) + firstFrame;
 
-                texturedQuad.UVOffset = new Vector2(uTile * (currentFrame % (int)(1 / uTile)), vTile * (currentFrame / (int)(1 / uTile)));
-                //texturedQuad.updateValues();
+                wall.UVOffset = new Vector2(uTile * (currentFrame % (int)(1 / uTile)), vTile * (currentFrame / (int)(1 / uTile)));
+                wall.updateValues();
             }
         }
 
@@ -203,7 +257,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 return;
 
             //Dibujar wall
-            texturedQuad.render();
+            wall.render();
         }
 
         /// <summary>
@@ -220,8 +274,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         /// </summary>
         public void dispose()
         {
-            texturedQuad.dispose();
+            wall.dispose();
         }
-
     }
 }

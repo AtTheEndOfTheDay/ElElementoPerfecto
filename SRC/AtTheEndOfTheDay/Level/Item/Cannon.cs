@@ -77,8 +77,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             var bodyMesh = game.GetMesh("Cannon");
             var baseMesh = game.GetMesh("CannonBase");
+            //TODO poner mas lindo
+            _Smoke = new AnimatedQuad(game.getParticleFolder() + "ExplosionDarkBlue.png", new Size(146, 146), 47, 15, new Vector2(25, 25), Item.DefaultPosition + new Vector3(0, 35, -4), 2);
             _ObbLoad = new TgcObb() { Extents = _ObbExtents };
             _ObbLoad.SetOrientation();
+            Add(new TranslatedParticlePart(_Smoke));
             Add(new ObbPart(_ObbLoad));
             Add(new MeshStaticPart(bodyMesh));
             var bodyObb = TgcObb.computeFromAABB(bodyMesh.BoundingBox);
@@ -163,6 +166,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             else _RotationB = r;
         }
 
+        private readonly AnimatedQuad _Smoke;
         private readonly TgcObb _ObbLoad;
         private readonly Single _Force = 100f;
         private readonly MeshUnRotatedPart _Base;
@@ -188,6 +192,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (r == _RotationF)
             {
                 //TODO: PARTICULAS ACA GUSTAVO !!!
+                _Smoke.initAnimation();
                 var d = _ObbLoad.Orientation[1];
                 _Load.Position += d * (_ObbExtents.Y + 1);
                 _Load.Velocity = d * _Force;

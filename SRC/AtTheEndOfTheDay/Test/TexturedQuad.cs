@@ -1,5 +1,4 @@
-﻿using AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement;
-using Microsoft.DirectX;
+﻿using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using TgcViewer.Utils;
 using TgcViewer.Utils.Shaders;
 using TgcViewer.Utils.TgcSceneLoader;
 
-namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
+namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     
     /// <summary>
@@ -20,6 +19,7 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
     public class TexturedQuad : IRenderObject
     {
         private CustomVertex.PositionTextured[] vertices;
+        private bool oldValues = true;
 
         private Vector3 position;
         /// <summary>
@@ -29,19 +29,27 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
         public Vector3 Position
         {
             get { return position; }
-            set { position = value; }
+            set 
+            { 
+                position = value;
+                oldValues = true;
+            }
         }
 
 
-        private Vector3 size;
+        private Vector2 size;
         /// <summary>
         /// Dimensiones de la pared.
         /// Llamar a updateValues() para aplicar cambios.
         /// </summary>
-        public Vector3 Size
+        public Vector2 Size
         {
             get { return size; }
-            set { size = value; }
+            set 
+            { 
+                size = value;
+                oldValues = true;
+            }
         }
 
 
@@ -53,7 +61,11 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
         public Vector3 Rotation
         {
             get { return rotation; }
-            set { rotation = value; }
+            set 
+            { 
+                rotation = value;
+                oldValues = true;
+            }
         }
 
         private TgcTexture texture;
@@ -72,7 +84,8 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
         public Effect Effect
         {
             get { return effect; }
-            set { effect = value; }
+            set 
+            { effect = value; }
         }
 
         protected string technique;
@@ -94,7 +107,11 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
         public float UTile
         {
             get { return uTile; }
-            set { uTile = value; }
+            set 
+            { 
+                uTile = value;
+                oldValues = true;
+            }
         }
 
         float vTile;
@@ -105,7 +122,11 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
         public float VTile
         {
             get { return vTile; }
-            set { vTile = value; }
+            set 
+            { 
+                vTile = value;
+                oldValues = true;
+            }
         }
 
 
@@ -116,7 +137,11 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
         public Vector2 UVOffset
         {
             get { return uvOffset; }
-            set { uvOffset = value; }
+            set 
+            {
+                uvOffset = value;
+                oldValues = true;
+            }
         }
 
         private bool enabled;
@@ -155,7 +180,7 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
         {
             this.vertices = new CustomVertex.PositionTextured[6];
             this.position = Vector3.Empty;
-            this.size = Vector3Extension.One;
+            this.size = new Vector2(0, 0);
             this.rotation = Vector3.Empty;
             this.enabled = true;
             this.uTile = 1;
@@ -169,7 +194,7 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
             this.effect = GuiController.Instance.Shaders.VariosShader;
             this.technique = TgcShaders.T_POSITION_TEXTURED;
 
-            updateValues();
+            //updateValues();
         }
 
         /// <summary>
@@ -182,7 +207,7 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
         /// <param name="texture">Textura de la pared</param>
         /// <param name="uTile">Cantidad de tile de la textura en coordenada U</param>
         /// <param name="vTile">Cantidad de tile de la textura en coordenada V</param>
-        public TexturedQuad(Vector3 position, Vector3 size, Vector3 rotation, TgcTexture texture, float uTile, float vTile)
+        public TexturedQuad(Vector3 position, Vector2 size, Vector3 rotation, TgcTexture texture, float uTile, float vTile)
             : this()
         {
             setTexture(texture);
@@ -193,7 +218,7 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
             this.uTile = uTile;
             this.vTile = vTile;
 
-            updateValues();
+            //updateValues();
         }
 
         /// <summary>
@@ -204,7 +229,7 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
         /// <param name="size">Dimensiones de la pared. Uno de los valores será ignorado, según la orientación elegida</param>
         /// <param name="orientation">Orientacion de la pared</param>
         /// <param name="texture">Textura de la pared</param>
-        public TexturedQuad(Vector3 position, Vector3 size, TgcTexture texture)
+        public TexturedQuad(Vector3 position, Vector2 size, TgcTexture texture)
             : this()
         {
             setTexture(texture);
@@ -212,7 +237,7 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
             this.position = position;
             this.size = size;
 
-            updateValues();
+            //updateValues();
         }
 
         /// <summary>
@@ -284,6 +309,13 @@ namespace AlumnoEjemplos.SRC.AtTheEndOfTheDay.Test
         {
             if (!enabled)
                 return;
+
+            if (oldValues)
+            {
+                updateValues();
+                oldValues = false;
+            }
+                
 
             Device d3dDevice = GuiController.Instance.D3dDevice;
             TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;

@@ -29,6 +29,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private readonly String _MaterialFolder;
         private readonly String _SignFolder;
         private readonly String _SoundFolder;
+        private readonly String _ParticleFolder;
         private readonly TgcScene _Scene;
         private readonly Level[] _Levels;
         private readonly Dx3D.Effect _LightShader = GuiController.Instance.Shaders.TgcMeshPointLightShader.Clone(GuiController.Instance.D3dDevice);
@@ -54,6 +55,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _MaterialFolder = mediaFolder + "Texture\\Material\\";
             _SignFolder = mediaFolder + "Texture\\Sign\\";
             _SoundFolder = mediaFolder + "Sound\\";
+            _ParticleFolder = mediaFolder + "Texture\\Particles\\";
+
             _Scene = new TgcSceneLoader().loadSceneFromFile(mediaFolder + "Mesh\\Items.xml");
             foreach (var mesh in _Scene.Meshes)
             {
@@ -186,6 +189,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             //player.FileName = (_SoundFolder + "Crash Bandicoot 2   Rock It, Pack Attack Music.mp3");
 
         }
+        
+        //TODO seguro esto es re feo XD
+        public String getParticleFolder()
+        {
+            return _ParticleFolder;
+        }
+
 
         public void reproducir()
         {
