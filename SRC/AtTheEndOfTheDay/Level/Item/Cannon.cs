@@ -105,8 +105,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         #region ResetMethods
         private Interactive _Load = null;
-        private Boolean _IsRotationA = true;
-        private Boolean _IsBaseRotating = false;
+        private Boolean _IsRotationA = false;
         private Vector3 _BaseRotationSaved;
         public override void SaveValues()
         {
@@ -117,7 +116,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             base.LoadValues();
             _Base.Rotation = _BaseRotationSaved;
-            _IsBaseRotating = false;
             _Load = null;
         }
         private static readonly Vector3 _MenuScale = Vector3Extension.One * .3f;
@@ -133,22 +131,24 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public override void Build(Single deltaTime)
         {
             var input = GuiController.Instance.D3dInput;
-            if (input.keyUp(Key.LeftControl))
-                _IsBaseRotating = !_IsBaseRotating;
-            if (input.keyUp(Key.Tab))
+            if (input.keyUp(Key.W))
             {
                 Rotation = _IsRotationA ? _RotationB : _RotationA;
                 _IsRotationA = !_IsRotationA;
             }
             if (input.keyDown(Key.D))
-                _BuildRotation(deltaTime, _Base.Rotation.Z - FastMath.PI_HALF);
+                _BuildRotation(deltaTime, _Base.Rotation.Z - FastMath.PI_HALF, false);
             else if (input.keyDown(Key.A))
-                _BuildRotation(deltaTime, _Base.Rotation.Z + FastMath.PI_HALF);
+                _BuildRotation(deltaTime, _Base.Rotation.Z + FastMath.PI_HALF, false);
+            if (input.keyDown(Key.Q))
+                _BuildRotation(deltaTime, _Base.Rotation.Z - FastMath.PI_HALF, true);
+            else if (input.keyDown(Key.E))
+                _BuildRotation(deltaTime, _Base.Rotation.Z + FastMath.PI_HALF, true);
         }
-        private void _BuildRotation(Single deltaTime, Single to)
+        private void _BuildRotation(Single deltaTime, Single to, Boolean isBaseRotating)
         {
             var step = deltaTime * BuildRotationSpeed;
-            if (_IsBaseRotating)
+            if (isBaseRotating)
             {
                 _Base.Rotation = _Base.Rotation.AdvanceZ(step, to);
                 _BaseCollider.Obb.SetOrientation(_Base.Rotation);
