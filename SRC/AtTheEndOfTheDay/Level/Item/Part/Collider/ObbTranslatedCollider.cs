@@ -29,19 +29,19 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constructors
 
         #region PartMethods
-        protected override void ItemScaleChanged(Item item)
+        protected override void Item_ScaleChanged(Item item)
         {
-            base.ItemScaleChanged(item);
+            base.Item_ScaleChanged(item);
             UpdateTranslation();
         }
-        protected override void ItemRotationChanged(Item item)
+        protected override void Item_RotationChanged(Item item)
         {
-            base.ItemRotationChanged(item);
+            base.Item_RotationChanged(item);
             UpdateTranslation();
         }
-        protected override void ItemPositionChanged(Item item)
+        protected override void Item_PositionChanged(Item item)
         {
-            base.ItemPositionChanged(item);
+            base.Item_PositionChanged(item);
             Obb.Center += _TranslationCurrent;
         }
         protected void UpdateTranslation()

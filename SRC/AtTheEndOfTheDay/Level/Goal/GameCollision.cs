@@ -8,7 +8,7 @@ using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public class GameCollision : IGoal
+    public class GameCollision : Goal
     {
         private Item _ItemA;
         private Item _ItemB;
@@ -23,6 +23,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             {
                 return _ItemA.Collides(_ItemB);
             }
+        }
+        public void Dispose()
+        {
         }
     }
 }

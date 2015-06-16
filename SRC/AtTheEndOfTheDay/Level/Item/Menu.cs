@@ -19,51 +19,69 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Menu : Item
     {
+        #region Constants
+        public static readonly Vector3 DefaultItemRotation = new Vector3(.7f, 0, .7f);
+        public static readonly Vector3 DefaultItemRotationSpeed = new Vector3(0, .7f, 0);
+        #endregion Constants
+
         #region Constructors
-        public Menu(Game game, Vector3 position, Vector3 slots, Vector3 step)
-            : this(game, position, slots, step, Vector3.Empty) { }
-        public Menu(Game game, Vector3 position, Vector3 slots, Vector3 step, Vector3 rotation)
+        public Menu(Game game)
+            : base(game)
         {
-            var halfStep = .5f * step;
-            var obb = new TgcObb() { Extents = halfStep.Abs() };
-            Add(new ObbCollider(obb));
-            obb.setRenderColor(Color.White);
-            obb.SetOrientation();
-            _Step = step;
-            _Start = halfStep - halfStep.MemberwiseMult(slots);
-            Scale = slots;
-            Rotation = rotation;
-            Position = position;
+            Add(_Colider = new ObbCollider() { Color = Color.White });
+            ItemRotation = DefaultItemRotation;
+            ItemRotationSpeed = DefaultItemRotationSpeed;
         }
         #endregion Constructors
 
-        #region Fields
-        private readonly Vector3 _Step;
-        private readonly Vector3 _Start;
-        private Vector3 _ItemRotation = new Vector3(.7f, 0, .7f);
-        private static readonly Vector3 _RotationSpeed = new Vector3(0, .7f, 0);
+        #region Items
         private readonly List<Item> _Items = new List<Item>();
-        public void Add(Item item)
+        public Item Add(Item item)
         {
             _Items.Add(item);
             item.SaveValues();
+            return item;
         }
-        public void Add(IEnumerable<Item> items)
+        public T Add<T>(T items)
+            where T : IEnumerable<Item>
         {
             foreach (var item in items)
                 Add(item);
+            return items;
         }
-        public void Remove(Item item)
+        public Item Remove(Item item)
         {
             _Items.Remove(item);
             item.LoadValues();
+            return item;
         }
-        public void Remove(IEnumerable<Item> items)
+        public T Remove<T>(T items)
+            where T : IEnumerable<Item>
         {
             foreach (var item in items)
                 Remove(item);
+            return items;
         }
-        #endregion Fields
+        #endregion Items
+
+        #region Properties
+        public Vector3 ItemRotation { get; set; }
+        public Vector3 ItemRotationSpeed { get; set; }
+        public ObbCollider _Colider;
+        public Vector3 _ItemStart;
+        private Vector3 _ItemSize = Item.DefaultScale;
+        public Vector3 ItemSize
+        {
+            get { return _ItemSize; }
+            set
+            {
+                _ItemSize = value;
+                var is_2 = .5f * _ItemSize;
+                _Colider.Extents = is_2;
+                _ItemStart = is_2 - is_2.MemberwiseMult(Scale);
+            }
+        }
+        #endregion Properties
 
         #region ItemMethods
         public Item Pick(TgcRay ray)
@@ -86,14 +104,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public override void Animate(Single deltaTime)
         {
-            _ItemRotation += deltaTime * _RotationSpeed;
-            var rotation = Rotation + _ItemRotation;
-            var start = Position + _Start;
+            ItemRotation += deltaTime * RotationSpeed;
+            var rotation = Rotation + ItemRotation;
+            var start = Position + _ItemStart;
             var v = new Vector3(0, 0, 0);
             for (var i = 0; v.Z < Scale.Z && i < _Items.Count; v.Z++)
                 for (v.Y = 0; v.Y < Scale.Y && i < _Items.Count; v.Y++)
                     for (v.X = 0; v.X < Scale.X && i < _Items.Count; v.X++, i++)
-                        _Items[i].MenuTransform(rotation, start + v.MemberwiseMult(_Step));
+                        _Items[i].MenuTransform(rotation, start + v.MemberwiseMult(_ItemSize));
         }
         #endregion ItemMethods
     }

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    class ParticlePart : IPart
+    class ParticlePart : ItemPart
     {
         protected readonly AnimatedQuad animatedQuad;
         public ParticlePart(AnimatedQuad animatedQuad)

@@ -17,27 +17,28 @@ using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
 
-//TgcTexture madera = TgcTexture.createTexture(alumnoTextureFolder() + "Madera.jpg");
-//TgcTexture metal = TgcTexture.createTexture(alumnoTextureFolder() + "Metal.jpg");
-//TgcTexture metal2 = TgcTexture.createTexture(alumnoTextureFolder() + "METAL_t.jpg");
-//TgcTexture laja = TgcTexture.createTexture(alumnoTextureFolder() + "Laja.jpg");
-//TgcTexture texturaCannon = TgcTexture.createTexture(alumnoTextureFolder() + "Cannon.png");
-//TgcTexture texturaMagnet = TgcTexture.createTexture(alumnoTextureFolder() + "Magnet.png");
-//TgcTexture texturaSpring = TgcTexture.createTexture(alumnoTextureFolder() + "Spring.png");
-//TgcTexture texturaPasarDeNivel = TgcTexture.createTexture(alumnoTextureFolder() + "PasasteDeNivel.jpg");
-//TgcTexture texturaGanaste = TgcTexture.createTexture(alumnoTextureFolder() + "Ganaste!!!.jpg");
-
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public class Level
+    public class Level:GameComponent
     {
+        #region Constants
+        private static readonly Menu _MenuNull = new Menu(null);
+        private static readonly Vector3 DefaultCameraPosition = Vector3Extension.Back * -200f;
+        private static readonly Vector3 DefaultCameraTarget = Vector3.Empty;
+        private static readonly Vector3 DefaultLightPosition = new Vector3(1f, 1f, -1f) * 500f;
+        private const Single DefaultLightIntensity = 66f;
+        private static readonly Vector3 DefaultPlanePoint = Vector3.Empty;
+        private static readonly Vector3 DefaultPlaneNormal = Vector3Extension.Front;
+        #endregion Constants
+
         #region Constructors
-        public Level(IList<Item> game, IList<Item> user, IEnumerable<IGoal> goal, String sign)
+        public Level(Game game)
+            : base(game)
         {
             _Stage = _Building;
-            _Game = game;
-            _Goal = goal;
-            _Interactives = _Game.OfType<Interactive>().ToList();
+            _Items = game;
+            _Goals = goal;
+            _Interactives = _Items.OfType<Interactive>().ToList();
             try
             {
                 _Menu = game.OfType<Menu>().Single();
@@ -50,6 +51,28 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _WinSign.Position = new Vector2(300, 200);
         }
         #endregion Constructors
+
+        #region Properties
+        public Single Order { get; set; }
+        public String _Name = String.Empty;
+        public String Name
+        {
+            get { return _Name; }
+            set { _Name = value ?? String.Empty; }
+        }
+        public String _Properties = String.Empty;
+        public String Properties
+        {
+            get { return _Properties; }
+            set { _Properties = value ?? String.Empty; }
+        }
+        public Menu _Menu = _MenuNull;
+        public Menu Menu
+        {
+            get { return _Menu == _MenuNull ? null : _Menu; }
+            set { _Menu = value ?? _MenuNull; }
+        }
+        #endregion Properties
 
         #region Fields
         private Item _Selected = null;
@@ -65,56 +88,86 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Single LightIntensity = 66f;
         public Vector3 PlanePoint = Vector3.Empty;
         public Vector3 PlaneNormal = Vector3Extension.Front;
-        private Plane _Plane { get { return Plane.FromPointNormal(PlanePoint, PlaneNormal); } }
+        public Plane Plane { get { return Plane.FromPointNormal(PlanePoint, PlaneNormal); } }
         #endregion Fields
 
         #region Lists
-        private readonly Menu _Menu;
-        private readonly IList<Item> _Game;
-        private readonly IEnumerable<IGoal> _Goal;
-        private readonly IList<Item> _Actives = new List<Item>();
-        private readonly IList<Interactive> _Interactives;
-        private void _Activate(Item item)
+        public Goal[] Goals { get { return _Goals.ToArray(); } }
+        private readonly IList<Goal> _Goals = new List<Goal>();
+        public Goal Add(Goal goal)
         {
-            item.SaveValues();
-            _Game.Add(item);
-            _Actives.Add(item);
+            _Goals.Add(goal);
+            return goal;
+        }
+        public T Add<T>(T goals)
+            where T : IEnumerable<Goal>
+        {
+            foreach (var goal in goals)
+                Add(goal);
+            return goals;
+        }
+        public Goal Remove(Goal goal)
+        {
+            _Goals.Remove(goal);
+            return goal;
+        }
+        public T Remove<T>(T goals)
+            where T : IEnumerable<Goal>
+        {
+            foreach (var goal in goals)
+                Remove(goal);
+            return goals;
+        }
+
+        public Item[] Items { get { return _Items.ToArray(); } }
+        private readonly IList<Item> _Items = new List<Item>();
+        private readonly IList<Item> _Actives = new List<Item>();
+        private readonly IList<Interactive> _Interactives = new List<Interactive>();
+        public Item Add(Item item)
+        {
+            _Items.Add(item);
             var interactive = item as Interactive;
             if (interactive != null)
                 _Interactives.Add(interactive);
+            return item;
         }
-        private void _Deactivate(Item item)
+        public T Add<T>(T items)
+            where T : IEnumerable<Item>
         {
-            _Game.Remove(item);
+            foreach (var item in items)
+                Add(item);
+            return items;
+        }
+        public Item Remove(Item item)
+        {
+            _Items.Remove(item);
             _Actives.Remove(item);
             var interactive = item as Interactive;
             if (interactive != null)
                 _Interactives.Remove(interactive);
+            return item;
         }
-        private void _DeactivateAll()
+        public T Remove<T>(T items)
+            where T : IEnumerable<Item>
         {
-            _Menu.Add(_Actives);
-            IList interactive = (IList)_Interactives;
-            foreach (var item in _Actives)
-            {
-                _Game.Remove(item);
-                interactive.Remove(item);
-            }
-            _Actives.Clear();
+            foreach (var item in items)
+                Remove(item);
+            return items;
         }
         #endregion Lists
 
         #region GamePlay
         public void Load()
         {
-            _DeactivateAll();
+            _Menu.Add(_Actives);
+            Remove(_Actives);
             RollBack();
         }
         public void RollBack()
         {
             _Stage = _Building;
             IsComplete = false;
-            foreach (var item in _Game)
+            foreach (var item in _Items)
                 item.LoadValues();
         }
         public void Play(Single deltaTime)
@@ -145,7 +198,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _WinSign.render();
                 GuiController.Instance.Drawer2D.endDrawSprite();
             }
-            foreach (var item in _Game)
+            foreach (var item in _Items)
                 item.Render(shader);
             if (_Selected != null)
             {
@@ -157,7 +210,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public void Dispose()
         {
-            foreach (var item in _Game)
+            foreach (var item in _Items)
                 item.Dispose();
         }
         #endregion GamePlay
@@ -170,7 +223,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (input.keyPressed(Key.Space))
             {
                 if (_Stage == _Building)
-                    foreach (var item in _Game)
+                    foreach (var item in _Items)
                         item.SaveValues();
                 if (_Stage == _Simulation)
                     _Stage = null;
@@ -191,7 +244,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private void _Simulation(Single deltaTime)
         {
             var collisions = new List<ItemCollision>();
-            foreach (var item in _Game)
+            foreach (var item in _Items)
             {
                 item.Animate(deltaTime);
                 foreach (var interactive in _Interactives)
@@ -214,7 +267,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             }
             foreach (var interactive in _Interactives)
                 interactive.Simulate(deltaTime);
-            IsComplete = _Goal.All(goal => goal.IsMeet);
+            IsComplete = _Goals.All(goal => goal.IsMeet);
         }
 
         private void _Pick()
@@ -228,7 +281,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 var ray = _PickingRay.Ray;
                 var picked = _Actives.FirstOrDefault(i => i.Intercepts(ray));
                 if (picked != null)
-                    _Deactivate(picked);
+                    Remove(picked);
                 else if (_Menu.Intercepts(ray))
                     picked = _Menu.Pick(ray);
                 _Selected = picked;
@@ -239,10 +292,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 var ray = _PickingRay.Ray;
                 var picked = _Actives.FirstOrDefault(i => i.Intercepts(ray));
                 if (picked != null)
-                {
-                    _Deactivate(picked);
-                    _Menu.Add(picked);
-                }
+                    _Menu.Add(Remove(picked));
             }
         }
 
@@ -250,11 +300,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             _PickingRay.updateRay();
             Single t; Vector3 position;
-            TgcCollisionUtils.intersectRayPlane(_PickingRay.Ray, _Plane, out t, out position);
+            TgcCollisionUtils.intersectRayPlane(_PickingRay.Ray, Plane, out t, out position);
             _Selected.Build(deltaTime);
             _Selected.Position = position;
             _SelectedColor = _Menu.Collides(_Selected) ? Color.Blue
-                : (_Game.Any(i => i.Collides(_Selected)) ? Color.Red
+                : (_Items.Any(i => i.Collides(_Selected)) ? Color.Red
                 : Color.Green);
             var input = GuiController.Instance.D3dInput;
             var left = TgcD3dInput.MouseButtons.BUTTON_LEFT;
@@ -267,7 +317,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 }
                 else if (_SelectedColor == Color.Green)
                 {
-                    _Activate(_Selected);
+                    _Actives.Add(Add(_Selected));
                     _Selected = null;
                 }
             }

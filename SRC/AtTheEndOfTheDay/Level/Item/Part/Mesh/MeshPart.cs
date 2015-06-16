@@ -5,7 +5,7 @@ using Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public abstract class MeshPart : IPart
+    public abstract class MeshPart : ItemPart
     {
         public static Boolean IsVisible = true;
         public static readonly Color Color = Color.Red;

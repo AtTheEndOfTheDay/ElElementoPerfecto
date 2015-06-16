@@ -6,7 +6,7 @@ using Microsoft.DirectX;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public class ObbPart : IPart
+    public class ObbPart : ItemPart
     {
         #region Constructors
         public readonly TgcObb Obb;

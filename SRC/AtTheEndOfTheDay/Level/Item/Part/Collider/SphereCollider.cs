@@ -19,7 +19,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             Sphere = sphere;
             Radius = sphere.Radius;
-            sphere.setRenderColor(Collider.Color);
+            sphere.setRenderColor(Collider.DefaultColor);
         }
         #endregion Constructors
 

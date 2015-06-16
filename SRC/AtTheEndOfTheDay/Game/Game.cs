@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Xml;
 using System.Linq;
 using System.Drawing;
 using TgcViewer;
@@ -24,7 +25,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private const String _GoalLabel = "Goal]";
         private const String _LevelLabel = "Level]";
         private static readonly Type[] _ItemTypes = typeof(Item).LoadSubTypes();
-        private static readonly Type[] _GoalTypes = typeof(IGoal).LoadSubTypes();
+        private static readonly Type[] _GoalTypes = typeof(Goal).LoadSubTypes();
 
         private readonly String _MaterialFolder;
         private readonly String _SignFolder;
@@ -77,18 +78,19 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             try
             {
-                var lvl = File.ReadAllText(lvlPath);
-                var sections = lvl.Split('[');
-                var game = _NewItemList(sections, _GameLabel);
-                var user = _NewItemList(sections, _UserLabel);
-                var goal = _NewGoalList(sections, game, user);
-                foreach (var item in game)
-                    item.Init(game, user);
-                foreach (var item in user)
-                    item.Init(game, user);
-                var levelSection = sections.FirstOrDefault(s => s.StartsWith(_LevelLabel));
-                var props = levelSection.Substring(_LevelLabel.Length).Split('\n');
-                return new Level(game, user, goal, (_SignFolder + "Win.png")).LoadFieldsFromText(props);
+                var lvl = new XmlTextReader(lvlPath);
+                //var sections = lvl.Split('[');
+                //var game = _NewItemList(sections, _GameLabel);
+                //var user = _NewItemList(sections, _UserLabel);
+                //var goal = _NewGoalList(sections, game, user);
+                //foreach (var item in game)
+                //    item.Init(game, user);
+                //foreach (var item in user)
+                //    item.Init(game, user);
+                //var levelSection = sections.FirstOrDefault(s => s.StartsWith(_LevelLabel));
+                //var props = levelSection.Substring(_LevelLabel.Length).Split('\n');
+                //return new Level(game, user, goal, (_SignFolder + "Win.png")).LoadFieldsFromText(props);
+                return null;
             }
             catch (ArrayTypeMismatchException e) { throw e; }
             catch (Exception e) { throw new Exception("Wrong level file format.", e); }
@@ -97,9 +99,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             return _ItemTypes.CreateFromTextStart<Item>(sections, header, this);
         }
-        private static IEnumerable<IGoal> _NewGoalList(String[] sections, params Object[] parameters)
+        private static IEnumerable<Goal> _NewGoalList(String[] sections, params Object[] parameters)
         {
-            return _GoalTypes.CreateFromTextStart<IGoal>(sections, _GoalLabel, parameters).ToArray();
+            return _GoalTypes.CreateFromTextStart<Goal>(sections, _GoalLabel, parameters).ToArray();
         }
         #endregion Constructors
 

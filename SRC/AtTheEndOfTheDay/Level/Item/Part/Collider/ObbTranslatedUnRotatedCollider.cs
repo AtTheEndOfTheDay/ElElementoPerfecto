@@ -21,7 +21,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constructors
 
         #region PartMethods
-        protected override void ItemRotationChanged(Item item)
+        protected override void Item_RotationChanged(Item item)
         {
             UpdateTranslation();
         }

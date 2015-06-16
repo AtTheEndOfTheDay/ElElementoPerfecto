@@ -17,12 +17,13 @@ using Dx3D = Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public abstract partial class Item : IDisposable
+    public abstract partial class Item : GameComponent
     {
-        #region DefaultTransformation
-        protected const Single BuildRotationSpeed = 1.5f;
-        protected const Single BuildScalingSpeed = 4.5f;
-        protected static readonly Vector3 BuildMinScale = .2f * Vector3Extension.One;
+        #region Constants
+        private const Item[] _SiblingsNull = { };
+        public const Single BuildScalingSpeed = 4.5f;
+        public const Single BuildRotationSpeed = 1.5f;
+        public const Single BuildTranslationSpeed = 4.5f;
 
         public static readonly Vector3 DefaultScale = Vector3Extension.One;
         public static readonly Vector3 DefaultRotation = Vector3.Empty;
@@ -30,7 +31,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public static readonly Matrix DefaultScaleMatrix = Matrix.Scaling(DefaultScale);
         public static readonly Matrix DefaultRotationMatrix = Matrix.RotationYawPitchRoll(DefaultRotation.X, DefaultRotation.Y, DefaultRotation.Z);
         public static readonly Matrix DefaultPositionMatrix = Matrix.Translation(DefaultPosition);
-        #endregion DefaultTransformation
+        #endregion Constants
 
         #region Item.EventHandler
         public delegate void EventHandler(Item item);
@@ -42,17 +43,35 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Item.EventHandler
 
         #region Constructors
-        public Item()
+        public Item(Game game)
+            : base(game)
         {
             ScaleMatrix = DefaultScaleMatrix;
             RotationMatrix = DefaultRotationMatrix;
             PositionMatrix = DefaultPositionMatrix;
         }
-        public virtual void Init(IList<Item> gameItems, IList<Item> userItems)
-        {
-            SaveValues();
-        }
         #endregion Constructors
+
+        #region Properties
+        public String _Name = String.Empty;
+        public String Name
+        {
+            get { return _Name; }
+            set { _Name = value ?? String.Empty; }
+        }
+        public String _Properties = String.Empty;
+        public String Properties
+        {
+            get { return _Properties; }
+            set { _Properties = value ?? String.Empty; }
+        }
+        private Item[] _Siblings = _SiblingsNull;
+        public Item[] Siblings
+        {
+            get { return _Siblings; }
+            set { _Siblings = value ?? _SiblingsNull; }
+        }
+        #endregion Properties
 
         #region ResetMethods
         private Vector3 _SavedScale;
@@ -81,7 +100,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region TransformProperties
         public Matrix ScaleMatrix { get; private set; }
         private Vector3 _Scale = DefaultScale;
-        public event EventHandler ScaleChanged;
         public Vector3 Scale
         {
             get { return _Scale; }
@@ -92,6 +110,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 ScaleMatrix = Matrix.Scaling(value);
                 RiseEvent(ScaleChanged);
             }
+        }
+        public event EventHandler ScaleChanged;
+        protected virtual void OnScaleChanged()
+        {
+            RiseEvent(ScaleChanged);
         }
         public Matrix RotationMatrix { get; private set; }
         private Vector3 _Rotation = DefaultRotation;
@@ -123,17 +146,33 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         #endregion TransformProperties
 
-        #region PartMethods
-        private ICollection<IPart> _Parts = new List<IPart>();
-        public void Add(IPart part)
+        #region Parts
+        private ICollection<ItemPart> _Parts = new List<ItemPart>();
+        public ItemPart Add(ItemPart part)
         {
             _Parts.Add(part);
             part.Attach(this);
+            return part;
         }
-        public void Remove(IPart part)
+        public T Add<T>(T parts)
+            where T : IEnumerable<ItemPart>
+        {
+            foreach (var part in parts)
+                Add(part);
+            return parts;
+        }
+        public ItemPart Remove(ItemPart part)
         {
             _Parts.Remove(part);
             part.Detach(this);
+            return part;
+        }
+        public T Remove<T>(T parts)
+            where T : IEnumerable<ItemPart>
+        {
+            foreach (var part in parts)
+                Remove(part);
+            return parts;
         }
 
         public Matrix RenderMatrix { get; private set; }
@@ -148,19 +187,19 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             foreach (var p in _Parts)
                 p.Dispose();
         }
-        #endregion PartMethods
+        #endregion Parts
 
         #region ColliderMethods
         private ICollection<Collider> _Colliders = new List<Collider>();
         public void Add(Collider collider)
         {
             _Colliders.Add(collider);
-            Add(collider as IPart);
+            Add(collider as ItemPart);
         }
         public void Remove(Collider collider)
         {
             _Colliders.Remove(collider);
-            Add(collider as IPart);
+            Add(collider as ItemPart);
         }
 
         public Boolean Intercepts(TgcRay ray)

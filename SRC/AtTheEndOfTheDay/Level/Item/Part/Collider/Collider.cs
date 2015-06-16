@@ -1,22 +1,32 @@
 ﻿using System;
 using System.Drawing;
-using Microsoft.DirectX.Direct3D;
 using TgcViewer.Utils.TgcGeometry;
+using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public abstract class Collider : IPart
+    public abstract class Collider : ItemPart
     {
         public static Boolean IsVisible = true;
-        public static readonly Color Color = Color.Green;
+        public const Single DefaultFriction = .1f;
+        public const Single DefaultRestitution = .7f;
+        public static readonly Color DefaultColor = Color.Green;
 
-        public Single Friction = .1f;
-        public Single Restitution = .7f;
+        public Collider(Game game)
+            : base(game)
+        {
+            Friction = DefaultFriction;
+            Restitution = DefaultRestitution;
+            Color = DefaultColor;
+        }
 
-        public abstract void Attach(Item item);
-        public abstract void Detach(Item item);
-        public abstract void Render(Item item, Effect shader);
-        public abstract void Dispose();
+        public Single Friction { get; set; }
+        public Single Restitution { get; set; }
+        public virtual Color Color { get; set; }
+        public Vector3 Scale { get; set; }
+        public Vector3 Position { get; set; }
+        public Vector3 Rotation { get; set; }
 
         public abstract Boolean Intercepts(TgcRay ray);
         public virtual Boolean Collides(Collider other)

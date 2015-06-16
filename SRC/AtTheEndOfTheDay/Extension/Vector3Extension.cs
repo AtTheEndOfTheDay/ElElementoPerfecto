@@ -56,6 +56,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             return new Vector3(a.X * b.X, a.Y * b.Y, a.Z * b.Z);
         }
+        public static Vector3 MemberwiseDiv(this Vector3 a, Vector3 b)
+        {
+            return new Vector3(a.X / b.X, a.Y / b.Y, a.Z / b.Z);
+        }
         public static Vector3 Orthogonal(this Vector3 v, Vector3 direction)
         {
             var ortho = Vector3.Cross(v, direction);

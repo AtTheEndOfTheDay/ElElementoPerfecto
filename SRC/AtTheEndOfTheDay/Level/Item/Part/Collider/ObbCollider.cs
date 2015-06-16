@@ -11,31 +11,64 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class ObbCollider : Collider
     {
         #region Constructors
-        public Vector3 Extents;
-        public readonly TgcObb Obb;
+        protected readonly TgcObb Obb;
+        public ObbCollider()
+            : this(new TgcObb() { Extents = Item.DefaultScale })
+        {
+            Obb.SetOrientation();
+        }
         public ObbCollider(TgcMesh mesh)
             : this(TgcObb.computeFromAABB(mesh.BoundingBox)) { }
+        public ObbCollider(TgcBoundingBox aabb)
+            : this(TgcObb.computeFromAABB(aabb)) { }
         public ObbCollider(TgcObb obb)
         {
             Obb = obb;
-            Extents = obb.Extents;
-            obb.setRenderColor(Collider.Color);
+            _Extents = obb.Extents;
+            obb.setRenderColor(Collider.DefaultColor);
+            Scale = Item.DefaultScale;
+            Position = Item.DefaultPosition;
+            Rotation = Item.DefaultRotation;
         }
         #endregion Constructors
+
+        #region Properties
+        public override Color Color
+        {
+            get { return base.Color; }
+            set { Obb.setRenderColor(base.Color = value); }
+        }
+        private Vector3 _Extents;
+        public Vector3 Extents
+        {
+            get { return _Extents; }
+            set
+            {
+                if (_Extents == value) return;
+                Obb.Extents = Obb.Extents
+                    .MemberwiseMult(value)
+                    .MemberwiseDiv(_Extents);
+                _Extents = value;
+            }
+        }
+        #endregion Properties
 
         #region PartMethods
         public override void Attach(Item item)
         {
             Detach(item);
-            item.ScaleChanged += ItemScaleChanged;
-            item.RotationChanged += ItemRotationChanged;
-            item.PositionChanged += ItemPositionChanged;
+            Item_ScaleChanged(item);
+            Item_RotationChanged(item);
+            Item_PositionChanged(item);
+            item.ScaleChanged += Item_ScaleChanged;
+            item.RotationChanged += Item_RotationChanged;
+            item.PositionChanged += Item_PositionChanged;
         }
         public override void Detach(Item item)
         {
-            item.ScaleChanged -= ItemScaleChanged;
-            item.RotationChanged -= ItemRotationChanged;
-            item.PositionChanged -= ItemPositionChanged;
+            item.ScaleChanged -= Item_ScaleChanged;
+            item.RotationChanged -= Item_RotationChanged;
+            item.PositionChanged -= Item_PositionChanged;
         }
         public override void Render(Item item, Effect shader)
         {
@@ -50,20 +83,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Obb.dispose();
         }
 
-        public Vector3 Scale = Item.DefaultScale;
-        public Vector3 Position = Item.DefaultPosition;
-        public Vector3 Rotation = Item.DefaultRotation;
-
-        protected virtual void ItemScaleChanged(Item item)
+        protected virtual void Item_ScaleChanged(Item item)
         {
-            Obb.Extents = Extents.MemberwiseMult(Scale = item.Scale);
+            Obb.Extents = _Extents.MemberwiseMult(Scale = item.Scale);
         }
-        protected virtual void ItemRotationChanged(Item item)
+        protected virtual void Item_RotationChanged(Item item)
         {
             Rotation = item.Rotation;
             Obb.SetOrientation(item.RotationMatrix);
         }
-        protected virtual void ItemPositionChanged(Item item)
+        protected virtual void Item_PositionChanged(Item item)
         {
             Obb.Center = Position = item.Position;
         }

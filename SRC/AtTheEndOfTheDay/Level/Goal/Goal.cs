@@ -7,8 +7,9 @@ using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public interface IGoal
+    public abstract class Goal : GameComponent
     {
-        Boolean IsMeet { get; }
+        public Goal(Game game) : base(game) { }
+        public abstract Boolean IsMeet { get; }
     }
 }
