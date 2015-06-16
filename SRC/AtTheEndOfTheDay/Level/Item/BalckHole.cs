@@ -85,13 +85,24 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
 
         private readonly Single _Force = 100000f;
-        private readonly Single _AtractionDistance = 1000f;//TODO: que lo levante del .lvl
+        private readonly Single _AtractionDistance = 100f;
+        private Single _AtractionFactor;
+        private Single _AtractionFactorPow2;
+        public Single AtractionFactor
+        {
+            get { return _AtractionFactor; }
+            set
+            {
+                _AtractionFactor = value;
+                _AtractionFactorPow2 = value * value;
+            }
+        }//TODO: que lo levante del .lvl
         public override void Act(Interactive interactive, Single deltaTime)
         {
             var n = interactive.Position - Position;
             var d2 = n.LengthSq();
             n.Normalize();
-            if (d2 < _AtractionDistance)
+            if (d2 < _AtractionDistance * 25/*_AtractionFactorPow2*/)
                 interactive.Momentum -= n * (_Force / d2);
         }
 
