@@ -91,6 +91,7 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Game\Game.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\TgcObbExtension.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\MatrixExtension.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshPart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Repulsor.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Menu.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Cannon.cs" />
@@ -107,8 +108,12 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshUnRotatedPart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshTransformedPart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\ObbPart.cs" />
-    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshPart.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Particle\ParticlePart.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Particle\TranslatedParticlePart.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Test\AnimatedQuad.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Test\TexturedQuad.cs" />
     <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\002.Text.lvl" />
+    <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\008.Text.lvl" />
     <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\007.Text.lvl" />
     <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\006.Text.lvl" />
     <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\005.Text.lvl" />
@@ -191,7 +196,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Estrategia\" />
-    <Folder Include="SRC\AtTheEndOfTheDay\Test\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
