@@ -14,6 +14,7 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -77,7 +78,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             var bodyMesh = game.GetMesh("Cannon");
             var baseMesh = game.GetMesh("CannonBase");
-            _Smoke = new TranslatedParticlePart(new AnimatedQuad(game.getParticleFolder() + "ExplosionGrey.png", new Size(146, 146), 47, 15, new Vector2(25, 25), Item.DefaultPosition + new Vector3(0, 35, -4), 2));
+            TgcStaticSound efecto = new TgcStaticSound();
+            efecto.loadSound(game.getSoundFolder() + "cañon.wav");
+            _Smoke = new TranslatedParticlePart(new AnimatedQuad(game.getParticleFolder() + "ExplosionGrey.png", new Size(146, 146), 47, 15, new Vector2(25, 25), Item.DefaultPosition + new Vector3(0, 35, -4), 2),efecto);
             _ObbLoad = new TgcObb() { Extents = _ObbExtents };
             _ObbLoad.SetOrientation();
             Add(_Smoke);

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -11,10 +12,18 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Constructors
         private Vector3 _Translation;
         private Vector3 _TranslationCurrent;
+        public TgcStaticSound efecto;
         public TranslatedParticlePart(AnimatedQuad animatedQuad) 
             : base(animatedQuad) 
         {
             _TranslationCurrent = _Translation = animatedQuad.Position - Item.DefaultPosition;
+        }
+
+        public TranslatedParticlePart(AnimatedQuad animatedQuad, TgcStaticSound sonido)
+            : base(animatedQuad ,sonido)
+        {
+            _TranslationCurrent = _Translation = animatedQuad.Position - Item.DefaultPosition;
+            efecto = sonido;
         }
         #endregion Constructors
 

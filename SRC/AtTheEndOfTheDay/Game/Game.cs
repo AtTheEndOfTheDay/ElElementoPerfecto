@@ -202,6 +202,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             return _ParticleFolder;
         }
 
+        public String getSoundFolder()
+        {
+            return _SoundFolder;
+        }
+
 
         public void reproducir()
         {

@@ -12,7 +12,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     class ParticlePart : IPart
     {
         protected readonly AnimatedQuad animatedQuad;
-         public TgcStaticSound efecto;
+        public TgcStaticSound efecto;
         public ParticlePart(AnimatedQuad animatedQuad)
         {
             this.animatedQuad = animatedQuad;
@@ -68,13 +68,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public virtual void initParticle()
         {
             animatedQuad.initAnimation();
-            //efecto.play(false);
+            efecto.play(false);
         }
 
         public virtual void stopParticle()
         {
             animatedQuad.stopAnimation();
-            //efecto.stop();
+            efecto.stop();
         }
 
         public void Render(Item item, Effect shader)
@@ -84,7 +84,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public void Dispose()
         {
             animatedQuad.dispose();
-            //efecto.dispose();
+            efecto.dispose();
         }
 
     }
