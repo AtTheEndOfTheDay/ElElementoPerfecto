@@ -108,6 +108,7 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\ObbPart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshPart.cs" />
     <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\002.Text.lvl" />
+    <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\007.Text.lvl" />
     <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\006.Text.lvl" />
     <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\005.Text.lvl" />
     <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\004.Text.lvl" />
