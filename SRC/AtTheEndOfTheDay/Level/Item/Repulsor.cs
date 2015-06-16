@@ -48,7 +48,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             : this(game, force, position, Vector3.Empty, radius) { }
         public Repulsor(Game game, Single force, Vector3 position, Vector3 rotation, Single radius)
         {
-            var mesh = game.GetMesh("Ball");
+            var mesh = game.GetMesh("Ball");//TODO: Make Mesh
             Add(new MeshStaticPart(mesh)); 
             Add(new SphereCollider(mesh));
             Scale = radius * Vector3Extension.One;
@@ -58,7 +58,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constructors
 
         #region ItemMethods
-        private readonly TgcObb _Obb;
         private readonly Single _Force = 100000f;
         private readonly Single _RepulsionDistance = 1000f;//TODO: que lo levante del .lvl
         public override void Act(Interactive interactive, Single deltaTime)
