@@ -22,8 +22,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Constants
         private const Single _ForceFactor = 100000f;
         private const Single _RepulsionFactor = 100f;
-        private const Single _MaxScaleFactor = 1.2f;
-        private const Single _MinScaleFactor = 0.8f;
         #endregion Constants
 
         #region Constructors
@@ -58,11 +56,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _AtractionDistancePow2 = value * value;
             }
         }
+        public Single MaxScale { get; set; }
+        public Single MinScale { get; set; }
         #endregion Properties
 
         #region ItemMethods
-        private Single _MaxScale;
-        private Single _MinScale;
         private Boolean _IsGrowing = true;
         public override void Animate(Single deltaTime)
         {
@@ -70,15 +68,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var stepY = 0.3f * deltaTime;
             if (_IsGrowing)
             {
-                Scale = Scale.AdvanceX(stepX, _MaxScale);
-                Scale = Scale.AdvanceY(stepY, _MaxScale);
+                Scale = Scale.AdvanceX(stepX, MaxScale);
+                Scale = Scale.AdvanceY(stepY, MaxScale);
             }
             else
             {
-                Scale = Scale.AdvanceX(stepX, _MinScale);
-                Scale = Scale.AdvanceY(stepY, _MinScale);
+                Scale = Scale.AdvanceX(stepX, MinScale);
+                Scale = Scale.AdvanceY(stepY, MinScale);
             }
-            if (Scale.X == _MinScale || Scale.X == _MaxScale)
+            if (Scale.X == MinScale || Scale.X == MaxScale)
                 _IsGrowing = !_IsGrowing;
         }
 
