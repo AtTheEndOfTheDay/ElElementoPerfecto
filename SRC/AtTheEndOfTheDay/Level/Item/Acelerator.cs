@@ -28,7 +28,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Acelerator()
         {
             var mesh = Game.Current.NewMesh("WallTextured");
-            Add(_Mesh = new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("Acelerator.png") });
+            Add(_Mesh = new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("Acelerator.jpg") });
             Add(new ObbCollider(mesh));
         }
         #endregion Constructors
