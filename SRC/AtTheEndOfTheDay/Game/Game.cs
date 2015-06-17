@@ -110,21 +110,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public void Play(Single deltaTime)
         {
             TgcD3dInput input = GuiController.Instance.D3dInput;
-            _LvlHack(input);
             var level = _Levels[_LevelIndex];
+            _LvlHack(input, level);
             if (level.IsComplete)
             {
                 if (input.keyDown(Key.R))
                     level.RollBack();
                 else if (input.keyDown(Key.Return))
-                {
-                    _LevelIndex++;
-                    if (_LevelIndex == _Levels.Length)
-                        _LevelIndex = 0;
-                    level.UnLoad();
-                    level = _Levels[_LevelIndex];
-                    level.Load();
-                }
+                    advanceLevel(level);
             }
             else level.Play(deltaTime);
             level.SetCamera();
@@ -142,24 +135,30 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 level.Dispose();
             _Levels = null;
         }
-        private void _LvlHack(TgcD3dInput input)
+        private void advanceLevel(Level level)
         {
-            if (input.keyDown(Key.F1))
+            _LevelIndex++;
+            if (_LevelIndex == _Levels.Length)
                 _LevelIndex = 0;
-            else if (input.keyDown(Key.F2))
-                _LevelIndex = 1;
-            else if (input.keyDown(Key.F3))
-                _LevelIndex = 2;
-            else if (input.keyDown(Key.F4))
-                _LevelIndex = 3;
-            else if (input.keyDown(Key.F5))
-                _LevelIndex = 4;
-            else if (input.keyDown(Key.F6))
-                _LevelIndex = 5;
-            else if (input.keyDown(Key.F7))
-                _LevelIndex = 6;
-            else if (input.keyDown(Key.F8))
-                _LevelIndex = 7;
+            level.UnLoad();
+            level = _Levels[_LevelIndex];
+            level.Load();
+        }
+        private void backwardLevel(Level level)
+        {
+            _LevelIndex--;
+            if (_LevelIndex == -1)
+                _LevelIndex = _Levels.Length - 1;
+            level.UnLoad();
+            level = _Levels[_LevelIndex];
+            level.Load();
+        }
+        private void _LvlHack(TgcD3dInput input, Level level)
+        {
+            if (input.keyPressed(Key.F2))
+                advanceLevel(level);
+            else if (input.keyPressed(Key.F1))
+                backwardLevel(level);
         }
         #endregion GamePlay
     }
