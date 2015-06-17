@@ -37,6 +37,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             var bodyMesh = game.GetMesh("Cannon");
             var baseMesh = game.GetMesh("CannonBase");
+            
+            //aaaaaaaaaaaaaaaaaaaaaaaa
             TgcStaticSound efecto = new TgcStaticSound();
             efecto.loadSound(game.getSoundFolder() + "cañon.wav");
             _Smoke = new TranslatedParticlePart(
@@ -45,9 +47,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     new Vector2(25, 25), 
                     Item.DefaultPosition + new Vector3(0, 35, -4), 2), 
                     efecto);
+            Add(_Smoke);
+            //aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
             _ObbLoad = new TgcObb() { Extents = _ObbExtents };
             _ObbLoad.SetOrientation();
-            Add(_Smoke);
             Add(new ObbPart(_ObbLoad));
             Add(new MeshStaticPart(bodyMesh));
             var bodyObb = TgcObb.computeFromAABB(bodyMesh.BoundingBox);
@@ -82,7 +86,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public override void LoadValues()
         {
+            //aaaaaaaaaaaaaaaaaaaaaaaaa
             _Smoke.stopParticle();
+            //aaaaaaaaaaaaaaaaaaaaaaaaaaa
             base.LoadValues();
             _Base.Rotation = _BaseRotationSaved;
             _Load = null;
@@ -131,7 +137,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             else _RotationB = r;
         }
 
+        //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         private readonly TranslatedParticlePart _Smoke;
+        //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        
         private readonly TgcObb _ObbLoad;
         private readonly Single _Force = 100f;
         private readonly MeshUnRotatedPart _Base;
@@ -141,7 +150,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private Vector3 _RotationF = Vector3.Empty;
         public override void Animate(Single deltaTime)
         {
+            //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
             _Smoke.updateParticle();
+            //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
             if (_Load == null) return;
             _Load.Position = Position;
@@ -158,7 +169,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             );
             if (r == _RotationF)
             {
+                //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                 _Smoke.initParticle();
+                //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                 var d = _ObbLoad.Orientation[1];
                 _Load.Position += d * (_ObbExtents.Y + 1);
                 _Load.Velocity = d * _Force;
