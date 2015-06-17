@@ -28,7 +28,7 @@
     <Wall Name="RightLateral" Properties="" Scale="0.4,21,1" Position="+155,0,0" Rotation="" Texture="@Walls.jpg"/>
     <!--Lvl Obstacles-->
     <Wall Name="" Properties="" Scale="20,0.4,1" Position="-70,40,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="20,0.4,1" Position="15,0,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="20,0.4,1" Position="13,0,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <Wall Name="" Properties="" Scale="20,0.4,1" Position="-70,-40,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <!--Lvl Resources-->
   </Game>
