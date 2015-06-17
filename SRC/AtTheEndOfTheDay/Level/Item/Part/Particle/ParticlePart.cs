@@ -9,10 +9,10 @@ using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    class ParticlePart : ItemPart
+    public class ParticlePart : ItemPart
     {
         protected readonly AnimatedQuad AnimatedQuad;
-        public TgcStaticSound efecto;
+        public TgcStaticSound Efecto;
         public ParticlePart(AnimatedQuad animatedQuad)
         {
             this.AnimatedQuad = animatedQuad;
@@ -21,7 +21,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public ParticlePart(AnimatedQuad animatedQuad,TgcStaticSound sound)
         {
           this.AnimatedQuad = animatedQuad;
-             efecto=sound;
+             Efecto=sound;
         }
 
         public virtual void Attach(Item item)
@@ -68,13 +68,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public virtual void initParticle()
         {
             AnimatedQuad.initAnimation();
-            efecto.play(false);
+            Efecto.play(false);
         }
 
         public virtual void stopParticle()
         {
             AnimatedQuad.stopAnimation();
-            efecto.stop();
+            Efecto.stop();
         }
 
         public void Render(Item item, Effect shader)
@@ -84,7 +84,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public void Dispose()
         {
             AnimatedQuad.dispose();
-            efecto.dispose();
+            Efecto.dispose();
         }
 
     }

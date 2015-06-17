@@ -7,12 +7,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public abstract class MeshPart : ItemPart
     {
-        public static Boolean IsVisible = true;
-
         #region Constructors
         protected readonly TgcMesh Mesh;
-        public MeshPart(Game game, TgcMesh mesh)
-            : base(game)
+        public MeshPart(TgcMesh mesh)
         {
             Mesh = mesh;
             Mesh.AutoTransformEnable = false;
@@ -50,7 +47,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         public virtual void Render(Item item, Effect shader)
         {
-            if (MeshPart.IsVisible)
+            if (Game.Current.IsMeshVisible)
             {
                 Mesh.Effect = shader;
                 Mesh.render();

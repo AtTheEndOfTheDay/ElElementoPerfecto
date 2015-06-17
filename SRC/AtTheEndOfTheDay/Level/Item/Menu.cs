@@ -25,10 +25,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constants
 
         #region Constructors
-        public Menu(Game game)
-            : base(game)
+        public Menu()
         {
-            Add(_Colider = new ObbCollider(Game) { DefaultColiderColor = Color.White });
+            Add(_Colider = new ObbCollider() { Color = Color.White });
             ItemRotation = DefaultItemRotation;
             ItemRotationSpeed = DefaultItemRotationSpeed;
         }

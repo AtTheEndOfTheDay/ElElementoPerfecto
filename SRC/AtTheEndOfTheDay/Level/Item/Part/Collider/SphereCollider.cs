@@ -12,10 +12,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     {
         #region Constructors
         protected readonly TgcBoundingSphere Sphere;
-        public SphereCollider(Game game, TgcMesh mesh)
-            : this(game, TgcBoundingSphere.computeFromMesh(mesh)) { }
-        public SphereCollider(Game game, TgcBoundingSphere sphere)
-            : base(game)
+        public SphereCollider(TgcMesh mesh)
+            : this(TgcBoundingSphere.computeFromMesh(mesh)) { }
+        public SphereCollider(TgcBoundingSphere sphere)
         {
             Sphere = sphere;
             _Radius = sphere.Radius;
@@ -58,7 +57,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public override void Render(Item item, Effect shader)
         {
-            if (Collider.IsVisible)
+            if (Game.Current.IsColliderVisible)
             {
                 //TODO:Sphere.Effect = shader;
                 Sphere.render();

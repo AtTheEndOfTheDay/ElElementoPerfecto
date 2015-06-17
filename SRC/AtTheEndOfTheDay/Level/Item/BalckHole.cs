@@ -19,17 +19,18 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class BlackHole : Item
     {
-        private MeshStaticPart _Mesh;
+        #region Constants
         private const Single _ForceFactor = 100000f;
         private const Single _RepulsionFactor = 100f;
         private const Single _MaxScaleFactor = 1.2f;
         private const Single _MinScaleFactor = 0.8f;
+        #endregion Constants
+
         #region Constructors
         public BlackHole()
         {
             var mesh = Game.Current.NewMesh("BallTextured");
-            Add(_Mesh = new MeshStaticPart(mesh));
-            _Mesh.Texture = Game.Current.GetMaterial("BlackHole.jpg");
+            Add(new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("BlackHole.jpg") });
             Add(new SphereCollider(mesh));
         }
         #endregion Constructors

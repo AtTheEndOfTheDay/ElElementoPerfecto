@@ -8,8 +8,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     {
         public MeshUnRotatedPart(TgcMesh mesh)
             : base(mesh) { }
-        protected override void ItemRotationChanged(Item item)
-        {
-        }
+        protected override void ItemRotationChanged(Item item) { }
     }
 }

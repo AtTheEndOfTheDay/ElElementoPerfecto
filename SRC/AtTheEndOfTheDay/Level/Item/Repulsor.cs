@@ -19,15 +19,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Repulsor : Item
     {
-        private MeshStaticPart _Mesh;
+        #region Constants
         private const Single _ForceFactor = 100000f;
         private const Single _RepulsionFactor = 100f;
+        #endregion Constants
+
         #region Constructors
         public Repulsor()
         {
             var mesh = Game.Current.NewMesh("Ball");
-            Add(_Mesh = new MeshStaticPart(mesh));
-            _Mesh.Color = Color.FromArgb(0, 75, 0, 0);
+            Add(new MeshStaticPart(mesh) { Color = Color.FromArgb(0, 75, 0, 0) });
             Add(new SphereCollider(mesh));
         }
         #endregion Constructors
@@ -58,7 +59,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Properties
 
         #region ItemMethods
-        
         public override void Act(Interactive interactive, Single deltaTime)
         {
             var n = interactive.Position - Position;

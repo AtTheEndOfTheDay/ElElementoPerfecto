@@ -91,7 +91,7 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Game\Game.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\TgcObbExtension.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\MatrixExtension.cs" />
-    <Compile Include="SRC\AtTheEndOfTheDay\Game\GameComponent.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Game\IGameComponent.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\BalckHole.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshPart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Repulsor.cs" />
@@ -145,8 +145,8 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshStaticPart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\Collider.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\TypeExtension.cs" />
-    <Compile Include="SRC\AtTheEndOfTheDay\Level\Goal\GameCollision.cs" />
-    <Compile Include="SRC\AtTheEndOfTheDay\Level\Goal\Goal.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Goal\ItemCollision.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Goal\IGoal.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Game\Level.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Game\Item.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Game\ThePerfectElementExample.cs" />
