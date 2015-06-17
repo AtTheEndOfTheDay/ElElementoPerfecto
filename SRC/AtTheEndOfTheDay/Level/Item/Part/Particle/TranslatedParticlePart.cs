@@ -10,8 +10,19 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class TranslatedParticlePart : ParticlePart
     {
         #region Properties
-        private Vector3 _Translation;
+        private Vector3 _Translation = Vector3.Empty;
         private Vector3 _TranslationCurrent;
+        private Matrix _RotationMatrixRelativ = Matrix.Identity;
+       
+        public Matrix Rotation
+        {
+            get { return _RotationMatrixRelativ; }
+            set 
+            { 
+                _RotationMatrixRelativ = value;
+                Animation.RotationMatrix = RotationMatrix * _RotationMatrixRelativ;
+            }
+        }
         public Vector3 Translation
         {
             get { return _Translation; }
@@ -35,6 +46,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             base.ItemRotationChanged(item);
             UpdateTranslation();
+            Animation.RotationMatrix *= _RotationMatrixRelativ;
         }
         protected override void ItemPositionChanged(Item item)
         {
