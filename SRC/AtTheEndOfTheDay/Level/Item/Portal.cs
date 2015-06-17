@@ -14,6 +14,7 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -26,9 +27,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         MeshStaticPart _Mesh;
         MeshImmutableePart _Receptor;
         ObbCollider _Obb;
+        private TgcStaticSound _SoundEffect;
         public Portal()
         {
-            var mesh = Game.Current.NewMesh("WallTextured"); 
+            var mesh = Game.Current.NewMesh("WallTextured");
+            _SoundEffect = Game.Current.GetSound("portal2.wav", EffectVolume);
             Add(_Mesh = new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("BluePortal.png") });
             Add(_Obb = new ObbCollider(mesh));
             var receptorMesh = Game.Current.NewMesh("WallTextured");
@@ -78,6 +81,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             if (itemCollision.Item != this) return false;
             var reacted = true;
+            _SoundEffect.play(false);
             var interactive = itemCollision.Interactive;
             interactive.Position = _Receptor.Position;
             Remove(_Mesh);

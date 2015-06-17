@@ -24,7 +24,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public const Single BuildScalingSpeed = 4.5f;
         public const Single BuildRotationSpeed = 1.5f;
         public const Single BuildTranslationSpeed = 4.5f;
-        public const int EffectVolume = 0;
+        public const int EffectVolume = -500;
 
         public static readonly Vector3 DefaultScale = Vector3Extension.One;
         public static readonly Vector3 DefaultRotation = Vector3.Empty;

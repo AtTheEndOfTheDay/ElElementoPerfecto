@@ -124,6 +124,9 @@
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\002.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\009.lvl.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\008.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
