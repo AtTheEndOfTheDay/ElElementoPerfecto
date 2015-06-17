@@ -24,8 +24,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     /// </summary>
     public class ThePerfectElementExample : TgcExample
     {
-        private Game _Game = null;
-
         #region TextProperties
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -55,17 +53,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private void _AddModifiers()
         {
             var mods = GuiController.Instance.Modifiers;
-            mods.addBoolean("Collider.IsVisible", "Mostrar Colliders", Collider.IsVisible);
-            mods.addBoolean("MeshPart.IsVisible", "Mostrar Meshes", MeshPart.IsVisible);
-            //GuiController.Instance.UserVars.addVar("Vx", 0f);
-            //GuiController.Instance.UserVars.addVar("Vy", 0f);
-            //GuiController.Instance.UserVars.addVar("Vz", 0f);
+            mods.addBoolean("IsMeshVisible", "Mostrar Meshes", Game.Current.IsMeshVisible);
+            mods.addBoolean("IsColliderVisible", "Mostrar Colliders", Game.Current.IsColliderVisible);
         }
         private void _SetModifiers()
         {
             var mods = GuiController.Instance.Modifiers;
-            Collider.IsVisible = (Boolean)mods["Collider.IsVisible"];
-            MeshPart.IsVisible = (Boolean)mods["MeshPart.IsVisible"];
+            Game.Current.IsMeshVisible = (Boolean)mods["IsMeshVisible"];
+            Game.Current.IsColliderVisible = (Boolean)mods["IsColliderVisible"];
         }
         #endregion Modifiers
 
@@ -78,7 +73,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public override void init()
         {
             _AddModifiers();
-            _Game = new Game(GuiController.Instance.AlumnoEjemplosMediaDir + "AtTheEndOfTheDay\\");
+            Game.Current.Init(GuiController.Instance.AlumnoEjemplosMediaDir + "AtTheEndOfTheDay\\");
         }
         /// <summary>
         /// Método que se llama cada vez que hay que refrescar la pantalla.
@@ -89,7 +84,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public override void render(float elapsedTime)
         {
             _SetModifiers();
-            _Game.Play(elapsedTime);
+            Game.Current.Play(elapsedTime);
         }
         /// <summary>
         /// Método que se llama cuando termina la ejecución del ejemplo.
@@ -97,7 +92,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         /// </summary>
         public override void close()
         {
-            _Game.Dispose();
+            Game.Current.Dispose();
         }
         #endregion GamePlay
     }

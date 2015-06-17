@@ -4,12 +4,11 @@ using Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public abstract class ItemPart : GameComponent
+    public abstract class ItemPart : IGameComponent
     {
         public static readonly Color DefaultPartColor = Color.Red;
 
-        public ItemPart(Game game)
-            : base(game)
+        public ItemPart()
         {
             Color = DefaultPartColor;
         }

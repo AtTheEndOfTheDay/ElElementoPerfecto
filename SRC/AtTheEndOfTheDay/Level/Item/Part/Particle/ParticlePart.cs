@@ -11,16 +11,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     class ParticlePart : ItemPart
     {
-        protected readonly AnimatedQuad animatedQuad;
+        protected readonly AnimatedQuad AnimatedQuad;
         public TgcStaticSound efecto;
         public ParticlePart(AnimatedQuad animatedQuad)
         {
-            this.animatedQuad = animatedQuad;
+            this.AnimatedQuad = animatedQuad;
         }
 
         public ParticlePart(AnimatedQuad animatedQuad,TgcStaticSound sound)
         {
-          this.animatedQuad = animatedQuad;
+          this.AnimatedQuad = animatedQuad;
              efecto=sound;
         }
 
@@ -47,43 +47,43 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Single xScaleIncremente = item.Scale.X / Scale.X;
             Single yScaleIncremente = item.Scale.Y / Scale.Y;
 
-            animatedQuad.Size = new Vector2(animatedQuad.Size.X * xScaleIncremente, animatedQuad.Size.Y * yScaleIncremente);
+            AnimatedQuad.Size = new Vector2(AnimatedQuad.Size.X * xScaleIncremente, AnimatedQuad.Size.Y * yScaleIncremente);
             Scale = item.Scale;
         }
         protected virtual void ItemRotationChanged(Item item)
         {
-            animatedQuad.Rotation += item.Rotation - Rotation;
+            AnimatedQuad.Rotation += item.Rotation - Rotation;
             Rotation = item.Rotation;
         }
         protected virtual void ItemPositionChanged(Item item)
         {
-            animatedQuad.Position = Position = item.Position ;
+            AnimatedQuad.Position = Position = item.Position ;
         }
 
         public virtual void updateParticle()
         {
-            animatedQuad.update();
+            AnimatedQuad.update();
         }
 
         public virtual void initParticle()
         {
-            animatedQuad.initAnimation();
+            AnimatedQuad.initAnimation();
             efecto.play(false);
         }
 
         public virtual void stopParticle()
         {
-            animatedQuad.stopAnimation();
+            AnimatedQuad.stopAnimation();
             efecto.stop();
         }
 
         public void Render(Item item, Effect shader)
         {
-            animatedQuad.render();
+            AnimatedQuad.render();
         }
         public void Dispose()
         {
-            animatedQuad.dispose();
+            AnimatedQuad.dispose();
             efecto.dispose();
         }
 

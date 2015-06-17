@@ -41,12 +41,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         protected override void ItemPositionChanged(Item item)
         {
             base.ItemPositionChanged(item);
-            animatedQuad.Position += _TranslationCurrent;
+            AnimatedQuad.Position += _TranslationCurrent;
         }
         protected void UpdateTranslation()
         {
             _TranslationCurrent = Vector3.TransformCoordinate(_Translation.MemberwiseMult(Scale), Matrix.RotationYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z));
-            animatedQuad.Position = Position + _TranslationCurrent;
+            AnimatedQuad.Position = Position + _TranslationCurrent;
         }
         #endregion PartMethods
     }

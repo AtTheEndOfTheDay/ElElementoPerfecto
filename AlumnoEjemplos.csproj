@@ -109,7 +109,6 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Magnet.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshUnRotatedPart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshTransformedPart.cs" />
-    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\ObbPart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Particle\ParticlePart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Particle\TranslatedParticlePart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Test\AnimatedQuad.cs" />

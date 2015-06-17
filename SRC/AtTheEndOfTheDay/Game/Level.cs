@@ -20,7 +20,7 @@ using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public class Level:GameComponent
+    public class Level : IGameComponent
     {
         #region Constants
         private static readonly Menu _MenuNull = new Menu(null);
@@ -36,8 +36,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constants
 
         #region Constructors
-        public Level(Game game)
-            : base(game)
+        public Level()
         {
             _Stage = _Building;
             CameraPosition = DefaultCameraPosition;
@@ -145,24 +144,24 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Properties
 
         #region Goals
-        public Goal[] Goals { get { return _Goals.ToArray(); } }
-        private readonly IList<Goal> _Goals = new List<Goal>();
-        public Goal Add(Goal goal)
+        public IGoal[] Goals { get { return _Goals.ToArray(); } }
+        private readonly IList<IGoal> _Goals = new List<IGoal>();
+        public IGoal Add(IGoal goal)
         {
             _Goals.Add(goal);
             return goal;
         }
-        public void Add(IEnumerable<Goal> goals)
+        public void Add(IEnumerable<IGoal> goals)
         {
             foreach (var goal in goals)
                 Add(goal);
         }
-        public Goal Remove(Goal goal)
+        public IGoal Remove(IGoal goal)
         {
             _Goals.Remove(goal);
             return goal;
         }
-        public void Remove(IEnumerable<Goal> goals)
+        public void Remove(IEnumerable<IGoal> goals)
         {
             foreach (var goal in goals)
                 Remove(goal);

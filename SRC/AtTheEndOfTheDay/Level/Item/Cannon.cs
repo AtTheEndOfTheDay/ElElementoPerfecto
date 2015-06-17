@@ -32,55 +32,19 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constants
 
         #region Constructors
-        #region DefaultForceConstructors
         public Cannon(Game game)
-            : this(game, 1f, Vector3.Empty, Vector3.Empty, Vector3.Empty, Vector3.Empty, 1f) { }
-        public Cannon(Game game, Vector3 position)
-            : this(game, 1f, position, Vector3.Empty, Vector3.Empty, Vector3.Empty, 1f) { }
-        public Cannon(Game game, Vector3 position, Vector3 rotation)
-            : this(game, 1f, position, rotation, Vector3.Empty, Vector3.Empty, 1f) { }
-        public Cannon(Game game, Vector3 position, Vector3 rotation, Vector3 rotationA)
-            : this(game, 1f, position, rotation, rotationA, Vector3.Empty, 1f) { }
-        public Cannon(Game game, Vector3 position, Vector3 rotation, Vector3 rotationA, Vector3 rotationB)
-            : this(game, 1f, position, rotation, rotationA, rotationB, 1f) { }
-
-        public Cannon(Game game, Vector3 position, Single scale)
-            : this(game, 1f, position, Vector3.Empty, Vector3.Empty, Vector3.Empty, scale) { }
-        public Cannon(Game game, Vector3 position, Vector3 rotation, Single scale)
-            : this(game, 1f, position, rotation, Vector3.Empty, Vector3.Empty, scale) { }
-        public Cannon(Game game, Vector3 position, Vector3 rotation, Vector3 rotationA, Single scale)
-            : this(game, 1f, position, rotation, rotationA, Vector3.Empty, scale) { }
-        public Cannon(Game game, Vector3 position, Vector3 rotation, Vector3 rotationA, Vector3 rotationB, Single scale)
-            : this(game, 1f, position, rotation, rotationA, rotationB, scale) { }
-        #endregion DefaultForceConstructors
-
-        #region DefaultConstructors
-        public Cannon(Game game, Single force)
-            : this(game, force, Vector3.Empty, Vector3.Empty, Vector3.Empty, Vector3.Empty, 1f) { }
-        public Cannon(Game game, Single force, Vector3 position)
-            : this(game, force, position, Vector3.Empty, Vector3.Empty, Vector3.Empty, 1f) { }
-        public Cannon(Game game, Single force, Vector3 position, Vector3 rotation)
-            : this(game, force, position, rotation, Vector3.Empty, Vector3.Empty, 1f) { }
-        public Cannon(Game game, Single force, Vector3 position, Vector3 rotation, Vector3 rotationA)
-            : this(game, force, position, rotation, rotationA, Vector3.Empty, 1f) { }
-        public Cannon(Game game, Single force, Vector3 position, Vector3 rotation, Vector3 rotationA, Vector3 rotationB)
-            : this(game, force, position, rotation, rotationA, rotationB, 1f) { }
-
-        public Cannon(Game game, Single force, Single scale)
-            : this(game, force, Vector3.Empty, Vector3.Empty, Vector3.Empty, Vector3.Empty, scale) { }
-        public Cannon(Game game, Single force, Vector3 position, Single scale)
-            : this(game, force, position, Vector3.Empty, Vector3.Empty, Vector3.Empty, scale) { }
-        public Cannon(Game game, Single force, Vector3 position, Vector3 rotation, Single scale)
-            : this(game, force, position, rotation, Vector3.Empty, Vector3.Empty, scale) { }
-        public Cannon(Game game, Single force, Vector3 position, Vector3 rotation, Vector3 rotationA, Single scale)
-            : this(game, force, position, rotation, rotationA, Vector3.Empty, scale) { }
-        public Cannon(Game game, Single force, Vector3 position, Vector3 rotation, Vector3 rotationA, Vector3 rotationB, Single scale)
+            : base(game)
         {
             var bodyMesh = game.GetMesh("Cannon");
             var baseMesh = game.GetMesh("CannonBase");
             TgcStaticSound efecto = new TgcStaticSound();
             efecto.loadSound(game.getSoundFolder() + "cañon.wav");
-            _Smoke = new TranslatedParticlePart(new AnimatedQuad(game.getParticleFolder() + "ExplosionGrey.png", new Size(146, 146), 47, 15, new Vector2(25, 25), Item.DefaultPosition + new Vector3(0, 35, -4), 2),efecto);
+            _Smoke = new TranslatedParticlePart(
+                new AnimatedQuad(game.getParticleFolder() + "ExplosionGrey.png", 
+                    new Size(146, 146), 47, 15, 
+                    new Vector2(25, 25), 
+                    Item.DefaultPosition + new Vector3(0, 35, -4), 2), 
+                    efecto);
             _ObbLoad = new TgcObb() { Extents = _ObbExtents };
             _ObbLoad.SetOrientation();
             Add(_Smoke);
@@ -105,7 +69,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _RotationB = rotationB.ClampZ(minZ, maxZ);
             _Force *= force;
         }
-        #endregion DefaultConstructors
         #endregion Constructors
 
         #region ResetMethods

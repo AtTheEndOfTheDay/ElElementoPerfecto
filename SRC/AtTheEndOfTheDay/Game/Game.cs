@@ -18,6 +18,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Game : IDisposable
     {
+        private Game() { }
+        public static Game Current = new Game();
+
         #region Constants
         private const Single _OriginalAspectRatio = 961f / 510f;
         private const String _GameLabel = "Game]";
@@ -25,9 +28,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private const String _GoalLabel = "Goal]";
         private const String _LevelLabel = "Level]";
         private static readonly Type[] _ItemTypes = typeof(Item).LoadSubTypes();
-        private static readonly Type[] _GoalTypes = typeof(Goal).LoadSubTypes();
+        private static readonly Type[] _GoalTypes = typeof(IGoal).LoadSubTypes();
 
-        private readonly Level[] _Levels;
         private readonly Dx3D.Effect _LightShader = GuiController.Instance.Shaders.TgcMeshPointLightShader.Clone(GuiController.Instance.D3dDevice);
         private void _LoadShaders()
         {
@@ -45,8 +47,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constants
 
         #region Constructors
-        public Game(String mediaFolder)
+        public Boolean IsMeshVisible { get; set; }
+        public Boolean IsColliderVisible { get; set; }
+        private Level[] _Levels;
+        public void Init(String mediaFolder)
         {
+            if (_Levels != null) Dispose();
             _LoadShaders();
             _MaterialFolder = mediaFolder + "Texture\\Material\\";
             _SignFolder = mediaFolder + "Texture\\Sign\\";
@@ -94,36 +100,36 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             return _ItemTypes.CreateFromTextStart<Item>(sections, header, this);
         }
-        private static IEnumerable<Goal> _NewGoalList(String[] sections, params Object[] parameters)
+        private static IEnumerable<IGoal> _NewGoalList(String[] sections, params Object[] parameters)
         {
-            return _GoalTypes.CreateFromTextStart<Goal>(sections, _GoalLabel, parameters).ToArray();
+            return _GoalTypes.CreateFromTextStart<IGoal>(sections, _GoalLabel, parameters).ToArray();
         }
         #endregion Constructors
 
         #region Media
-        private readonly String _MaterialFolder;
+        private String _MaterialFolder;
         public TgcTexture GetMaterial(String materialFile)
         {
             return TgcTexture.createTexture(_MaterialFolder + materialFile);
         }
-        private readonly String _ParticleFolder;
+        private String _ParticleFolder;
         public TgcTexture GetParticle(String particleFile)
         {
             return TgcTexture.createTexture(_ParticleFolder + particleFile);
         }
-        private readonly String _SignFolder;
+        private String _SignFolder;
         public TgcTexture GetSign(String signFile)
         {
             return TgcTexture.createTexture(_SignFolder + signFile);
         }
-        private readonly String _SoundFolder;
+        private String _SoundFolder;
         public TgcStaticSound GetSound(String soundFile)
         {
             var sound = new TgcStaticSound();
             sound.loadSound(_SoundFolder + soundFile, -1500);
             return sound;
         }
-        private readonly TgcScene _Scene;
+        private TgcScene _Scene;
         public TgcMesh GetMesh(String name)
         {
             return _Scene.getMeshByName(name);
@@ -170,6 +176,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _Scene.disposeAll();
             foreach (var level in _Levels)
                 level.Dispose();
+            _Levels = null;
         }
 
         private void _LvlHack(TgcD3dInput input)

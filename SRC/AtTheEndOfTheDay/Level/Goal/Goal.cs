@@ -7,11 +7,10 @@ using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public abstract class Goal : GameComponent
+    public interface IGoal : IGameComponent
     {
-        public Goal(Game game) : base(game) { }
-        public abstract void FindTargets(Item[] items);
-        public abstract Boolean IsMeet { get; }
-        public abstract void Dispose();
+        void FindTargets(Item[] items);
+        Boolean IsMeet { get; }
+        void Dispose();
     }
 }
