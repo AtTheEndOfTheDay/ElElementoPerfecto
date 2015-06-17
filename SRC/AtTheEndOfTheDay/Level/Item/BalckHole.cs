@@ -30,10 +30,26 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var mesh = Game.Current.NewMesh("BallTextured");
             Add(new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("BlackHole.jpg") });
             Add(new SphereCollider(mesh));
+            Add(_StarStorm = new TranslatedParticlePart()
+            {
+                Translation = new Vector3(0, 0, -4),
+                Sound = Game.Current.GetSound("cañon.wav"),
+                Animation = new AnimatedQuad()
+                {
+                    Texture = Game.Current.GetParticle("thunders.png"),
+                    FrameSize = new Size(256, 256),
+                    Size = new Vector2(25, 25),
+                    FirstFrame = 0,
+                    CurrentFrame = 0,
+                    FrameRate = 15,
+                    TotalFrames = 16,
+                }
+            });
         }
         #endregion Constructors
 
         #region Properties
+        private readonly TranslatedParticlePart _StarStorm;
         private Single _Force;
         private Single _ForceReal;
         public Single Force
@@ -62,8 +78,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         #region ItemMethods
         private Boolean _IsGrowing = true;
+
+        public override void LoadValues()
+        {
+            base.LoadValues();
+            _StarStorm.Stop();
+        }
         public override void Animate(Single deltaTime)
         {
+            _StarStorm.Update(deltaTime);
             var stepX = 0.2f * deltaTime; 
             var stepY = 0.3f * deltaTime;
             if (_IsGrowing)
@@ -86,7 +109,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var d2 = n.LengthSq();
             n.Normalize();
             if (d2 < _AtractionFactor * _AtractionDistancePow2)
+            {
+                _StarStorm.KeepPlaying();
                 interactive.Momentum -= n * (_ForceReal / d2);
+            }
+                
         }
 
         public override Boolean React(ItemCollision itemCollision, Single deltaTime)

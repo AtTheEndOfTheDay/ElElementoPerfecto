@@ -20,7 +20,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             set 
             { 
                 _RotationMatrixRelativ = value;
-                Animation.RotationMatrix = RotationMatrix * _RotationMatrixRelativ;
+                if (Animation != null)
+                    Animation.RotationMatrix = RotationMatrix * _RotationMatrixRelativ;
             }
         }
         public Vector3 Translation
