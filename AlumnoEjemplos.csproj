@@ -118,25 +118,25 @@
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\001.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\002.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\002.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\008.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\008.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\007.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\007.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\006.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\006.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\005.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\005.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\004.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\004.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\003.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\003.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\Vector3Extension.cs" />
