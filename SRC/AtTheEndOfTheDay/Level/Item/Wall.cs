@@ -27,7 +27,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Constructors
         public Wall()
         {
-            var mesh = Game.Current.NewMesh("Ball");
+            var mesh = Game.Current.NewMesh("Wall");
             _MeshTextured = new MeshStaticPart(Game.Current.NewMesh("WallTextured"));
             Add(_Mesh = new MeshStaticPart(mesh));
             Add(new ObbCollider(mesh));

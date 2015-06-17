@@ -143,6 +143,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Parts
         public ItemPart[] Parts { get { return _Parts.ToArray(); } }
         private ICollection<ItemPart> _Parts = new List<ItemPart>();
+        protected Boolean emptyParts()
+        {
+            return (_Parts.Count == 0);
+        }
         public ItemPart Add(ItemPart part)
         {
             _Parts.Add(part);

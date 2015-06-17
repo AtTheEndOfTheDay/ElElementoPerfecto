@@ -95,7 +95,9 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\MatrixExtension.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Game\IGameComponent.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\BalckHole.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshImmutablePart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshPart.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Portal.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Repulsor.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Menu.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Cannon.cs" />

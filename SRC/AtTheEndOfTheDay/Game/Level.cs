@@ -289,7 +289,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 else _Stage = _Simulation;
             }
             else if (input.keyPressed(Key.C))
+            {
+                if (_Stage == _Building) return;
                 RollBack();
+
+            }
         }
 
         private void _Building(Single deltaTime)
