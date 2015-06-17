@@ -3,7 +3,7 @@
        CameraPosition="0,0,-200" CameraTarget="0,0,0"
        LightPosition="500,500,-500" LightIntensity="500"
        PlanePoint="0,0,0" PlaneNormal="0,0,1"
-       Sound="Crash Bandicoot 2.wav" WinSign="Level.png"
+       Sound="@Crash Bandicoot 2.wav" WinSign="@Level.png"
        WinSignScaling="0.5f, 0.5f" WinSignPosition="300, 200">
   <Level.Description>
     Aca va la descripcion del nivel.
