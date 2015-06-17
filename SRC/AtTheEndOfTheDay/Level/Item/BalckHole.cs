@@ -19,50 +19,48 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class BlackHole : Item
     {
+        private MeshStaticPart _Mesh;
+        private const Single _ForceFactor = 100000f;
+        private const Single _RepulsionFactor = 100f;
         private const Single _MaxScaleFactor = 1.2f;
         private const Single _MinScaleFactor = 0.8f;
         #region Constructors
-        #region DefaultForceConstructors
         public BlackHole(Game game)
-            : this(game, 1f, Vector3.Empty, Vector3.Empty, 1f) { }
-        public BlackHole(Game game, Vector3 position)
-            : this(game, 1f, position, Vector3.Empty, 1f) { }
-        public BlackHole(Game game, Vector3 position, Vector3 rotation)
-            : this(game, 1f, position, rotation, 1f) { }
-
-        public BlackHole(Game game, Vector3 position, Single radius)
-            : this(game, 1f, position, Vector3.Empty, radius) { }
-        public BlackHole(Game game, Vector3 position, Vector3 rotation, Single radius)
-            : this(game, 1f, position, rotation, radius) { }
-        #endregion DefaultForceConstructors
-
-        #region DefaultConstructors
-        public BlackHole(Game game, Single force)
-            : this(game, force, Vector3.Empty, Vector3.Empty, 1f) { }
-        public BlackHole(Game game, Single force, Vector3 position)
-            : this(game, force, position, Vector3.Empty, 1f) { }
-        public BlackHole(Game game, Single force, Vector3 position, Vector3 rotation)
-            : this(game, force, position, rotation, 1f) { }
-
-        public BlackHole(Game game, Single force, Single radius)
-            : this(game, force, Vector3.Empty, Vector3.Empty, radius) { }
-        public BlackHole(Game game, Single force, Vector3 position, Single radius)
-            : this(game, force, position, Vector3.Empty, radius) { }
-        public BlackHole(Game game, Single force, Vector3 position, Vector3 rotation, Single radius)
+            :base(game)
         {
-            var mesh = game.NewMesh("Ball", "BlackHole.jpg");//TODO: Make mesh
-            Add(new MeshStaticPart(mesh));
-            Add(new SphereCollider(mesh));
-            Scale = radius * Vector3Extension.One;
-            _MaxScale = Scale.X * _MaxScaleFactor;
-            _MinScale = Scale.X * _MinScaleFactor;
-            _Force *= force;
+            var mesh = game.NewMesh("BallTextured");
+            Add(_Mesh = new MeshStaticPart(game, mesh));
+            _Mesh.Texture = Game.GetMaterial("BlackHole.jpg");
+            Add(new SphereCollider(game, mesh));
         }
-        #endregion DefaultConstructors
         #endregion Constructors
 
+        #region Properties
+        private Single _Force;
+        private Single _ForceReal;
+        public Single Force
+        {
+            get { return _Force; }
+            set
+            {
+                _Force = value;
+                _ForceReal = value * _ForceFactor;
+            }
+        }
+        private Single _AtractionDistance;
+        private Single _AtractionDistancePow2;
+        public Single AtractionDistance
+        {
+            get { return _AtractionDistance; }
+            set
+            {
+                _AtractionDistance = value;
+                _AtractionDistancePow2 = value * value;
+            }
+        }
+        #endregion Properties
+
         #region ItemMethods
- 
         private Single _MaxScale;
         private Single _MinScale;
         private Boolean _IsGrowing = true;
@@ -84,25 +82,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _IsGrowing = !_IsGrowing;
         }
 
-        private readonly Single _Force = 100000f;
-        private readonly Single _AtractionDistance = 100f;
-        private Single _AtractionFactor;
-        private Single _AtractionFactorPow2;
-        public Single AtractionFactor
-        {
-            get { return _AtractionFactor; }
-            set
-            {
-                _AtractionFactor = value;
-                _AtractionFactorPow2 = value * value;
-            }
-        }//TODO: que lo levante del .lvl
         public override void Act(Interactive interactive, Single deltaTime)
         {
             var n = interactive.Position - Position;
             var d2 = n.LengthSq();
             n.Normalize();
-            if (d2 < _AtractionDistance * 25/*_AtractionFactorPow2*/)
+            if (d2 < _AtractionDistance * _AtractionDistancePow2)
                 interactive.Momentum -= n * (_Force / d2);
         }
 

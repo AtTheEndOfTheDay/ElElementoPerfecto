@@ -19,65 +19,54 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Repulsor : Item
     {
+        private MeshStaticPart _Mesh;
+        private const Single _ForceFactor = 100000f;
+        private const Single _RepulsionFactor = 100f;
         #region Constructors
-        #region DefaultForceConstructors
         public Repulsor(Game game)
-            : this(game, 1f, Vector3.Empty, Vector3.Empty, 1f) { }
-        public Repulsor(Game game, Vector3 position)
-            : this(game, 1f, position, Vector3.Empty, 1f) { }
-        public Repulsor(Game game, Vector3 position, Vector3 rotation)
-            : this(game, 1f, position, rotation, 1f) { }
-
-        public Repulsor(Game game, Vector3 position, Single radius)
-            : this(game, 1f, position, Vector3.Empty, radius) { }
-        public Repulsor(Game game, Vector3 position, Vector3 rotation, Single radius)
-            : this(game, 1f, position, rotation, radius) { }
-        #endregion DefaultForceConstructors
-
-        #region DefaultConstructors
-        public Repulsor(Game game, Single force)
-            : this(game, force, Vector3.Empty, Vector3.Empty, 1f) { }
-        public Repulsor(Game game, Single force, Vector3 position)
-            : this(game, force, position, Vector3.Empty, 1f) { }
-        public Repulsor(Game game, Single force, Vector3 position, Vector3 rotation)
-            : this(game, force, position, rotation, 1f) { }
-
-        public Repulsor(Game game, Single force, Single radius)
-            : this(game, force, Vector3.Empty, Vector3.Empty, radius) { }
-        public Repulsor(Game game, Single force, Vector3 position, Single radius)
-            : this(game, force, position, Vector3.Empty, radius) { }
-        public Repulsor(Game game, Single force, Vector3 position, Vector3 rotation, Single radius)
+            :base(game)
         {
-            var mesh = game.NewMesh("Ball", Color.FromArgb(0,75,0,0));//TODO: Make Mesh
-            Add(new MeshStaticPart(mesh)); 
-            Add(new SphereCollider(mesh));
-            Scale = radius * Vector3Extension.One;
-            _Force *= force;
+            var mesh = game.NewMesh("Ball");
+            Add(_Mesh = new MeshStaticPart(game, mesh));
+            _Mesh.Color = Color.FromArgb(0, 75, 0, 0);
+            Add(new SphereCollider(game, mesh));
         }
-        #endregion DefaultConstructors
         #endregion Constructors
 
-        #region ItemMethods
-        private readonly Single _Force = 100000f;
-        private readonly Single _RepulsionDistance = 100f;
-        private Single _RepulsionFactor;
-        private Single _RepulsionFactorPow2;
-        public Single RepulsionFactor
+        #region Properties
+        private Single _Force;
+        private Single _ForceReal;
+        public Single Force
         {
-            get { return _RepulsionFactor; }
+            get { return _Force; }
             set
             {
-                _RepulsionFactor = value;
-                _RepulsionFactorPow2 = value * value;
+                _Force = value;
+                _ForceReal = value * _ForceFactor;
             }
-        }//TODO: que lo levante del .lvl
+        }
+        private Single _RepulsionDistance;
+        private Single _RepulsionDistancePow2;
+        public Single RepulsionDistance
+        {
+            get { return _RepulsionDistance; }
+            set
+            {
+                _RepulsionDistance = value;
+                _RepulsionDistancePow2 = value * value;
+            }
+        }
+        #endregion Properties
+
+        #region ItemMethods
+        
         public override void Act(Interactive interactive, Single deltaTime)
         {
             var n = interactive.Position - Position;
             var d2 = n.LengthSq();
             n.Normalize();
-            if (d2 < _RepulsionDistance * 25/*_RepulsionFactorPow2*/)
-                interactive.Momentum += n * (_Force / d2);
+            if (d2 < _RepulsionFactor * _RepulsionDistancePow2)
+                interactive.Momentum += n * (_ForceReal / d2);
         }
         #endregion ItemMethods
     }
