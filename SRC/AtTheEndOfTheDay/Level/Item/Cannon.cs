@@ -58,7 +58,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
             Add(_Smoke = new TranslatedParticlePart()
             {
-                Translation = new Vector3(0, 35, -4),
+                Translation = new Vector3(0, 33, -4),
                 Sound = Game.Current.GetSound("cañon.wav"),
                 Animation = new AnimatedQuad()
                 {

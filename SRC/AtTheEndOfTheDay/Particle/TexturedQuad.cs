@@ -31,7 +31,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Effect Shader { get; set; }
         public String Technique { get; set; }
         public Vector2 Tile { get; set; }
-        public Vector2 UVOffset { get; set; }
+        public Vector2 _UVOffset;
+        public Vector2 UVOffset 
+        {
+            get { return _UVOffset; }
+            set
+            {
+                _UVOffset = value;
+                _OldValues = true;
+            }
+        }
         public Boolean Enabled { get; set; }
         public Boolean IsAlphaBlendEnabled { get; set; }
         private void _SetAlphaBlend(Boolean isAlphaEnabled)
@@ -115,10 +124,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _Vertices[3] = new CustomVertex.PositionTextured(bLeft, UVOffset.X, UVOffset.Y + Tile.Y);
             _Vertices[4] = new CustomVertex.PositionTextured(tRight, UVOffset.X + Tile.X, UVOffset.Y);
             _Vertices[5] = new CustomVertex.PositionTextured(bRight, UVOffset.X + Tile.X, UVOffset.Y + Tile.Y);
+            
             //Transformar todos los puntos
+
+            Matrix t = _RotationMatrix * Matrix.Translation(_Position);
             for (int i = 0; i < _Vertices.Length; i++)
             {
-                _Vertices[i].Position = Vector3.TransformCoordinate(_Vertices[i].Position, _RotationMatrix);
+                _Vertices[i].Position = Vector3.TransformCoordinate(_Vertices[i].Position, t);
             }
         }
         #endregion TextureMethods
