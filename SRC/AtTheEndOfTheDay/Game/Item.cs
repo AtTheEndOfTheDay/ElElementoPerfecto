@@ -269,6 +269,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 }
             return reacted;
         }
+        public virtual void ButtonSignal() { }
         #endregion InteractionMethods
     }
 }
