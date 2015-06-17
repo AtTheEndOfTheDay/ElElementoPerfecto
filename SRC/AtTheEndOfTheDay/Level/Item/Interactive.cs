@@ -33,28 +33,28 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constructors
 
         #region ResetMethods
-        private Vector3 _SavedVelocity;
-        private Vector3 _SavedAngularVelocity;
-        private Vector3 _SavedMomentum;
-        private Vector3 _SavedAngularMomentum;
-        private Single _SavedMass;
+        protected Vector3 SavedVelocity;
+        protected Vector3 SavedAngularVelocity;
+        protected Vector3 SavedMomentum;
+        protected Vector3 SavedAngularMomentum;
+        protected Single SavedMass;
         public override void SaveValues()
         {
             base.SaveValues();
-            _SavedVelocity = Velocity;
-            _SavedAngularVelocity = AngularVelocity;
-            _SavedMomentum = Momentum;
-            _SavedAngularMomentum = AngularMomentum;
-            _SavedMass = Mass;
+            SavedVelocity = Velocity;
+            SavedAngularVelocity = AngularVelocity;
+            SavedMomentum = Momentum;
+            SavedAngularMomentum = AngularMomentum;
+            SavedMass = Mass;
         }
         public override void LoadValues()
         {
             base.LoadValues();
-            Velocity = _SavedVelocity;
-            AngularVelocity = _SavedAngularVelocity;
-            Momentum = _SavedMomentum;
-            AngularMomentum = _SavedAngularMomentum;
-            Mass = _SavedMass;
+            Velocity = SavedVelocity;
+            AngularVelocity = SavedAngularVelocity;
+            Momentum = SavedMomentum;
+            AngularMomentum = SavedAngularMomentum;
+            Mass = SavedMass;
         }
         #endregion ResetMethods
 

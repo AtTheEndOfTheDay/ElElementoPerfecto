@@ -12,16 +12,17 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     {
         #region Constructors
         protected readonly TgcObb Obb;
-        public ObbCollider()
-            : this(new TgcObb() { Extents = Item.DefaultScale })
+        public ObbCollider(Game game)
+            : this(game, new TgcObb() { Extents = Item.DefaultScale })
         {
             Obb.SetOrientation();
         }
-        public ObbCollider(TgcMesh mesh)
-            : this(TgcObb.computeFromAABB(mesh.BoundingBox)) { }
-        public ObbCollider(TgcBoundingBox aabb)
-            : this(TgcObb.computeFromAABB(aabb)) { }
-        public ObbCollider(TgcObb obb)
+        public ObbCollider(Game game, TgcMesh mesh)
+            : this(game, TgcObb.computeFromAABB(mesh.BoundingBox)) { }
+        public ObbCollider(Game game, TgcBoundingBox aabb)
+            : this(game, TgcObb.computeFromAABB(aabb)) { }
+        public ObbCollider(Game game, TgcObb obb)
+            :base(game)
         {
             Obb = obb;
             _Extents = obb.Extents;

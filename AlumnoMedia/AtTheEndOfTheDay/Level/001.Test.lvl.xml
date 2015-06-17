@@ -1,13 +1,21 @@
 ﻿<?xml version="1.0"?>
-<Level CameraPosition="0,0,-200" CameraTarget="0,0,0"
+<Level Order="" Name="" Description="" Properties=""
+       CameraPosition="0,0,-200" CameraTarget="0,0,0"
        LightPosition="500,500,-500" LightIntensity="500"
-       PlanePoint="0,0,0" PlaneNormal="0,0,1">
+       PlanePoint="0,0,0" PlaneNormal="0,0,1"
+       Sound="Crash Bandicoot 2.wav" WinSign="Win.png"
+       WinSignScaling="0.5f, 0.5f" WinSignPosition="300, 200">
+  <Level.Description>
+    Aca va la descripcion del nivel.
+    Si se defie esta propiedad se ignora el atributo.
+  </Level.Description>
   <Goals>
-    <GameCollision IndexA="2" IndexB="3"/>
+    <GameCollision ItemA="Ball" ItemB="Win"/>
   </Goals>
   <Game>
-    <Gravitor Scale="0,-98,0" Position="" Rotation=""/>
-    <Menu Position="120,0,0" Scale="2,7,1" ItemSize="20,-20,20" Rotation=""/>
+    <Gravitor Name="" Properties="" Scale="0,-98,0" Position="" Rotation=""/>
+    <Menu Name="" Properties="" Position="120,0,0" Scale="2,7,1" Rotation="" ItemSize="20,-20,20" ItemRotation=".7, 0, .7" ItemRotationSpeed="0,.7,0"/>
+    <Gravitor Name="" Properties="" Scale="0,-98,0" Position="" Rotation=""/>
   </Game>
 </Level>
 [Game]
@@ -34,6 +42,7 @@ Wall=-24,-11,0;2.5,0.4,1;0,0,0.78;"Walls.jpg"
 Magnet=3;1.25
 Repulsor=1;1
 
+<!--
 [Test]
 //Only [Level][Goal][Game][User] are taken into account.
 //Every other section its just ignored.
@@ -63,3 +72,4 @@ Ball=[*position;*velocity][;radius;mass];#color
 Ball=[*position;*velocity][;radius;mass]
 Magnet=[force][;*position;*rotation][;scale]
 Cannon=[force][;*position;*rotation;*rotationA;*rotationB][;scale]
+-->

@@ -79,7 +79,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             _AddModifiers();
             _Game = new Game(GuiController.Instance.AlumnoEjemplosMediaDir + "AtTheEndOfTheDay\\");
-            _Game.cargarSonido();
+            _Game.GetSound();
         }
         /// <summary>
         /// Método que se llama cada vez que hay que refrescar la pantalla.

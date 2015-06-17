@@ -27,11 +27,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private static readonly Type[] _ItemTypes = typeof(Item).LoadSubTypes();
         private static readonly Type[] _GoalTypes = typeof(Goal).LoadSubTypes();
 
-        private readonly String _MaterialFolder;
-        private readonly String _SignFolder;
-        private readonly String _SoundFolder;
-        private readonly String _ParticleFolder;
-        private readonly TgcScene _Scene;
         private readonly Level[] _Levels;
         private readonly Dx3D.Effect _LightShader = GuiController.Instance.Shaders.TgcMeshPointLightShader.Clone(GuiController.Instance.D3dDevice);
         private void _LoadShaders()
@@ -71,7 +66,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var screen = GuiController.Instance.Panel3d.Size;
             var cameraFix = _OriginalAspectRatio / ((Single)screen.Width / screen.Height);
             foreach (var level in _Levels)
-                level.CameraPosition.Z *= cameraFix;
+                level.CameraPosition = level.CameraPosition.MultZ(cameraFix);
             _Levels[0].Load();
         }
         private Level _NewLevel(String lvlPath)
@@ -105,7 +100,30 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         #endregion Constructors
 
-        #region MeshMethods
+        #region Media
+        private readonly String _MaterialFolder;
+        public TgcTexture GetMaterial(String materialFile)
+        {
+            return TgcTexture.createTexture(_MaterialFolder + materialFile);
+        }
+        private readonly String _ParticleFolder;
+        public TgcTexture GetParticle(String particleFile)
+        {
+            return TgcTexture.createTexture(_ParticleFolder + particleFile);
+        }
+        private readonly String _SignFolder;
+        public TgcTexture GetSign(String signFile)
+        {
+            return TgcTexture.createTexture(_SignFolder + signFile);
+        }
+        private readonly String _SoundFolder;
+        public TgcStaticSound GetSound(String soundFile)
+        {
+            var sound = new TgcStaticSound();
+            sound.loadSound(_SoundFolder + soundFile, -1500);
+            return sound;
+        }
+        private readonly TgcScene _Scene;
         public TgcMesh GetMesh(String name)
         {
             return _Scene.getMeshByName(name);
@@ -128,14 +146,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             });
             return mesh;
         }
-        #endregion MeshMethods
+        #endregion Media
 
         #region GamePlay
         private Int32 _LevelIndex = 0;
         public void Play(Single deltaTime)
         {
             TgcD3dInput input = GuiController.Instance.D3dInput;
-            lvlHack(input);
+            _LvlHack(input);
             var level = _Levels[_LevelIndex];
             if (level.IsComplete)
             {
@@ -159,7 +177,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             //level.Render(_LightShader);
         }
 
-        public void lvlHack(TgcD3dInput input)
+        public void Dispose()
+        {
+            _Scene.disposeAll();
+            _BackgroundSound.dispose();
+            foreach (var level in _Levels)
+                level.Dispose();
+            //player.closeFile();            
+        }
+
+        private void _LvlHack(TgcD3dInput input)
         {
             if (input.keyDown(Key.F1))
                 _LevelIndex = 0;
@@ -179,40 +206,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _LevelIndex = 7;
         }
 
-        public void Dispose()
-        {
-            _Scene.disposeAll();
-            foreach (var level in _Levels)
-                level.Dispose();
-            sound.dispose();
-            //player.closeFile();            
-        }
-
-        public TgcStaticSound sound;
-        //TgcMp3Player player = GuiController.Instance.Mp3Player;
-
-        public void cargarSonido(){
-            sound = new TgcStaticSound();
-            sound.loadSound(_SoundFolder + "Crash Bandicoot 2.wav",-1500);
-            //player.FileName = (_SoundFolder + "Crash Bandicoot 2   Rock It, Pack Attack Music.mp3");
-
-        }
-        
-        //TODO seguro esto es re feo XD
-        public String getParticleFolder()
-        {
-            return _ParticleFolder;
-        }
-
-        public String getSoundFolder()
-        {
-            return _SoundFolder;
-        }
-
-
         public void reproducir()
         {
-            sound.play(true);
+            _BackgroundSound.play(true);
+            new tgcso
             //TgcMp3Player.States currentState = player.getStatus();
             //if (currentState == TgcMp3Player.States.Open)
             //{player.play(true);}

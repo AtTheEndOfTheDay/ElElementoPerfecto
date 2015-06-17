@@ -21,6 +21,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     {
         #region Constants
         private const Item[] _SiblingsNull = { };
+        public const Single ScaleSizeFactor = 1f / 8f;
         public const Single BuildScalingSpeed = 4.5f;
         public const Single BuildRotationSpeed = 1.5f;
         public const Single BuildTranslationSpeed = 4.5f;
@@ -53,13 +54,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constructors
 
         #region Properties
-        public String _Name = String.Empty;
+        private String _Name = String.Empty;
         public String Name
         {
             get { return _Name; }
             set { _Name = value ?? String.Empty; }
         }
-        public String _Properties = String.Empty;
+        private String _Properties = String.Empty;
         public String Properties
         {
             get { return _Properties; }
@@ -74,24 +75,29 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Properties
 
         #region ResetMethods
-        private Vector3 _SavedScale;
-        private Vector3 _SavedRotation;
-        private Vector3 _SavedPosition;
+        protected Vector3 SavedScale;
+        protected Vector3 SavedRotation;
+        protected Vector3 SavedPosition;
         public virtual void SaveValues()
         {
-            _SavedScale = _Scale;
-            _SavedRotation = _Rotation;
-            _SavedPosition = _Position;
+            SavedScale = _Scale;
+            SavedRotation = _Rotation;
+            SavedPosition = _Position;
         }
         public virtual void LoadValues()
         {
-            Scale = _SavedScale;
-            Rotation = _SavedRotation;
-            Position = _SavedPosition;
+            Scale = SavedScale;
+            Rotation = SavedRotation;
+            Position = SavedPosition;
         }
-        public virtual void MenuTransform(Vector3 rotation, Vector3 position)
+        private Vector3 _MenuScaleCache = Vector3.Empty;
+        public virtual void MenuTransform(Vector3 scale, Vector3 rotation, Vector3 position)
         {
-            Scale = DefaultScale;
+            if (Scale != _MenuScaleCache)
+            {
+                var factor = scale.MemberwiseDiv(Scale).MinCoordinate();
+                _MenuScaleCache = Scale = Math.Min(1, factor) * Scale;
+            }
             Rotation = rotation;
             Position = position;
         }
@@ -100,6 +106,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region TransformProperties
         public Matrix ScaleMatrix { get; private set; }
         private Vector3 _Scale = DefaultScale;
+        public event EventHandler ScaleChanged;
         public Vector3 Scale
         {
             get { return _Scale; }
@@ -110,11 +117,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 ScaleMatrix = Matrix.Scaling(value);
                 RiseEvent(ScaleChanged);
             }
-        }
-        public event EventHandler ScaleChanged;
-        protected virtual void OnScaleChanged()
-        {
-            RiseEvent(ScaleChanged);
         }
         public Matrix RotationMatrix { get; private set; }
         private Vector3 _Rotation = DefaultRotation;
@@ -147,6 +149,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion TransformProperties
 
         #region Parts
+        public ItemPart[] Parts { get { return _Parts.ToArray(); } }
         private ICollection<ItemPart> _Parts = new List<ItemPart>();
         public ItemPart Add(ItemPart part)
         {
@@ -154,12 +157,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             part.Attach(this);
             return part;
         }
-        public T Add<T>(T parts)
-            where T : IEnumerable<ItemPart>
+        public void Add(IEnumerable<ItemPart> parts)
         {
             foreach (var part in parts)
                 Add(part);
-            return parts;
         }
         public ItemPart Remove(ItemPart part)
         {
@@ -167,12 +168,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             part.Detach(this);
             return part;
         }
-        public T Remove<T>(T parts)
-            where T : IEnumerable<ItemPart>
+        public void Remove(IEnumerable<ItemPart> parts)
         {
             foreach (var part in parts)
                 Remove(part);
-            return parts;
         }
 
         public Matrix RenderMatrix { get; private set; }
@@ -189,17 +188,30 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         #endregion Parts
 
-        #region ColliderMethods
+        #region Colliders
+        public Collider[] Colliders { get { return _Colliders.ToArray(); } }
         private ICollection<Collider> _Colliders = new List<Collider>();
-        public void Add(Collider collider)
+        public Collider Add(Collider collider)
         {
             _Colliders.Add(collider);
             Add(collider as ItemPart);
+            return collider;
         }
-        public void Remove(Collider collider)
+        public void Add(IEnumerable<Collider> colliders)
+        {
+            foreach (var collider in colliders)
+                Add(collider);
+        }
+        public Collider Remove(Collider collider)
         {
             _Colliders.Remove(collider);
-            Add(collider as ItemPart);
+            Remove(collider as ItemPart);
+            return collider;
+        }
+        public void Remove(IEnumerable<Collider> colliders)
+        {
+            foreach (var collider in colliders)
+                Remove(collider);
         }
 
         public Boolean Intercepts(TgcRay ray)
@@ -228,7 +240,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             return collisions.Count == 0 ? null
                 : new ItemCollision(this, interactive, collisions.ToArray());
         }
-        #endregion ColliderMethods
+        #endregion Colliders
 
         #region InteractionMethods
         public virtual void Build(Single deltaTime) { }

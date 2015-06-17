@@ -124,12 +124,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _Base.Rotation = _BaseRotationSaved;
             _Load = null;
         }
-        private static readonly Vector3 _MenuScale = Vector3Extension.One * .3f;
-        public override void MenuTransform(Vector3 rotation, Vector3 position)
+        private static readonly Vector3 _MenuProportion = new Vector3(.1f, .2f, .2f);
+        public override void MenuTransform(Vector3 scale, Vector3 rotation, Vector3 position)
         {
-            Scale = _MenuScale;
-            Position = position;
-            Rotation = _Base.Rotation = rotation;
+            _Base.Rotation = rotation;
+            base.MenuTransform(scale.MemberwiseMult(_MenuProportion), rotation, position);
         }
         #endregion ResetMethods
 

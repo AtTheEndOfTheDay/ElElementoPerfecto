@@ -24,6 +24,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public static readonly Vector3 Back = -Front;
         #endregion Constants
 
+        public static Single MinCoordinate(this Vector3 v)
+        {
+            return Math.Min(Math.Min(v.X, v.Y), v.Z);
+        }
+        public static Single MaxCoordinate(this Vector3 v)
+        {
+            return Math.Max(Math.Max(v.X, v.Y), v.Z);
+        }
         public static Vector3 AddX(this Vector3 v, Single step)
         {
             v.X += step; return v;
@@ -35,6 +43,18 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public static Vector3 AddZ(this Vector3 v, Single step)
         {
             v.Z += step; return v;
+        }
+        public static Vector3 MultX(this Vector3 v, Single step)
+        {
+            v.X *= step; return v;
+        }
+        public static Vector3 MultY(this Vector3 v, Single step)
+        {
+            v.Y *= step; return v;
+        }
+        public static Vector3 MultZ(this Vector3 v, Single step)
+        {
+            v.Z *= step; return v;
         }
         public static Vector3 AdvanceX(this Vector3 v, Single step, Single to)
         {

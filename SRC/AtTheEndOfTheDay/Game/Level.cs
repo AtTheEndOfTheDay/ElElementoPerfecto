@@ -16,6 +16,7 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -23,12 +24,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     {
         #region Constants
         private static readonly Menu _MenuNull = new Menu(null);
-        private static readonly Vector3 DefaultCameraPosition = Vector3Extension.Back * -200f;
+        private static readonly TgcStaticSound _SoundNull = new TgcStaticSound();
+        private static readonly Vector3 DefaultCameraPosition = Vector3Extension.Back * 200f;
         private static readonly Vector3 DefaultCameraTarget = Vector3.Empty;
         private static readonly Vector3 DefaultLightPosition = new Vector3(1f, 1f, -1f) * 500f;
         private const Single DefaultLightIntensity = 66f;
         private static readonly Vector3 DefaultPlanePoint = Vector3.Empty;
         private static readonly Vector3 DefaultPlaneNormal = Vector3Extension.Front;
+        private static readonly Vector2 DefaultWinSignScaling = new Vector2(0.5f, 0.5f);
+        private static readonly Vector2 DefaultWinSignPosition = new Vector2(300, 200);
         #endregion Constants
 
         #region Constructors
@@ -36,62 +40,107 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             : base(game)
         {
             _Stage = _Building;
-            _Items = game;
-            _Goals = goal;
-            _Interactives = _Items.OfType<Interactive>().ToList();
-            try
-            {
-                _Menu = game.OfType<Menu>().Single();
-                _Menu.Add(user);
-            }
-            catch (Exception e) { throw new Exception("Menu not found.", e); }
-            //TODO: pasarlo al .lvl y que el parser devuelva el string o directamente el TgcSprite mejor.
-            _WinSign.Texture = TgcTexture.createTexture(sign);
-            _WinSign.Scaling = new Vector2(0.5f, 0.5f);
-            _WinSign.Position = new Vector2(300, 200);
+            CameraPosition = DefaultCameraPosition;
+            CameraTarget = DefaultCameraTarget;
+            LightPosition = DefaultLightPosition;
+            LightIntensity = DefaultLightIntensity;
+            PlanePoint = DefaultPlanePoint;
+            PlaneNormal = DefaultPlaneNormal;
         }
         #endregion Constructors
 
         #region Properties
+        public Vector3 CameraPosition { get; set; }
+        public Vector3 CameraTarget { get; set; }
+        public Vector3 LightPosition { get; set; }
+        public Single LightIntensity { get; set; }
+        public Vector3 PlanePoint { get; set; }
+        public Vector3 PlaneNormal { get; set; }
+        public Plane Plane { get { return Plane.FromPointNormal(PlanePoint, PlaneNormal); } }
         public Single Order { get; set; }
-        public String _Name = String.Empty;
+        private String _Name = String.Empty;
         public String Name
         {
             get { return _Name; }
             set { _Name = value ?? String.Empty; }
         }
-        public String _Properties = String.Empty;
+        private String _Description = String.Empty;
+        public String Description
+        {
+            get { return _Description; }
+            set { _Description = value ?? String.Empty; }
+        }
+        private String _Properties = String.Empty;
         public String Properties
         {
             get { return _Properties; }
             set { _Properties = value ?? String.Empty; }
         }
-        public Menu _Menu = _MenuNull;
+        private Menu _Menu = _MenuNull;
         public Menu Menu
         {
             get { return _Menu == _MenuNull ? null : _Menu; }
             set { _Menu = value ?? _MenuNull; }
         }
+        private String _WinSignPath;
+        public String WinSign
+        {
+            get { return _WinSignPath; }
+            set
+            {
+                if (_WinSignPath == value) return;
+                if (_WinSign.Texture != null)
+                    _WinSign.Texture.dispose();
+                if (String.IsNullOrWhiteSpace(value))
+                {
+                    _WinSign.Texture = null;
+                    _WinSignPath = null;
+                    return;
+                }
+                try { _WinSign.Texture = Game.GetSign(value); }
+                catch { _WinSign.Texture = null; }
+                finally { _WinSignPath = value; }
+            }
+        }
+        private TgcSprite _WinSign = new TgcSprite()
+        {
+            Scaling = DefaultWinSignScaling,
+            Position = DefaultWinSignPosition,
+        };
+        public Vector2 WinSignScaling
+        {
+            get { return _WinSign.Scaling; }
+            set { _WinSign.Scaling = value; }
+        }
+        public Vector2 WinSignPosition
+        {
+            get { return _WinSign.Position; }
+            set { _WinSign.Position = value; }
+        }
+        private TgcStaticSound _Sound = _SoundNull;
+        private String _SoundPath;
+        public String Sound
+        {
+            get { return _SoundPath; }
+            set
+            {
+                if (_SoundPath == value) return;
+                if (_Sound != _SoundNull)
+                    _Sound.dispose();
+                if (String.IsNullOrWhiteSpace(value))
+                {
+                    _Sound = _SoundNull;
+                    _SoundPath = null;
+                    return;
+                }
+                try { _Sound = Game.GetSound(value); }
+                catch { _Sound = _SoundNull; }
+                finally { _SoundPath = value; }
+            }
+        }
         #endregion Properties
 
-        #region Fields
-        private Item _Selected = null;
-        private Color _SelectedColor = Color.Green;
-        private Action<Single> _Stage = null;
-        private TgcSprite _WinSign = new TgcSprite();
-        public Boolean IsComplete { get; private set; }
-        private readonly TgcPickingRay _PickingRay = new TgcPickingRay();
-
-        public Vector3 CameraPosition = new Vector3(0f, 0f, -100f);
-        public Vector3 CameraTarget = Vector3.Empty;
-        public Vector3 LightPosition = new Vector3(100f, 100f, -100f);
-        public Single LightIntensity = 66f;
-        public Vector3 PlanePoint = Vector3.Empty;
-        public Vector3 PlaneNormal = Vector3Extension.Front;
-        public Plane Plane { get { return Plane.FromPointNormal(PlanePoint, PlaneNormal); } }
-        #endregion Fields
-
-        #region Lists
+        #region Goals
         public Goal[] Goals { get { return _Goals.ToArray(); } }
         private readonly IList<Goal> _Goals = new List<Goal>();
         public Goal Add(Goal goal)
@@ -99,26 +148,24 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _Goals.Add(goal);
             return goal;
         }
-        public T Add<T>(T goals)
-            where T : IEnumerable<Goal>
+        public void Add(IEnumerable<Goal> goals)
         {
             foreach (var goal in goals)
                 Add(goal);
-            return goals;
         }
         public Goal Remove(Goal goal)
         {
             _Goals.Remove(goal);
             return goal;
         }
-        public T Remove<T>(T goals)
-            where T : IEnumerable<Goal>
+        public void Remove(IEnumerable<Goal> goals)
         {
             foreach (var goal in goals)
                 Remove(goal);
-            return goals;
         }
+        #endregion Goals
 
+        #region Items
         public Item[] Items { get { return _Items.ToArray(); } }
         private readonly IList<Item> _Items = new List<Item>();
         private readonly IList<Item> _Actives = new List<Item>();
@@ -131,12 +178,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _Interactives.Add(interactive);
             return item;
         }
-        public T Add<T>(T items)
-            where T : IEnumerable<Item>
+        public void Add(IEnumerable<Item> items)
         {
             foreach (var item in items)
                 Add(item);
-            return items;
         }
         public Item Remove(Item item)
         {
@@ -147,16 +192,20 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _Interactives.Remove(interactive);
             return item;
         }
-        public T Remove<T>(T items)
-            where T : IEnumerable<Item>
+        public void Remove(IEnumerable<Item> items)
         {
             foreach (var item in items)
                 Remove(item);
-            return items;
         }
-        #endregion Lists
+        #endregion Items
 
         #region GamePlay
+        private Item _Selected = null;
+        private Color _SelectedColor = Color.Green;
+        private Action<Single> _Stage = null;
+        public Boolean IsComplete { get; private set; }
+        private readonly TgcPickingRay _PickingRay = new TgcPickingRay();
+
         public void Load()
         {
             _Menu.Add(_Actives);

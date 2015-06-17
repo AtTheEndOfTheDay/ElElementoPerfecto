@@ -19,6 +19,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Friction = DefaultFriction;
             Restitution = DefaultRestitution;
             Color = DefaultColor;
+            Scale = Item.DefaultScale;
+            Position = Item.DefaultPosition;
+            Rotation = Item.DefaultRotation;
         }
 
         public Single Friction { get; set; }

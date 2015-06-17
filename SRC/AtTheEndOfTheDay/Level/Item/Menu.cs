@@ -28,13 +28,34 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Menu(Game game)
             : base(game)
         {
-            Add(_Colider = new ObbCollider() { Color = Color.White });
+            Add(_Colider = new ObbCollider(Game) { Color = Color.White });
             ItemRotation = DefaultItemRotation;
             ItemRotationSpeed = DefaultItemRotationSpeed;
         }
         #endregion Constructors
 
+        #region Properties
+        public Vector3 ItemRotation { get; set; }
+        public Vector3 ItemRotationSpeed { get; set; }
+        private ObbCollider _Colider;
+        private Vector3 _ItemStart;
+        private Vector3 _ItemSize;
+        public Vector3 ItemSize
+        {
+            get { return _ItemSize; }
+            set
+            {
+                if (_ItemSize == value) return;
+                _ItemSize = value;
+                var is_2 = .5f * value;
+                _Colider.Extents = is_2;
+                _ItemStart = is_2 - is_2.MemberwiseMult(Scale);
+            }
+        }
+        #endregion Properties
+
         #region Items
+        public Item[] Items { get { return _Items.ToArray(); } }
         private readonly List<Item> _Items = new List<Item>();
         public Item Add(Item item)
         {
@@ -42,12 +63,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             item.SaveValues();
             return item;
         }
-        public T Add<T>(T items)
-            where T : IEnumerable<Item>
+        public void Add(IEnumerable<Item> items)
         {
             foreach (var item in items)
                 Add(item);
-            return items;
         }
         public Item Remove(Item item)
         {
@@ -55,33 +74,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             item.LoadValues();
             return item;
         }
-        public T Remove<T>(T items)
-            where T : IEnumerable<Item>
+        public void Remove(IEnumerable<Item> items)
         {
             foreach (var item in items)
                 Remove(item);
-            return items;
         }
         #endregion Items
-
-        #region Properties
-        public Vector3 ItemRotation { get; set; }
-        public Vector3 ItemRotationSpeed { get; set; }
-        public ObbCollider _Colider;
-        public Vector3 _ItemStart;
-        private Vector3 _ItemSize = Item.DefaultScale;
-        public Vector3 ItemSize
-        {
-            get { return _ItemSize; }
-            set
-            {
-                _ItemSize = value;
-                var is_2 = .5f * _ItemSize;
-                _Colider.Extents = is_2;
-                _ItemStart = is_2 - is_2.MemberwiseMult(Scale);
-            }
-        }
-        #endregion Properties
 
         #region ItemMethods
         public Item Pick(TgcRay ray)
@@ -104,14 +102,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public override void Animate(Single deltaTime)
         {
-            ItemRotation += deltaTime * RotationSpeed;
+            var scale = _ItemSize * Item.ScaleSizeFactor;
+            ItemRotation += deltaTime * ItemRotationSpeed;
             var rotation = Rotation + ItemRotation;
             var start = Position + _ItemStart;
             var v = new Vector3(0, 0, 0);
             for (var i = 0; v.Z < Scale.Z && i < _Items.Count; v.Z++)
                 for (v.Y = 0; v.Y < Scale.Y && i < _Items.Count; v.Y++)
                     for (v.X = 0; v.X < Scale.X && i < _Items.Count; v.X++, i++)
-                        _Items[i].MenuTransform(rotation, start + v.MemberwiseMult(_ItemSize));
+                        _Items[i].MenuTransform(scale, rotation, start + v.MemberwiseMult(_ItemSize));
         }
         #endregion ItemMethods
     }
