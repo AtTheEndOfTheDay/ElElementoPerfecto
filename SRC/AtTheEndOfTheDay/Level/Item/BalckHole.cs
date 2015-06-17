@@ -25,13 +25,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private const Single _MaxScaleFactor = 1.2f;
         private const Single _MinScaleFactor = 0.8f;
         #region Constructors
-        public BlackHole(Game game)
-            :base(game)
+        public BlackHole()
         {
-            var mesh = game.NewMesh("BallTextured");
-            Add(_Mesh = new MeshStaticPart(game, mesh));
-            _Mesh.Texture = Game.GetMaterial("BlackHole.jpg");
-            Add(new SphereCollider(game, mesh));
+            var mesh = Game.Current.NewMesh("BallTextured");
+            Add(_Mesh = new MeshStaticPart(mesh));
+            _Mesh.Texture = Game.Current.GetMaterial("BlackHole.jpg");
+            Add(new SphereCollider(mesh));
         }
         #endregion Constructors
 
@@ -87,7 +86,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var n = interactive.Position - Position;
             var d2 = n.LengthSq();
             n.Normalize();
-            if (d2 < _AtractionDistance * _AtractionDistancePow2)
+            if (d2 < _RepulsionFactor * _AtractionDistancePow2)
                 interactive.Momentum -= n * (_Force / d2);
         }
 

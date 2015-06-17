@@ -39,6 +39,6 @@
     <Cannon Force="2"/>
     <Cannon Force="2"/>
     <Cannon Force="2"/>
-    <Wall Name="" Properties="" Scale="5,0.4,1" Position="-65,22,0" Rotation="0,0,0.78" Texture="Walls.jpg"/>
+    <Wall Name="" Properties="" Scale="5,0.4,1" Position="-65,22,0" Rotation="0,0,0.78" Texture="Walls.jpg" MaxScale="10" MinScale="2.5"/>
   </User>
 </Level>

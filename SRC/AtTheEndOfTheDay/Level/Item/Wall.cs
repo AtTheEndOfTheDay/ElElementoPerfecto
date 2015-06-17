@@ -19,64 +19,77 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Wall : Item
     {
+        private const Single _DefaultMaxScale = 10;
+        private const Single _DefaultMinScale = 2.5f;
         #region Constructors
-        private const String _MeshName = "Wall";
-        private const Single _MinScaleXFactor = 0.5f;
-        private const Single _MaxScaleXFactor = 2;
-
-        #region TexturedConstructors
-        public Wall(Game game, String material)
-            : this(game, Vector3.Empty, Vector3.Empty, Vector3.Empty, material) { }
-        public Wall(Game game, Vector3 position, String material)
-            : this(game, position, Vector3.Empty, Vector3.Empty, material) { }
-        public Wall(Game game, Vector3 position, Vector3 scale, String material)
-            : this(game, position, scale, Vector3.Empty, material) { }
-        public Wall(Game game, Vector3 position, Vector3 scale, Vector3 rotation, String material)
-            : this(position, scale, rotation, game.NewMesh(_MeshName, material)) { }
-        #endregion TexturedConstructors
-
-        #region ColorConstructors
-        public Wall(Game game, Color color)
-            : this(game, Vector3.Empty, Vector3.Empty, Vector3.Empty, color) { }
-        public Wall(Game game, Vector3 position, Color color)
-            : this(game, position, Vector3.Empty, Vector3.Empty, color) { }
-        public Wall(Game game, Vector3 position, Vector3 scale, Color color)
-            : this(game, position, scale, Vector3.Empty, color) { }
-        public Wall(Game game, Vector3 position, Vector3 scale, Vector3 rotation, Color color)
-            : this(position, scale, rotation, game.NewMesh(_MeshName, color)) { }
-        #endregion ColorConstructors
-
-        #region DefaultConstructors
-        public Wall(Game game)
-            : this(game, Vector3.Empty, Vector3.Empty, Vector3.Empty) { }
-        public Wall(Game game, Vector3 position)
-            : this(game, position, Vector3.Empty, Vector3.Empty) { }
-        public Wall(Game game, Vector3 position, Vector3 scale, Vector3 rotation)
-            : this(position, scale, rotation, game.GetMesh(_MeshName)) { }
-        private Wall(Vector3 position, Vector3 scale, Vector3 rotation, TgcMesh mesh)
+        private Wall()
         {
-            Add(new MeshStaticPart(mesh));
+            var mesh = Game.Current.NewMesh("Ball");
+            _MeshTextured = new MeshStaticPart(Game.Current.NewMesh("WallTextured"));
+            Add(_Mesh = new MeshStaticPart(mesh));
             Add(new ObbCollider(mesh));
-            Scale = scale;
-            _MinSacleX = scale.X * _MinScaleXFactor;
-            _MaxSacleX = scale.X * _MaxScaleXFactor;
-            Rotation = rotation;
-            Position = position;
+            Maxcale = _DefaultMaxScale;
+            Mincale = _DefaultMinScale;
         }
-        #endregion DefaultConstructors
         #endregion Constructors
 
+        #region Properties
+        private MeshStaticPart _Mesh;
+        private MeshStaticPart _MeshTextured;
+        public Color Color
+        {
+            get { return _Mesh.Color; }
+            set { _Mesh.Color = value; }
+        }
+        private String _Texture;
+        public String Texture
+        {
+            get { return _Texture; }
+            set
+            {
+                if (_Texture == value) return;
+                _Texture = value;
+                if (String.IsNullOrWhiteSpace(value))
+                    _SwapMeshes(false);
+                else
+                {
+                    try
+                    {
+                        _MeshTextured.Texture = Game.Current.GetMaterial(value);
+                        _SwapMeshes(true);
+                    }
+                    catch { _SwapMeshes(false); }
+                }
+            }
+        }
+        private Boolean _IsTextured = false;
+        private void _SwapMeshes(Boolean isTextured)
+        {
+            if (_IsTextured == isTextured) return;
+            if (_IsTextured = isTextured)
+            {
+                Add(_MeshTextured);
+                Remove(_Mesh);
+            }
+            else
+            {
+                Add(_Mesh);
+                Remove(_MeshTextured);
+            }
+        }
+        public Single MinScale { get; set; }
+        public Single Maxcale { get; set; }
+        #endregion Properties
+
         #region ItemMethods
-        private readonly Single _MinSacleX;
-        private readonly Single _MaxSacleX;
         public override void Build(Single deltaTime)
         {
             var input = GuiController.Instance.D3dInput;
             var stepS = deltaTime * BuildScalingSpeed;
             if (input.keyDown(Key.E))
-                Scale = Scale.AdvanceX(stepS, _MaxSacleX);
+                Scale = Scale.AdvanceX(stepS, Maxcale);
             else if (input.keyDown(Key.Q))
-                Scale = Scale.AdvanceX(stepS, _MinSacleX);
+                Scale = Scale.AdvanceX(stepS, MinScale);
             var stepR = deltaTime * BuildRotationSpeed;
             if (input.keyDown(Key.D))
                 Rotation = Rotation.AddZ(-stepR);

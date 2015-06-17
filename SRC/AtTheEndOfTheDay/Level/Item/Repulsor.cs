@@ -23,13 +23,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private const Single _ForceFactor = 100000f;
         private const Single _RepulsionFactor = 100f;
         #region Constructors
-        public Repulsor(Game game)
-            :base(game)
+        public Repulsor()
         {
-            var mesh = game.NewMesh("Ball");
-            Add(_Mesh = new MeshStaticPart(game, mesh));
+            var mesh = Game.Current.NewMesh("Ball");
+            Add(_Mesh = new MeshStaticPart(mesh));
             _Mesh.Color = Color.FromArgb(0, 75, 0, 0);
-            Add(new SphereCollider(game, mesh));
+            Add(new SphereCollider(mesh));
         }
         #endregion Constructors
 

@@ -22,12 +22,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private const Single _ForceFactor = 100000f;
 
         #region Constructors
-        public Magnet(Game game)
-            : base(game)
+        public Magnet()
         {
-            var mesh = game.GetMesh("Magnet");
-            Add(new MeshStaticPart(game, mesh));
-            Add(_Obb = new ObbTranslatedCollider(game, mesh));
+            var mesh = Game.Current.GetMesh("Magnet");
+            Add(new MeshStaticPart(mesh));
+            Add(_Obb = new ObbTranslatedCollider(mesh));
         }
         #endregion Constructors
 
