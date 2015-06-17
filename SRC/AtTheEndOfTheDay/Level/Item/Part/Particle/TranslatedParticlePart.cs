@@ -7,7 +7,7 @@ using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    class TranslatedParticlePart : ParticlePart
+    public class TranslatedParticlePart : ParticlePart
     {
         #region Constructors
         private Vector3 _Translation;

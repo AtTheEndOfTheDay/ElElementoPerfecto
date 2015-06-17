@@ -19,8 +19,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Wall : Item
     {
+        #region Constants
         private const Single _DefaultMaxScale = 10;
         private const Single _DefaultMinScale = 2.5f;
+        #endregion Constants
+
         #region Constructors
         private Wall()
         {
@@ -28,12 +31,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _MeshTextured = new MeshStaticPart(Game.Current.NewMesh("WallTextured"));
             Add(_Mesh = new MeshStaticPart(mesh));
             Add(new ObbCollider(mesh));
-            Maxcale = _DefaultMaxScale;
-            Mincale = _DefaultMinScale;
+            MaxScale = _DefaultMaxScale;
+            MinScale = _DefaultMinScale;
         }
         #endregion Constructors
 
         #region Properties
+        public Single MinScale { get; set; }
+        public Single MaxScale { get; set; }
         private MeshStaticPart _Mesh;
         private MeshStaticPart _MeshTextured;
         public Color Color
@@ -77,8 +82,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 Remove(_MeshTextured);
             }
         }
-        public Single MinScale { get; set; }
-        public Single Maxcale { get; set; }
         #endregion Properties
 
         #region ItemMethods
@@ -87,7 +90,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var input = GuiController.Instance.D3dInput;
             var stepS = deltaTime * BuildScalingSpeed;
             if (input.keyDown(Key.E))
-                Scale = Scale.AdvanceX(stepS, Maxcale);
+                Scale = Scale.AdvanceX(stepS, MaxScale);
             else if (input.keyDown(Key.Q))
                 Scale = Scale.AdvanceX(stepS, MinScale);
             var stepR = deltaTime * BuildRotationSpeed;

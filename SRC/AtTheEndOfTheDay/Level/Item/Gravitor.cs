@@ -19,7 +19,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Gravitor : Item
     {
-        public Gravitor(Game game) : base(game) { }
         public override void Act(Interactive interactive, Single deltaTime)
         {
             interactive.Momentum += Scale * interactive.Mass;

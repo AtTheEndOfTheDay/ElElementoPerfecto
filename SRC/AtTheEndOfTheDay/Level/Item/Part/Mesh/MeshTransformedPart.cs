@@ -7,7 +7,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class MeshTransformedPart : MeshPart
     {
         public MeshTransformedPart(TgcMesh mesh)
-            : base(mesh) { }
+            : base(mesh)
+        {
+            Scale = Item.DefaultScale;
+            Rotation = Item.DefaultRotation;
+            Position = Item.DefaultPosition;
+        }
 
         #region PartMethods
         public override void Attach(Item item)
@@ -31,9 +36,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             base.Render(item, shader);
         }
 
-        public Vector3 Scale = Item.DefaultScale;
-        public Vector3 Rotation = Item.DefaultRotation;
-        public Vector3 Position = Item.DefaultPosition;
+        public Vector3 Scale { get; protected set; }
+        public Vector3 Rotation { get; protected set; }
+        public Vector3 Position { get; protected set; }
 
         protected virtual void ItemScaleChanged(Item item)
         {

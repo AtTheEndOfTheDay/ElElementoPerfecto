@@ -20,8 +20,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public abstract class Interactive : Item
     {
         #region Constructors
-        public Interactive(Game game)
-            : base(game)
+        public Interactive()
         {
             Mass = 1;
             //ScaleChanged -= Interactive_ScaleChanged;

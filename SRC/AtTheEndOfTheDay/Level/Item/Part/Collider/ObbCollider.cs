@@ -12,17 +12,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     {
         #region Constructors
         protected readonly TgcObb Obb;
-        public ObbCollider(Game game)
-            : this(game, new TgcObb() { Extents = Item.DefaultScale })
+        public ObbCollider()
+            : this(new TgcObb() { Extents = Item.DefaultScale })
         {
             Obb.SetOrientation();
         }
-        public ObbCollider(Game game, TgcMesh mesh)
-            : this(game, TgcObb.computeFromAABB(mesh.BoundingBox)) { }
-        public ObbCollider(Game game, TgcBoundingBox aabb)
-            : this(game, TgcObb.computeFromAABB(aabb)) { }
-        public ObbCollider(Game game, TgcObb obb)
-            :base(game)
+        public ObbCollider(TgcMesh mesh)
+            : this(TgcObb.computeFromAABB(mesh.BoundingBox)) { }
+        public ObbCollider(TgcBoundingBox aabb)
+            : this(TgcObb.computeFromAABB(aabb)) { }
+        public ObbCollider(TgcObb obb)
         {
             Obb = obb;
             _Extents = obb.Extents;
@@ -75,7 +74,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public override void Render(Item item, Effect shader)
         {
-            if (Collider.IsVisible)
+            if (Game.Current.IsColliderVisible)
             {
                 //TODO:Obb.Effect = shader;
                 Obb.render();

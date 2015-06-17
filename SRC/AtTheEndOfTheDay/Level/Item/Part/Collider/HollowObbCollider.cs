@@ -72,7 +72,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         private void _AddCollider(Vector3[] orientation, Vector3 extents, Vector3 translation)
         {
-            Colliders.Add(new ObbTranslatedCollider(new TgcObb()
+            Add(new ObbTranslatedCollider(new TgcObb()
             {
                 Orientation = orientation,
                 Extents = extents,

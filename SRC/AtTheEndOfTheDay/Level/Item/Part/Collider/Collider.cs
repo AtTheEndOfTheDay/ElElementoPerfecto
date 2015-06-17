@@ -8,13 +8,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public abstract class Collider : ItemPart
     {
-        public static Boolean IsVisible = true;
         public const Single DefaultFriction = .1f;
         public const Single DefaultRestitution = .7f;
         public static readonly Color DefaultColiderColor = Color.Green;
 
-        public Collider(Game game)
-            : base(game)
+        public Collider()
         {
             Friction = DefaultFriction;
             Restitution = DefaultRestitution;

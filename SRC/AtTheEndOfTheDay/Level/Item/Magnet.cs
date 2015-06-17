@@ -19,7 +19,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Magnet : Item
     {
+        #region Constants
         private const Single _ForceFactor = 100000f;
+        #endregion Constants
 
         #region Constructors
         public Magnet()

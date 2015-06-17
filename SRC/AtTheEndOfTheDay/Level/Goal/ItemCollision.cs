@@ -11,10 +11,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class ItemCollision : IGoal
     {
-        public ItemCollision(Game game) : base(game) { }
         private Item[] _Items;
         public String[] Items { get; set; }
-        public override void FindTargets(Item[] items)
+        public void FindTargets(Item[] items)
         {
             if (Items != null && Items.Length > 0)
             {
@@ -29,11 +28,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _Items = targets;
             }
         }
-        public override Boolean IsMeet
+        public Boolean IsMeet
         {
             get { return _Items != null && _Items.All(a => _Items.All(b => a.Collides(b))); }
         }
-        public override void Dispose()
+        public void Dispose()
         {
             if (_Items == null) return;
             foreach (var item in _Items)

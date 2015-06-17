@@ -101,7 +101,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     _WinSign.Texture = null;
                 else
                 {
-                    try { _WinSign.Texture = Game.GetSign(value); }
+                    try { _WinSign.Texture = Game.Current.GetSign(value); }
                     catch { _WinSign.Texture = null; }
                 }
             }
@@ -136,7 +136,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     _Sound = _SoundNull;
                 else
                 {
-                    try { _Sound = Game.GetSound(value); }
+                    try { _Sound = Game.Current.GetSound(value); }
                     catch { _Sound = _SoundNull; }
                 }
             }

@@ -20,13 +20,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class Ball : Interactive
     {
         #region Constructors
-        private Ball(Game game)
-            : base(game)
+        private Ball()
         {
-            var mesh = game.NewMesh("Ball");
-            _MeshTextured = new MeshStaticPart(game, game.NewMesh("BallTextured"));
-            Add(_Mesh = new MeshStaticPart(game, mesh));
-            Add(new SphereCollider(game, mesh));
+            var mesh = Game.Current.NewMesh("Ball");
+            _MeshTextured = new MeshStaticPart(Game.Current.NewMesh("BallTextured"));
+            Add(_Mesh = new MeshStaticPart(mesh));
+            Add(new SphereCollider(mesh));
         }
         #endregion Constructors
 
@@ -52,7 +51,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 {
                     try
                     {
-                        _MeshTextured.Texture = Game.GetMaterial(value);
+                        _MeshTextured.Texture = Game.Current.GetMaterial(value);
                         _SwapMeshes(true);
                     }
                     catch { _SwapMeshes(false); }

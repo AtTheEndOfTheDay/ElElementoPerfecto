@@ -12,12 +12,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class ObbTranslatedUnRotatedCollider : ObbTranslatedCollider
     {
         #region Constructors
-        public ObbTranslatedUnRotatedCollider(Game game, TgcMesh mesh)
-            : base(game, mesh) { }
-        public ObbTranslatedUnRotatedCollider(Game game, TgcMesh mesh, Vector3 translation)
-            : base(game, mesh, translation) { }
-        public ObbTranslatedUnRotatedCollider(Game game, TgcObb obb, Vector3 translation)
-            : base(game, obb, translation) { }
+        public ObbTranslatedUnRotatedCollider(TgcMesh mesh)
+            : base(mesh) { }
+        public ObbTranslatedUnRotatedCollider(TgcMesh mesh, Vector3 translation)
+            : base(mesh, translation) { }
+        public ObbTranslatedUnRotatedCollider(TgcObb obb, Vector3 translation)
+            : base(obb, translation) { }
         #endregion Constructors
 
         #region PartMethods
