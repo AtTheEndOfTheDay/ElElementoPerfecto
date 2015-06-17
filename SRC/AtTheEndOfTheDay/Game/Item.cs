@@ -256,6 +256,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     if (approachVel > 0)
                     {
                         interactive.AddVelocityAt(r, (1 + collision.Restitution) * approachVel * normal);
+                        this.ReceiveCollision(contact.PointB, approachVel, normal);
                         reacted = true;
                     }
                     var force = interactive.GetForceAt(r);
@@ -269,7 +270,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 }
             return reacted;
         }
-        public virtual void ButtonSignal() { }
+       	public virtual void ReceiveCollision(Vector3 point, Single approachVel, Vector3 normal) { }
+	public virtual void ButtonSignal() { }
+
         #endregion InteractionMethods
     }
 }

@@ -96,6 +96,7 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Game\IGameComponent.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Acelerator.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\BalckHole.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Particle\IndependentParticlePart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Button.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshImmutablePart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshPart.cs" />

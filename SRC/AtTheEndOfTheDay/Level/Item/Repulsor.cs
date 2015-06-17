@@ -25,11 +25,26 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constants
 
         #region Constructors
+        private readonly IndependentParticlePart _Spark;
         public Repulsor()
         {
             var mesh = Game.Current.NewMesh("Ball");
             Add(new MeshStaticPart(mesh) { Color = Color.FromArgb(0, 75, 0, 0) });
             Add(new SphereCollider(mesh));
+            Add(_Spark = new IndependentParticlePart()
+            {
+                Translation = new Vector3(0, 0, 4),
+                Animation = new AnimatedQuad()
+                {
+                    Texture = Game.Current.GetParticle("RedSparks.png"),
+                    FrameSize = new Size(256, 256),
+                    FirstFrame = 0,
+                    CurrentFrame = 0,
+                    FrameRate = 30,
+                    TotalFrames = 10,
+                },
+                Size = new Vector2(50, 30),
+            });
         }
         #endregion Constructors
 
@@ -59,6 +74,18 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Properties
 
         #region ItemMethods
+        public override void LoadValues()
+        {
+            _Spark.Stop();
+            base.LoadValues();
+        }
+
+        public override void Animate(float deltaTime)
+        {
+            _Spark.Update(deltaTime);
+            base.Animate(deltaTime);
+        }
+
         public override void Act(Interactive interactive, Single deltaTime)
         {
             var n = interactive.Position - Position;
@@ -66,6 +93,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             n.Normalize();
             if (d2 < _RepulsionFactor * _RepulsionDistancePow2)
                 interactive.Momentum += n * (_ForceReal / d2);
+        }
+
+        public override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
+        {
+            _Spark.Start(point, approachVel, normal);
         }
         #endregion ItemMethods
     }

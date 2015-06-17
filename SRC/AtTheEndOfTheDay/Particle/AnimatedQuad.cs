@@ -113,7 +113,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (CurrentFrame != ((Int32)(_CurrentTime * FrameRate) + FirstFrame) % _RealTotalFrames)
             {
                 CurrentFrame = (Int32)(_CurrentTime * FrameRate) + FirstFrame % _RealTotalFrames;
-                _TexturedQuad.UVOffset = new Vector2(_TexturedQuad.Tile.X * (CurrentFrame % _TileInverse.Width), _TexturedQuad.Tile.Y * (CurrentFrame / _TileInverse.Height));
+                _TexturedQuad.UVOffset = new Vector2(_TexturedQuad.Tile.X * (CurrentFrame % _TileInverse.Width), _TexturedQuad.Tile.Y * (CurrentFrame / _TileInverse.Width));
             }
         }
         public void Start()
