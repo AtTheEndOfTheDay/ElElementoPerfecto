@@ -20,10 +20,9 @@ using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public class Level : IGameComponent
+    public class Level : IGameComponent, IDisposable
     {
         #region Constants
-        private static readonly Menu _MenuNull = new Menu(null);
         private static readonly TgcStaticSound _SoundNull = new TgcStaticSound();
         private static readonly Vector3 DefaultCameraPosition = Vector3Extension.Back * 200f;
         private static readonly Vector3 DefaultCameraTarget = Vector3.Empty;
@@ -75,14 +74,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             get { return _Properties; }
             set { _Properties = value ?? String.Empty; }
         }
-        private Menu _Menu = _MenuNull;
+        private Menu _Menu = Menu.Null;
         public Menu Menu
         {
-            get { return _Menu == _MenuNull ? null : _Menu; }
+            get { return _Menu == Menu.Null ? null : _Menu; }
             set
             {
                 if (_Menu == value) return;
-                _Menu = value ?? _MenuNull;
+                _Menu = value ?? Menu.Null;
                 if (value != null && !_Items.Contains(_Menu))
                     _Items.Add(_Menu);
             }

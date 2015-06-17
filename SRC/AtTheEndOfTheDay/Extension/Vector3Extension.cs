@@ -32,6 +32,18 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             return Math.Max(Math.Max(v.X, v.Y), v.Z);
         }
+        public static Vector3 SetX(this Vector3 v, Single x)
+        {
+            v.X = x; return v;
+        }
+        public static Vector3 SetY(this Vector3 v, Single y)
+        {
+            v.Y = y; return v;
+        }
+        public static Vector3 SetZ(this Vector3 v, Single z)
+        {
+            v.Z = z; return v;
+        }
         public static Vector3 AddX(this Vector3 v, Single step)
         {
             v.X += step; return v;

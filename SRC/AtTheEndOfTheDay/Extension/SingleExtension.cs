@@ -12,7 +12,7 @@ using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    internal static class SingleExtension
+    public static class SingleExtension
     {
         public const Single Tolerance = .001f;
         public static Boolean TolerantEquals(this Single a, Single b)

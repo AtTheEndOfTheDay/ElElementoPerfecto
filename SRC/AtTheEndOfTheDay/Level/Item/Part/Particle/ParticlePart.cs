@@ -11,81 +11,96 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class ParticlePart : ItemPart
     {
-        protected readonly AnimatedQuad AnimatedQuad;
-        public TgcStaticSound Efecto;
-        public ParticlePart(AnimatedQuad animatedQuad)
+        #region Constructios
+        public ParticlePart()
         {
-            this.AnimatedQuad = animatedQuad;
+            Scale = Item.DefaultScale;
+            Position = Item.DefaultPosition;
+            RotationMatrix = Item.DefaultRotationMatrix;
         }
+        #endregion Constructios
 
-        public ParticlePart(AnimatedQuad animatedQuad,TgcStaticSound sound)
-        {
-          this.AnimatedQuad = animatedQuad;
-             Efecto=sound;
-        }
+        #region Properties
+        public TgcStaticSound Sound { get; set; }
+        public AnimatedQuad Animation { get; set; }
+        #endregion Properties
 
-        public virtual void Attach(Item item)
+        #region PartMethods
+        public override void Attach(Item item)
         {
             Detach(item);
+            ItemScaleChanged(item);
+            ItemRotationChanged(item);
+            ItemPositionChanged(item);
             item.ScaleChanged += ItemScaleChanged;
             item.RotationChanged += ItemRotationChanged;
             item.PositionChanged += ItemPositionChanged;
         }
-        public virtual void Detach(Item item)
+        public override void Detach(Item item)
         {
             item.ScaleChanged -= ItemScaleChanged;
             item.RotationChanged -= ItemRotationChanged;
             item.PositionChanged -= ItemPositionChanged;
         }
+        public override void Render(Item item, Effect shader)
+        {
+            if (Animation != null)
+                Animation.Render();
+        }
+        public override void Dispose()
+        {
+            if (Animation != null)
+                Animation.Dispose();
+            if (Sound != null)
+                Sound.dispose();
+        }
 
-        public Vector3 Scale = Item.DefaultScale;
-        public Vector3 Position = Item.DefaultPosition;
-        public Vector3 Rotation = Item.DefaultRotation;
+        public Vector3 Scale { get; set; }
+        public Vector3 Position { get; set; }
+        public Matrix RotationMatrix { get; set; }
 
         protected virtual void ItemScaleChanged(Item item)
         {
+            Scale = item.Scale;
+            if (Animation == null) return;
             Single xScaleIncremente = item.Scale.X / Scale.X;
             Single yScaleIncremente = item.Scale.Y / Scale.Y;
-
-            AnimatedQuad.Size = new Vector2(AnimatedQuad.Size.X * xScaleIncremente, AnimatedQuad.Size.Y * yScaleIncremente);
-            Scale = item.Scale;
+            Animation.Size = new Vector2(Animation.Size.X * xScaleIncremente, Animation.Size.Y * yScaleIncremente);
         }
         protected virtual void ItemRotationChanged(Item item)
         {
-            AnimatedQuad.Rotation += item.Rotation - Rotation;
-            Rotation = item.Rotation;
+            RotationMatrix = item.RotationMatrix;
+            if (Animation != null)
+                Animation.RotationMatrix = item.RotationMatrix;
         }
         protected virtual void ItemPositionChanged(Item item)
         {
-            AnimatedQuad.Position = Position = item.Position ;
+            Position = item.Position;
+            if (Animation != null)
+                Animation.Position = item.Position;
         }
+        #endregion PartMethods
 
-        public virtual void updateParticle()
+        #region AnimationMethods
+        public void Start()
         {
-            AnimatedQuad.update();
+            if (Animation != null)
+                Animation.Start();
+            if (Sound != null)
+                Sound.play(false);
         }
-
-        public virtual void initParticle()
+        public void Update(Single deltaTime)
         {
-            AnimatedQuad.initAnimation();
-            Efecto.play(false);
+            if (Animation != null)
+                Animation.Update(deltaTime);
         }
-
-        public virtual void stopParticle()
+        public void Stop()
         {
-            AnimatedQuad.stopAnimation();
-            Efecto.stop();
+            if (Animation != null)
+                Animation.Stop();
+            if (Sound != null)
+                Sound.stop();
         }
-
-        public void Render(Item item, Effect shader)
-        {
-            AnimatedQuad.render();
-        }
-        public void Dispose()
-        {
-            AnimatedQuad.dispose();
-            Efecto.dispose();
-        }
-
+        #endregion AnimationMethods
     }
 }

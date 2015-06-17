@@ -8,7 +8,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public abstract class MeshPart : ItemPart
     {
         #region Constructors
-        protected readonly TgcMesh Mesh;
+        public readonly TgcMesh Mesh;
         public MeshPart(TgcMesh mesh)
         {
             Mesh = mesh;
@@ -21,7 +21,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public override Color Color
         {
             get { return base.Color; }
-            set { Mesh.setColor(base.Color = value); }
+            set { base.Color = value; if (Mesh != null) Mesh.setColor(value); }
         }
         public TgcTexture Texture
         {
@@ -42,10 +42,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Properties
 
         #region PartMethods
-        public abstract void Attach(Item item);
-        public abstract void Detach(Item item);
-
-        public virtual void Render(Item item, Effect shader)
+        public override void Render(Item item, Effect shader)
         {
             if (Game.Current.IsMeshVisible)
             {
@@ -53,7 +50,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 Mesh.render();
             }
         }
-        public void Dispose()
+        public override void Dispose()
         {
             if (Mesh.Enabled)
                 Mesh.dispose();

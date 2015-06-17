@@ -25,7 +25,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constants
 
         #region Constructors
-        private Wall()
+        public Wall()
         {
             var mesh = Game.Current.NewMesh("Ball");
             _MeshTextured = new MeshStaticPart(Game.Current.NewMesh("WallTextured"));

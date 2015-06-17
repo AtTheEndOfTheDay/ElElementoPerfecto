@@ -87,7 +87,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SRC\AtTheEndOfTheDay\Extension\XmlTextReader.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\SingleExtension.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Game\Parser.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Game\Game.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\TgcObbExtension.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\MatrixExtension.cs" />
@@ -111,30 +113,30 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshTransformedPart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Particle\ParticlePart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Particle\TranslatedParticlePart.cs" />
-    <Compile Include="SRC\AtTheEndOfTheDay\Test\AnimatedQuad.cs" />
-    <Compile Include="SRC\AtTheEndOfTheDay\Test\TexturedQuad.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Particle\AnimatedQuad.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Particle\TexturedQuad.cs" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\001.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\002.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\002.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\008.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\008.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\007.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\007.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\006.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\006.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\005.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\005.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\004.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\004.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\003.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\temp\003.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\Vector3Extension.cs" />
@@ -145,7 +147,7 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshStaticPart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\Collider.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\TypeExtension.cs" />
-    <Compile Include="SRC\AtTheEndOfTheDay\Level\Goal\ItemCollision.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Goal\CollisionGoal.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Goal\IGoal.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Game\Level.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Game\Item.cs" />
@@ -188,24 +190,51 @@
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\Texture\PositiveMaterial.bmp" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\BertycoX   The Signal.mp3" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\cambio gravedad.wav" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\cañon.wav" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\choque cualquiera.wav" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\Crash Bandicoot 2   Rock It, Pack Attack Music.mp3" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\Crash Bandicoot 2.wav" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\pasar nivel.wav" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\resorte 2.wav" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\BlackHole.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Fondo.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\FondoMenu.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\MetalScratched.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\BlackHole.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\BlueFuturisticWall.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\Fondo.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\Fondos.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\FuturisticWall.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\MetalPlate.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\Pokeball.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\trip-exterior.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\Wood.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Pelota.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Walls.jpg" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\WinItem.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\ExplosionGrey.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\Dust.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\Dust2.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\Explosion.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\Explosion2.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\Explosion3.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\Explosion4 %282%29.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\Explosion4.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\Explosion5.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\ExplosionBlue.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\ExplosionDarkBlue.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\smoke.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\smoke_atlas.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\Sparks.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\SparksFinal.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\Sprite_FX_Dust_0005.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\Sprite_FX_Dust_0009.png" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\NotUsed\thinders.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\Sparks2.jpg" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\Sparks2.png" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Level.png" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Win.png" />
+    <Content Include="GrupoInfo\Gaston Santoalla 149.324-3.jpg" />
     <Content Include="GrupoInfo\información.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@ using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public class ItemCollision : IGoal
+    public class CollisionGoal : IGoal
     {
         private Item[] _Items;
         public String[] Items { get; set; }

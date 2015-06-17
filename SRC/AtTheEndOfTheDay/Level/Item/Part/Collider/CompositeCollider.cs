@@ -46,13 +46,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Properties
         public override Color Color
         {
-            get { return base.DefaultColiderColor; }
+            get { return base.Color; }
             set
             {
-                if (base.DefaultColiderColor == value) return;
+                if (base.Color == value) return;
                 foreach (var colider in _Colliders)
-                    colider.DefaultColiderColor = value;
-                base.DefaultColiderColor = value;
+                    colider.Color = value;
+                base.Color = value;
             }
         }
         #endregion Properties
@@ -72,9 +72,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             foreach (var colider in Colliders)
                 colider.Detach(item);
         }
-        #endregion PartMethods
-
-        #region ColliderMethods
         public override void Render(Item item, Dx3D.Effect shader)
         {
             foreach (var colider in Colliders)
@@ -85,6 +82,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             foreach (var colider in Colliders)
                 colider.Dispose();
         }
+        #endregion PartMethods
+
+        #region ColliderMethods
         public override Boolean Intercepts(TgcRay ray)
         {
             return Colliders.Any(c => c.Intercepts(ray));

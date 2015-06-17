@@ -12,7 +12,7 @@ using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    internal static class MatrixExtension
+    public static class MatrixExtension
     {
         public static Vector3 Multiply(this Matrix m, Vector3 v)
         {

@@ -20,6 +20,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class Menu : Item
     {
         #region Constants
+        public static readonly Menu Null = new Menu();
         public static readonly Vector3 DefaultItemRotation = new Vector3(.7f, 0, .7f);
         public static readonly Vector3 DefaultItemRotationSpeed = new Vector3(0, .7f, 0);
         #endregion Constants
@@ -47,8 +48,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 if (_ItemSize == value) return;
                 _ItemSize = value;
                 var is_2 = .5f * value;
-                _Colider.Extents = is_2;
                 _ItemStart = is_2 - is_2.MemberwiseMult(Scale);
+                _Colider.Extents = is_2.Abs();
             }
         }
         #endregion Properties
@@ -101,7 +102,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public override void Animate(Single deltaTime)
         {
-            var scale = _ItemSize * Item.ScaleSizeFactor;
+            var scale = _ItemSize.Abs() * Item.ScaleSizeFactor;
             ItemRotation += deltaTime * ItemRotationSpeed;
             var rotation = Rotation + ItemRotation;
             var start = Position + _ItemStart;

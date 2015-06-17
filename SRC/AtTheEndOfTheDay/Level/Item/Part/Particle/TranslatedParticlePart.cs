@@ -9,23 +9,21 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class TranslatedParticlePart : ParticlePart
     {
-        #region Constructors
+        #region Properties
         private Vector3 _Translation;
         private Vector3 _TranslationCurrent;
-        public TgcStaticSound efecto;
-        public TranslatedParticlePart(AnimatedQuad animatedQuad) 
-            : base(animatedQuad) 
+        public Vector3 Translation
         {
-            _TranslationCurrent = _Translation = animatedQuad.Position - Item.DefaultPosition;
+            get { return _Translation; }
+            set { _Translation = value; UpdateTranslation(); }
         }
-
-        public TranslatedParticlePart(AnimatedQuad animatedQuad, TgcStaticSound sonido)
-            : base(animatedQuad ,sonido)
+        protected void UpdateTranslation()
         {
-            _TranslationCurrent = _Translation = animatedQuad.Position - Item.DefaultPosition;
-            efecto = sonido;
+            _TranslationCurrent = Vector3.TransformCoordinate(_Translation.MemberwiseMult(Scale), RotationMatrix);
+            if (Animation != null)
+                Animation.Position = Position + _TranslationCurrent;
         }
-        #endregion Constructors
+        #endregion Properties
 
         #region PartMethods
         protected override void ItemScaleChanged(Item item)
@@ -41,12 +39,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         protected override void ItemPositionChanged(Item item)
         {
             base.ItemPositionChanged(item);
-            AnimatedQuad.Position += _TranslationCurrent;
-        }
-        protected void UpdateTranslation()
-        {
-            _TranslationCurrent = Vector3.TransformCoordinate(_Translation.MemberwiseMult(Scale), Matrix.RotationYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z));
-            AnimatedQuad.Position = Position + _TranslationCurrent;
+            if (Animation != null)
+                Animation.Position += _TranslationCurrent;
         }
         #endregion PartMethods
     }

@@ -53,8 +53,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private void _AddModifiers()
         {
             var mods = GuiController.Instance.Modifiers;
-            mods.addBoolean("IsMeshVisible", "Mostrar Meshes", Game.Current.IsMeshVisible);
-            mods.addBoolean("IsColliderVisible", "Mostrar Colliders", Game.Current.IsColliderVisible);
+            mods.addBoolean("IsMeshVisible", "Mostrar Meshes", Game.Current.IsMeshVisible = true);
+            mods.addBoolean("IsColliderVisible", "Mostrar Colliders", Game.Current.IsColliderVisible = true);
         }
         private void _SetModifiers()
         {

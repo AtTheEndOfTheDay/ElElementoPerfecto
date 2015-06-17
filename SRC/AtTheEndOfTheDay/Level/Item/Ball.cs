@@ -20,7 +20,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class Ball : Interactive
     {
         #region Constructors
-        private Ball()
+        public Ball()
         {
             var mesh = Game.Current.NewMesh("Ball");
             _MeshTextured = new MeshStaticPart(Game.Current.NewMesh("BallTextured"));

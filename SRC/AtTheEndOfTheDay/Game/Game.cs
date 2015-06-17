@@ -23,13 +23,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         #region Constants
         private const Single _OriginalAspectRatio = 961f / 510f;
-        private const String _GameLabel = "Game]";
-        private const String _UserLabel = "User]";
-        private const String _GoalLabel = "Goal]";
-        private const String _LevelLabel = "Level]";
-        private static readonly Type[] _ItemTypes = typeof(Item).LoadSubTypes();
-        private static readonly Type[] _GoalTypes = typeof(IGoal).LoadSubTypes();
-
         private readonly Dx3D.Effect _LightShader = GuiController.Instance.Shaders.TgcMeshPointLightShader.Clone(GuiController.Instance.D3dDevice);
         private void _LoadShaders()
         {
@@ -55,9 +48,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (_Levels != null) Dispose();
             _LoadShaders();
             _MaterialFolder = mediaFolder + "Texture\\Material\\";
+            _ParticleFolder = mediaFolder + "Texture\\Particles\\";
             _SignFolder = mediaFolder + "Texture\\Sign\\";
             _SoundFolder = mediaFolder + "Sound\\";
-            _ParticleFolder = mediaFolder + "Texture\\Particles\\";
 
             _Scene = new TgcSceneLoader().loadSceneFromFile(mediaFolder + "Mesh\\Items.xml");
             foreach (var mesh in _Scene.Meshes)
@@ -65,44 +58,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 mesh.AutoTransformEnable = false;
                 mesh.AutoUpdateBoundingBox = false;
             }
-            var lvls = Directory.GetFiles(mediaFolder + "Level\\", "*.lvl");
-            _Levels = new Level[lvls.Length];
-            for (var i = 0; i < lvls.Length; i++)
-                _Levels[i] = _NewLevel(lvls[i]);
+            var lvlPaths = Directory.GetFiles(mediaFolder + "Level\\", "*.xml", SearchOption.AllDirectories);
+            var levels = new List<Level>();
+            foreach (var lvlPath in lvlPaths)
+                Parser.ParseLevels(lvlPath, levels);
+            _Levels = levels.OrderBy(l => l.Order).ToArray();
             var screen = GuiController.Instance.Panel3d.Size;
             var cameraFix = _OriginalAspectRatio / ((Single)screen.Width / screen.Height);
             foreach (var level in _Levels)
                 level.CameraPosition = level.CameraPosition.MultZ(cameraFix);
             _Levels[0].Load();
-        }
-        private Level _NewLevel(String lvlPath)
-        {
-            try
-            {
-                var lvl = new XmlTextReader(lvlPath);
-                //var sections = lvl.Split('[');
-                //var game = _NewItemList(sections, _GameLabel);
-                //var user = _NewItemList(sections, _UserLabel);
-                //var goal = _NewGoalList(sections, game, user);
-                //foreach (var item in game)
-                //    item.Init(game, user);
-                //foreach (var item in user)
-                //    item.Init(game, user);
-                //var levelSection = sections.FirstOrDefault(s => s.StartsWith(_LevelLabel));
-                //var props = levelSection.Substring(_LevelLabel.Length).Split('\n');
-                //return new Level(game, user, goal, (_SignFolder + "Win.png")).LoadFieldsFromText(props);
-                return null;
-            }
-            catch (ArrayTypeMismatchException e) { throw e; }
-            catch (Exception e) { throw new Exception("Wrong level file format.", e); }
-        }
-        private IList<Item> _NewItemList(String[] sections, String header)
-        {
-            return _ItemTypes.CreateFromTextStart<Item>(sections, header, this);
-        }
-        private static IEnumerable<IGoal> _NewGoalList(String[] sections, params Object[] parameters)
-        {
-            return _GoalTypes.CreateFromTextStart<IGoal>(sections, _GoalLabel, parameters).ToArray();
         }
         #endregion Constructors
 
@@ -170,7 +135,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _LightShader.SetValue("materialSpecularColor", ColorValue.FromColor(Color.White));
             //level.Render(_LightShader);
         }
-
         public void Dispose()
         {
             _Scene.disposeAll();
@@ -178,7 +142,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 level.Dispose();
             _Levels = null;
         }
-
         private void _LvlHack(TgcD3dInput input)
         {
             if (input.keyDown(Key.F1))

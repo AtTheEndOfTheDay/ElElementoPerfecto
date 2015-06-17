@@ -11,7 +11,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class ObbCollider : Collider
     {
         #region Constructors
-        protected readonly TgcObb Obb;
+        public readonly TgcObb Obb;
         public ObbCollider()
             : this(new TgcObb() { Extents = Item.DefaultScale })
         {
@@ -33,7 +33,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public override Color Color
         {
             get { return base.Color; }
-            set { Obb.setRenderColor(base.Color = value); }
+            set { base.Color = value; if (Obb != null) Obb.setRenderColor(value); }
         }
         private Vector3 _Extents;
         public Vector3 Extents
@@ -52,6 +52,26 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             get { return Obb.Orientation; }
             set { Obb.Orientation = value; }
+        }
+        public void SetOrientation()
+        {
+            Obb.SetOrientation();
+        }
+        public void SetOrientation(Matrix orientation)
+        {
+            Obb.SetOrientation(orientation);
+        }
+        public void SetOrientation(Vector3 rotation)
+        {
+            Obb.SetOrientation(rotation);
+        }
+        public void SetOrientation(Vector3 o0, Vector3 o1, Vector3 o2)
+        {
+            Obb.SetOrientation(o0, o1, o2);
+        }
+        public Vector3 ClosestPoint(Vector3 v)
+        {
+            return Obb.ClosestPoint(v);
         }
         #endregion Properties
 

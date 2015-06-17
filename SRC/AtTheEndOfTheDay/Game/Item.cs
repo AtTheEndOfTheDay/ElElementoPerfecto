@@ -17,7 +17,7 @@ using Dx3D = Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public abstract partial class Item : IGameComponent
+    public abstract partial class Item : IGameComponent, IDisposable
     {
         #region Constants
         public const Single ScaleSizeFactor = 1f / 8f;

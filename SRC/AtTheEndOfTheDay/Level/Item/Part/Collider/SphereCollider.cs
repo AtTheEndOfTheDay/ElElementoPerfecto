@@ -11,7 +11,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class SphereCollider : Collider
     {
         #region Constructors
-        protected readonly TgcBoundingSphere Sphere;
+        public readonly TgcBoundingSphere Sphere;
         public SphereCollider(TgcMesh mesh)
             : this(TgcBoundingSphere.computeFromMesh(mesh)) { }
         public SphereCollider(TgcBoundingSphere sphere)
@@ -25,8 +25,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Properties
         public override Color Color
         {
-            get { return base.DefaultColiderColor; }
-            set { Sphere.setRenderColor(base.DefaultColiderColor = value); }
+            get { return base.Color; }
+            set { base.Color = value; if (Sphere != null) Sphere.setRenderColor(value); }
         }
         private Single _Radius;
         public Single Radius

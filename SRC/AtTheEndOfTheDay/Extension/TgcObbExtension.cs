@@ -12,7 +12,7 @@ using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    internal static class TgcObbExtension
+    public static class TgcObbExtension
     {
         private static readonly Vector3[] _RotationEmpty = { new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, 0, 1) };
         public static void SetOrientation(this TgcObb obb)

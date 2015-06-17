@@ -21,59 +21,90 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class Cannon : Item
     {
         #region Constants
+        private const Single _ForceFactor = 100f;
         private const Single _RotationSpeed = .7f;
         private const Single _BorderScale = .2f;
         private const Single _BodyObbScaleY = .8f;
         private const Single _BaseObbScaleY = .3f;
-        private static readonly Vector3 _ObbExtents = Vector3Extension.One * 4f;
+        private static readonly Vector3 _LoadColiderExtents = Vector3Extension.One * 4f;
         private static readonly Vector3 _BaseObbTranslation = Vector3Extension.Bottom * 15f;
         private static readonly Vector3 _MinBorderScale = Vector3Extension.One * _BorderScale;
         private static readonly Vector3 _MaxBorderScale = new Vector3(1f, 0f, 1f) * _BorderScale;
         #endregion Constants
 
         #region Constructors
-        public Cannon(Game game)
-            : base(game)
+        public Cannon()
         {
-            var bodyMesh = game.GetMesh("Cannon");
-            var baseMesh = game.GetMesh("CannonBase");
-            
-            //aaaaaaaaaaaaaaaaaaaaaaaa
-            TgcStaticSound efecto = new TgcStaticSound();
-            efecto.loadSound(game.getSoundFolder() + "cañon.wav");
-            _Smoke = new TranslatedParticlePart(
-                new AnimatedQuad(game.getParticleFolder() + "ExplosionGrey.png", 
-                    new Size(146, 146), 47, 15, 
-                    new Vector2(25, 25), 
-                    Item.DefaultPosition + new Vector3(0, 35, -4), 2), 
-                    efecto);
-            Add(_Smoke);
-            //aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-            _ObbLoad = new TgcObb() { Extents = _ObbExtents };
-            _ObbLoad.SetOrientation();
-            Add(new ObbPart(_ObbLoad));
+            var bodyMesh = Game.Current.GetMesh("Cannon");
+            _LoadColider = new ObbCollider()
+            {
+                Extents = _LoadColiderExtents,
+                Color = ItemPart.DefaultPartColor,
+            };
+            Add(_LoadColider as ItemPart);
             Add(new MeshStaticPart(bodyMesh));
             var bodyObb = TgcObb.computeFromAABB(bodyMesh.BoundingBox);
             var bodyE = bodyObb.Extents;
             bodyObb.Extents = new Vector3(bodyE.X * _BodyObbScaleY, bodyE.Y, bodyE.Z * _BodyObbScaleY);
             Add(new HollowObbCollider(bodyObb, bodyObb.Position - bodyMesh.Position, _MinBorderScale, _MaxBorderScale));
+            bodyObb.dispose();
+
+            var baseMesh = Game.Current.GetMesh("CannonBase");
             var baseObb = TgcObb.computeFromAABB(baseMesh.BoundingBox);
             var baseE = baseObb.Extents;
             baseObb.Extents = new Vector3(baseE.X, baseE.Y * _BaseObbScaleY, baseE.Z);
             Add(_Base = new MeshUnRotatedPart(baseMesh));
             Add(_BaseCollider = new ObbTranslatedUnRotatedCollider(baseObb, _BaseObbTranslation));
-            Scale = scale * Vector3Extension.One;
-            _Base.Rotation = Rotation = rotation;
-            _BaseCollider.Obb.SetOrientation(rotation);
-            Position = position;
-            var minZ = rotation.Z - FastMath.PI_HALF;
-            var maxZ = rotation.Z + FastMath.PI_HALF;
-            _RotationA = rotationA.ClampZ(minZ, maxZ);
-            _RotationB = rotationB.ClampZ(minZ, maxZ);
-            _Force *= force;
+
+            Add(_Smoke = new TranslatedParticlePart()
+            {
+                Translation = new Vector3(0, 35, -4),
+                Sound = Game.Current.GetSound("cañon.wav"),
+                Animation = new AnimatedQuad()
+                {
+                    Texture = Game.Current.GetParticle("ExplosionGrey.png"),
+                    FrameSize = new Size(146, 146),
+                    Size = new Vector2(25, 25),
+                    FirstFrame = 2,
+                    CurrentFrame = 2,
+                    FrameRate = 15,
+                    TotalFrames = 47,
+                }
+            });
+            RotationChanged += Cannon_RotationChanged;
+        }
+        private void Cannon_RotationChanged(Item item)
+        {
+            _Base.Rotation = new Vector3(Rotation.X, Rotation.Y, _Base.Rotation.Z.Clamp(Rotation.Z - FastMath.PI_HALF, Rotation.Z + FastMath.PI_HALF));
+            _BaseCollider.SetOrientation(_Base.Rotation);
         }
         #endregion Constructors
+
+        #region Properties
+        private Single _Force = 1;
+        private Single _ForceReal = _ForceFactor;
+        public Single Force
+        {
+            get { return _Force; }
+            set
+            {
+                _Force = value;
+                _ForceReal = value * _ForceFactor;
+            }
+        }
+        public Vector3 RotationA { get; set; }
+        public Vector3 RotationB { get; set; }
+        public Single BaseRotationZ
+        {
+            get { return _Base.Rotation.Z; }
+            set
+            {
+                if (_Base.Rotation.Z == value) return;
+                _Base.Rotation = _Base.Rotation.SetZ(value);
+                Cannon_RotationChanged(this);
+            }
+        }
+        #endregion Properties
 
         #region ResetMethods
         private Interactive _Load = null;
@@ -86,12 +117,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public override void LoadValues()
         {
-            //aaaaaaaaaaaaaaaaaaaaaaaaa
-            _Smoke.stopParticle();
-            //aaaaaaaaaaaaaaaaaaaaaaaaaaa
             base.LoadValues();
             _Base.Rotation = _BaseRotationSaved;
             _Load = null;
+            _Smoke.Stop();
         }
         private static readonly Vector3 _MenuProportion = new Vector3(.1f, .2f, .2f);
         public override void MenuTransform(Vector3 scale, Vector3 rotation, Vector3 position)
@@ -107,7 +136,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var input = GuiController.Instance.D3dInput;
             if (input.keyUp(Key.W))
             {
-                Rotation = _IsRotationA ? _RotationB : _RotationA;
+                Rotation = _IsRotationA ? RotationB : RotationA;
                 _IsRotationA = !_IsRotationA;
             }
             if (input.keyDown(Key.D))
@@ -125,35 +154,26 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (isBaseRotating)
             {
                 _Base.Rotation = _Base.Rotation.AdvanceZ(step, to);
-                _BaseCollider.Obb.SetOrientation(_Base.Rotation);
+                _BaseCollider.SetOrientation(_Base.Rotation);
                 if (_IsRotationA)
-                    _RotationB = _RotationB.AdvanceZ(step, to);
+                    RotationB = RotationB.AdvanceZ(step, to);
                 else
-                    _RotationA = _RotationA.AdvanceZ(step, to);
+                    RotationA = RotationA.AdvanceZ(step, to);
             }
             var r = Rotation = Rotation.AdvanceZ(step, to);
             if (_IsRotationA)
-                _RotationA = r;
-            else _RotationB = r;
+                RotationA = r;
+            else RotationB = r;
         }
 
-        //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        private readonly TranslatedParticlePart _Smoke;
-        //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        
-        private readonly TgcObb _ObbLoad;
-        private readonly Single _Force = 100f;
+        private Vector3 _RotationF = Vector3.Empty;
+        private readonly ObbCollider _LoadColider;
         private readonly MeshUnRotatedPart _Base;
         private readonly ObbTranslatedUnRotatedCollider _BaseCollider;
-        private Vector3 _RotationA = Vector3.Empty;
-        private Vector3 _RotationB = Vector3.Empty;
-        private Vector3 _RotationF = Vector3.Empty;
+        private readonly TranslatedParticlePart _Smoke;
         public override void Animate(Single deltaTime)
         {
-            //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            _Smoke.updateParticle();
-            //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
+            _Smoke.Update(deltaTime);
             if (_Load == null) return;
             _Load.Position = Position;
             _Load.Velocity = Vector3.Empty;
@@ -169,23 +189,21 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             );
             if (r == _RotationF)
             {
-                //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                _Smoke.initParticle();
-                //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                var d = _ObbLoad.Orientation[1];
-                _Load.Position += d * (_ObbExtents.Y + 1);
-                _Load.Velocity = d * _Force;
+                var d = _LoadColider.Orientation[1];
+                _Load.Position += d * (_LoadColiderExtents.Y + 1);
+                _Load.Velocity = d * _ForceReal;
                 _Load = null;
+                _Smoke.Start();
             }
         }
         public override void Act(Interactive interactive, Single deltaTime)
         {
             if (_Load != null) return;
             var p = interactive.Position;
-            if (_ObbLoad.ClosestPoint(p) == p)
+            if (_LoadColider.ClosestPoint(p) == p)
             {
                 _Load = interactive;
-                _RotationF = Rotation == _RotationA ? _RotationB : _RotationA;
+                _RotationF = Rotation == RotationA ? RotationB : RotationA;
             }
         }
         #endregion ItemMethods
