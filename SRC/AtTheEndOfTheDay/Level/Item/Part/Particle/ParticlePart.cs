@@ -93,7 +93,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             if ((Animation == null) || (Animation._IsEnabled))
                 return;
-            Animation.Start();
+            this.Start();
         }
         public void Update(Single deltaTime)
         {

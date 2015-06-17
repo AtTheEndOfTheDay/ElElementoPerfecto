@@ -31,6 +31,20 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _MeshTextured = new MeshStaticPart(Game.Current.NewMesh("WallTextured"));
             Add(_Mesh = new MeshStaticPart(mesh));
             Add(new ObbCollider(mesh));
+            Add(_Dust = new IndependentParticlePart()
+            {
+                Translation = new Vector3(0, 0, 4),
+                Animation = new AnimatedQuad()
+                {
+                    Texture = Game.Current.GetParticle("Dust.png"),
+                    FrameSize = new Size(512, 102),
+                    FirstFrame = 0,
+                    CurrentFrame = 0,
+                    FrameRate = 15,
+                    TotalFrames = 5,
+                },
+                Size = new Vector2(25, 15),
+            }); 
             MaxScale = _DefaultMaxScale;
             MinScale = _DefaultMinScale;
         }
@@ -99,6 +113,24 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             else if (input.keyDown(Key.A))
                 Rotation = Rotation.AddZ(stepR);
         }
+
+        private readonly IndependentParticlePart _Dust;
+        public override void LoadValues()
+        {
+            base.LoadValues();
+            _Dust.Stop();
+        }
+        public override void Animate(Single deltaTime)
+        {
+            _Dust.Update(deltaTime);
+            base.Animate(deltaTime);
+        }
+
+        public override void ReceiveCollision(Vector3 point, Single approachVel, Vector3 normal) 
+        {
+            _Dust.Start(point, approachVel, normal);
+        }
+
         #endregion ItemMethods
     }
 }

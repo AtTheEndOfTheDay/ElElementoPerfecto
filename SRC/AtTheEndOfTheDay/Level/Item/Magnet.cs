@@ -24,9 +24,24 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constants
 
         #region Constructors
+        private readonly IndependentParticlePart _Spark;
         public Magnet()
         {
             var mesh = Game.Current.GetMesh("Magnet");
+            Add(_Spark = new IndependentParticlePart()
+            {
+                Translation = new Vector3(0, 0, 4),
+                Animation = new AnimatedQuad()
+                {
+                    Texture = Game.Current.GetParticle("SparksFinal.png"),
+                    FrameSize = new Size(256, 256),
+                    FirstFrame = 0,
+                    CurrentFrame = 0,
+                    FrameRate = 30,
+                    TotalFrames = 10,
+                },
+                Size = new Vector2(25, 15),
+            }); 
             Add(new MeshStaticPart(mesh));
             Add(_Obb = new ObbTranslatedCollider(mesh));
         }
@@ -56,6 +71,19 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             else if (input.keyDown(Key.A))
                 Rotation = Rotation.AddZ(stepR);
         }
+
+        public override void LoadValues()
+        {
+            _Spark.Stop();
+            base.LoadValues();
+        }
+
+        public override void Animate(float deltaTime)
+        {
+            _Spark.Update(deltaTime);
+            base.Animate(deltaTime);
+        }
+
         private readonly ObbTranslatedCollider _Obb;
         public override void Act(Interactive interactive, Single deltaTime)
         {
@@ -66,5 +94,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 interactive.Momentum -= n * (_ForceReal / d2);
         }
         #endregion ItemMethods
+
+        public override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
+        {
+            _Spark.Start(point, approachVel, normal);
+        }
     }
 }

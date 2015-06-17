@@ -33,7 +33,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Add(_StarStorm = new TranslatedParticlePart()
             {
                 Translation = new Vector3(0, 0, -4),
-                Sound = Game.Current.GetSound("cañon.wav"),
                 Animation = new AnimatedQuad()
                 {
                     Texture = Game.Current.GetParticle("thunders.png"),
