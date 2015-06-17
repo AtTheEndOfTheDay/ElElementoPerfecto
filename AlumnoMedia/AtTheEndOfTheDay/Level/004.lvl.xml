@@ -34,7 +34,7 @@
     <Wall Name="" Properties="" Scale="7,0.4,1" Position="17,25,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <Wall Name="" Properties="" Scale="5,0.4,1" Position="-30,-4.5,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <Wall Name="" Properties="" Scale="18,0.4,1" Position="-20,-60,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="7.5,0.4,1" Position="72,-40,0" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="7.5,0.4,1" Position="71,-39,0" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg"/>
     <Wall Name="" Properties="" Scale="7.5,0.4,1" Position="-115,45,0" Rotation="0,0,-0.78" Texture="@ObstacleWalls.jpg"/>
     <!--Lvl Resources-->
   </Game>

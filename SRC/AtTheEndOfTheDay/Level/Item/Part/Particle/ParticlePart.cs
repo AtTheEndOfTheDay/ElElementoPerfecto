@@ -89,6 +89,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (Sound != null)
                 Sound.play(false);
         }
+        public void KeepPlaying()
+        {
+            if ((Animation == null) || (Animation._IsEnabled))
+                return;
+            Animation.Start();
+        }
         public void Update(Single deltaTime)
         {
             if (Animation != null)

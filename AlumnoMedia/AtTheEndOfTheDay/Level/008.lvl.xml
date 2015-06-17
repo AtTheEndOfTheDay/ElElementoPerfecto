@@ -27,14 +27,17 @@
     <Wall Name="LeftLateral" Properties="" Scale="0.4,21,1" Position="-154,0,0" Rotation="" Texture="@Walls.jpg"/>
     <Wall Name="RightLateral" Properties="" Scale="0.4,21,1" Position="+155,0,0" Rotation="" Texture="@Walls.jpg"/>
     <!--Lvl Obstacles-->
-    <Wall Name="" Properties="" Scale="0.4,6.5,1" Position="-98,-15,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="0.4,6,1" Position="-99,-15,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <Wall Name="" Properties="" Scale="7,0.4,1" Position="-125,10,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="17,0.4,1" Position="-30,-38,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="0.4,10,1" Position="38,0,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="17,0.4,1" Position="-30,-37.5,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="0.4,10,1" Position="38,1,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <!--Lvl Resources-->
   </Game>
   <User>
     <Magnet Force="5" Scale="1.25,1.25,1.25"/>
+    <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
+    <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
+    <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
     <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
     <Wall Name="" Properties="" Scale="5,0.4,1" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg" MaxScale="10" MinScale="2.5"/>
   </User>
