@@ -135,7 +135,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     _Sound = _SoundNull;
                 else
                 {
-                    try { _Sound = Game.Current.GetSound(value); }
+                    try { _Sound = Game.Current.GetSound(value, -1500); }
                     catch { _Sound = _SoundNull; }
                 }
             }

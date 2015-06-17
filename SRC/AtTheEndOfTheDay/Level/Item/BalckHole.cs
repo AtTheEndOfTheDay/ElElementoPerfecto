@@ -30,13 +30,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public BlackHole()
         {
             var mesh = Game.Current.NewMesh("BallTextured");
-            _SoundEffect = Game.Current.GetSound("blackhole2.wav");
+            _SoundEffect = Game.Current.GetSound("blackhole2.wav", EffectVolume);
             Add(new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("BlackHole.jpg") });
             Add(new SphereCollider(mesh));
             Add(_StarStorm = new TranslatedParticlePart()
             {
                 Translation = new Vector3(0, 0, -4),
-                Sound = Game.Current.GetSound("cañon.wav"),
                 Animation = new AnimatedQuad()
                 {
                     Texture = Game.Current.GetParticle("thunders.png"),
