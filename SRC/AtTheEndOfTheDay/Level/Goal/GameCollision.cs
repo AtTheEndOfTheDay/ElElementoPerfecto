@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Drawing;
 using System.Collections.Generic;
 using Microsoft.DirectX;
@@ -8,24 +9,35 @@ using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public class GameCollision : Goal
+    public class ItemCollision : Goal
     {
-        private Item _ItemA;
-        private Item _ItemB;
-        public GameCollision(IList<Item> gameItems, IList<Item> userItems, Int32 aIndex, Int32 bIndex)
+        public ItemCollision(Game game) : base(game) { }
+        private Item[] _Items;
+        public String[] Items { get; set; }
+        public override void FindTargets(Item[] items)
         {
-            _ItemA = gameItems[aIndex];
-            _ItemB = gameItems[bIndex];
-        }
-        public Boolean IsMeet
-        {
-            get
+            if (Items != null && Items.Length > 0)
             {
-                return _ItemA.Collides(_ItemB);
+                _Items = null;
+                var targets = new Item[Items.Length];
+                for (var index = 0; index < Items.Length; index++)
+                {
+                    var item = items.FirstOrDefault(i => i.Name == Items[index]);
+                    if (item == null) return;
+                    targets[index] = item;
+                }
+                _Items = targets;
             }
         }
-        public void Dispose()
+        public override Boolean IsMeet
         {
+            get { return _Items != null && _Items.All(a => _Items.All(b => a.Collides(b))); }
+        }
+        public override void Dispose()
+        {
+            if (_Items == null) return;
+            foreach (var item in _Items)
+                item.Dispose();
         }
     }
 }

@@ -80,7 +80,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Menu Menu
         {
             get { return _Menu == _MenuNull ? null : _Menu; }
-            set { _Menu = value ?? _MenuNull; }
+            set
+            {
+                if (_Menu == value) return;
+                _Menu = value ?? _MenuNull;
+                if (value != null && !_Items.Contains(_Menu))
+                    _Items.Add(_Menu);
+            }
         }
         private String _WinSignPath;
         public String WinSign
@@ -89,17 +95,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             set
             {
                 if (_WinSignPath == value) return;
+                _WinSignPath = value;
                 if (_WinSign.Texture != null)
                     _WinSign.Texture.dispose();
                 if (String.IsNullOrWhiteSpace(value))
-                {
                     _WinSign.Texture = null;
-                    _WinSignPath = null;
-                    return;
+                else
+                {
+                    try { _WinSign.Texture = Game.GetSign(value); }
+                    catch { _WinSign.Texture = null; }
                 }
-                try { _WinSign.Texture = Game.GetSign(value); }
-                catch { _WinSign.Texture = null; }
-                finally { _WinSignPath = value; }
             }
         }
         private TgcSprite _WinSign = new TgcSprite()
@@ -125,17 +130,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             set
             {
                 if (_SoundPath == value) return;
+                _SoundPath = value;
                 if (_Sound != _SoundNull)
                     _Sound.dispose();
                 if (String.IsNullOrWhiteSpace(value))
-                {
                     _Sound = _SoundNull;
-                    _SoundPath = null;
-                    return;
+                else
+                {
+                    try { _Sound = Game.GetSound(value); }
+                    catch { _Sound = _SoundNull; }
                 }
-                try { _Sound = Game.GetSound(value); }
-                catch { _Sound = _SoundNull; }
-                finally { _SoundPath = value; }
             }
         }
         #endregion Properties
@@ -208,6 +212,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         public void Load()
         {
+            _Sound.play(true);
             _Menu.Add(_Actives);
             Remove(_Actives);
             RollBack();
@@ -218,6 +223,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             IsComplete = false;
             foreach (var item in _Items)
                 item.LoadValues();
+        }
+        public void UnLoad()
+        {
+            _Sound.stop();
         }
         public void Play(Single deltaTime)
         {
@@ -259,6 +268,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public void Dispose()
         {
+            _WinSign.dispose();
+            _Sound.dispose();
             foreach (var item in _Items)
                 item.Dispose();
         }

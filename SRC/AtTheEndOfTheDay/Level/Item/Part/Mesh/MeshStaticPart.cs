@@ -5,8 +5,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class MeshStaticPart : MeshPart
     {
-        public MeshStaticPart(TgcMesh mesh)
-            : base(mesh) { }
+        public MeshStaticPart(Game game, TgcMesh mesh)
+            : base(game, mesh) { }
         public override void Attach(Item item) { }
         public override void Detach(Item item) { }
         public override void Render(Item item, Effect shader)

@@ -20,79 +20,61 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class Ball : Interactive
     {
         #region Constructors
-        private const String _MeshName = "Ball";
-
-        #region TexturedConstructors
-        public Ball(Game game, String material)
-            : this(game, Vector3.Empty, Vector3.Empty, 1, 1, material) { }
-        public Ball(Game game, Single radius, String material)
-            : this(game, Vector3.Empty, Vector3.Empty, radius, 1, material) { }
-        public Ball(Game game, Single radius, Single mass, String material)
-            : this(game, Vector3.Empty, Vector3.Empty, radius, mass, material) { }
-        public Ball(Game game, Vector3 position, String material)
-            : this(game, position, Vector3.Empty, 1, 1, material) { }
-        public Ball(Game game, Vector3 position, Single radius, String material)
-            : this(game, position, Vector3.Empty, radius, 1, material) { }
-        public Ball(Game game, Vector3 position, Single radius, Single mass, String material)
-            : this(game, position, Vector3.Empty, radius, mass, material) { }
-        public Ball(Game game, Vector3 position, Vector3 velocity, String material)
-            : this(game, position, velocity, 1, 1, material) { }
-        public Ball(Game game, Vector3 position, Vector3 velocity, Single radius, String material)
-            : this(game, position, velocity, radius, 1, material) { }
-        public Ball(Game game, Vector3 position, Vector3 velocity, Single radius, Single mass, String material)
-            : this(position, velocity, radius, mass, game.NewMesh(_MeshName, material)) { }
-        #endregion TexturedConstructors
-
-        #region ColorConstructors
-        public Ball(Game game, Color color)
-            : this(game, Vector3.Empty, Vector3.Empty, 1, 1, color) { }
-        public Ball(Game game, Single radius, Color color)
-            : this(game, Vector3.Empty, Vector3.Empty, radius, 1, color) { }
-        public Ball(Game game, Single radius, Single mass, Color color)
-            : this(game, Vector3.Empty, Vector3.Empty, radius, mass, color) { }
-        public Ball(Game game, Vector3 position, Color color)
-            : this(game, position, Vector3.Empty, 1, 1, color) { }
-        public Ball(Game game, Vector3 position, Single radius, Color color)
-            : this(game, position, Vector3.Empty, radius, 1, color) { }
-        public Ball(Game game, Vector3 position, Single radius, Single mass, Color color)
-            : this(game, position, Vector3.Empty, radius, mass, color) { }
-        public Ball(Game game, Vector3 position, Vector3 velocity, Color color)
-            : this(game, position, velocity, 1, 1, color) { }
-        public Ball(Game game, Vector3 position, Vector3 velocity, Single radius, Color color)
-            : this(game, position, velocity, radius, 1, color) { }
-        public Ball(Game game, Vector3 position, Vector3 velocity, Single radius, Single mass, Color color)
-            : this(position, velocity, radius, mass, game.NewMesh(_MeshName, color)) { }
-        #endregion ColorConstructors
-
-        #region DefaultConstructors
-        public Ball(Game game)
-            : this(game, Vector3.Empty, Vector3.Empty, 1, 1, Color.Purple) { }
-        public Ball(Game game, Single radius)
-            : this(game, Vector3.Empty, Vector3.Empty, radius, 1, Color.Purple) { }
-        public Ball(Game game, Single radius, Single mass)
-            : this(game, Vector3.Empty, Vector3.Empty, radius, mass, Color.Purple) { }
-        public Ball(Game game, Vector3 position)
-            : this(game, position, Vector3.Empty, 1, 1, Color.Purple) { }
-        public Ball(Game game, Vector3 position, Single radius)
-            : this(game, position, Vector3.Empty, radius, 1, Color.Purple) { }
-        public Ball(Game game, Vector3 position, Single radius, Single mass)
-            : this(game, position, Vector3.Empty, radius, mass, Color.Purple) { }
-        public Ball(Game game, Vector3 position, Vector3 velocity)
-            : this(game, position, velocity, 1, 1, Color.Purple) { }
-        public Ball(Game game, Vector3 position, Vector3 velocity, Single radius)
-            : this(game, position, velocity, radius, 1, Color.Purple) { }
-        public Ball(Game game, Vector3 position, Vector3 velocity, Single radius, Single mass)
-            : this(game, position, velocity, radius, mass, Color.Purple) { }
-        private Ball(Vector3 position, Vector3 velocity, Single radius, Single mass, TgcMesh mesh)
+        private Ball(Game game)
+            : base(game)
         {
-            Add(new MeshStaticPart(mesh));
-            Add(new SphereCollider(mesh));
-            Scale = radius * Vector3Extension.One;
-            Position = position;
-            Velocity = velocity;
+            var mesh = game.NewMesh("Ball");
+            _MeshTextured = new MeshStaticPart(game, game.NewMesh("BallTextured"));
+            Add(_Mesh = new MeshStaticPart(game, mesh));
+            Add(new SphereCollider(game, mesh));
         }
-        #endregion DefaultConstructors
         #endregion Constructors
+
+        #region Properties
+        private MeshStaticPart _Mesh;
+        private MeshStaticPart _MeshTextured;
+        public Color Color
+        {
+            get { return _Mesh.Color; }
+            set { _Mesh.Color = value; }
+        }
+        private String _Texture;
+        public String Texture
+        {
+            get { return _Texture; }
+            set
+            {
+                if (_Texture == value) return;
+                _Texture = value;
+                if (String.IsNullOrWhiteSpace(value))
+                    _SwapMeshes(false);
+                else
+                {
+                    try
+                    {
+                        _MeshTextured.Texture = Game.GetMaterial(value);
+                        _SwapMeshes(true);
+                    }
+                    catch { _SwapMeshes(false); }
+                }
+            }
+        }
+        private Boolean _IsTextured = false;
+        private void _SwapMeshes(Boolean isTextured)
+        {
+            if (_IsTextured == isTextured) return;
+            if (_IsTextured = isTextured)
+            {
+                Add(_MeshTextured);
+                Remove(_Mesh);
+            }
+            else
+            {
+                Add(_Mesh);
+                Remove(_MeshTextured);
+            }
+        }
+        #endregion Properties
 
         #region InteractiveMethods
         protected override Matrix ComputeBody()

@@ -10,6 +10,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public abstract class Goal : GameComponent
     {
         public Goal(Game game) : base(game) { }
+        public abstract void FindTargets(Item[] items);
         public abstract Boolean IsMeet { get; }
+        public abstract void Dispose();
     }
 }

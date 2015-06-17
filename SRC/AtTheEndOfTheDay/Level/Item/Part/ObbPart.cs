@@ -17,7 +17,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             Obb = obb;
             Extents = obb.Extents;
-            obb.setRenderColor(MeshPart.Color);
+            obb.setRenderColor(MeshPart.DefaultPartColor);
         }
         #endregion Constructors
 

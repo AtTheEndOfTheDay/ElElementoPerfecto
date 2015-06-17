@@ -19,48 +19,32 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Magnet : Item
     {
+        private const Single _ForceFactor = 100000f;
+
         #region Constructors
-        #region DefaultForceConstructors
         public Magnet(Game game)
-            : this(game, 1f, Vector3.Empty, Vector3.Empty, 1f) { }
-        public Magnet(Game game, Vector3 position)
-            : this(game, 1f, position, Vector3.Empty, 1f) { }
-        public Magnet(Game game, Vector3 position, Vector3 rotation)
-            : this(game, 1f, position, rotation, 1f) { }
-
-        public Magnet(Game game, Vector3 position, Single scale)
-            : this(game, 1f, position, Vector3.Empty, scale) { }
-        public Magnet(Game game, Vector3 position, Vector3 rotation, Single scale)
-            : this(game, 1f, position, rotation, scale) { }
-        #endregion DefaultForceConstructors
-
-        #region DefaultConstructors
-        public Magnet(Game game, Single force)
-            : this(game, force, Vector3.Empty, Vector3.Empty, 1f) { }
-        public Magnet(Game game, Single force, Vector3 position)
-            : this(game, force, position, Vector3.Empty, 1f) { }
-        public Magnet(Game game, Single force, Vector3 position, Vector3 rotation)
-            : this(game, force, position, rotation, 1f) { }
-
-        public Magnet(Game game, Single force, Single scale)
-            : this(game, force, Vector3.Empty, Vector3.Empty, scale) { }
-        public Magnet(Game game, Single force, Vector3 position, Single scale)
-            : this(game, force, position, Vector3.Empty, scale) { }
-        public Magnet(Game game, Single force, Vector3 position, Vector3 rotation, Single scale)
+            : base(game)
         {
             var mesh = game.GetMesh("Magnet");
-            Add(new MeshStaticPart(mesh));
-            var collider = new ObbTranslatedCollider(mesh);
-            Add(collider);
-            Scale = scale * Vector3Extension.One;
-            Rotation = rotation;
-            Position = position;
-            _Obb = collider.Obb;
-            _Force *= force;
+            Add(new MeshStaticPart(game, mesh));
+            Add(_Obb = new ObbTranslatedCollider(game, mesh));
         }
-        #endregion DefaultConstructors
         #endregion Constructors
 
+        #region Properties
+        private Single _Force;
+        private Single _ForceReal;
+        public Single Force
+        {
+            get { return _Force; }
+            set
+            {
+                _Force = value;
+                _ForceReal = value * _ForceFactor;
+            }
+        }
+        #endregion Properties
+        
         #region ItemMethods
         public override void Build(Single deltaTime)
         {
@@ -71,15 +55,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             else if (input.keyDown(Key.A))
                 Rotation = Rotation.AddZ(stepR);
         }
-        private readonly TgcObb _Obb;
-        private readonly Single _Force = 100000f;
+        private readonly ObbTranslatedCollider _Obb;
         public override void Act(Interactive interactive, Single deltaTime)
         {
             var n = interactive.Position - Position;
             var d2 = n.LengthSq();
             n.Normalize();
             if (Vector3.Dot(n, _Obb.Orientation[1]) > .7f)
-                interactive.Momentum -= n * (_Force / d2);
+                interactive.Momentum -= n * (_ForceReal / d2);
         }
         #endregion ItemMethods
     }

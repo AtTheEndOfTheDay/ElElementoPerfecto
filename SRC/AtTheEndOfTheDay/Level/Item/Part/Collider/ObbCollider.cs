@@ -26,10 +26,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             Obb = obb;
             _Extents = obb.Extents;
-            obb.setRenderColor(Collider.DefaultColor);
-            Scale = Item.DefaultScale;
-            Position = Item.DefaultPosition;
-            Rotation = Item.DefaultRotation;
+            obb.setRenderColor(Collider.DefaultColiderColor);
         }
         #endregion Constructors
 
@@ -51,6 +48,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     .MemberwiseDiv(_Extents);
                 _Extents = value;
             }
+        }
+        public Vector3[] Orientation
+        {
+            get { return Obb.Orientation; }
+            set { Obb.Orientation = value; }
         }
         #endregion Properties
 

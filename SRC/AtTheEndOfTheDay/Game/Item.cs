@@ -20,7 +20,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public abstract partial class Item : GameComponent
     {
         #region Constants
-        private const Item[] _SiblingsNull = { };
         public const Single ScaleSizeFactor = 1f / 8f;
         public const Single BuildScalingSpeed = 4.5f;
         public const Single BuildRotationSpeed = 1.5f;
@@ -65,12 +64,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             get { return _Properties; }
             set { _Properties = value ?? String.Empty; }
-        }
-        private Item[] _Siblings = _SiblingsNull;
-        public Item[] Siblings
-        {
-            get { return _Siblings; }
-            set { _Siblings = value ?? _SiblingsNull; }
         }
         #endregion Properties
 
@@ -220,11 +213,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public Boolean Collides(Item other)
         {
-            foreach (var c in _Colliders)
-                foreach (var oc in other._Colliders)
-                    if (c.Collides(oc))
-                        return true;
-            return false;
+            return _Colliders.Any(c => other._Colliders.Any(oc => c.Collides(oc)));
         }
         public ItemCollision Collide(Interactive interactive)
         {
@@ -243,6 +232,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Colliders
 
         #region InteractionMethods
+        public virtual void FindSiblings(Item[] items) { }
         public virtual void Build(Single deltaTime) { }
         public virtual void Animate(Single deltaTime) { }
         public virtual void Act(Interactive interactive, Single deltaTime) { }

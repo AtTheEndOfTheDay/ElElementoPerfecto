@@ -132,20 +132,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             return GetMesh(father).clone(String.Empty);
         }
-        public TgcMesh NewMesh(String father, Color color)
-        {
-            var mesh = NewMesh(father);
-            mesh.setColor(color);
-            return mesh;
-        }
-        public TgcMesh NewMesh(String father, String material)
-        {
-            var mesh = NewMesh(father + "Textured");
-            mesh.changeDiffuseMaps(new TgcTexture[] {
-                TgcTexture.createTexture(_MaterialFolder + material)
-            });
-            return mesh;
-        }
         #endregion Media
 
         #region GamePlay
@@ -164,7 +150,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     _LevelIndex++;
                     if (_LevelIndex == _Levels.Length)
                         _LevelIndex = 0;
-                    _Levels[_LevelIndex].Load();
+                    level.UnLoad();
+                    level = _Levels[_LevelIndex];
+                    level.Load();
                 }
             }
             else level.Play(deltaTime);
@@ -180,10 +168,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public void Dispose()
         {
             _Scene.disposeAll();
-            _BackgroundSound.dispose();
             foreach (var level in _Levels)
                 level.Dispose();
-            //player.closeFile();            
         }
 
         private void _LvlHack(TgcD3dInput input)
@@ -205,17 +191,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             else if (input.keyDown(Key.F8))
                 _LevelIndex = 7;
         }
-
-        public void reproducir()
-        {
-            _BackgroundSound.play(true);
-            new tgcso
-            //TgcMp3Player.States currentState = player.getStatus();
-            //if (currentState == TgcMp3Player.States.Open)
-            //{player.play(true);}
-        }
-
-
         #endregion GamePlay
     }
 }

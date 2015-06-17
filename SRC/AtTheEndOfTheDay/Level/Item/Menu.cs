@@ -28,7 +28,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Menu(Game game)
             : base(game)
         {
-            Add(_Colider = new ObbCollider(Game) { Color = Color.White });
+            Add(_Colider = new ObbCollider(Game) { DefaultColiderColor = Color.White });
             ItemRotation = DefaultItemRotation;
             ItemRotationSpeed = DefaultItemRotationSpeed;
         }

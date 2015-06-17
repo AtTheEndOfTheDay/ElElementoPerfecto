@@ -14,7 +14,65 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class CompositeCollider : Collider
     {
-        public IList<Collider> Colliders = new List<Collider>();
+        #region Colliders
+        public Collider[] Colliders { get { return _Colliders.ToArray(); } }
+        private ICollection<Collider> _Colliders = new List<Collider>();
+        public Collider Add(Collider collider)
+        {
+            _Colliders.Add(collider);
+            foreach (var item in _Items)
+                collider.Attach(item);
+            return collider;
+        }
+        public void Add(IEnumerable<Collider> colliders)
+        {
+            foreach (var part in colliders)
+                Add(part);
+        }
+        public Collider Remove(Collider collider)
+        {
+            _Colliders.Remove(collider);
+            foreach (var item in _Items)
+                collider.Detach(item);
+            return collider;
+        }
+        public void Remove(IEnumerable<Collider> colliders)
+        {
+            foreach (var part in colliders)
+                Remove(part);
+        }
+        #endregion Colliders
+
+        #region Properties
+        public override Color Color
+        {
+            get { return base.DefaultColiderColor; }
+            set
+            {
+                if (base.DefaultColiderColor == value) return;
+                foreach (var colider in _Colliders)
+                    colider.DefaultColiderColor = value;
+                base.DefaultColiderColor = value;
+            }
+        }
+        #endregion Properties
+
+        #region PartMethods
+        private ICollection<Item> _Items = new List<Item>();
+        public override void Attach(Item item)
+        {
+            _Items.Remove(item);
+            _Items.Add(item);
+            foreach (var colider in Colliders)
+                colider.Attach(item);
+        }
+        public override void Detach(Item item)
+        {
+            _Items.Remove(item);
+            foreach (var colider in Colliders)
+                colider.Detach(item);
+        }
+        #endregion PartMethods
 
         #region ColliderMethods
         public override void Render(Item item, Dx3D.Effect shader)
@@ -48,18 +106,5 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 : new Collision(this, other, contacts.ToArray());
         }
         #endregion ColliderMethods
-
-        #region PartMethods
-        public override void Attach(Item item)
-        {
-            foreach (var colider in Colliders)
-                colider.Attach(item);
-        }
-        public override void Detach(Item item)
-        {
-            foreach (var colider in Colliders)
-                colider.Detach(item);
-        }
-        #endregion PartMethods
     }
 }

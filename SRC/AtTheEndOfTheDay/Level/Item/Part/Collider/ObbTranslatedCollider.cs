@@ -14,15 +14,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Constructors
         private Vector3 _Translation;
         private Vector3 _TranslationCurrent;
-        public ObbTranslatedCollider(TgcMesh mesh)
-            : base(mesh)
+        public ObbTranslatedCollider(Game game, TgcMesh mesh)
+            : base(game, mesh)
         {
             _TranslationCurrent = _Translation = Obb.Position - mesh.Position;
         }
-        public ObbTranslatedCollider(TgcMesh mesh, Vector3 translation)
-            : this(TgcObb.computeFromAABB(mesh.BoundingBox), translation) { }
-        public ObbTranslatedCollider(TgcObb obb, Vector3 translation)
-            : base(obb)
+        public ObbTranslatedCollider(Game game, TgcMesh mesh, Vector3 translation)
+            : this(game, TgcObb.computeFromAABB(mesh.BoundingBox), translation) { }
+        public ObbTranslatedCollider(Game game, TgcObb obb, Vector3 translation)
+            : base(game, obb)
         {
             _TranslationCurrent = _Translation = translation;
         }

@@ -11,29 +11,50 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class SphereCollider : Collider
     {
         #region Constructors
-        public Single Radius;
-        public readonly TgcBoundingSphere Sphere;
-        public SphereCollider(TgcMesh mesh)
-            : this(TgcBoundingSphere.computeFromMesh(mesh)) { }
-        public SphereCollider(TgcBoundingSphere sphere)
+        protected readonly TgcBoundingSphere Sphere;
+        public SphereCollider(Game game, TgcMesh mesh)
+            : this(game, TgcBoundingSphere.computeFromMesh(mesh)) { }
+        public SphereCollider(Game game, TgcBoundingSphere sphere)
+            : base(game)
         {
             Sphere = sphere;
-            Radius = sphere.Radius;
-            sphere.setRenderColor(Collider.DefaultColor);
+            _Radius = sphere.Radius;
+            sphere.setRenderColor(Collider.DefaultColiderColor);
         }
         #endregion Constructors
+
+        #region Properties
+        public override Color Color
+        {
+            get { return base.DefaultColiderColor; }
+            set { Sphere.setRenderColor(base.DefaultColiderColor = value); }
+        }
+        private Single _Radius;
+        public Single Radius
+        {
+            get { return _Radius; }
+            set
+            {
+                if (_Radius == value) return;
+                Sphere.setValues(Sphere.Center, Sphere.Radius * value / _Radius);
+                _Radius = value;
+            }
+        }
+        #endregion Properties
 
         #region PartMethods
         public override void Attach(Item item)
         {
             Detach(item);
-            item.ScaleChanged += ItemScaleChanged;
-            item.PositionChanged += ItemPositionChanged;
+            Item_ScaleChanged(item);
+            Item_PositionChanged(item);
+            item.ScaleChanged += Item_ScaleChanged;
+            item.PositionChanged += Item_PositionChanged;
         }
         public override void Detach(Item item)
         {
-            item.ScaleChanged -= ItemScaleChanged;
-            item.PositionChanged -= ItemPositionChanged;
+            item.ScaleChanged -= Item_ScaleChanged;
+            item.PositionChanged -= Item_PositionChanged;
         }
         public override void Render(Item item, Effect shader)
         {
@@ -48,21 +69,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Sphere.dispose();
         }
 
-        public Single Scale = GetSingleScale(Item.DefaultScale);
-        public Vector3 Position = Item.DefaultPosition;
-
-        protected virtual void ItemScaleChanged(Item item)
+        protected virtual void Item_ScaleChanged(Item item)
         {
-            Scale = GetSingleScale(item.Scale);
-            Sphere.setValues(Sphere.Center, Radius * Scale);
+            Scale = Vector3Extension.One * item.Scale.MaxCoordinate();
+            Sphere.setValues(Sphere.Center, _Radius * Scale.X);
         }
-        protected virtual void ItemPositionChanged(Item item)
+        protected virtual void Item_PositionChanged(Item item)
         {
             Sphere.setCenter(Position = item.Position);
-        }
-        protected static Single GetSingleScale(Vector3 s)
-        {
-            return Math.Max(Math.Max(s.X, s.Y), s.Z);
         }
         #endregion PartMethods
 
