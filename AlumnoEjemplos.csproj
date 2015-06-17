@@ -156,7 +156,6 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Old\Spring.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Wall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Material\Not used\Thumbs.db" />
     <None Include="Game.cd" />
   </ItemGroup>
   <ItemGroup>
