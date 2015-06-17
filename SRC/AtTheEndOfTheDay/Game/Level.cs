@@ -266,7 +266,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public void Dispose()
         {
-            _WinSign.dispose();
+            if (_WinSign.Texture != null)
+                _WinSign.dispose();
             _Sound.dispose();
             foreach (var item in _Items)
                 item.Dispose();

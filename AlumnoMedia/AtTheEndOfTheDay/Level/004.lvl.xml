@@ -10,32 +10,32 @@
     Si se defie esta propiedad se ignora el atributo.
   </Level.Description>
   <Goals>
-    <GameCollision ItemA="Ball" ItemB="Win"/>
+    <CollisionGoal Items="{Ball;Win}"/>
   </Goals>
   <Game>
     <Gravitor Name="" Properties="" Scale="0,-98,0" Position="" Rotation=""/>
     <Menu Name="" Properties="" Position="120,0,0" Scale="2,7,1" Rotation="" ItemSize="20,-20,20" ItemRotation=".7, 0, .7" ItemRotationSpeed="0,.7,0"/>
     <Ball Name="Ball" Properties="" Scale="1,1,1" Position="-110,70,0" Texture="Pelota.jpg"/>
-    <Wall Name="Win" Properties="" Scale="1,1,1" Position="-110,-10,0" Rotation="" Texture="WinItem.jpg"/>
+    <Wall Name="Win" Properties="" Scale="1,1,1" Position="-110,-10,0" Rotation="" Texture="@WinItem.jpg"/>
     <!--General Walls-->
     <Wall Name="BlackBack" Properties="" Scale="100,100,1" Position="0,0,30" Rotation="" Color="#FF000000"/>
-    <Wall Name="Back" Properties="" Scale="42,23,1" Position="0,0,27" Rotation="" Texture="Fondo.jpg"/>
-    <Wall Name="MenuBack" Properties="" Scale="8,23,1" Position="140,0,26.9" Rotation="" Texture="FondoMenu.jpg"/>
-    <Wall Name="Divisor" Properties="" Scale="0.4,21,1" Position="95,0,0" Rotation="" Texture="Walls.jpg"/>
-    <Wall Name="Superior" Properties="" Scale="39,0.4,1" Position="0,+84,0" Rotation="" Texture="Walls.jpg"/>
-    <Wall Name="Inferior" Properties="" Scale="39,0.4,1" Position="0,-83,0" Rotation="" Texture="Walls.jpg"/>
-    <Wall Name="LeftLateral" Properties="" Scale="0.4,21,1" Position="-154,0,0" Rotation="" Texture="Walls.jpg"/>
-    <Wall Name="RightLateral" Properties="" Scale="0.4,21,1" Position="+155,0,0" Rotation="" Texture="Walls.jpg"/>
+    <Wall Name="Back" Properties="" Scale="42,23,1" Position="0,0,27" Rotation="" Texture="@Fondo.jpg"/>
+    <Wall Name="MenuBack" Properties="" Scale="8,23,1" Position="140,0,26.9" Rotation="" Texture="@FondoMenu.jpg"/>
+    <Wall Name="Divisor" Properties="" Scale="0.4,21,1" Position="95,0,0" Rotation="" Texture="@Walls.jpg"/>
+    <Wall Name="Superior" Properties="" Scale="39,0.4,1" Position="0,+84,0" Rotation="" Texture="@Walls.jpg"/>
+    <Wall Name="Inferior" Properties="" Scale="39,0.4,1" Position="0,-83,0" Rotation="" Texture="@Walls.jpg"/>
+    <Wall Name="LeftLateral" Properties="" Scale="0.4,21,1" Position="-154,0,0" Rotation="" Texture="@Walls.jpg"/>
+    <Wall Name="RightLateral" Properties="" Scale="0.4,21,1" Position="+155,0,0" Rotation="" Texture="@Walls.jpg"/>
     <!--Lvl Obstacles-->
-    <Wall Name="" Properties="" Scale="0.4,4,1" Position="-10,10,0" Rotation="" Texture="Walls.jpg"/>
-    <Wall Name="" Properties="" Scale="0.4,4,1" Position="-50,10,0" Rotation="" Texture="Walls.jpg"/>
-    <Wall Name="" Properties="" Scale="0.4,6,1" Position="44,1,0" Rotation="" Texture="Walls.jpg"/>
-    <Wall Name="" Properties="" Scale="5.5,0.4,1" Position="72,25,0" Rotation="" Texture="Walls.jpg"/>
-    <Wall Name="" Properties="" Scale="7,0.4,1" Position="17,25,0" Rotation="" Texture="Walls.jpg"/>
-    <Wall Name="" Properties="" Scale="5,0.4,1" Position="-30,-4.5" Rotation="" Texture="Walls.jpg"/>
-    <Wall Name="" Properties="" Scale="18,0.4,1" Position="20,-60,0" Rotation="" Texture="Walls.jpg"/>
-    <Wall Name="" Properties="" Scale="7.5,0.4,1" Position="72,-40,0" Rotation="0,0,0.78" Texture="Walls.jpg"/>
-    <Wall Name="" Properties="" Scale="7.5,0.4,1" Position="-115,45,0" Rotation="0,0,-0.78" Texture="Walls.jpg"/>
+    <Wall Name="" Properties="" Scale="0.4,4,1" Position="-10,10,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="0.4,4,1" Position="-50,10,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="0.4,6,1" Position="44,1,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="5.5,0.4,1" Position="-72,25,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="7,0.4,1" Position="17,25,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="5,0.4,1" Position="-30,-4.5,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="18,0.4,1" Position="-20,-60,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="7.5,0.4,1" Position="72,-40,0" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="7.5,0.4,1" Position="-115,45,0" Rotation="0,0,-0.78" Texture="@ObstacleWalls.jpg"/>
     <!--Lvl Resources-->
   </Game>
   <User>

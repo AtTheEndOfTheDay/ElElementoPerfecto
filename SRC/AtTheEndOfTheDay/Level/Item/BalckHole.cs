@@ -21,7 +21,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     {
         #region Constants
         private const Single _ForceFactor = 100000f;
-        private const Single _RepulsionFactor = 100f;
+        private const Single _AtractionFactor = 100f;
         #endregion Constants
 
         #region Constructors
@@ -85,8 +85,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var n = interactive.Position - Position;
             var d2 = n.LengthSq();
             n.Normalize();
-            if (d2 < _RepulsionFactor * _AtractionDistancePow2)
-                interactive.Momentum -= n * (_Force / d2);
+            if (d2 < _AtractionFactor * _AtractionDistancePow2)
+                interactive.Momentum -= n * (_ForceReal / d2);
         }
 
         public override Boolean React(ItemCollision itemCollision, Single deltaTime)
