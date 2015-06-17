@@ -94,6 +94,7 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\TgcObbExtension.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\MatrixExtension.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Game\IGameComponent.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Acelerator.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\BalckHole.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Button.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshImmutablePart.cs" />
