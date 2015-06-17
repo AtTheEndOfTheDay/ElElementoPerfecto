@@ -38,5 +38,6 @@
   <User>
     <Magnet Force="3" Scale="1.25,1.25,1.25"/>
     <Repulsor Force="2" Scale="1,1,1" RepulsionDistance="3"/>
+    <Portal Name="" Properties="" Scale="3,0.1,1" Position="0,0,0" Rotation="" ReceptorPosition="25,-75,0" ReceptorScale="3,0.1,1" ReceptorRotation=""/>
   </User>
 </Level>

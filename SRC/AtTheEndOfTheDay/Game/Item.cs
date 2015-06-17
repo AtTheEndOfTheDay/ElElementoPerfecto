@@ -24,6 +24,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public const Single BuildScalingSpeed = 4.5f;
         public const Single BuildRotationSpeed = 1.5f;
         public const Single BuildTranslationSpeed = 4.5f;
+        public const int EffectVolume = -500;
 
         public static readonly Vector3 DefaultScale = Vector3Extension.One;
         public static readonly Vector3 DefaultRotation = Vector3.Empty;
@@ -143,6 +144,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Parts
         public ItemPart[] Parts { get { return _Parts.ToArray(); } }
         private ICollection<ItemPart> _Parts = new List<ItemPart>();
+        protected Boolean emptyParts()
+        {
+            return (_Parts.Count == 0);
+        }
         public ItemPart Add(ItemPart part)
         {
             _Parts.Add(part);
@@ -265,7 +270,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 }
             return reacted;
         }
-        public virtual void ReceiveCollision(Vector3 point, Single approachVel, Vector3 normal) { }
+       	public virtual void ReceiveCollision(Vector3 point, Single approachVel, Vector3 normal) { }
+	public virtual void ButtonSignal() { }
+
         #endregion InteractionMethods
     }
 }

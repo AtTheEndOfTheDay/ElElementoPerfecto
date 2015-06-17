@@ -88,10 +88,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             return TgcTexture.createTexture(_SignFolder + signFile);
         }
         private String _SoundFolder;
-        public TgcStaticSound GetSound(String soundFile)
+        public TgcStaticSound GetSound(String soundFile, int volume)
         {
             var sound = new TgcStaticSound();
-            sound.loadSound(_SoundFolder + soundFile, -1500);
+            sound.loadSound(_SoundFolder + soundFile, volume);
             return sound;
         }
         private TgcScene _Scene;

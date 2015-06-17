@@ -14,6 +14,7 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -22,12 +23,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Constants
         private const Single _ForceFactor = 100000f;
         private const Single _AtractionFactor = 100f;
+        private TgcStaticSound _SoundEffect;
         #endregion Constants
 
         #region Constructors
         public BlackHole()
         {
             var mesh = Game.Current.NewMesh("BallTextured");
+            _SoundEffect = Game.Current.GetSound("blackhole2.wav", EffectVolume);
             Add(new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("BlackHole.jpg") });
             Add(new SphereCollider(mesh));
             Add(_StarStorm = new TranslatedParticlePart()
@@ -44,6 +47,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     TotalFrames = 16,
                 }
             });
+        
         }
         #endregion Constructors
 
@@ -73,10 +77,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public Single MaxScale { get; set; }
         public Single MinScale { get; set; }
+   
         #endregion Properties
 
         #region ItemMethods
         private Boolean _IsGrowing = true;
+
 
         public override void LoadValues()
         {
@@ -121,7 +127,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var reacted = true;
             var interactive = itemCollision.Interactive;
             interactive.Position= new Vector3(0,0,Single.MaxValue);
+            _SoundEffect.play(false);
             return reacted;
+            
+
         }
         #endregion ItemMethods
     }

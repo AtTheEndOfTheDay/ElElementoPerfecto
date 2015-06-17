@@ -95,9 +95,11 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\MatrixExtension.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Game\IGameComponent.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\BalckHole.cs" />
-    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Particle.cs" />
-    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshPart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Particle\IndependentParticlePart.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Button.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshImmutablePart.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshPart.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Portal.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Repulsor.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Menu.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Cannon.cs" />
@@ -121,6 +123,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\002.lvl.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\009.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\008.lvl.xml">
