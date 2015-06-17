@@ -113,17 +113,30 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Particle\TranslatedParticlePart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Test\AnimatedQuad.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Test\TexturedQuad.cs" />
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\001.Test.lvl.xml">
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\001.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\002.Text.lvl" />
-    <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\008.Text.lvl" />
-    <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\007.Text.lvl" />
-    <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\006.Text.lvl" />
-    <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\005.Text.lvl" />
-    <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\004.Text.lvl" />
-    <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\003.Text.lvl" />
-    <None Include="AlumnoMedia\AtTheEndOfTheDay\Level\001.Text.lvl" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\002.lvl.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\008.lvl.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\007.lvl.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\006.lvl.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\005.lvl.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\004.lvl.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\003.lvl.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\Vector3Extension.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\StringExtension.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Ball.cs" />

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0"?>
+<Level Order="" Name="" Description="" Properties=""
+       CameraPosition="0,0,-200" CameraTarget="0,0,0"
+       LightPosition="500,500,-500" LightIntensity="500"
+       PlanePoint="0,0,0" PlaneNormal="0,0,1"
+       Sound="Crash Bandicoot 2.wav" WinSign="Level.png"
+       WinSignScaling="0.5f, 0.5f" WinSignPosition="300, 200">
+  <Level.Description>
+    Aca va la descripcion del nivel.
+    Si se defie esta propiedad se ignora el atributo.
+  </Level.Description>
+  <Goals>
+    <GameCollision ItemA="Ball" ItemB="Win"/>
+  </Goals>
+  <Game>
+    <Gravitor Name="" Properties="" Scale="0,-98,0" Position="" Rotation=""/>
+    <Menu Name="" Properties="" Position="120,0,0" Scale="2,7,1" Rotation="" ItemSize="20,-20,20" ItemRotation=".7, 0, .7" ItemRotationSpeed="0,.7,0"/>
+    <Ball Name="Ball" Properties="" Scale="1,1,1" Position="-130,0,0" Texture="Pelota.jpg"/>
+    <Wall Name="Win" Properties="" Scale="1,1,1" Position="0,-20,0" Rotation="" Texture="WinItem.jpg"/>
+    <!--General Walls-->
+    <Wall Name="BlackBack" Properties="" Scale="100,100,1" Position="0,0,30" Rotation="" Color="#FF000000"/>
+    <Wall Name="Back" Properties="" Scale="42,23,1" Position="0,0,27" Rotation="" Texture="Fondo.jpg"/>
+    <Wall Name="MenuBack" Properties="" Scale="8,23,1" Position="140,0,26.9" Rotation="" Texture="FondoMenu.jpg"/>
+    <Wall Name="Divisor" Properties="" Scale="0.4,21,1" Position="95,0,0" Rotation="" Texture="Walls.jpg"/>
+    <Wall Name="Superior" Properties="" Scale="39,0.4,1" Position="0,+84,0" Rotation="" Texture="Walls.jpg"/>
+    <Wall Name="Inferior" Properties="" Scale="39,0.4,1" Position="0,-83,0" Rotation="" Texture="Walls.jpg"/>
+    <Wall Name="LeftLateral" Properties="" Scale="0.4,21,1" Position="-154,0,0" Rotation="" Texture="Walls.jpg"/>
+    <Wall Name="RightLateral" Properties="" Scale="0.4,21,1" Position="+155,0,0" Rotation="" Texture="Walls.jpg"/>
+    <!--Lvl Obstacles-->
+    <Wall Name="" Properties="" Scale="0.4,21,1" Position="15,23,0" Rotation="" Texture="Walls.jpg"/>
+    <Wall Name="" Properties="" Scale="0.4,9,1" Position="-15,48,0" Rotation="" Texture="Walls.jpg"/>
+    <Wall Name="" Properties="" Scale="4,0.4,1" Position="0,-36,0" Rotation="" Texture="Walls.jpg"/>
+    <Wall Name="" Properties="" Scale="2.5,0.4,1" Position="-24,-28,0" Rotation="0,0,-0.78" Texture="Walls.jpg"/>
+    <Wall Name="" Properties="" Scale="2.5,0.4,1" Position="-24,-11,0" Rotation="0,0,0.78" Texture="Walls.jpg"/>
+    <!--Lvl Resources-->
+    <Cannon Name="" Properties="" Scale="2.5,0.4,1" Position="-130,-62,0" Rotation="0,0,0" RotationA="0,0,0" RotationB="0,0,-0.90"/>
+  </Game>
+  <User>
+    <Magnet Force="3" Scale="1.25,1.25,1.25"/>
+    <Repulsor Force="2" Scale="1,1,1" RepulsionFactor="3"/>
+  </User>
+</Level>
+<!--
+[Test]
+//Only [Level][Goal][Game][User] are taken into account.
+//Every other section its just ignored.
+***************************************************************************************************************************************
+16:9 -> 200=(70, 36) -> 200=(148, 77) -> 300=(226, 120)
+4:3  -> 100=(52, 36) -> 200=(110, 77) -> 300=(168, 120)
+(16:9) * 1.33 = (4:3)
+
+//Color Walls
+Wall=#FFBBAAAA
+Wall=#FFAABBAA
+Wall=#FFAAAABB
+Wall=#FFCCAAAA
+Wall=#FFAACCAA
+Wall=#FFAAAACC
+Wall=#FFDDAAAA
+Wall=#FFAADDAA
+Wall=#FFAAAADD
+
+//Constructors (*Vector3;Single;"String";#Color(Hexa)[;optional])
+Gravitor=*acceleration
+Wall=[*position;*scale;*rotation];"material"
+Wall=[*position;*scale;*rotation];#color
+Wall=[*position;*scale;*rotation]
+Ball=[*position;*velocity][;radius;mass];"material"
+Ball=[*position;*velocity][;radius;mass];#color
+Ball=[*position;*velocity][;radius;mass]
+Magnet=[force][;*position;*rotation][;scale]
+Cannon=[force][;*position;*rotation;*rotationA;*rotationB][;scale]
+-->
