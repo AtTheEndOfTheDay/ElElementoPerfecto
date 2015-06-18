@@ -15,8 +15,8 @@
   <Game>
     <Gravitor Name="Gravitor" Properties="" Scale="0,-98,0" Position="" Rotation=""/>
     <Menu Name="" Properties="" Position="120,0,0" Scale="2,7,1" Rotation="" ItemSize="20,-20,20" ItemRotation=".7, 0, .7" ItemRotationSpeed="0,.7,0"/>
-    <Ball Name="Ball" Properties="" Scale="1,1,1" Position="-130,-30,0" Texture="@Pelota.jpg"/>
-    <Wall Name="Win" Properties="" Scale="1,1,1" Position="40,0,0" Rotation="" Texture="@WinItem.jpg"/>
+    <Ball Name="Ball" Properties="" Scale="1,1,1" Position="-130,-60,0" Texture="@Pelota.jpg"/>
+    <Wall Name="Win" Properties="" Scale="1,1,1" Position="-0,0,0" Rotation="" Texture="@WinItem.jpg"/>
     <!--General Walls-->
     <Wall Name="BlackBack" Properties="" Scale="100,100,1" Position="0,0,30" Rotation="" Color="#FF000000"/>
     <Wall Name="Back" Properties="" Scale="42,23,1" Position="0,0,27" Rotation="" Texture="@DarkFondo.png"/>
@@ -27,27 +27,25 @@
     <Wall Name="LeftLateral" Properties="" Scale="0.4,21,1" Position="-154,0,0" Rotation="" Texture="@Walls.jpg"/>
     <Wall Name="RightLateral" Properties="" Scale="0.4,21,1" Position="+155,0,0" Rotation="" Texture="@Walls.jpg"/>
     <!--Lvl Obstacles-->
-    <Wall Name="" Properties="" Scale="0.4,11,1" Position="-99,-5,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="7,0.4,1" Position="-125,0,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="5.5,0.4,1" Position="72,13,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="18.2,0.4,1" Position="-25,-47.5,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="18.2,0.4,1" Position="-25,37.5,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="0.4,11,1" Position="50,-5,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="20,0.4,1" Position="-70,-22,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="11.2,0.4,1" Position="-35,22,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="0.4,6,1" Position="-80,0,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="0.4,6,1" Position="10,0,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <!--Lvl Resources-->
-    <Portal Name="" Properties="" Scale="3,0.4 ,1" Position="75,10,0" Rotation="0,0,0" ReceptorPosition="-125,3,0" ReceptorScale="3,0.4,1" ReceptorRotation="0,0,0"/>
-    <Portal Name="" Properties="" Scale="3,0.4 ,1" Position="75,15,0" Rotation="0,0,0" ReceptorPosition="-95,-2,0" ReceptorScale="3,0.4,1" ReceptorRotation="0,0,1.57"/>
-    <BlackHole Force="2" AtractionDistance ="5" Position="-60,-40,0" Scale="1,1,1" MinScale="0.8" MaxScale="1.2"/>
-    <BlackHole Force="2" AtractionDistance ="5" Position="10,-40,0" Scale="1,1,1" MinScale="0.8" MaxScale="1.2"/>
-    <BlackHole Force="2" AtractionDistance ="5" Position="-60,30,0" Scale="1,1,1" MinScale="0.8" MaxScale="1.2"/>
-    <BlackHole Force="2" AtractionDistance ="5" Position="10,30,0" Scale="1,1,1" MinScale="0.8" MaxScale="1.2"/>
+    <Portal Name="" Properties="" Scale="3,0.5 ,1" Position="-150,-65,0" Rotation="0,0,1.57" ReceptorPosition="-76,0,0" ReceptorScale="3,0.2,1" ReceptorRotation="0,0,1.57"/>
+    <BlackHole Name="gargantua" Force="2" AtractionDistance ="5" Position="-30,0,0" Scale="1.5,1.5,1.5" MinScale="0.8" MaxScale="1.2"/>
+    <Button Properties="" Scale="1.5,1,1" Position="-85,-5,0" Rotation="0,0,1.57" RelatedItem="gargantua" Signal="-100,-100,-100" SoundEffect="@GravityChange.wav"/>
   </Game>
   <User>
-      <Magnet Force="5" Scale="1.25,1.25,1.25"/>
+    <Magnet Force="5" Scale="1.25,1.25,1.25"/>
     <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
-    <Cannon Force="2"/>
+    <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
     <Wall Name="" Properties="" Scale="5,0.4,1" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg" MaxScale="10" MinScale="2.5"/>
-    <Acelerator Force="5" Scale="2.5,1,0.1"/> 
     <Acelerator Force="5" Scale="2.5,1,0.1"/>
     <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="" RelatedItem="Gravitor" Signal="-1" SoundEffect="@GravityChange.wav"/>
+    <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="" RelatedItem="Gravitor" Signal="-1" SoundEffect="@GravityChange.wav"/>
+    <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="" RelatedItem="Gravitor" Signal="-1" SoundEffect="@GravityChange.wav"/>
+    <Acelerator Force="5" Scale="2.5,1,0.1"/>
+    <Cannon Force="3"/>
   </User>
 </Level>
