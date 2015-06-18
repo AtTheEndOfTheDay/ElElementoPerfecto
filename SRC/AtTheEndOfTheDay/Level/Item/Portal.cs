@@ -67,9 +67,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public override void Act(Interactive interactive, Single deltaTime)
         {
             if (interactive.Colliders.Any(colider => colider.Collides(_Collider)))
-            {
+        {
                 interactive.Position = _Receptor.Position;
-                _SoundEffect.play(false);
+            _SoundEffect.play(false);
                 ClearParts();
             }
         }

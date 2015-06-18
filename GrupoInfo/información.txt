@@ -15,7 +15,6 @@ Integrantes:
 Lider del Grupo: Santoalla Gaston
 Nombre del Grupo: AtTheEndOfTheDay
 
-//TODO: Fotos lean gsutavo nahuel
 //TODO: capturas de pantalla del juego
 /*TODO EstrategiaAlumno.pdf
 Documento “EstrategiaAlumno.pdf”:

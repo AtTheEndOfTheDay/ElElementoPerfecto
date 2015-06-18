@@ -3,8 +3,24 @@ El elemento perfecto es un juego en el cual, el jugador debe hacer que una pelot
 El juego posee una apariencia 3D con una jugabilidad 2D, existe un escenario donde se encuentran la pelota, el objetivo y una serie de obstaculos caracteristicos de cada nivel. Ademas la derecha hay un menu, donde el usuario podra ver los items que dispone para ir resolviendo el nivel, para esto, debera ubicarlos, rotarlos y posicionarlos de una manera conveniente para guiar a la pelota en su camino hacia el cubo.
 
 Instrucciones de Juego:
-	Al inciar el juego se comenzara en el nivel 1, y al ir logrando cumplir los niveles, apareceran carteles que indicaran que el nivel fue completando, pudiendo avanzar al siguiente presionando la tecla enter.
-	Todo nivel se divide en dos etapas, la etapa de Construccion y la etapa de Simulacion o de juego en si mismo.
+
+Objetivo: Que la pelota alcance el cubo dimensional en todos los niveles propuestos.
+Resumen Controles:
+Tecla C: Pasa a la etapa de construccion
+Tecla Espacio: Pasa de Construccion a Simulacion/ Pausa o reanuda el juego en la etapa de simulacion
+Tecla R: Una vez completado el nivel permite reiniciarlo
+Tecla Enter: una vez completado el nivel permite avanzar al siguiente
+
+-Dentro de la etapa de construccion con un item seleccionado-
+Teclas A y D: Permiten rotar los siguientes items en la etapa de construccion: Acelerador, Cañon (sin la base), Iman, Pared y Resorte.
+Teclas Q y E: Permiten rotar el cañon junto con su base / Permiten ensanchar o achicar las paredes hasta un limite
+Tecla W: Permite seleccionar cual de las dos rotaciones del cañon posicionar.
+
+NOTA: Para poder realizar una rapida inspeccion del juego (y de gran ayuda a la hora de armar los niveles) se agrego la funcion LvlHack, la que permite saltear los niveles sin haber cumplido su objetivo, pero sin recibir la satisfaccion de lograrlo. Presionando F2 podra avanzar al siguiente nivel, y presionando F1 podra retroceder al nivel anterior.
+
+Descripcion Detallada:
+Al inciar el juego se comenzara en el nivel 1, y al ir logrando cumplir los niveles, apareceran carteles que indicaran que el nivel fue completando, pudiendo avanzar al siguiente presionando la tecla enter.
+Todo nivel se divide en dos etapas, la etapa de Construccion y la etapa de Simulacion o de juego en si mismo.
 
 Etapa de Construccion:
 	Al iniciar cualquier nivel, el mismo se encontrara en esta etapa.
@@ -26,25 +42,52 @@ Etapa de Simulacion:
 	Es importante destacar que el nivel se completa durante esta etapa, ya que es cuando la pelota interactua con los objetos e intenta llegar a su objetivo. En caso de lograrlo, se considera el nivel completado (y se muestra un cartel que lo indica), el usuario puede presionar la tecla enter para pasar al siguiente nivel, o la tecla R (Replay) en caso de que quiera volver a hacer el nivel (con la misma configuracion de objetos con la que lo gano, pudiendo hacerle cambios si lo desea, o simplemente repetir la simulacion ganadora).
 
 Items del Juego:
-	Pelota: junto con el cubo dimensional, es una de las protagonistas del juego, se la vera en todos los niveles y sera parte de los items del nivel (el usuario no podra moverla en la etapa de cosntruccion), al iniciar la simulacion se vera afectada por la gravedad y comenzara a interactuar con los items que el usuario haya dispuesto en el escenario.
-	
-	Cubo dimensional: Un pequeño cubo (normalmente del tamaño de la pelota) el cual el jugador debera ubicar, ya que el objetivo es que la pelota lo alcance (basta con que lo colisione solamente)
+	Acelerador: este item permite al jugador colocar una pista por la cual la pelota puede circular. Al circular por la pista, esta hara que la pelota gane velocidad en la direccion en dodne las flechas apuntan.
+		Construccion: ademas de posicionarse con el mouse, puede direccionarlo con las teclas A y D.
 
-	Pared: este es uno de los items que mas aparece en el juego, normalmente se utiliza como obstaculo para evitar que el camino de la pelota sea directo, pero en ciertos niveles el usuario podra utilizarlo como uno de sus items para lograr su objetivo.
-		Construccion: presionando las teclas A y D se puede cambiar su rotacion hacia izquierda y derecha respectivamente. Ademas el jugador podra agrandar y achicar el largo de la pared con las teclas Q y E, pero hasta un limite especifico para cada pared (que el jugador podra comprobar jugando)
+	Agujero Negro: este peligroso item, usado como obstaculo y como recurso del jugador atraera a la pelota en toda direccion (asi como el iman la atrae, pero en toda direccion como el repulsor), pero como su nombre lo indica, si la pelota llegara a tocarlo desapareceria del juego por lo cual el jugador debera presionar C para volver a la etapa de construccion y reiniciar el juego.
+		Construccion: este objeto solo se puede posicionar con el mouse.
 
-	Resorte: con este item, el usuario podra hacer que la pelota rebote hacia cierta direccion sin perder gran parte de su velocidad, cuando la pelota rebote en la cara superior del resorte (que sera la cara de madera), la misma saldra disparada con una velocidad mayor a la que saldria si rebotara en una pared convencional.
-		Construccion: al igual que la pared, podra posicionarlo con el mouse y rotarlo con A y con D.	
-
-	Iman: aunque muy util y verstail, a veces dificil de emplear, el iman atraera a la pelota con una fuerza propia (puede variar en distintos imanes) pero solo lo hara si la pelota se encuentra en su campo de atraccion (direccionado por sus partes planas)
-		Construccion: para poder direccionar el iman para donde el jugador desee, podra rotarlo como las paredes presionando las teclas A y D.
+	Boton: mas que un item en si mismo, este es un auxiliar, al presionarlo desde arriba o abajo, permite cambiar las propiedades de alguno de los items del escenario, el jugador debera descubrir cual de esos items es el que el boton modifica y de que manera. Este podria hacer desaparecer algun obstaculo o incluso cambiar la gravedad.
+		Construccion: solo se posciona con el mouse
 
 	Cañon: el poderoso cañon nos permitira disparar a la pelota en la direccion que querramos, siempre y cuando lleguemos a cargarlo. Al iniciar la simulacion el cañon estara inactivo, hasta que el usuario logre que la pelota entre en el orificio del cañon, cargandolo. Una vez que el cañon este cargado rotara, abandonando su rotacion inicial y se colocara el posicion de disparo, una vez finalizado, disparara a la pelota con cierta potencia (puede variar en distintos cañones) hacia esa direccion. En caso de que el cañon sea parte del nivel, las posiciones (inicial y de disparo) seran propias del cañon y el usuario no podra elegirlas, en caso de que el cañon sea un item del usuario este podra tanto posicionarlo donde quiera como tambien establecerle las posiciones que el desee (por esto es el item mas complejo de construir)
 		Construccion: ademas de desplazarlo con el mouse, el cañon posee 3 tipos de rotacion, la primera de ellas es la rotacion absoluta, en la cual rota tanto el cañon en si como su base, es decir rota todo el objeto, para lograr esta rotacion el usuario podra presionar las teclas Q y E.
 				Las otras dos rotaciones seran las que, dejando quieta la base, definan la posicion del cañon tanto para disparar como incial. El usuario podra definir una posicion presionando las teclas A y D y una vez agusto con la posicion seleccionada presionando la tecla W podra cambiar a la otra rotacion (pudiendo modificarla con A y D tambien) de esta manera con W cambia de una a otra y con A y D la establece como desee. (Nota: se tomara como posicion inicial la posicion que tenga el cañon en el momento de presionar espacio (iniciar la simulacion) y como posicion de disparo la otra)
 
+	Cubo dimensional: Un pequeño cubo (normalmente del tamaño de la pelota) al cual el jugador debera prestar especial atencion, ya que el objetivo es que la pelota lo alcance (basta con que lo colisione solamente)
+
+	Iman: aunque muy util y verstail, a veces dificil de emplear, el iman atraera a la pelota con una fuerza propia (puede variar en distintos imanes) pero solo lo hara si la pelota se encuentra en su campo de atraccion (direccionado por sus partes planas)
+		Construccion: para poder direccionar el iman para donde el jugador desee, podra rotarlo como las paredes presionando las teclas A y D.
+
+	Pared: este es uno de los items que mas aparece en el juego, normalmente se utiliza como obstaculo para evitar que el camino de la pelota sea directo, pero en ciertos niveles el usuario podra utilizarlo como uno de sus items para lograr su objetivo.
+		Construccion: presionando las teclas A y D se puede cambiar su rotacion hacia izquierda y derecha respectivamente. Ademas el jugador podra agrandar y achicar el largo de la pared con las teclas Q y E, pero hasta un limite especifico para cada pared (que el jugador podra comprobar jugando)
+
+	Pelota: junto con el cubo dimensional, es una de las protagonistas del juego, se la vera en todos los niveles y sera parte de los items del nivel (el usuario no podra moverla en la etapa de cosntruccion), al iniciar la simulacion se vera afectada por la gravedad y comenzara a interactuar con los items que el usuario haya dispuesto en el escenario.
+	
+	Portal: este misterioso item permite a la pelota teletransportarse a la posicion del receptor. El umbral de entrada se reconocera por su color azul y el umbral de salida por su color naranja, pero cuidado, solo se puede usar una unica vez.
+		Construccion: el jugador, enc aso de poseerlo entre sus items solo poseera el umbral azul, el receptor (por donde sale la pelota) sera fijo en el escenario. Podra posicionar el umbral azul con el mouse, pero no rotarlo.
+
 	Repulsor: esta pequeña pelotita roja sera a veces una ayuda y otras una molestia, su efecto sobre la pelota es, como lo indica su nombre repelerla. Similar a como el iman la atrae este objeto repele a la pelota, pero sin importar la direccion en la que la pelota se encuentre.
 		Construccion: este objeto solo se puede posicionar con el mouse.
+	
+	Resorte: con este item, el usuario podra hacer que la pelota rebote hacia cierta direccion sin perder gran parte de su velocidad, cuando la pelota rebote en la cara superior del resorte (que sera la cara de madera), la misma saldra disparada con una velocidad mayor a la que saldria si rebotara en una pared convencional.
+		Construccion: al igual que la pared, podra posicionarlo con el mouse y rotarlo con A y con D.
 
-	Agujero Negro: este peligroso item, usado como obstaculo y como recurso del jugador atraera a la pelota en toda direccion (asi como el iman la atrae, pero en toda direccion como el repulsor), pero como su nombre lo indica, si la pelota llegara a tocarlo desapareceria del juego por lo cual el jugador debera presionar C para volver a la etapa de construccion y reiniciar el juego.
-		Construccion: este objeto solo se puede posicionar con el mouse.
+Desiciones de Diseño Tomadas:
+
+Jugabilidad:
+El Juego, sus etapas, diseño general:
+Elaboracion de Niveles:
+Los Objetivos:
+Los Items:
+Las Partes:
+	Colliders:
+	Meshes:
+	Particles:
+Las Meshes:
+Las Texturas:
+Efectos de Sonido:
+Efectos de Particulas:
+Animaciones:
+Optimizacion:
