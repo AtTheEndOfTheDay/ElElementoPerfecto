@@ -66,6 +66,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Properties
 
         #region ItemMethods
+        public override void Build(Single deltaTime)
+        {
+            var input = GuiController.Instance.D3dInput;
+            var stepR = deltaTime * BuildRotationSpeed;
+            if (input.keyDown(Key.D))
+                Rotation = Rotation.AddZ(-stepR);
+            else if (input.keyDown(Key.A))
+                Rotation = Rotation.AddZ(stepR);
+        }
         public override void FindSiblings(Item[] items)
         {
             if (_RelatedItemName != null)
