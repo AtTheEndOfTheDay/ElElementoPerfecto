@@ -4,7 +4,7 @@
        LightPosition="500,500,-500" LightIntensity="500"
        PlanePoint="0,0,0" PlaneNormal="0,0,1"
        Sound="@DarkLevelMusic.wav" WinSound="@Win.wav"
-       WinSign="@Level.png" WinSignSize="113,56.5" WinSignPosition="-25, 0, -20">
+       WinSign="@Level.png" WinSignSize="113,56.5" WinSignPosition="-25, 0, -10">
   <Description>
     Aca va la descripcion del nivel.
     Si se defie esta propiedad se ignora el atributo.
@@ -33,7 +33,7 @@
     <Wall Name="" Properties="" Scale="0.4,6,1" Position="10,0,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <!--Lvl Resources-->
     <Portal Name="" Properties="" Scale="3,0.5 ,1" Position="-150,-65,0" Rotation="0,0,1.57" ReceptorPosition="-76,0,0" ReceptorScale="3,0.2,1" ReceptorRotation="0,0,1.57"/>
-    <BlackHole Name="gargantua" Force="2" AtractionDistance ="5" Position="-30,0,0" Scale="1.5,1.5,1.5" MinScale="0.8" MaxScale="1.2"/>
+    <BlackHole Name="gargantua" Force="2" AtractionDistance ="5" Position="-60,0,0" Scale="1.5,1.5,1.5" MinScale="0.8" MaxScale="1.2"/>
     <Button Properties="" Scale="1.5,1,1" Position="-85,-5,0" Rotation="0,0,1.57" RelatedItem="gargantua" Signal="-100,-100,-100" SoundEffect="@GravityChange.wav"/>
   </Game>
   <User>
