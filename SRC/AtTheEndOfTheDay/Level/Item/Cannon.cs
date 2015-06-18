@@ -37,6 +37,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private readonly ObbTranslatedUnRotatedCollider _BaseCollider;
         private readonly ObbCollider _LoadColider;
         private readonly TranslatedParticlePart _Smoke;
+        private TgcStaticSound _ChargeSound;
         public Cannon()
         {
             var bodyMesh = Game.Current.GetMesh("Cannon");
@@ -63,7 +64,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Add(_Smoke = new TranslatedParticlePart()
             {
                 Translation = new Vector3(0, 33, -4),
-                Sound = Game.Current.GetSound("cañon2.wav", EffectVolume),
+                Sound = Game.Current.GetSound("Cannon.wav", EffectVolume),
                 Animation = new AnimatedQuad()
                 {
                     Texture = Game.Current.GetParticle("ExplosionGrey.png"),
@@ -76,6 +77,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 }
             });
             RotationChanged += Cannon_RotationChanged;
+            _ChargeSound = Game.Current.GetSound("CannonCharge.wav", 0);
         }
         private void Cannon_RotationChanged(Item item)
         {
@@ -123,6 +125,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public override void LoadValues()
         {
+            _ChargeSound.dispose();
+            _ChargeSound = Game.Current.GetSound("CannonCharge.wav", 0);
             _Base.Rotation = _BaseRotationSaved;
             _IsRotationTarget = _IsRotationTargetSaved;
             base.LoadValues();
@@ -187,17 +191,21 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 r.Y.AdvanceTo(step, _RotationF.Y),
                 r.Z.AdvanceTo(step, _RotationF.Z)
             );
+            
+            _ChargeSound.play(false);
             if (r == _RotationF)
                 _Shoot();
         }
         private void _Shoot()
-        {
-            var d = _LoadColider.Orientation[1];
-            _Load.Position += d * (_LoadColiderExtents.Y + 1);
-            _Load.Velocity = d * _ForceReal;
-            _Load = null;
-            _Smoke.Start();
-        }
+            {
+                _ChargeSound.dispose();
+                _ChargeSound = Game.Current.GetSound("CannonCharge.wav", 0);
+                var d = _LoadColider.Orientation[1];
+                _Load.Position += d * (_LoadColiderExtents.Y + 1);
+                _Load.Velocity = d * _ForceReal;
+                _Load = null;
+                _Smoke.Start();
+            }
         public override void StaticCollision(Item item)
         {
             if (item != _Load

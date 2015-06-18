@@ -35,7 +35,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _PartList[1] = _Collider = new ObbCollider(mesh); Add(_Collider); 
             var receptorMesh = Game.Current.NewMesh("BallTextured");
             Add(_PartList[2] = _Receptor = new MeshImmutableePart(receptorMesh) { Texture = Game.Current.GetMaterial("OrangePortal.png") });
-            _SoundEffect = Game.Current.GetSound("portal2.wav", EffectVolume);
+            _SoundEffect = Game.Current.GetSound("Portal.wav", EffectVolume);
         }
         public override void LoadValues()
         {

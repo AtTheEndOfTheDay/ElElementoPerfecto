@@ -23,7 +23,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Constants
         private const Single _ForceFactor = 100000f;
         private const Single _AtractionFactor = 100f;
-        private static readonly Vector3 _EndOfTheWorld = Vector3Extension.One * Single.MaxValue;
+        private static readonly Vector3 _EndOfTheWorld = Vector3Extension.One * 1000;
         #endregion Constants
 
         #region Constructors
@@ -34,7 +34,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var mesh = Game.Current.NewMesh("BallTextured");
             Add(new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("BlackHole.jpg") });
             Add(new SphereCollider(mesh));
-            _SoundEffect = Game.Current.GetSound("blackhole2.wav", EffectVolume);
+            _SoundEffect = Game.Current.GetSound("BlackHole.wav", EffectVolume);
             Add(_StarStorm = new TranslatedParticlePart()
             {
                 Translation = new Vector3(0, 0, -4),

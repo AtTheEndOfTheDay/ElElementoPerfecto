@@ -14,6 +14,7 @@ using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
 using TgcViewer.Utils.Sound;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -81,11 +82,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private Single _CameraFix;
         private String[] _Paths;
         private Level[] _Levels;
-        private TexturedQuad _LoadSign = new TexturedQuad()
-        {
-            Size = new Vector2(113f, 56.5f),
-            Position = new Vector3(-25, 0, -10),
-        };
+
         public void Init(String mediaFolder)
         {
             if (_Levels != null) Dispose();
@@ -107,8 +104,66 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _LoadLevelThread = new Thread(_LoadLevelThreadHandler);
             _LoadLevelThread.Start();
             //TODO:Cambiar cartel
-            _LoadSign.Texture = GetSign("Win.png");
+
+            InitLoadingSign();
+            
         }
+
+        private TexturedQuad _LoadSign = new TexturedQuad()
+        {
+            Size = new Vector2(270, 150),
+            Position = new Vector3(0, 0, -10),
+        };
+
+        private TexturedQuad _LoadWord = new TexturedQuad();
+
+        private TgcQuad _BlackQuad = new TgcQuad()
+        { 
+            Center = Vector3.Empty,
+            Normal = Vector3Extension.Back,
+            Size = new Vector2(1000, 1000),
+            Color = Color.Black,
+            
+        };
+        private AnimatedQuad[] _LoadingAnimations = new AnimatedQuad[6];
+
+        private void InitLoadingSign()
+        {
+            Vector2 auxSize;
+            _LoadSign.Texture = GetSign("Loading9.png");
+            _LoadWord.Texture = GetSign("LoadingWord.png");
+            var camera = GuiController.Instance.ThirdPersonCamera;
+            camera.setCamera(Vector3.Empty, 0, -200);
+            camera.Enable = true;
+
+            _BlackQuad.updateValues();
+
+            auxSize = new Vector2(35, 15);
+
+            _LoadWord.Size = new Vector2(45, 10);
+            _LoadWord.Position = new Vector3(_LoadWord.Size.X / 2 + (auxSize.X * (-3)), -40, -10);
+
+            for (int i = 0; i < 6; i++)
+            {
+                _LoadingAnimations[i] = new AnimatedQuad()
+                {
+                    Texture = Game.Current.GetParticle("RedArrows.png"),
+                    FrameSize = new Size(512, 256),
+
+                    Size = auxSize,
+                    Position = new Vector3(auxSize.X / 2 + (auxSize.X * (i - 3)), -55, -10),
+                    FirstFrame = 7,
+                    CurrentFrame = 7,
+                    FrameRate = 3,
+                    TotalFrames = 0,
+                };
+
+                _LoadingAnimations[i].Start();
+            }
+
+        }
+
+
         private Thread _LoadLevelThread;
         private void _LoadLevelThreadHandler()
         {
@@ -139,7 +194,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var level = _Levels[_LevelIndex];
             if (level == null)
             {
+                _BlackQuad.render();
                 _LoadSign.Render();
+                _LoadWord.Render();
+                for (int i = 0; i < 6; i++)
+                {
+                    _LoadingAnimations[i].Update(deltaTime);
+                    _LoadingAnimations[i].Render();
+                }
                 return;
             }
             TgcD3dInput input = GuiController.Instance.D3dInput;
@@ -148,10 +210,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 if (input.keyDown(Key.R))
                     level.RollBack();
                 else if (input.keyDown(Key.Return))
-                {
-                    level = _Levels[_LevelIndex = _NextIndex];
-                    if (level != null) level.Load();
-                }
+                    _SetLevel(_NextIndex);
             }
             else level.Play(deltaTime);
             level.SetCamera();
@@ -173,6 +232,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _LevelIndex = 0;
             _Levels = null;
             _Paths = null;
+
+            //_BlackQuad.dispose();
+            for (int i = 0; i < 4; i++)
+            {
+                _LoadingAnimations[i].Dispose();
+            }
+
         }
         private void _LvlHack()
         {

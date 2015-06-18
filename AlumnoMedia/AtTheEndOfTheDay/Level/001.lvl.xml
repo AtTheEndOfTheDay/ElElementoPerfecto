@@ -3,8 +3,8 @@
        CameraPosition="0,0,-200" CameraTarget="0,0,0"
        LightPosition="500,500,-500" LightIntensity="500"
        PlanePoint="0,0,0" PlaneNormal="0,0,1"
-       Sound="@Crash Bandicoot 2.wav" WinSound="@Win.wav"
-       WinSign="@Level.png" WinSignSize="113,56.5" WinSignPosition="-25, 0, -10">
+       Sound="@WhiteLevelMusic.wav" WinSound="@Win.wav"
+       WinSign="@Level.png" WinSignSize="113,56.5" WinSignPosition="-25, 0, -20">
   <Description>
     Aca va la descripcion del nivel.
     Si se defie esta propiedad se ignora el atributo.
@@ -15,7 +15,7 @@
   <Game>
     <Gravitor Name="Gravitor" Properties="" Scale="0,-98,0" Position="" Rotation=""/>
     <Menu Name="" Properties="" Position="120,0,0" Scale="2,7,1" Rotation="" ItemSize="20,-20,20" ItemRotation=".7, 0, .7" ItemRotationSpeed="0,.7,0"/>
-    <Ball Name="Ball" Properties="" Scale="1,1,1" Position="-130,50,0" Texture="@Pelota.jpg"/>
+    <Ball Name="Ball" Properties="" Scale="1,1,1" Position="-130,0,0" Texture="@Pelota.jpg"/>
     <Wall Name="Win" Properties="" Scale="1,1,1" Position="0,-20,0" Rotation="" Texture="@WinItem.jpg"/>
     <!--General Walls-->
     <Wall Name="BlackBack" Properties="" Scale="100,100,1" Position="0,0,30" Rotation="" Color="#FF000000"/>
