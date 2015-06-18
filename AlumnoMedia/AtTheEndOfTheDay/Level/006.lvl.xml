@@ -35,7 +35,7 @@
   </Game>
   <User>
     <Magnet Force="5" Scale="1.25,1.25,1.25"/>
-    <Spring Elasticity="" SoundEffect="@Resorte.wav"/>
+    <Spring Elasticity="13" SoundEffect="@Resorte.wav"/>
     <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
     <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
     <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>

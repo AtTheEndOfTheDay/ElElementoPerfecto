@@ -134,7 +134,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             _TotalContraction += contraction;
             Scale = Scale.AddY(-contraction * _SpringSizeInverseY);
-            Position = Position + contraction * _Collider.Bottom;
+            Position = Position + contraction * _Collider.Bottom * .5f;
         }
         protected override void OnRestingContact(ItemContactState contactState)
         {
