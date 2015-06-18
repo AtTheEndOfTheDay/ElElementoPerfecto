@@ -37,6 +37,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private readonly ObbTranslatedUnRotatedCollider _BaseCollider;
         private readonly ObbCollider _LoadColider;
         private readonly TranslatedParticlePart _Smoke;
+        private readonly TgcStaticSound _ChargeSound;
         public Cannon()
         {
             var bodyMesh = Game.Current.GetMesh("Cannon");
@@ -76,6 +77,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 }
             });
             RotationChanged += Cannon_RotationChanged;
+            _ChargeSound = Game.Current.GetSound("carga cañon.wav", 0);
         }
         private void Cannon_RotationChanged(Item item)
         {
@@ -178,6 +180,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             _Smoke.Update(deltaTime);
             if (_Load == null) return;
+            _ChargeSound.play(false);
             _Load.Position = Position;
             _Load.Velocity = Vector3.Empty;
             _Load.AngularVelocity = Vector3.Empty;

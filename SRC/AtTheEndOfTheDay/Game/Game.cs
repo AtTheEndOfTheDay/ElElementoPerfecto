@@ -196,10 +196,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 if (input.keyDown(Key.R))
                     level.RollBack();
                 else if (input.keyDown(Key.Return))
-                {
-                    level = _Levels[_LevelIndex = _NextIndex];
-                    if (level != null) level.Load();
-                }
+                    _SetLevel(_NextIndex);
             }
             else level.Play(deltaTime);
             level.SetCamera();
