@@ -37,6 +37,6 @@
   </Game>
   <User>
     <Magnet Force="3" Scale="1.25,1.25,1.25"/>
-    <Spring Elasticity="" SoundEffect="@Resorte.wav"/>
+    
   </User>
 </Level>
