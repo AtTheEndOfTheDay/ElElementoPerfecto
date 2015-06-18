@@ -26,6 +26,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Constructors
         MeshStaticPart _Mesh;
         private TranslatedParticlePart _Arrows;
+        ObbCollider _Obb;
         public Acelerator()
         {
             var mesh = Game.Current.NewMesh("WallTextured");
@@ -46,6 +47,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     TotalFrames = 8,
                 }
             });
+            Add(_Obb = new ObbCollider(mesh));
         }
         #endregion Constructors
 
@@ -90,7 +92,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _Arrows.KeepPlaying();
             var reacted = false;
             var interactive = itemCollision.Interactive;
-            interactive.Momentum += Vector3.TransformCoordinate(Vector3Extension.Right, this.RotationMatrix) * (_ForceReal);
+            interactive.Momentum += _Obb.Orientation[0] * (_ForceReal);
             return reacted;
         }
         #endregion ItemMethods

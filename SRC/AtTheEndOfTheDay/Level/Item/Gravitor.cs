@@ -23,5 +23,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             interactive.Momentum += Scale * interactive.Mass;
         }
+        public override void ButtonSignal()
+        {
+            Scale = -Scale;
+        }
     }
 }
