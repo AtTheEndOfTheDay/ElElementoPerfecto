@@ -167,6 +167,7 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Old\Spring.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Wall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Estrategia\Estrategia.pdf" />
     <None Include="Game.cd" />
   </ItemGroup>
   <ItemGroup>
@@ -244,7 +245,6 @@
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\Sparks2.png" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Level.png" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Win.png" />
-    <Content Include="Estrategia\Boceto de Instrucciones.txt" />
     <Content Include="GrupoInfo\Gustavo Crespi 149-169.6.jpg" />
     <Content Include="GrupoInfo\Leandro Rodriguez 149-246.9.jpg" />
     <Content Include="GrupoInfo\Gaston Santoalla 149.324-3.jpg" />
