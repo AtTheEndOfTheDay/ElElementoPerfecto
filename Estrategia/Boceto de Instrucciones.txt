@@ -6,6 +6,8 @@ Instrucciones de Juego:
 
 Objetivo: Que la pelota alcance el cubo dimensional en todos los niveles propuestos.
 Resumen Controles:
+Click Izquierdo- selecciona un item de usuario y lo mueve por la pantalla, soltandolo al segundo click.
+Click Derecho- remueve un item del juego, devolviendolo al menu.
 Tecla C: Pasa a la etapa de construccion
 Tecla Espacio: Pasa de Construccion a Simulacion/ Pausa o reanuda el juego en la etapa de simulacion
 Tecla R: Una vez completado el nivel permite reiniciarlo
@@ -80,6 +82,9 @@ Jugabilidad:
 	Dado que el juego proponia un ambiente de resolucion de acertijos utilizando diferentes items, se decidio tener una jugabilidad 2D, auqnue el modelo en si es 3D, durante el juego solo se maneja en el eje X,Y para las interacciones normales, haciendo mas facil para el usuario como tambien para su diseño.
 
 El Juego, sus etapas, diseño general:
+
+	A la hora de realizar el juego, definimos dos etapas muy marcadas. La etapa de contruccion, en la que el usuario se encarga de colocar los items y de diseñar lo que le parece es una solucion del nivel propuesto y la etapa de simulacion, la cual es en si, la etapa mas importante de la aplicacion, ya que es donde se hacen todas las consideraciones fisicas y donde mas se sobrecarga el motor por la cantidad de calculos realizados.
+
 	
 Elaboracion de Niveles:
 	A la hora de armar los niveles, en el principio del desarrollo se utilizaba una clase, la cual poseia los valores de los objetos harcodeados y los instanciaba dependiendo el nivel en el que se encontraba. Sin embargo con el objetivo de poder hacerlos con mas facildiad y sin la necesidad de recompilar el juego se decidio pasarlos a un archivo de texto para luego a traves de un parser (Parser.cs), se levantan y se instancian los diferentes niveles. Luego intentando llevar esto un poco mas alla, se decidio que este parser levante los niveles de un archivo .xml, seteando las properties propias de cada objeto instanciado del nivel. Para esto se utilizo refleccion (reflector), una herramienta provista por .net que permite interpretar lso valores del .xml en clases y objetos concretos del codigo del ejemplo.
@@ -90,8 +95,15 @@ Elaboracion de Niveles:
 
 Los Objetivos:
 	En realidad el juego consta de un solo objetivo, que la pelotita llegue a tocar el cubo dimensional, sin embargo por como esta diseñado el mismo, podrian agregarse objetivos facilmente, ya que cada nivel posee una lista de objetivos, y estos todos entienden los mismos mensajes, asi pudiendo responder si estan completos con una logica particular. Sin embargo, el unico objetivo que esta realmente implementado es que se de la colision de dos objetos (lso cuales son configurados por el archivo .xml).
+
 Los Items:
-	
+	A la hora de diseñar los items, decidimos no hacer diferencia de los items del usuario y los items propios del nivel. Esta diferencia la hace el nivel a la hora de construccion, para saber sobre cuales objetos tiene el usuario y cuales no, y a la hora de restablecer las posiciones de los mismos.
+	De esta manera todos los items (incluyendo el menu por ejemplo) heredan de la misma clase item. Esto nos facilito las cosas a la hora tanto de crear nuevos items, ya que todo el comportamiento ya estaba en item y en lo uncio que nos teniamos que preocupar era en el comportamiento particular del mismo para redefinir esa parte y nada mas.
+	Ademas los mensajes que se mandan en la simulacion, pudiendo asi crear la misma, son iguales a todos los items y cada uno actua de una manera distinta (considerando sus partes asociadas).
+	Existen una serie de items particulares que son distintos a los demas entre ellos estan los carteles de victoria, el gravitor (aplicador de gravedad), pero los mas importantes son el menu y los interactivos.
+		
+		Menu: es unico en el juego, y se encarga de capturar a los items del usuario y aplicarles una animacion especial para que el usuario vea los items que tiene a su disposicion. Es importante destacar que los items del menu, solo estan en la lista del menu, y no en la lista del juego, cuando el usuario los selecciona se produce el intercambio de listas, y cuando el usuario los devuelve al menu lo mismo.
+		Interactivo: El unico item interactivo implementado es la pelota, que es la que se ve afectada por todos los demas, incluso por la gravedad (la cual en realidad es un item separado del resto cuyo unico objetivo es plaicarles una fuerza a los interactivos), pero por como esta diseñado el ejemplo agregar otro item interactivo no presentaria grandes dificultades, solo habria que redefinir las particularidades de ese item (su masa y la mesh entre otras) y se comportaria de manera similar a la pelota actual.
 
 Las Partes:
 	Parte de la versatilidad que se busco a la hora de realizar los items, consistia en independizar el concepto del item (su comportamiento en si) del comportamiento de sus partes. Considerando partes del item, sus colliders, y sus meshes. Dado que algunos de los items tienen mas de una mesh y mas de un collider (como el cañon), se decidio tener una lista de las partes, las cuales se suscribian a ciertos eventos (como el cambio de la escala, posicion y rotacion del item) y se iban adaptando a la vez.
