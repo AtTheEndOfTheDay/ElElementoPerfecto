@@ -24,7 +24,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         #region Properties
         public Int32 FirstFrame { get; set; }
-        public Int32 CurrentFrame { get; set; }
+        private Int32 _CurrentFrame;
+        public Int32 CurrentFrame 
+        {
+            get { return _CurrentFrame; }
+            set
+            {
+                _CurrentFrame = value;
+                _TexturedQuad.UVOffset = new Vector2(_TexturedQuad.Tile.X * (CurrentFrame % _TileInverse.Width), _TexturedQuad.Tile.Y * (CurrentFrame / _TileInverse.Width));
+            }
+        }
         public Boolean IsPlaying { get; set; }
         private Single _AnimationLength;
         private void UpdateAnimationLength()

@@ -15,6 +15,7 @@ using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
 
+
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Acelerator : Item
@@ -26,6 +27,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Constructors
         MeshStaticPart _Mesh;
         private TranslatedParticlePart _Arrows;
+        private TranslatedParticlePart _RedArrows;
         ObbCollider _Obb;
         public Acelerator()
         {
@@ -35,7 +37,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Add(_Arrows = new TranslatedParticlePart()
             {
                 Translation = new Vector3(0, 0, -4),
-                Sound = Game.Current.GetSound("acelerator.wav", EffectVolume),
                 Animation = new AnimatedQuad()
                 {
                     Texture = Game.Current.GetParticle("RedArrows.png"),
@@ -44,7 +45,23 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     FirstFrame = 7,
                     CurrentFrame = 7,
                     FrameRate = 4,
-                    TotalFrames = 8,
+                    TotalFrames = 6,
+                }
+            });
+
+            Add(_RedArrows = new TranslatedParticlePart()
+            {
+                Translation = new Vector3(0, 0, -4.1f),
+                Sound = Game.Current.GetSound("acelerator2.wav", EffectVolume),
+                Animation = new AnimatedQuad()
+                {
+                    Texture = Game.Current.GetParticle("RedArrows.png"),
+                    FrameSize = new Size(512, 256),
+                    Size = new Vector2(8, 8),
+                    FirstFrame = 5,
+                    CurrentFrame = 5,
+                    FrameRate = 1,
+                    TotalFrames = 1,
                 }
             });
             Add(_Obb = new ObbCollider(mesh));
@@ -63,6 +80,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _ForceReal = value * _ForceFactor;
             }
         }
+
         #endregion Properties
 
         #region ItemMethods
@@ -78,18 +96,21 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public override void LoadValues()
         {
             _Arrows.Stop();
+            _RedArrows.Stop();
             base.LoadValues();
         }
 
         public override void Animate(float deltaTime)
         {
+            _Arrows.KeepPlaying();
             _Arrows.Update(deltaTime);
+            _RedArrows.Update(deltaTime);
             base.Animate(deltaTime);
         }
         public override Boolean React(ItemCollision itemCollision, Single deltaTime)
         {
             if (itemCollision.Item != this) return false;
-            _Arrows.KeepPlaying();
+            _RedArrows.KeepPlaying();
             var reacted = false;
             var interactive = itemCollision.Interactive;
             interactive.Momentum += _Obb.Orientation[0] * (_ForceReal);

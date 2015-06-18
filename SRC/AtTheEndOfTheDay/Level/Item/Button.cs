@@ -14,6 +14,7 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -44,6 +45,17 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _RelatedItemString = value;
             }
         }
+        private TgcStaticSound _SoundEffect;
+        private String _SoundString;
+        public String SoundEffect
+        {
+            get { return _SoundString; }
+            set
+            {
+                _SoundString = value;
+                _SoundEffect = Game.Current.GetSound(_SoundString, EffectVolume);
+            }
+        }
         private Object[] _Signal = _SignalNull;
         public Object[] Signal
         {
@@ -66,7 +78,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private Item _RelatedItem;
         public override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
         {
-            _RelatedItem.ButtonSignal(Signal);
+            if (_RelatedItem != null)
+                _RelatedItem.ButtonSignal(_Signal);
+            _SoundEffect.play(false);
         }
         #endregion ItemMethods
     }

@@ -31,8 +31,6 @@
   </Game>
   <User><!--TODO:Cambiar por 3 resortes-->
     <Magnet Force="3" Scale="1.25,1.25,1.25"/>
-    <Magnet Force="3" Scale="1.25,1.25,1.25"/>
-    <Magnet Force="3" Scale="1.25,1.25,1.25"/>
-    <BlackHole Force="2" AtractionDistance ="5" Scale="1,1,1" MinScale="0.8" MaxScale="1.2"/>
+  
   </User>
 </Level>

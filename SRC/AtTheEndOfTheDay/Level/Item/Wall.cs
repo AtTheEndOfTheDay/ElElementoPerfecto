@@ -34,7 +34,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Add(_Dust = new IndependentParticlePart()
             {
                 Translation = new Vector3(0, 0, -4),
-                Sound = Game.Current.GetSound("choque cualquiera.wav", EffectVolume),
+                Sound = Game.Current.GetSound("choquePared.wav", EffectVolume),
                 Animation = new AnimatedQuad()
                 {
                     Texture = Game.Current.GetParticle("Dust.png"),

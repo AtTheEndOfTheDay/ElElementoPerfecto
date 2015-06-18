@@ -132,6 +132,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             
 
         }
+        public override void ButtonSignal()
+        {
+            Position = new Vector3(0, 0, Single.MaxValue);
+        }
         #endregion ItemMethods
     }
 }
