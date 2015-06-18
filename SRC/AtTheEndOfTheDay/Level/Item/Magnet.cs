@@ -21,6 +21,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     {
         #region Constants
         private const Single _ForceFactor = 100000f;
+        private const Single _AttractionAngle = .7f;
         #endregion Constants
 
         #region Constructors
@@ -61,7 +62,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             }
         }
         #endregion Properties
-        
+
+        #region ResetMethods
+        public override void LoadValues()
+        {
+            _Spark.Stop();
+            base.LoadValues();
+        }
+        #endregion ResetMethods
+
         #region ItemMethods
         public override void Build(Single deltaTime)
         {
@@ -72,33 +81,24 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             else if (input.keyDown(Key.A))
                 Rotation = Rotation.AddZ(stepR);
         }
-
-        public override void LoadValues()
-        {
-            _Spark.Stop();
-            base.LoadValues();
-        }
-
         public override void Animate(float deltaTime)
         {
             _Spark.Update(deltaTime);
             base.Animate(deltaTime);
         }
-
         private readonly ObbTranslatedCollider _Obb;
         public override void Act(Interactive interactive, Single deltaTime)
         {
             var n = interactive.Position - Position;
             var d2 = n.LengthSq();
             n.Normalize();
-            if (Vector3.Dot(n, _Obb.Orientation[1]) > .7f)
+            if (Vector3.Dot(n, _Obb.Orientation[1]) > _AttractionAngle)
                 interactive.Momentum -= n * (_ForceReal / d2);
         }
-        #endregion ItemMethods
-
-        public override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
+        protected override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
         {
             _Spark.Start(point, approachVel, normal);
         }
+        #endregion ItemMethods
     }
 }

@@ -18,17 +18,17 @@ using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public class Button : Item
+    public class Spring : Item
     {
         #region Constants
         private static readonly Object[] _SignalNull = { };
         #endregion Constants
 
         #region Constructors
-        public Button()
+        public Spring()
         {
-            var mesh = Game.Current.GetMesh("Wall");
-            Add(new MeshStaticPart(mesh) { Color = Color.FromArgb(0, 0, 0, 55) });
+            var mesh = Game.Current.GetMesh("Spring");
+            Add(new MeshStaticPart(mesh));
             Add(_Obb = new ObbTranslatedCollider(mesh));
         }
         #endregion Constructors
@@ -63,23 +63,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Properties
 
         #region ItemMethods
-        public override void FindSiblings(Item[] items)
-        {
-            if (_RelatedItemString != null)
-            {
-                _RelatedItem = null;
-                _RelatedItem = items.FirstOrDefault(i => i.Name.IgnoreCaseEquals(_RelatedItemString));
-                if (_RelatedItem == null) return;
-            }
-        }
         private readonly ObbTranslatedCollider _Obb;
-        private Item _RelatedItem;
         protected override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
         {
-
-            if (_RelatedItem != null)
-                _RelatedItem.ButtonSignal(_Signal);
-            _SoundEffect.play(false);
         }
         #endregion ItemMethods
     }

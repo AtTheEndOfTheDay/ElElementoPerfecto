@@ -283,7 +283,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 }
             return reacted;
         }
-       	public virtual void ReceiveCollision(Vector3 point, Single approachVel, Vector3 normal) { }
+       	protected virtual void ReceiveCollision(Vector3 point, Single approachVel, Vector3 normal) { }
         #endregion InteractionMethods
     }
 }
