@@ -111,9 +111,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         private TexturedQuad _LoadSign = new TexturedQuad()
         {
-            Size = new Vector2(250f, 150f),
+            Size = new Vector2(270, 150),
             Position = new Vector3(0, 0, -10),
         };
+
+        private TexturedQuad _LoadWord = new TexturedQuad();
+
         private TgcQuad _BlackQuad = new TgcQuad()
         { 
             Center = Vector3.Empty,
@@ -122,30 +125,36 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Color = Color.Black,
             
         };
-        private AnimatedQuad[] _LoadingAnimations = new AnimatedQuad[4];
+        private AnimatedQuad[] _LoadingAnimations = new AnimatedQuad[6];
 
         private void InitLoadingSign()
         {
             Vector2 auxSize;
-            _LoadSign.Texture = GetSign("Loading3.png");
+            _LoadSign.Texture = GetSign("Loading8.png");
+            _LoadWord.Texture = GetSign("LoadingWord.png");
             var camera = GuiController.Instance.ThirdPersonCamera;
             camera.setCamera(Vector3.Empty, 0, -200);
             camera.Enable = true;
 
             _BlackQuad.updateValues();
 
-            for (int i = 0; i < 4; i++)
+            auxSize = new Vector2(35, 15);
+
+            _LoadWord.Size = new Vector2(45, 10);
+            _LoadWord.Position = new Vector3(_LoadWord.Size.X / 2 + (auxSize.X * (-3)), -40, -10);
+
+            for (int i = 0; i < 6; i++)
             {
                 _LoadingAnimations[i] = new AnimatedQuad()
                 {
                     Texture = Game.Current.GetParticle("RedArrows.png"),
                     FrameSize = new Size(512, 256),
 
-                    Size = auxSize = new Vector2(40, 20),
-                    Position = new Vector3(auxSize.X / 2 + (auxSize.X * (i - 2)), 0, -10),
+                    Size = auxSize,
+                    Position = new Vector3(auxSize.X / 2 + (auxSize.X * (i - 3)), -55, -10),
                     FirstFrame = 7,
                     CurrentFrame = 7,
-                    FrameRate = 4,
+                    FrameRate = 3,
                     TotalFrames = 0,
                 };
 
@@ -183,7 +192,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             {
                 _BlackQuad.render();
                 _LoadSign.Render();
-                for (int i = 0; i < 4; i++)
+                _LoadWord.Render();
+                for (int i = 0; i < 6; i++)
                 {
                     _LoadingAnimations[i].Update(deltaTime);
                     _LoadingAnimations[i].Render();
@@ -218,6 +228,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _LevelIndex = 0;
             _Levels = null;
             _Paths = null;
+
+            //_BlackQuad.dispose();
+            for (int i = 0; i < 4; i++)
+            {
+                _LoadingAnimations[i].Dispose();
+            }
+
         }
         private void _LvlHack()
         {
