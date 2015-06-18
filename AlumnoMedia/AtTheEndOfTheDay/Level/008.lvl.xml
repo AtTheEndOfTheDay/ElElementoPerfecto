@@ -44,7 +44,7 @@
   <User>
       <Magnet Force="5" Scale="1.25,1.25,1.25"/>
     <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
-    <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
+    <Cannon Force="2"/>
     <Wall Name="" Properties="" Scale="5,0.4,1" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg" MaxScale="10" MinScale="2.5"/>
     <Acelerator Force="5" Scale="2.5,1,0.1"/> 
     <Acelerator Force="5" Scale="2.5,1,0.1"/>
