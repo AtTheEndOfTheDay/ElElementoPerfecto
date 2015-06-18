@@ -96,6 +96,7 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Game\IGameComponent.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Acelerator.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\BalckHole.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Spring.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Particle\IndependentParticlePart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Button.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshImmutablePart.cs" />
@@ -244,15 +245,14 @@
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Particles\Sparks2.png" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Level.png" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Win.png" />
+    <Content Include="Estrategia\Boceto de Instrucciones.txt" />
     <Content Include="GrupoInfo\Gaston Santoalla 149.324-3.jpg" />
     <Content Include="GrupoInfo\información.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Estrategia\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

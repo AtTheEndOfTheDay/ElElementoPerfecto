@@ -20,7 +20,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public static Object ParseValue(this String s)
         {
             if (s.StartsWith("@")) return s.Substring(1);
-            if (s.StartsWith("{")) return s.Substring(1, s.Length - 2).ParseArray();
             if (s.StartsWith("#")) return s.ParseColor();
             if (s.Contains(',')) return s.ParseVector();
             if (s.Contains('.')) return s.ParseSingle();
@@ -29,17 +28,21 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 return param;
             return s;
         }
-        public static Array ParseArray(this String s)
+        public static T[] ParseArray<T>(this String s)
         {
-            var texts = s.Split(';');
+            return (T[])s.Split('•').ParseArray(typeof(T));
+        }
+        public static Array ParseArray(this String s, Type type)
+        {
+            return s.Split('•').ParseArray(type);
+        }
+        public static Array ParseArray(this String[] texts, Type type)
+        {
             var len = texts.Length;
-            var values = new Object[len];
+            var values = Array.CreateInstance(type, len);
             for (var i = 0; i < len; i++)
-                values[i] = texts[i].ParseValue();
-            var array = Array.CreateInstance(values[0].GetType(), texts.Length);
-            for (var i = 0; i < len; i++)
-                array.SetValue(values[i], i);
-            return array;
+                values.SetValue(texts[i].ParseValue(), i);
+            return values;
         }
         public static Single ParseSingle(this String s)
         {

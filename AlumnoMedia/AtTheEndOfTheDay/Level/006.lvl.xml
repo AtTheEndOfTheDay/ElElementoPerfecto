@@ -10,7 +10,7 @@
     Si se defie esta propiedad se ignora el atributo.
   </Level.Description>
   <Goals>
-    <CollisionGoal Items="{Ball;Win}"/>
+    <CollisionGoal Items="Ball•Win"/>
   </Goals>
   <Game>
     <Gravitor Name="Gravitor" Properties="" Scale="0,-98,0" Position="" Rotation=""/>
@@ -36,7 +36,6 @@
     <Magnet Force="3" Scale="1.25,1.25,1.25"/>
     <Magnet Force="3" Scale="1.25,1.25,1.25"/>
     <!--Poner Resortes-->
-    <Magnet Force="3" Scale="1.25,1.25,1.25"/>
-    <Magnet Force="3" Scale="1.25,1.25,1.25"/>
+  
   </User>
 </Level>

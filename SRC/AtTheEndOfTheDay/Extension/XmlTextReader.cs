@@ -23,8 +23,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 type = type ?? instance.GetType();
                 while (xml.MoveToNextAttribute())
                     if (!String.IsNullOrWhiteSpace(xml.Value))
-                        type.GetProperty(xml.Name, _BindingFlags)
-                            .SetValue(instance, xml.Value.ParseValue(), null);
+                        try
+                        {
+                            var prop = type.GetProperty(xml.Name, _BindingFlags);
+                            var value = prop.PropertyType.IsArray
+                                ? xml.Value.ParseArray(prop.PropertyType.GetElementType())
+                                : xml.Value.ParseValue();
+                            prop.SetValue(instance, value, null);
+                        }
+                        catch (Exception e) { }
             }
             catch (Exception e) { }
             return instance;

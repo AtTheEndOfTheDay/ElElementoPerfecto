@@ -112,9 +112,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     switch (reader.NodeType)
                     {
                         case XmlNodeType.Element:
-                            var t = types.FirstOrDefault(x => x.Name.IgnoreCaseEquals(reader.Name));
-                            if (t == null) break;
-                            list.Add((T)reader.SetObjectProperties(t.NewInstance()));
+                            try
+                            {
+                                var t = types.FirstOrDefault(x => x.Name.IgnoreCaseEquals(reader.Name));
+                                if (t == null) break;
+                                list.Add((T)reader.SetObjectProperties(t.NewInstance()));
+                            }
+                            catch (Exception e) { }
                             break;
                         case XmlNodeType.EndElement:
                             if (endTag.IgnoreCaseEquals(reader.Name))
@@ -122,7 +126,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                             break;
                     }
             }
-            catch(Exception e) { }
+            catch (Exception e) { }
             return list;
         }
     }

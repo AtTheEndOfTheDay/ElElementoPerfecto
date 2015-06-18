@@ -126,12 +126,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _Dust.Update(deltaTime);
             base.Animate(deltaTime);
         }
-
-        public override void ReceiveCollision(Vector3 point, Single approachVel, Vector3 normal) 
+        protected override void ReceiveCollision(Vector3 point, Single approachVel, Vector3 normal) 
         {
             _Dust.Start(point, approachVel, normal);
         }
-
         #endregion ItemMethods
     }
 }

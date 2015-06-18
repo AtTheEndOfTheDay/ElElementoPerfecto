@@ -10,7 +10,7 @@
     Si se defie esta propiedad se ignora el atributo.
   </Level.Description>
   <Goals>
-    <CollisionGoal Items="{Ball;Win}"/>
+    <CollisionGoal Items="Ball•Win"/>
   </Goals>
   <Game>
     <Gravitor Name="Gravitor" Properties="" Scale="0,-98,0" Position="" Rotation=""/>
@@ -31,8 +31,6 @@
   </Game>
   <User><!--TODO:Cambiar por 3 resortes-->
     <Magnet Force="3" Scale="1.25,1.25,1.25"/>
-    <Magnet Force="3" Scale="1.25,1.25,1.25"/>
-    <Magnet Force="3" Scale="1.25,1.25,1.25"/>
-    <BlackHole Force="2" AtractionDistance ="5" Scale="1,1,1" MinScale="0.8" MaxScale="1.2"/>
+  
   </User>
 </Level>
