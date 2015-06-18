@@ -35,7 +35,7 @@
     <!--Lvl Resources-->
   </Game>
   <User><!--TODO:Cambiar por 3 resortes-->
-    <Magnet Force="3" Scale="1.25,1.25,1.25"/>
+    <Spring Elasticity="" SoundEffect="@Resorte.wav"/>
     <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="0,0,1.57" RelatedItem="Gravitor" Signal="-1" SoundEffect="@GravityChange.wav"/>
     <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="" RelatedItem="Gravitor" Signal="-1" SoundEffect="@GravityChange.wav"/>
     <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="" RelatedItem="Gravitor" Signal="-1" SoundEffect="@GravityChange.wav"/>

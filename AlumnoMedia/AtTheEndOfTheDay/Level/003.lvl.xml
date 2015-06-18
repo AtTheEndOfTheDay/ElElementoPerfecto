@@ -42,7 +42,7 @@
   <User>
     <Magnet Force="3" Scale="1.25,1.25,1.25"/>
     <Acelerator Force="5" Scale="2.5,1,0.1"/>
-    
+    <Spring Elasticity="" SoundEffect="@Resorte.wav"/>
    
   </User>
 </Level>
