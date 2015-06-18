@@ -15,8 +15,8 @@
   <Game>
     <Gravitor Name="Gravitor" Properties="" Scale="0,-98,0" Position="" Rotation=""/>
     <Menu Name="" Properties="" Position="120,0,0" Scale="2,7,1" Rotation="" ItemSize="20,-20,20" ItemRotation=".7, 0, .7" ItemRotationSpeed="0,.7,0"/>
-    <Ball Name="Ball" Properties="" Scale="1,1,1" Position="-90,-5,0" Texture="@Pelota.jpg"/>
-    <Wall Name="Win" Properties="" Scale="1,1,1" Position="10,-55,0" Rotation="" Texture="@WinItem.jpg"/>
+    <Ball Name="Ball" Properties="" Scale="1,1,1" Position="-110,-20,0" Texture="@Pelota.jpg"/>
+    <Wall Name="Win" Properties="" Scale="1,1,1" Position="55,50,0" Rotation="" Texture="@WinItem.jpg"/>
     <!--General Walls-->
     <Wall Name="BlackBack" Properties="" Scale="100,100,1" Position="0,0,30" Rotation="" Color="#FF000000"/>
     <Wall Name="Back" Properties="" Scale="42,23,1" Position="0,0,27" Rotation="" Texture="@Fondo.jpg"/>
@@ -27,16 +27,13 @@
     <Wall Name="LeftLateral" Properties="" Scale="0.4,21,1" Position="-154,0,0" Rotation="" Texture="@Walls.jpg"/>
     <Wall Name="RightLateral" Properties="" Scale="0.4,21,1" Position="+155,0,0" Rotation="" Texture="@Walls.jpg"/>
     <!--Lvl Obstacles-->
-    <Wall Name="" Properties="" Scale="0.4,6.5,1" Position="35,-55,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="14,0.4,1" Position="-20,-30,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="7.5,0.4,1" Position="-97,-9.5,0" Rotation="0,0,-0.78" Texture="@ObstacleWalls.jpg"/>
-    <BlackHole Force="2" AtractionDistance ="5" Position="70,-60,0" Scale="1,1,1" MinScale="0.8" MaxScale="1.2"/>
+    <Wall Name="" Properties="" Scale="0.4,12,1" Position="15,34,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="0.4,12,1" Position="-60,-34,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <!--Lvl Resources-->
   </Game>
   <User>
     <Magnet Force="3" Scale="1.25,1.25,1.25"/>
     <Magnet Force="3" Scale="1.25,1.25,1.25"/>
-    <!--Cambiar Por Resorte-->
-  
+    <Magnet Force="3" Scale="1.25,1.25,1.25"/>
   </User>
 </Level>
