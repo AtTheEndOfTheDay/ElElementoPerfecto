@@ -107,9 +107,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             _Spark.Start(point, approachVel, normal);
         }
-        public override void ButtonSignal()
+        public override void ButtonSignal(Object[] signal)
         {
-            _ForceReal = -_ForceReal;
+            if (signal.Length == 0) return;
+            var value = signal[0];
+            try { _ForceReal *= Convert.ToSingle(value); }
+                catch (Exception) { }
         }
         #endregion ItemMethods
     }
