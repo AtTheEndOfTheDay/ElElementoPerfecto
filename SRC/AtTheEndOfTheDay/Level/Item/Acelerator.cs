@@ -35,7 +35,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Add(_Arrows = new TranslatedParticlePart()
             {
                 Translation = new Vector3(0, 0, -4),
-                Sound = Game.Current.GetSound("acelerator.wav", EffectVolume),
+                Sound = Game.Current.GetSound("acelerator2.wav", EffectVolume),
                 Animation = new AnimatedQuad()
                 {
                     Texture = Game.Current.GetParticle("RedArrows.png"),
