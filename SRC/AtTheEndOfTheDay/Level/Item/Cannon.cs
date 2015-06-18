@@ -112,13 +112,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private Vector3 _BaseRotationSaved;
         public override void SaveValues()
         {
-            base.SaveValues();
             _BaseRotationSaved = _Base.Rotation;
+            base.SaveValues();
         }
         public override void LoadValues()
         {
-            base.LoadValues();
             _Base.Rotation = _BaseRotationSaved;
+            base.LoadValues();
+            OnScaleChanged();
             _Load = null;
             _Smoke.Stop();
         }

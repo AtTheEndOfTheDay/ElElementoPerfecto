@@ -24,9 +24,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         public Single Friction { get; set; }
         public Single Restitution { get; set; }
-        public Vector3 Scale { get; protected set; }
-        public Vector3 Position { get; protected set; }
-        public Vector3 Rotation { get; protected set; }
+        public Vector3 Scale { get; set; }
+        public Vector3 Position { get; set; }
+        public Vector3 Rotation { get; set; }
 
         public abstract Boolean Intercepts(TgcRay ray);
         public virtual Boolean Collides(Collider other)

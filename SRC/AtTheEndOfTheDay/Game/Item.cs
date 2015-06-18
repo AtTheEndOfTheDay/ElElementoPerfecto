@@ -108,8 +108,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 if (_Scale == value) return;
                 _Scale = value;
                 ScaleMatrix = Matrix.Scaling(value);
-                RiseEvent(ScaleChanged);
+                OnScaleChanged();
             }
+        }
+        protected virtual void OnScaleChanged()
+        {
+            RiseEvent(ScaleChanged);
         }
         public Matrix RotationMatrix { get; private set; }
         private Vector3 _Rotation = DefaultRotation;
@@ -122,8 +126,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 if (_Rotation == value) return;
                 _Rotation = value;
                 RotationMatrix = Matrix.RotationYawPitchRoll(value.Y, value.X, value.Z);
-                RiseEvent(RotationChanged);
+                OnRotationChanged();
             }
+        }
+        protected virtual void OnRotationChanged()
+        {
+            RiseEvent(RotationChanged);
         }
         public Matrix PositionMatrix { get; private set; }
         private Vector3 _Position = DefaultPosition;
@@ -136,8 +144,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 if (_Position == value) return;
                 _Position = value;
                 PositionMatrix = Matrix.Translation(value);
-                RiseEvent(PositionChanged);
+                OnPositionChanged();
             }
+        }
+        protected virtual void OnPositionChanged()
+        {
+            RiseEvent(PositionChanged);
         }
         #endregion TransformProperties
 
