@@ -33,7 +33,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Add(new SphereCollider(mesh));
             Add(_Spark = new IndependentParticlePart()
             {
-                Translation = new Vector3(0, 0, 4),
+                Translation = new Vector3(0, 0, -4),
                 Sound = Game.Current.GetSound("repulsor.wav", EffectVolume),
                 Animation = new AnimatedQuad()
                 {

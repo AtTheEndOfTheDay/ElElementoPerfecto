@@ -30,7 +30,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var mesh = Game.Current.GetMesh("Magnet");
             Add(_Spark = new IndependentParticlePart()
             {
-                Translation = new Vector3(0, 0, 4),
+                Translation = new Vector3(0, 0, -4),
                 Sound = Game.Current.GetSound("iman.wav", EffectVolume),
                 Animation = new AnimatedQuad()
                 {

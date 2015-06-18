@@ -25,11 +25,29 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         #region Constructors
         MeshStaticPart _Mesh;
+        private TranslatedParticlePart _Arrows;
+        ObbCollider _Obb;
         public Acelerator()
         {
             var mesh = Game.Current.NewMesh("WallTextured");
             Add(_Mesh = new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("Acelerator.jpg") });
             Add(new ObbCollider(mesh));
+            Add(_Arrows = new TranslatedParticlePart()
+            {
+                Translation = new Vector3(0, 0, -4),
+                Sound = Game.Current.GetSound("acelerator.wav", EffectVolume),
+                Animation = new AnimatedQuad()
+                {
+                    Texture = Game.Current.GetParticle("RedArrows.png"),
+                    FrameSize = new Size(512, 256),
+                    Size = new Vector2(8, 8),
+                    FirstFrame = 7,
+                    CurrentFrame = 7,
+                    FrameRate = 4,
+                    TotalFrames = 8,
+                }
+            });
+            Add(_Obb = new ObbCollider(mesh));
         }
         #endregion Constructors
 
@@ -57,12 +75,24 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             else if (input.keyDown(Key.A))
                 Rotation = Rotation.AddZ(stepR);
         }
+        public override void LoadValues()
+        {
+            _Arrows.Stop();
+            base.LoadValues();
+        }
+
+        public override void Animate(float deltaTime)
+        {
+            _Arrows.Update(deltaTime);
+            base.Animate(deltaTime);
+        }
         public override Boolean React(ItemCollision itemCollision, Single deltaTime)
         {
             if (itemCollision.Item != this) return false;
+            _Arrows.KeepPlaying();
             var reacted = false;
             var interactive = itemCollision.Interactive;
-            interactive.Momentum += Vector3.TransformCoordinate(Vector3Extension.Right, this.RotationMatrix) * (_ForceReal);
+            interactive.Momentum += _Obb.Orientation[0] * (_ForceReal);
             return reacted;
         }
         #endregion ItemMethods

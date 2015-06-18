@@ -21,7 +21,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 var targets = new Item[Items.Length];
                 for (var index = 0; index < Items.Length; index++)
                 {
-                    var item = items.FirstOrDefault(i => i.Name == Items[index]);
+                    var item = items.FirstOrDefault(i => i.Name.IgnoreCaseEquals(Items[index]));
                     if (item == null) return;
                     targets[index] = item;
                 }
