@@ -15,30 +15,37 @@
   <Game>
     <Gravitor Name="Gravitor" Properties="" Scale="0,-98,0" Position="" Rotation=""/>
     <Menu Name="" Properties="" Position="120,0,0" Scale="2,7,1" Rotation="" ItemSize="20,-20,20" ItemRotation=".7, 0, .7" ItemRotationSpeed="0,.7,0"/>
-    <Ball Name="Ball" Properties="" Scale="1,1,1" Position="-130,0,0" Texture="@Pelota.jpg"/>
-    <Wall Name="Win" Properties="" Scale="1,1,1" Position="30,20,0" Rotation="" Texture="@WinItem.jpg"/>
+    <Ball Name="Ball" Properties="" Scale="1,1,1" Position="-130,60,0" Texture="@Pelota.jpg"/>
+    <Wall Name="Win" Properties="" Scale="1,1,1" Position="-50,60,0" Rotation="" Texture="@WinItem.jpg"/>
     <!--General Walls-->
     <Wall Name="BlackBack" Properties="" Scale="100,100,1" Position="0,0,30" Rotation="" Color="#FF000000"/>
-    <Wall Name="Back" Properties="" Scale="42,23,1" Position="0,0,27" Rotation="" Texture="@Fondo.jpg"/>
-    <Wall Name="MenuBack" Properties="" Scale="8,23,1" Position="140,0,26.9" Rotation="" Texture="@FondoMenu.jpg"/>
+    <Wall Name="Back" Properties="" Scale="42,23,1" Position="0,0,27" Rotation="" Texture="@DarkFondo.png"/>
+    <Wall Name="MenuBack" Properties="" Scale="8,23,1" Position="140,0,26.9" Rotation="" Texture="@DarkFondoMenu.jpg"/>
     <Wall Name="Divisor" Properties="" Scale="0.4,21,1" Position="95,0,0" Rotation="" Texture="@Walls.jpg"/>
     <Wall Name="Superior" Properties="" Scale="39,0.4,1" Position="0,+84,0" Rotation="" Texture="@Walls.jpg"/>
     <Wall Name="Inferior" Properties="" Scale="39,0.4,1" Position="0,-83,0" Rotation="" Texture="@Walls.jpg"/>
     <Wall Name="LeftLateral" Properties="" Scale="0.4,21,1" Position="-154,0,0" Rotation="" Texture="@Walls.jpg"/>
     <Wall Name="RightLateral" Properties="" Scale="0.4,21,1" Position="+155,0,0" Rotation="" Texture="@Walls.jpg"/>
     <!--Lvl Obstacles-->
-    <Wall Name="" Properties="" Scale="0.4,15,1" Position="-100,20,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="12.5,0.4,1" Position="-11,27,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="17,0.4,1" Position="-30,-38,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="0.4,8.5,1" Position="38,-5,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="2,0.4,1" Position="-65,22,0" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="2.5,0.4,1" Position="-92,22,0" Rotation="0,0,-0.78" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="0.4,20,1" Position="-60,0,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="7,0.4,1" Position="-125,30,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="7,0.4,1" Position="-90,-30.5,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="19,0.4,1" Position="15,0,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="13,0.4,1" Position="-5,40,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <!--Lvl Resources-->
+    <Portal Name="" Properties="" Scale="3,0.5 ,1" Position="-62,-55,0" Rotation="0,0,1.57" ReceptorPosition="92,-60,0" ReceptorScale="3,0.2,1" ReceptorRotation="0,0,1.57"/>
+    <Portal Name="" Properties="" Scale="3,0.5,1" Position="92,-20,0" Rotation="0,0,1.57" ReceptorPosition="-58,20,0" ReceptorScale="3,0.2,1" ReceptorRotation="0,0,1.57"/>
     <!--Lvl Resources-->
   </Game>
   <User>
-    <Cannon Force="2"/>
-    <Cannon Force="2"/>
-    <Cannon Force="2"/>
-    <Wall Name="" Properties="" Scale="5,0.4,1" Position="-65,22,0" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg" MaxScale="10" MinScale="2.5"/>
+    <Magnet Force="5" Scale="1.25,1.25,1.25"/>
+    <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
+    <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
+    <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
+    <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
+    <BlackHole Force="2" AtractionDistance ="5" Scale="1,1,1" MinScale="0.8" MaxScale="1.2"/>
+    <BlackHole Force="2" AtractionDistance ="5" Scale="1,1,1" MinScale="0.8" MaxScale="1.2"/>
+    <Wall Name="" Properties="" Scale="5,0.4,1" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg" MaxScale="10" MinScale="2.5"/>
+    <Cannon Force="3"/>
   </User>
 </Level>
