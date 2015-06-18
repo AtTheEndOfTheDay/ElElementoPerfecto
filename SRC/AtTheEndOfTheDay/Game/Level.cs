@@ -144,6 +144,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Properties
 
         #region Goals
+        protected Boolean IsEmptyOfGoals { get { return (_Goals.Count == 0); } }
         public IGoal[] Goals { get { return _Goals.ToArray(); } }
         private readonly IList<IGoal> _Goals = new List<IGoal>();
         public IGoal Add(IGoal goal)
@@ -166,9 +167,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             foreach (var goal in goals)
                 Remove(goal);
         }
+        public void ClearGoals()
+        {
+            Remove(_Goals.ToArray());
+        }
         #endregion Goals
 
         #region Items
+        protected Boolean IsEmptyOfItems { get { return (_Items.Count == 0); } }
         public Item[] Items { get { return _Items.ToArray(); } }
         private readonly IList<Item> _Items = new List<Item>();
         private readonly IList<Item> _Actives = new List<Item>();
@@ -199,6 +205,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             foreach (var item in items)
                 Remove(item);
+        }
+        public void ClearItems()
+        {
+            Remove(_Items.ToArray());
         }
         #endregion Items
 
@@ -326,7 +336,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             {
                 reacted = false;
                 foreach (var collision in collisions)
-                    if (collision.Reaction(deltaTime))
+                    if (collision.ComputeReaction(deltaTime))
                         reacted = true;
             }
             foreach (var interactive in _Interactives)

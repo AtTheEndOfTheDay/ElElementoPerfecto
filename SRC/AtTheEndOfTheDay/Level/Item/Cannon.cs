@@ -33,6 +33,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constants
 
         #region Constructors
+        private readonly MeshUnRotatedPart _Base;
+        private readonly ObbTranslatedUnRotatedCollider _BaseCollider;
+        private readonly ObbCollider _LoadColider;
+        private readonly TranslatedParticlePart _Smoke;
         public Cannon()
         {
             var bodyMesh = Game.Current.GetMesh("Cannon");
@@ -166,12 +170,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 RotationA = r;
             else RotationB = r;
         }
-
         private Vector3 _RotationF = Vector3.Empty;
-        private readonly ObbCollider _LoadColider;
-        private readonly MeshUnRotatedPart _Base;
-        private readonly ObbTranslatedUnRotatedCollider _BaseCollider;
-        private readonly TranslatedParticlePart _Smoke;
         public override void Animate(Single deltaTime)
         {
             _Smoke.Update(deltaTime);

@@ -23,16 +23,18 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Constants
         private const Single _ForceFactor = 100000f;
         private const Single _AtractionFactor = 100f;
+        private static readonly Vector3 _EndOfTheWorld = Vector3Extension.One * Single.MaxValue;
         #endregion Constants
 
         #region Constructors
-        private TgcStaticSound _SoundEffect;
+        private readonly TgcStaticSound _SoundEffect;
+        private readonly TranslatedParticlePart _StarStorm;
         public BlackHole()
         {
             var mesh = Game.Current.NewMesh("BallTextured");
-            _SoundEffect = Game.Current.GetSound("blackhole2.wav", EffectVolume);
             Add(new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("BlackHole.jpg") });
             Add(new SphereCollider(mesh));
+            _SoundEffect = Game.Current.GetSound("blackhole2.wav", EffectVolume);
             Add(_StarStorm = new TranslatedParticlePart()
             {
                 Translation = new Vector3(0, 0, -4),
@@ -47,12 +49,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     TotalFrames = 16,
                 }
             });
-        
         }
         #endregion Constructors
 
         #region Properties
-        private readonly TranslatedParticlePart _StarStorm;
+        public Single MaxScale { get; set; }
+        public Single MinScale { get; set; }
         private Single _Force;
         private Single _ForceReal;
         public Single Force
@@ -75,17 +77,25 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _AtractionDistancePow2 = value * value;
             }
         }
-        public Single MaxScale { get; set; }
-        public Single MinScale { get; set; }
         #endregion Properties
 
-        #region ItemMethods
-        private Boolean _IsGrowing = true;
+        #region ResetMethods
         public override void LoadValues()
         {
             base.LoadValues();
             _StarStorm.Stop();
         }
+        #endregion ResetMethods
+
+        #region ItemMethods
+        public override void ButtonSignal(Object[] signal)
+        {
+            if (signal.Length == 0)
+                Position = _EndOfTheWorld;
+            else if (signal[0] is Vector3)
+                Position = (Vector3)signal[0];
+        }
+        private Boolean _IsGrowing = true;
         public override void Animate(Single deltaTime)
         {
             _StarStorm.Update(deltaTime);
@@ -104,7 +114,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (Scale.X == MinScale || Scale.X == MaxScale)
                 _IsGrowing = !_IsGrowing;
         }
-
         public override void Act(Interactive interactive, Single deltaTime)
         {
             var n = interactive.Position - Position;
@@ -116,21 +125,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 interactive.Momentum -= n * (_ForceReal / d2);
             }
         }
-        public override Boolean React(ItemCollision itemCollision, Single deltaTime)
+        protected override void OnCollision(ItemCollision itemCollision)
         {
-            if (itemCollision.Item != this) return false;
-            var reacted = true;
-            var interactive = itemCollision.Interactive;
-            interactive.Position= new Vector3(0,0,Single.MaxValue);
+            itemCollision.Interactive.Position = _EndOfTheWorld;
             _SoundEffect.play(false);
-            return reacted;
-        }
-        public override void ButtonSignal(Object[] signal)
-        {
-            if (signal.Length == 0)
-                Position = new Vector3(0, 0, Single.MaxValue);
-            else if (signal[0] is Vector3)
-                Position = (Vector3)signal[0];
         }
         #endregion ItemMethods
     }

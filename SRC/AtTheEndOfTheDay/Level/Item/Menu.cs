@@ -55,6 +55,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Properties
 
         #region Items
+        protected Boolean IsEmptyOfItems { get { return (_Items.Count == 0); } }
         public Item[] Items { get { return _Items.ToArray(); } }
         private readonly List<Item> _Items = new List<Item>();
         public Item Add(Item item)
@@ -78,6 +79,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             foreach (var item in items)
                 Remove(item);
+        }
+        public void ClearItems()
+        {
+            Remove(_Items.ToArray());
         }
         #endregion Items
 

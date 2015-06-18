@@ -1,11 +1,6 @@
-﻿using System;
-using System.Drawing;
-using TgcViewer;
-using TgcViewer.Utils.TgcSceneLoader;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using Microsoft.DirectX.DirectInput;
-using Dx3D = Microsoft.DirectX.Direct3D;
+﻿using Microsoft.DirectX;
+using System;
+using System.Linq;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -14,6 +9,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public readonly Item Item;
         public readonly Interactive Interactive;
         public readonly Collision[] Collisions;
+        public Int32 TimesReacted { get; private set; }
 
         public ItemCollision(Item item, Interactive interactive, Collision[] collisions)
         {
@@ -21,9 +17,23 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             this.Interactive = interactive;
             this.Collisions = collisions;
         }
-        public Boolean Reaction(Single deltaTime)
+        public Boolean ComputeReaction(Single deltaTime)
         {
-            return Item.React(this, deltaTime);
+            var reacted = false;
+            foreach (var collision in Collisions)
+                foreach (var contact in collision.Contacts)
+                    if (Item.React(new ItemContactState(this, collision, contact, TimesReacted), deltaTime))
+                        reacted = true;
+            if (reacted) TimesReacted++;
+            return reacted;
+        }
+        public Boolean AnyContact(Func<Contact, Boolean> predicate)
+        {
+            return Collisions.Any(collision => collision.Contacts.Any(predicate));
+        }
+        public Boolean AnyNormalDotVector(Vector3 vector, Func<Single, Boolean> predicate)
+        {
+            return AnyContact(contact => predicate(Vector3.Dot(contact.NormalAB, vector)));
         }
     }
 }

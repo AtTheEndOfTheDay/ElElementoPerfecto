@@ -72,6 +72,27 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             catch(Exception e) { }
             return level.LoadGoalsAndItems(goals, game, user);
         }
+        private const BindingFlags _BindingFlags = BindingFlags.Public | BindingFlags.Instance;
+        private static T SetObjectProperties<T>(this XmlTextReader xml, T instance, Type type = null)
+        {
+            try
+            {
+                type = type ?? instance.GetType();
+                while (xml.MoveToNextAttribute())
+                    if (!String.IsNullOrWhiteSpace(xml.Value))
+                        try
+                        {
+                            var prop = type.GetProperty(xml.Name, _BindingFlags);
+                            var value = prop.PropertyType.IsArray
+                                ? xml.Value.ParseArray(prop.PropertyType.GetElementType())
+                                : xml.Value.ParseValue();
+                            prop.SetValue(instance, value, null);
+                        }
+                        catch (Exception e) { }
+            }
+            catch (Exception e) { }
+            return instance;
+        }
         private static Level LoadGoalsAndItems(this Level level, List<IGoal> goals, List<Item> game, List<Item> user)
         {
             Item[] items = { };

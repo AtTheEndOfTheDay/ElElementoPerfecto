@@ -90,6 +90,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion ResetMethods
 
         #region ItemMethods
+        public override void ButtonSignal(Object[] signal)
+        {
+            if (signal.Length == 0) return;
+            var value = signal[0];
+            try { _ForceReal *= Convert.ToSingle(value); }
+            catch (Exception) { }
+        }
         public override void Animate(Single deltaTime)
         {
             _Spark.Update(deltaTime);
@@ -102,16 +109,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (d2 < _RepulsionFactor * _RepulsionDistancePow2)
                 interactive.Momentum += n * (_ForceReal / d2);
         }
-        protected override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
+        protected override void OnContact(ItemContactState contactState)
         {
-            _Spark.Start(point, approachVel, normal);
-        }
-        public override void ButtonSignal(Object[] signal)
-        {
-            if (signal.Length == 0) return;
-            var value = signal[0];
-            try { _ForceReal *= Convert.ToSingle(value); }
-                catch (Exception) { }
+            base.OnContact(contactState);
+            _Spark.Start(contactState.Point, contactState.Approach, contactState.Normal);
         }
         #endregion ItemMethods
     }

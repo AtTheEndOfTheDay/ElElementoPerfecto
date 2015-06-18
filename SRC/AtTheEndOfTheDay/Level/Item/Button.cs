@@ -25,22 +25,24 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constants
 
         #region Constructors
+        private readonly ObbTranslatedCollider _Collider;
         public Button()
         {
             var mesh = Game.Current.GetMesh("Wall");
             Add(new MeshStaticPart(mesh) { Color = Color.FromArgb(0, 0, 0, 55) });
-            Add(_Obb = new ObbTranslatedCollider(mesh));
+            Add(_Collider = new ObbTranslatedCollider(mesh));
         }
         #endregion Constructors
 
         #region Properties
-        private String _RelatedItemString;
+        private Item _RelatedItem;
+        private String _RelatedItemName;
         public String RelatedItem
         {
-            get { return _RelatedItemString; }
+            get { return _RelatedItemName; }
             set
             {
-                _RelatedItemString = value;
+                _RelatedItemName = value;
             }
         }
         private TgcStaticSound _SoundEffect;
@@ -65,19 +67,17 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region ItemMethods
         public override void FindSiblings(Item[] items)
         {
-            if (_RelatedItemString != null)
+            if (_RelatedItemName != null)
             {
                 _RelatedItem = null;
-                _RelatedItem = items.FirstOrDefault(i => i.Name.IgnoreCaseEquals(_RelatedItemString));
+                _RelatedItem = items.FirstOrDefault(i => i.Name.IgnoreCaseEquals(_RelatedItemName));
                 if (_RelatedItem == null) return;
             }
         }
-        private readonly ObbTranslatedCollider _Obb;
-        private Item _RelatedItem;
-        protected override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
+        protected override void OnCollision(ItemCollision itemCollision)
         {
-
-            if (_RelatedItem != null)
+            if (_RelatedItem != null
+            && itemCollision.AnyNormalDotVector(_Collider.Top, dot => dot.Abs().TolerantEquals(1)))
                 _RelatedItem.ButtonSignal(_Signal);
             _SoundEffect.play(false);
         }

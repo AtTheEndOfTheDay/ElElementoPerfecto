@@ -31,12 +31,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         #region Properties
         private MeshStaticPart _Mesh;
-        private MeshStaticPart _MeshTextured;
         public Color Color
         {
             get { return _Mesh.Color; }
             set { _Mesh.Color = value; }
         }
+        private MeshStaticPart _MeshTextured;
         private String _Texture;
         public String Texture
         {

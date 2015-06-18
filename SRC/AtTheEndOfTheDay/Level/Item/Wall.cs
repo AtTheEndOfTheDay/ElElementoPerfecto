@@ -25,6 +25,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constants
 
         #region Constructors
+        private readonly IndependentParticlePart _Dust;
         public Wall()
         {
             var mesh = Game.Current.NewMesh("Wall");
@@ -55,12 +56,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Single MinScale { get; set; }
         public Single MaxScale { get; set; }
         private MeshStaticPart _Mesh;
-        private MeshStaticPart _MeshTextured;
         public Color Color
         {
             get { return _Mesh.Color; }
             set { _Mesh.Color = value; }
         }
+        private MeshStaticPart _MeshTextured;
         private String _Texture;
         public String Texture
         {
@@ -99,6 +100,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         #endregion Properties
 
+        #region ResetMethods
+        public override void LoadValues()
+        {
+            base.LoadValues();
+            _Dust.Stop();
+        }
+        #endregion ResetMethods
+
         #region ItemMethods
         public override void Build(Single deltaTime)
         {
@@ -114,21 +123,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             else if (input.keyDown(Key.A))
                 Rotation = Rotation.AddZ(stepR);
         }
-
-        private readonly IndependentParticlePart _Dust;
-        public override void LoadValues()
-        {
-            base.LoadValues();
-            _Dust.Stop();
-        }
         public override void Animate(Single deltaTime)
         {
             _Dust.Update(deltaTime);
-            base.Animate(deltaTime);
         }
-        protected override void ReceiveCollision(Vector3 point, Single approachVel, Vector3 normal) 
+        protected override void OnContact(ItemContactState contactState)
         {
-            _Dust.Start(point, approachVel, normal);
+            base.OnContact(contactState);
+            _Dust.Start(contactState.Point, contactState.Approach, contactState.Normal);
         }
         #endregion ItemMethods
     }

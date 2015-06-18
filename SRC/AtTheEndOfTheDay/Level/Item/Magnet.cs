@@ -21,14 +21,17 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     {
         #region Constants
         private const Single _ForceFactor = 100000f;
-        private const Single _AttractionAngle = .7f;
+        private const Single _AttractionTolerance = .866f;//Cos(30°)
         #endregion Constants
 
         #region Constructors
+        private readonly ObbTranslatedCollider _Collider;
         private readonly IndependentParticlePart _Spark;
         public Magnet()
         {
             var mesh = Game.Current.GetMesh("Magnet");
+            Add(new MeshStaticPart(mesh));
+            Add(_Collider = new ObbTranslatedCollider(mesh));
             Add(_Spark = new IndependentParticlePart()
             {
                 Translation = new Vector3(0, 0, -4),
@@ -44,8 +47,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 },
                 Size = new Vector2(25, 15),
             }); 
-            Add(new MeshStaticPart(mesh));
-            Add(_Obb = new ObbTranslatedCollider(mesh));
         }
         #endregion Constructors
 
@@ -81,23 +82,23 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             else if (input.keyDown(Key.A))
                 Rotation = Rotation.AddZ(stepR);
         }
-        public override void Animate(float deltaTime)
+        public override void Animate(Single deltaTime)
         {
             _Spark.Update(deltaTime);
             base.Animate(deltaTime);
         }
-        private readonly ObbTranslatedCollider _Obb;
         public override void Act(Interactive interactive, Single deltaTime)
         {
             var n = interactive.Position - Position;
             var d2 = n.LengthSq();
             n.Normalize();
-            if (Vector3.Dot(n, _Obb.Orientation[1]) > _AttractionAngle)
+            if (Vector3.Dot(n, _Collider.Top) > _AttractionTolerance)
                 interactive.Momentum -= n * (_ForceReal / d2);
         }
-        protected override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
+        protected override void OnContact(ItemContactState contactState)
         {
-            _Spark.Start(point, approachVel, normal);
+            base.OnContact(contactState);
+            _Spark.Start(contactState.Point, contactState.Approach, contactState.Normal);
         }
         #endregion ItemMethods
     }

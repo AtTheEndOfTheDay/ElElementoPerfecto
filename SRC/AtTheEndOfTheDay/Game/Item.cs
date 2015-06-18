@@ -20,11 +20,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public abstract partial class Item : IGameComponent, IDisposable
     {
         #region Constants
+        public const Int32 EffectVolume = -500;
         public const Single ScaleSizeFactor = 1f / 8f;
         public const Single BuildScalingSpeed = 4.5f;
         public const Single BuildRotationSpeed = 1.5f;
         public const Single BuildTranslationSpeed = 4.5f;
-        public const int EffectVolume = -500;
 
         public static readonly Vector3 DefaultScale = Vector3Extension.One;
         public static readonly Vector3 DefaultRotation = Vector3.Empty;
@@ -154,12 +154,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion TransformProperties
 
         #region Parts
+        protected Boolean IsEmptyOfParts { get { return (_Parts.Count == 0); } }
         public ItemPart[] Parts { get { return _Parts.ToArray(); } }
         private ICollection<ItemPart> _Parts = new List<ItemPart>();
-        protected Boolean emptyParts()
-        {
-            return (_Parts.Count == 0);
-        }
         public ItemPart Add(ItemPart part)
         {
             _Parts.Add(part);
@@ -182,7 +179,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             foreach (var part in parts)
                 Remove(part);
         }
-
+        public void ClearParts()
+        {
+            Remove(_Parts.ToArray());
+        }
         public Matrix RenderMatrix { get; private set; }
         public virtual void Render(Dx3D.Effect shader)
         {
@@ -198,6 +198,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Parts
 
         #region Colliders
+        protected Boolean IsEmptyOfColliders { get { return (_Colliders.Count == 0); } }
         public Collider[] Colliders { get { return _Colliders.ToArray(); } }
         private ICollection<Collider> _Colliders = new List<Collider>();
         public Collider Add(Collider collider)
@@ -222,7 +223,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             foreach (var collider in colliders)
                 Remove(collider);
         }
-
+        public void ClearColiders()
+        {
+            Remove(_Colliders.ToArray());
+        }
         public Boolean Intercepts(TgcRay ray)
         {
             return _Colliders.Any(c => c.Intercepts(ray));
@@ -242,8 +246,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     if (collision != null)
                         collisions.Add(collision);
                 }
-            return collisions.Count == 0 ? null
-                : new ItemCollision(this, interactive, collisions.ToArray());
+            if (collisions.Count == 0) return null;
+            var itemCollision = new ItemCollision(this, interactive, collisions.ToArray());
+            OnCollision(itemCollision);
+            return itemCollision;
         }
         #endregion Colliders
 
@@ -253,37 +259,39 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public virtual void Build(Single deltaTime) { }
         public virtual void Animate(Single deltaTime) { }
         public virtual void Act(Interactive interactive, Single deltaTime) { }
-        public virtual Boolean React(ItemCollision itemCollision, Single deltaTime)
+        protected virtual void OnCollision(ItemCollision itemCollision) { }
+        internal Boolean React(ItemContactState contactState, Single deltaTime)
         {
-            if (itemCollision.Item != this) return false;
             var reacted = false;
-            var interactive = itemCollision.Interactive;
-            foreach (var collision in itemCollision.Collisions)
-                foreach (var contact in collision.Contacts)
-                {
-                    var normal = contact.NormalAB;
-                    interactive.Position += normal * contact.Depth;
-                    var r = contact.PointB - interactive.Position;
-                    var velocity = interactive.GetVelocityAt(r);
-                    var approachVel = -Vector3.Dot(normal, velocity);
-                    if (approachVel > 0)
-                    {
-                        interactive.AddVelocityAt(r, (1 + collision.Restitution) * approachVel * normal);
-                        this.ReceiveCollision(contact.PointB, approachVel, normal);
-                        reacted = true;
-                    }
-                    var force = interactive.GetForceAt(r);
-                    var weight = -Vector3.Dot(normal, force);
-                    if (weight > 0)
-                    {
-                        var ortho = normal.Orthonormal(velocity);
-                        interactive.AddForceAt(r, weight * (normal - collision.Friction * ortho));
-                        reacted = true;
-                    }
-                }
+            if (contactState.TimesReacted == 0)
+            {
+                OnContact(contactState);
+                reacted = true;
+            }
+            if (contactState.Weight > 0)
+            {
+                OnRestingContact(contactState);
+                reacted = true;
+            }
+            if (contactState.Approach > 0)
+            {
+                OnRestitutiveContact(contactState);
+                reacted = true;
+            }
             return reacted;
         }
-       	protected virtual void ReceiveCollision(Vector3 point, Single approachVel, Vector3 normal) { }
+        protected virtual void OnContact(ItemContactState contactState)
+        {
+            contactState.ApplyMinimumTranslation();
+        }
+        protected virtual void OnRestitutiveContact(ItemContactState contactState)
+        {
+            contactState.ApplyRestitution();
+        }
+        protected virtual void OnRestingContact(ItemContactState contactState)
+        {
+            contactState.ApplyFriction();
+        }
         #endregion InteractionMethods
     }
 }

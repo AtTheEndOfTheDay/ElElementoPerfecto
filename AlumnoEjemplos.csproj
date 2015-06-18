@@ -87,7 +87,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SRC\AtTheEndOfTheDay\Extension\XmlTextReader.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Extension\SingleExtension.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Game\Parser.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Game\Game.cs" />
@@ -96,7 +95,7 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Game\IGameComponent.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Acelerator.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\BalckHole.cs" />
-    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Spring.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\Collision\ItemContactState.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Particle\IndependentParticlePart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Button.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshImmutablePart.cs" />

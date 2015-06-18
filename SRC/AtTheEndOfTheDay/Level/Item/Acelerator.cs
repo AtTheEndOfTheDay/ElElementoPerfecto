@@ -25,14 +25,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constants
 
         #region Constructors
-        MeshStaticPart _Mesh;
-        private TranslatedParticlePart _Arrows;
-        private TranslatedParticlePart _RedArrows;
-        ObbCollider _Obb;
+        private readonly ObbCollider _Collider;
+        private readonly TranslatedParticlePart _Arrows;
+        private readonly TranslatedParticlePart _RedArrows;
         public Acelerator()
         {
             var mesh = Game.Current.NewMesh("WallTextured");
-            Add(_Mesh = new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("Acelerator.jpg") });
+            Add(new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("Acelerator.jpg") });
+            Add((_Collider = new ObbCollider(mesh)) as ItemPart);
             Add(new ObbCollider(mesh));
             Add(_Arrows = new TranslatedParticlePart()
             {
@@ -48,7 +48,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     TotalFrames = 6,
                 }
             });
-
             Add(_RedArrows = new TranslatedParticlePart()
             {
                 Translation = new Vector3(0, 0, -4.1f),
@@ -64,7 +63,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     TotalFrames = 1,
                 }
             });
-            Add(_Obb = new ObbCollider(mesh));
         }
         #endregion Constructors
 
@@ -80,8 +78,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _ForceReal = value * _ForceFactor;
             }
         }
-
         #endregion Properties
+
+        #region ResetMethods
+        public override void LoadValues()
+        {
+            _Arrows.Stop();
+            _RedArrows.Stop();
+            base.LoadValues();
+        }
+        #endregion ResetMethods
 
         #region ItemMethods
         public override void Build(Single deltaTime)
@@ -93,28 +99,20 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             else if (input.keyDown(Key.A))
                 Rotation = Rotation.AddZ(stepR);
         }
-        public override void LoadValues()
-        {
-            _Arrows.Stop();
-            _RedArrows.Stop();
-            base.LoadValues();
-        }
-
-        public override void Animate(float deltaTime)
+        public override void Animate(Single deltaTime)
         {
             _Arrows.KeepPlaying();
             _Arrows.Update(deltaTime);
             _RedArrows.Update(deltaTime);
-            base.Animate(deltaTime);
         }
-        public override Boolean React(ItemCollision itemCollision, Single deltaTime)
+        public override void Act(Interactive interactive, float deltaTime)
         {
-            if (itemCollision.Item != this) return false;
-            _RedArrows.KeepPlaying();
-            var reacted = false;
-            var interactive = itemCollision.Interactive;
-            interactive.Momentum += _Obb.Orientation[0] * (_ForceReal);
-            return reacted;
+            if (interactive.Colliders.Any(colider => colider.Collides(_Collider)))
+            {
+                interactive.Momentum += _Collider.Right * _ForceReal;
+                _RedArrows.KeepPlaying();
+                ClearParts();
+            }
         }
         #endregion ItemMethods
     }

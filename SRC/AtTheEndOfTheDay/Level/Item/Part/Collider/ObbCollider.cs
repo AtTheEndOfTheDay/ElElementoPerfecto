@@ -53,6 +53,36 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             get { return Obb.Orientation; }
             set { Obb.Orientation = value; }
         }
+        public Vector3 Right
+        {
+            get { return Obb.Orientation[0]; }
+            set { Obb.Orientation[0] = value; }
+        }
+        public Vector3 Left
+        {
+            get { return -Right; }
+            set { Right = -value; }
+        }
+        public Vector3 Top
+        {
+            get { return Obb.Orientation[1]; }
+            set { Obb.Orientation[1] = value; }
+        }
+        public Vector3 Bottom
+        {
+            get { return -Top; }
+            set { Top = -value; }
+        }
+        public Vector3 Front
+        {
+            get { return Obb.Orientation[2]; }
+            set { Obb.Orientation[2] = value; }
+        }
+        public Vector3 Back
+        {
+            get { return -Front; }
+            set { Front = -value; }
+        }
         public void SetOrientation()
         {
             Obb.SetOrientation();

@@ -14,10 +14,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public static class SingleExtension
     {
-        public const Single Tolerance = .001f;
-        public static Boolean TolerantEquals(this Single a, Single b)
+        private const Single _Tolerance = .001f;
+        public static Boolean TolerantEquals(this Single a, Single b, Single tolerance = _Tolerance)
         {
-            return Tolerance + b > a && a > b - Tolerance;
+            return tolerance + b > a && a > b - tolerance;
+        }
+        public static Single Abs(this Single s)
+        {
+            return Math.Abs(s);
         }
         public static Single AdvanceTo(this Single x, Single step, Single to)
         {

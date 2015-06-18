@@ -19,10 +19,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Gravitor : Item
     {
-        public override void Act(Interactive interactive, Single deltaTime)
-        {
-            interactive.Momentum += Scale * interactive.Mass;
-        }
         public override void ButtonSignal(Object[] signal)
         {
             if (signal.Length == 0) return;
@@ -31,6 +27,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 Scale = (Vector3)value;
             else try { Scale *= Convert.ToSingle(value); }
                 catch (Exception) { }
+        }
+        public override void Act(Interactive interactive, Single deltaTime)
+        {
+            interactive.Momentum += Scale * interactive.Mass;
         }
     }
 }

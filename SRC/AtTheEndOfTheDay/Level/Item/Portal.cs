@@ -24,27 +24,23 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Constants
 
         #region Constructors
-        MeshStaticPart _Mesh;
-        MeshImmutableePart _Receptor;
-        ObbCollider _Obb;
-        private TgcStaticSound _SoundEffect;
+        private readonly Collider _Collider;
+        private readonly MeshImmutableePart _Receptor;
+        private readonly ItemPart[] _PartList = new ItemPart[3];
+        private readonly TgcStaticSound _SoundEffect;
         public Portal()
         {
             var mesh = Game.Current.NewMesh("WallTextured");
-            _SoundEffect = Game.Current.GetSound("portal2.wav", EffectVolume);
-            Add(_Mesh = new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("BluePortal.png") });
-            Add(_Obb = new ObbCollider(mesh));
+            Add(_PartList[0] = new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("BluePortal.png") });
+            Add(_PartList[1] = _Collider = new ObbCollider(mesh));
             var receptorMesh = Game.Current.NewMesh("WallTextured");
-            Add(_Receptor = new MeshImmutableePart(receptorMesh) { Texture = Game.Current.GetMaterial("OrangePortal.png") });
+            Add(_PartList[2] = _Receptor = new MeshImmutableePart(receptorMesh) { Texture = Game.Current.GetMaterial("OrangePortal.png") });
+            _SoundEffect = Game.Current.GetSound("portal2.wav", EffectVolume);
         }
         public override void LoadValues()
         {
-            if (emptyParts())
-            {
-                Add(_Mesh);
-                Add(_Receptor);
-                Add(_Obb);
-            }
+            if (IsEmptyOfParts)
+                Add(_PartList);
             base.LoadValues();
         }
         #endregion Constructors
@@ -53,41 +49,29 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Vector3 ReceptorPosition
         {
             get { return _Receptor.Position; }
-            set
-            {
-                _Receptor.Position = value;
-            }
+            set { _Receptor.Position = value; }
         }
         public Vector3 ReceptorScale
         {
             get { return _Receptor.Scale; }
-            set
-            {
-                _Receptor.Scale = value;
-            }
+            set { _Receptor.Scale = value; }
         }
         public Vector3 ReceptorRotation
         {
             get { return _Receptor.Rotation; }
-            set
-            {
-                _Receptor.Rotation = value;
-            }
+            set { _Receptor.Rotation = value; }
         }
         #endregion Properties
 
         #region ItemMethods
-        public override Boolean React(ItemCollision itemCollision, Single deltaTime)
+        public override void Act(Interactive interactive, Single deltaTime)
         {
-            if (itemCollision.Item != this) return false;
-            var reacted = true;
-            _SoundEffect.play(false);
-            var interactive = itemCollision.Interactive;
-            interactive.Position = _Receptor.Position;
-            Remove(_Mesh);
-            Remove(_Receptor);
-            Remove(_Obb);
-            return reacted;
+            if (interactive.Colliders.Any(colider => colider.Collides(_Collider)))
+            {
+                interactive.Position = _Receptor.Position;
+                _SoundEffect.play(false);
+                ClearParts();
+            }
         }
         #endregion ItemMethods
     }
