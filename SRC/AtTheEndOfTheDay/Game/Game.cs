@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml;
 using System.Linq;
 using System.Drawing;
+using System.Threading;
 using TgcViewer;
 using TgcViewer.Utils.TgcSceneLoader;
 using System.Reflection;
@@ -18,7 +19,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Game : IDisposable
     {
-        private Game() { }
+        private Game() { }//Singleton
         public static Game Current = new Game();
 
         #region Constants
@@ -38,38 +39,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _LightShader.SetValue("materialSpecularExp", 10f);
         }
         #endregion Constants
-
-        #region Constructors
-        public Boolean IsMeshVisible { get; set; }
-        public Boolean IsColliderVisible { get; set; }
-        private Level[] _Levels;
-        public void Init(String mediaFolder)
-        {
-            if (_Levels != null) Dispose();
-            _LoadShaders();
-            _MaterialFolder = mediaFolder + "Texture\\Material\\";
-            _ParticleFolder = mediaFolder + "Texture\\Particles\\";
-            _SignFolder = mediaFolder + "Texture\\Sign\\";
-            _SoundFolder = mediaFolder + "Sound\\";
-
-            _Scene = new TgcSceneLoader().loadSceneFromFile(mediaFolder + "Mesh\\Items.xml");
-            foreach (var mesh in _Scene.Meshes)
-            {
-                mesh.AutoTransformEnable = false;
-                mesh.AutoUpdateBoundingBox = false;
-            }
-            var lvlPaths = Directory.GetFiles(mediaFolder + "Level\\", "*.xml", SearchOption.AllDirectories);
-            var levels = new List<Level>();
-            foreach (var lvlPath in lvlPaths)
-                Parser.ParseLevels(lvlPath, levels);
-            _Levels = levels.OrderBy(l => l.Order).ToArray();
-            var screen = GuiController.Instance.Panel3d.Size;
-            var cameraFix = _OriginalAspectRatio / ((Single)screen.Width / screen.Height);
-            foreach (var level in _Levels)
-                level.CameraPosition = level.CameraPosition.MultZ(cameraFix);
-            _Levels[0].Load();
-        }
-        #endregion Constructors
 
         #region Media
         private String _MaterialFolder;
@@ -106,18 +75,79 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Media
 
         #region GamePlay
+        public Boolean IsMeshVisible { get; set; }
+        public Boolean IsColliderVisible { get; set; }
+        public Boolean IsToonShaderEnabled { get; set; }
+        private Single _CameraFix;
+        private String[] _Paths;
+        private Level[] _Levels;
+        private TexturedQuad _LoadSign = new TexturedQuad()
+        {
+            Size = new Vector2(113f, 56.5f),
+            Position = new Vector3(-25, 0, -10),
+        };
+        public void Init(String mediaFolder)
+        {
+            if (_Levels != null) Dispose();
+            _LoadShaders();
+            _MaterialFolder = mediaFolder + "Texture\\Material\\";
+            _ParticleFolder = mediaFolder + "Texture\\Particles\\";
+            _SignFolder = mediaFolder + "Texture\\Sign\\";
+            _SoundFolder = mediaFolder + "Sound\\";
+            _Scene = new TgcSceneLoader().loadSceneFromFile(mediaFolder + "Mesh\\Items.xml");
+            foreach (var mesh in _Scene.Meshes)
+            {
+                mesh.AutoTransformEnable = false;
+                mesh.AutoUpdateBoundingBox = false;
+            }
+            var screen = GuiController.Instance.Panel3d.Size;
+            _CameraFix = _OriginalAspectRatio / ((Single)screen.Width / screen.Height);
+            _Paths = Directory.GetFiles(mediaFolder + "Level\\", "*.xml", SearchOption.AllDirectories);
+            _Levels = new Level[_Paths.Length];
+            _LoadLevelThread = new Thread(_LoadLevelThreadHandler);
+            _LoadLevelThread.Start();
+            //TODO:Cambiar cartel
+            _LoadSign.Texture = GetSign("Win.png");
+        }
+        private Thread _LoadLevelThread;
+        private void _LoadLevelThreadHandler()
+        {
+            var firstLevels = new List<Level>();
+            Parser.ParseLevels(_Paths[0], firstLevels);
+            if (firstLevels.Count > 0)
+            {
+                _Levels[0] = firstLevels[0];
+                _Levels[0].Load();
+            }
+            for (var i = 1; i < _Levels.Length; i++)
+            {
+                var levels = new List<Level>();
+                Parser.ParseLevels(_Paths[i], levels);
+                if (levels.Count > 0)
+                    _Levels[i] = levels[0];
+            }
+            _LoadLevelThread.Abort();
+        }
         private Int32 _LevelIndex = 0;
         public void Play(Single deltaTime)
         {
-            TgcD3dInput input = GuiController.Instance.D3dInput;
+            _LvlHack();
             var level = _Levels[_LevelIndex];
-            _LvlHack(input, level);
+            if (level == null)
+            {
+                _LoadSign.Render();
+                return;
+            }
+            TgcD3dInput input = GuiController.Instance.D3dInput;
             if (level.IsComplete)
             {
                 if (input.keyDown(Key.R))
                     level.RollBack();
                 else if (input.keyDown(Key.Return))
-                    advanceLevel(level);
+                {
+                    level = _Levels[_LevelIndex = _NextIndex];
+                    if (level != null) level.Load();
+                }
             }
             else level.Play(deltaTime);
             level.SetCamera();
@@ -130,35 +160,49 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public void Dispose()
         {
+            _LoadLevelThread.Abort();
+            _LoadSign.Dispose();
             _Scene.disposeAll();
             foreach (var level in _Levels)
-                level.Dispose();
+                if (level != null)
+                    level.Dispose();
+            _LevelIndex = 0;
             _Levels = null;
+            _Paths = null;
         }
-        private void advanceLevel(Level level)
+        private void _LvlHack()
         {
-            _LevelIndex++;
-            if (_LevelIndex == _Levels.Length)
-                _LevelIndex = 0;
-            level.UnLoad();
-            level = _Levels[_LevelIndex];
-            level.Load();
-        }
-        private void backwardLevel(Level level)
-        {
-            _LevelIndex--;
-            if (_LevelIndex == -1)
-                _LevelIndex = _Levels.Length - 1;
-            level.UnLoad();
-            level = _Levels[_LevelIndex];
-            level.Load();
-        }
-        private void _LvlHack(TgcD3dInput input, Level level)
-        {
+            TgcD3dInput input = GuiController.Instance.D3dInput;
             if (input.keyPressed(Key.F2))
-                advanceLevel(level);
+                _SetLevel(_NextIndex);
             else if (input.keyPressed(Key.F1))
-                backwardLevel(level);
+                _SetLevel(_PrevIndex);
+        }
+        private void _SetLevel(Int32 index)
+        {
+            var newLevel = _Levels[index];
+            if (newLevel == null) return;
+            var prevLevel = _Levels[_LevelIndex];
+            if (prevLevel != null)
+                prevLevel.UnLoad();
+            _LevelIndex = index;
+            newLevel.Load();
+        }
+        private Int32 _NextIndex
+        {
+            get
+            {
+                var next = _LevelIndex + 1;
+                return next == _Levels.Length ? 0 : next;
+            }
+        }
+        private Int32 _PrevIndex
+        {
+            get
+            {
+                var prev = _LevelIndex - 1;
+                return prev == -1 ? _Levels.Length - 1 : prev;
+            }
         }
         #endregion GamePlay
     }

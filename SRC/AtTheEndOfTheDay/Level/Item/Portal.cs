@@ -32,7 +32,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             var mesh = Game.Current.NewMesh("WallTextured");
             Add(_PartList[0] = new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("BluePortal.png") });
-            Add(_PartList[1] = _Collider = new ObbCollider(mesh));
+            Add(_Collider); _PartList[1] = _Collider = new ObbCollider(mesh);
             var receptorMesh = Game.Current.NewMesh("WallTextured");
             Add(_PartList[2] = _Receptor = new MeshImmutableePart(receptorMesh) { Texture = Game.Current.GetMaterial("OrangePortal.png") });
             _SoundEffect = Game.Current.GetSound("portal2.wav", EffectVolume);
@@ -64,14 +64,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Properties
 
         #region ItemMethods
-        public override void Act(Interactive interactive, Single deltaTime)
+        protected override void OnCollision(ItemCollision itemCollision)
         {
-            if (interactive.Colliders.Any(colider => colider.Collides(_Collider)))
-        {
-                interactive.Position = _Receptor.Position;
+            itemCollision.Interactive.Position = _Receptor.Position;
             _SoundEffect.play(false);
-                ClearParts();
-            }
+            ClearParts();
+        }
+        public override Boolean React(ItemContactState contactState, Single deltaTime)
+        {
+            return false;
         }
         #endregion ItemMethods
     }

@@ -18,11 +18,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     internal static class Parser
     {
+        private const String _DescriptionTag = "Description";
         private const String _LevelTag = "Level";
         private const String _GoalTag = "Goals";
         private const String _GameTag = "Game";
         private const String _UserTag = "User";
-        private static readonly Type[] _LevelTypes;
         private static readonly Type[] _GoalTypes;
         private static readonly Type[] _ItemTypes;
         static Parser()
@@ -56,7 +56,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     switch (reader.NodeType)
                     {
                         case XmlNodeType.Element:
-                            if (goals == null && _GoalTag.IgnoreCaseEquals(reader.Name))
+                            if (_DescriptionTag.IgnoreCaseEquals(reader.Name))
+                                level.SetDescription(reader);
+                            else if (goals == null && _GoalTag.IgnoreCaseEquals(reader.Name))
                                 goals = reader.ParseList<IGoal>(_GoalTypes, _GoalTag);
                             else if (game == null && _GameTag.IgnoreCaseEquals(reader.Name))
                                 game = reader.ParseList<Item>(_ItemTypes, _GameTag);
@@ -72,20 +74,43 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             catch(Exception e) { }
             return level.LoadGoalsAndItems(goals, game, user);
         }
+        private static Level SetDescription(this Level level, XmlTextReader reader)
+        {
+            try
+            {
+                var description = String.Empty;
+                while (reader.Read())
+                    switch (reader.NodeType)
+                    {
+                        case XmlNodeType.Text:
+                            description += reader.Value;
+                            break;
+                        case XmlNodeType.EndElement:
+                            if (_DescriptionTag.IgnoreCaseEquals(reader.Name))
+                            {
+                                level.Description = description;
+                                return level;
+                            }
+                            break;
+                    }
+            }
+            catch (Exception e) { }
+            return level;
+        }
         private const BindingFlags _BindingFlags = BindingFlags.Public | BindingFlags.Instance;
-        private static T SetObjectProperties<T>(this XmlTextReader xml, T instance, Type type = null)
+        private static T SetObjectProperties<T>(this XmlTextReader reader, T instance, Type type = null)
         {
             try
             {
                 type = type ?? instance.GetType();
-                while (xml.MoveToNextAttribute())
-                    if (!String.IsNullOrWhiteSpace(xml.Value))
+                while (reader.MoveToNextAttribute())
+                    if (!String.IsNullOrWhiteSpace(reader.Value))
                         try
                         {
-                            var prop = type.GetProperty(xml.Name, _BindingFlags);
+                            var prop = type.GetProperty(reader.Name, _BindingFlags);
                             var value = prop.PropertyType.IsArray
-                                ? xml.Value.ParseArray(prop.PropertyType.GetElementType())
-                                : xml.Value.ParseValue();
+                                ? reader.Value.ParseArray(prop.PropertyType.GetElementType())
+                                : reader.Value.ParseValue();
                             prop.SetValue(instance, value, null);
                         }
                         catch (Exception e) { }

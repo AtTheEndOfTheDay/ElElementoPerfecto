@@ -25,9 +25,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private const Single _RotationSpeed = .7f;
         private const Single _BorderScale = .2f;
         private const Single _BodyObbScaleY = .8f;
-        private const Single _BaseObbScaleY = .3f;
+        private const Single _BaseObbScaleY = .13f;
         private static readonly Vector3 _LoadColiderExtents = Vector3Extension.One * 4f;
-        private static readonly Vector3 _BaseObbTranslation = Vector3Extension.Bottom * 15f;
+        private static readonly Vector3 _BaseObbTranslation = Vector3Extension.Bottom * 11f;
         private static readonly Vector3 _MinBorderScale = Vector3Extension.One * _BorderScale;
         private static readonly Vector3 _MaxBorderScale = new Vector3(1f, 0f, 1f) * _BorderScale;
         #endregion Constants

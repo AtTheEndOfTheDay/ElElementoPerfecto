@@ -260,7 +260,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public virtual void Animate(Single deltaTime) { }
         public virtual void Act(Interactive interactive, Single deltaTime) { }
         protected virtual void OnCollision(ItemCollision itemCollision) { }
-        internal Boolean React(ItemContactState contactState, Single deltaTime)
+        public virtual Boolean React(ItemContactState contactState, Single deltaTime)
         {
             var reacted = false;
             if (contactState.TimesReacted == 0)

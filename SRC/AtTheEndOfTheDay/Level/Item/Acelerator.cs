@@ -32,8 +32,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             var mesh = Game.Current.NewMesh("WallTextured");
             Add(new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("Acelerator.jpg") });
-            Add((_Collider = new ObbCollider(mesh)) as ItemPart);
-            Add(new ObbCollider(mesh));
+            Add(_Collider = new ObbCollider(mesh));
             Add(_Arrows = new TranslatedParticlePart()
             {
                 Translation = new Vector3(0, 0, -4),
@@ -105,14 +104,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _Arrows.Update(deltaTime);
             _RedArrows.Update(deltaTime);
         }
-        public override void Act(Interactive interactive, float deltaTime)
+        protected override void OnCollision(ItemCollision itemCollision)
         {
-            if (interactive.Colliders.Any(colider => colider.Collides(_Collider)))
-            {
-                interactive.Momentum += _Collider.Right * _ForceReal;
-                _RedArrows.KeepPlaying();
-                ClearParts();
-            }
+            itemCollision.Interactive.Momentum += _Collider.Right * _ForceReal;
+            _RedArrows.KeepPlaying();
+        }
+        public override Boolean React(ItemContactState contactState, Single deltaTime)
+        {
+            return false;
         }
         #endregion ItemMethods
     }

@@ -86,9 +86,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     _Items.Add(_Menu);
             }
         }
-
         private TgcStaticSound _WinSound = _SoundNull;
-
         private String _WinSoundPath;
         public String WinSound
         {

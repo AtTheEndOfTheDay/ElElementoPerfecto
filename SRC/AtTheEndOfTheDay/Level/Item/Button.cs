@@ -28,8 +28,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private readonly ObbTranslatedCollider _Collider;
         public Button()
         {
-            var mesh = Game.Current.GetMesh("Wall");
-            Add(new MeshStaticPart(mesh) { Color = Color.FromArgb(0, 0, 0, 55) });
+            var mesh = Game.Current.GetMesh("Torus");
+            Add(new MeshStaticPart(mesh));
+            Add(new MeshStaticPart(Game.Current.GetMesh("Cylinder")));
             Add(_Collider = new ObbTranslatedCollider(mesh));
         }
         #endregion Constructors
