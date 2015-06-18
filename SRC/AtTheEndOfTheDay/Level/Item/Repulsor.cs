@@ -74,11 +74,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         #endregion Properties
 
-        #region ItemMethods
+        #region ResetMethods
         private Single _SavedForceReal;
         public override void SaveValues()
         {
-            _SavedForceReal =_ForceReal;
+            _SavedForceReal = _ForceReal;
             base.SaveValues();
         }
         public override void LoadValues()
@@ -87,13 +87,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _Spark.Stop();
             base.LoadValues();
         }
+        #endregion ResetMethods
 
-        public override void Animate(float deltaTime)
+        #region ItemMethods
+        public override void Animate(Single deltaTime)
         {
             _Spark.Update(deltaTime);
-            base.Animate(deltaTime);
         }
-
         public override void Act(Interactive interactive, Single deltaTime)
         {
             var n = interactive.Position - Position;
@@ -102,8 +102,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (d2 < _RepulsionFactor * _RepulsionDistancePow2)
                 interactive.Momentum += n * (_ForceReal / d2);
         }
-
-        public override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
+        protected override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
         {
             _Spark.Start(point, approachVel, normal);
         }
