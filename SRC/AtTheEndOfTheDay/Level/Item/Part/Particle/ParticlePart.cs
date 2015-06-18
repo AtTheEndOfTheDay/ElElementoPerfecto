@@ -61,11 +61,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         protected virtual void ItemScaleChanged(Item item)
         {
-            Scale = item.Scale;
             if (Animation == null) return;
             Single xScaleIncremente = item.Scale.X / Scale.X;
             Single yScaleIncremente = item.Scale.Y / Scale.Y;
             Animation.Size = new Vector2(Animation.Size.X * xScaleIncremente, Animation.Size.Y * yScaleIncremente);
+            Scale = item.Scale;
         }
         protected virtual void ItemRotationChanged(Item item)
         {
