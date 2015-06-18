@@ -130,7 +130,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private void InitLoadingSign()
         {
             Vector2 auxSize;
-            _LoadSign.Texture = GetSign("Loading8.png");
+            _LoadSign.Texture = GetSign("Loading9.png");
             _LoadWord.Texture = GetSign("LoadingWord.png");
             var camera = GuiController.Instance.ThirdPersonCamera;
             camera.setCamera(Vector3.Empty, 0, -200);

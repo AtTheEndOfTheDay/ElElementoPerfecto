@@ -4,7 +4,7 @@
        LightPosition="500,500,-500" LightIntensity="500"
        PlanePoint="0,0,0" PlaneNormal="0,0,1"
        Sound="@DarkLevelMusic.wav" WinSound="@Win.wav"
-       WinSign="@Level.png" WinSignSize="113,56.5" WinSignPosition="-25, 0, -10">
+       WinSign="@Level.png" WinSignSize="113,56.5" WinSignPosition="-25, 0, -20">
   <Description>
     Aca va la descripcion del nivel.
     Si se defie esta propiedad se ignora el atributo.
@@ -39,10 +39,9 @@
   <User>
     <Magnet Force="5" Scale="1.25,1.25,1.25"/>
     <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
-    <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
     <Wall Name="" Properties="" Scale="5,0.4,1" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg" MaxScale="10" MinScale="2.5"/>
     <Acelerator Force="5" Scale="2.5,1,0.1"/>
-    <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="" RelatedItem="Gravitor" Signal="-1" SoundEffect="@GravityChange.wav"/>
+    <Acelerator Force="5" Scale="2.5,1,0.1"/>
     <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="" RelatedItem="Gravitor" Signal="-1" SoundEffect="@GravityChange.wav"/>
     <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="" RelatedItem="Gravitor" Signal="-1" SoundEffect="@GravityChange.wav"/>
     <Acelerator Force="5" Scale="2.5,1,0.1"/>
