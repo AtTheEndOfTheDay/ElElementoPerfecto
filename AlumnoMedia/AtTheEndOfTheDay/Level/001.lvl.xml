@@ -39,7 +39,7 @@
     <Magnet Force="3" Scale="1.25,1.25,1.25"/>
     <Repulsor Force="2" Scale="1,1,1" RepulsionDistance="3"/>
     <Acelerator Name="" Properties="" Force="5" Scale="3,1,0.1" Position="0,0,0" Rotation=""/>
-    <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="" RelatedItem="Gravitor"/>
+    <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="" RelatedItem="Gravitor" SoundEffect="@cambio gravedad2.wav"/>
     
   </User>
 </Level>

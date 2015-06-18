@@ -15,6 +15,7 @@ using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
 
+
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Acelerator : Item
@@ -79,6 +80,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _ForceReal = value * _ForceFactor;
             }
         }
+
         #endregion Properties
 
         #region ItemMethods

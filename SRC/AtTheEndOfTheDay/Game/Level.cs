@@ -32,6 +32,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private static readonly Vector3 DefaultPlaneNormal = Vector3Extension.Front;
         private static readonly Vector2 DefaultWinSignScaling = new Vector2(0.5f, 0.5f);
         private static readonly Vector2 DefaultWinSignPosition = new Vector2(300, 200);
+        private static readonly TgcStaticSound WinSound = Game.Current.GetSound("Win.wav", 0);
         #endregion Constants
 
         #region Constructors
@@ -331,6 +332,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             foreach (var interactive in _Interactives)
                 interactive.Simulate(deltaTime);
             IsComplete = _Goals.All(goal => goal.IsMeet);
+            if (IsComplete)
+                WinSound.play();
         }
 
         private void _Pick()

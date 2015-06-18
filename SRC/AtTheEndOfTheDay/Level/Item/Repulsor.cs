@@ -75,8 +75,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Properties
 
         #region ItemMethods
+        private Single _SavedForceReal;
+        public override void SaveValues()
+        {
+            _SavedForceReal =_ForceReal;
+            base.SaveValues();
+        }
         public override void LoadValues()
         {
+            _ForceReal = _SavedForceReal;
             _Spark.Stop();
             base.LoadValues();
         }
@@ -99,6 +106,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
         {
             _Spark.Start(point, approachVel, normal);
+        }
+        public override void ButtonSignal()
+        {
+            _ForceReal = -_ForceReal;
         }
         #endregion ItemMethods
     }
