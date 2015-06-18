@@ -31,7 +31,7 @@
     <Wall Name="" Properties="" Scale="7,0.4,1" Position="-125,10,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <Wall Name="" Properties="" Scale="17,0.4,1" Position="-30,-37.5,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <Wall Name="" Properties="" Scale="0.4,10,1" Position="38,1,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
-    <Wall Name="" Properties="" Scale="0.4,7,1" Position="-30,55,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
+    <Wall Name="" Properties="" Scale="0.4,9,1" Position="-30,45,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <!--Lvl Resources-->
   </Game>
   <User><!--TODO:Cambiar por 3 resortes-->
