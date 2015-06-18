@@ -41,7 +41,8 @@
   </Game>
   <User>
     <Magnet Force="3" Scale="1.25,1.25,1.25"/>
-    <!--TODO:Cambiar por resorte-->
+    <Acelerator Force="5" Scale="2.5,1,0.1"/>
+    
    
   </User>
 </Level>

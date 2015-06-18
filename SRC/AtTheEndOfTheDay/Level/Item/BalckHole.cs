@@ -125,9 +125,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _SoundEffect.play(false);
             return reacted;
         }
-        public override void ButtonSignal()
+        public override void ButtonSignal(Object[] signal)
         {
-            Position = new Vector3(0, 0, Single.MaxValue);
+            if (signal.Length == 0)
+                Position = new Vector3(0, 0, Single.MaxValue);
+            else if (signal[0] is Vector3)
+                Position = (Vector3)signal[0];
         }
         #endregion ItemMethods
     }
