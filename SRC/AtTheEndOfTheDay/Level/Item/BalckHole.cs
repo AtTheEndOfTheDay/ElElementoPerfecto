@@ -23,7 +23,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region Constants
         private const Single _ForceFactor = 100000f;
         private const Single _AtractionFactor = 100f;
-        private static readonly Vector3 _EndOfTheWorld = Vector3Extension.One * Single.MaxValue;
+        private static readonly Vector3 _EndOfTheWorld = Vector3Extension.One * 1000;
         #endregion Constants
 
         #region Constructors
