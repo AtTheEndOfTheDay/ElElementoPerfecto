@@ -72,7 +72,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private Item _RelatedItem;
         public override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
         {
-            _RelatedItem.ButtonSignal();
+            if (_RelatedItem != null)
+                _RelatedItem.ButtonSignal();
             _SoundEffect.play(false);
         }
         #endregion ItemMethods
