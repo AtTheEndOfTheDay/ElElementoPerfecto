@@ -23,20 +23,24 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Ball()
         {
             var mesh = Game.Current.NewMesh("Ball");
-            _MeshTextured = new MeshTemporalRecursivePart(Game.Current.NewMesh("BallTextured"), 1);
-            Add(_Mesh = new MeshTemporalRecursivePart(mesh));
+            //_MeshTextured = new MeshTemporalRecursivePart(Game.Current.NewMesh("BallTextured"));
+            _MeshTextured = new MeshStaticPart(Game.Current.NewMesh("BallTextured"));
+            //Add(_Mesh = new MeshTemporalRecursivePart(mesh));
+            Add(_Mesh = new MeshStaticPart(mesh));
             Add(new SphereCollider(mesh));
         }
         #endregion Constructors
 
         #region Properties
-        private MeshTemporalRecursivePart _Mesh;
+        //private MeshTemporalRecursivePart _Mesh;
+        private MeshStaticPart _Mesh;
         public Color Color
         {
             get { return _Mesh.Color; }
             set { _Mesh.Color = value; }
         }
-        private MeshTemporalRecursivePart _MeshTextured;
+        //private MeshTemporalRecursivePart _MeshTextured;
+        private MeshStaticPart _MeshTextured;
         private String _Texture;
         public String Texture
         {
@@ -93,22 +97,22 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion InteractiveMethods
 
         #region ResetMethods
-        public override void LoadValues()
-        {
-            base.LoadValues();
-            if (_IsTextured)
-                _MeshTextured.Clear();
-            else _Mesh.Clear();
-        }
+        //public override void LoadValues()
+        //{
+        //    base.LoadValues();
+        //    if (_IsTextured)
+        //        _MeshTextured.Clear();
+        //    else _Mesh.Clear();
+        //}
         #endregion ResetMethods
 
         #region ItemMethods
-        public override void Animate(Single deltaTime)
-        {
-            if (_IsTextured)
-                _MeshTextured.Update(deltaTime);
-            else _Mesh.Update(deltaTime);
-        }
+        //public override void Animate(Single deltaTime)
+        //{
+        //    if (_IsTextured)
+        //        _MeshTextured.Update(deltaTime);
+        //    else _Mesh.Update(deltaTime);
+        //}
         #endregion ItemMethods
     }
 }

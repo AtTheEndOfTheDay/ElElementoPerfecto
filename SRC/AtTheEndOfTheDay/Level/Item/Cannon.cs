@@ -81,6 +81,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             _Base.Rotation = new Vector3(Rotation.X, Rotation.Y, _Base.Rotation.Z.Clamp(Rotation.Z - FastMath.PI_HALF, Rotation.Z + FastMath.PI_HALF));
             _BaseCollider.SetOrientation(_Base.Rotation);
+            if (!_IsRotationTarget)
+                _StoredRotation = Rotation;
         }
         #endregion Constructors
 
@@ -97,7 +99,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             }
         }
         public Vector3 RotationTarget { get; set; }
-        public Vector3 RotationB { get; set; }
         public Single BaseRotationZ
         {
             get { return _Base.Rotation.Z; }
@@ -113,17 +114,17 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region ResetMethods
         private Interactive _Load = null;
         private Vector3 _BaseRotationSaved;
-        private Boolean _IsRotationASaved = false;
+        private Boolean _IsRotationTargetSaved = false;
         public override void SaveValues()
         {
             _BaseRotationSaved = _Base.Rotation;
-            _IsRotationASaved = _IsRotationA;
+            _IsRotationTargetSaved = _IsRotationTarget;
             base.SaveValues();
         }
         public override void LoadValues()
         {
             _Base.Rotation = _BaseRotationSaved;
-            _IsRotationA = _IsRotationASaved;
+            _IsRotationTarget = _IsRotationTargetSaved;
             base.LoadValues();
             OnScaleChanged();
             _Load = null;
@@ -138,14 +139,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion ResetMethods
 
         #region ItemMethods
-        private Boolean _IsRotationA = false;
+        private Vector3 _StoredRotation;
+        private Boolean _IsRotationTarget = false;
         public override void Build(Single deltaTime)
         {
             var input = GuiController.Instance.D3dInput;
             if (input.keyUp(Key.W))
             {
-                Rotation = _IsRotationA ? RotationB : RotationTarget;
-                _IsRotationA = !_IsRotationA;
+                Rotation = _IsRotationTarget ? _StoredRotation : RotationTarget;
+                _IsRotationTarget = !_IsRotationTarget;
             }
             if (input.keyDown(Key.D))
                 _BuildRotation(deltaTime, _Base.Rotation.Z - FastMath.PI_HALF, false);
@@ -163,15 +165,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             {
                 _Base.Rotation = _Base.Rotation.AdvanceZ(step, to);
                 _BaseCollider.SetOrientation(_Base.Rotation);
-                if (_IsRotationA)
-                    RotationB = RotationB.AdvanceZ(step, to);
-                else
-                    RotationTarget = RotationTarget.AdvanceZ(step, to);
             }
             var r = Rotation = Rotation.AdvanceZ(step, to);
-            if (_IsRotationA)
+            if (_IsRotationTarget)
                 RotationTarget = r;
-            else RotationB = r;
         }
         private Vector3 _RotationF = Vector3.Empty;
         public override void Animate(Single deltaTime)
@@ -191,13 +188,21 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 r.Z.AdvanceTo(step, _RotationF.Z)
             );
             if (r == _RotationF)
-            {
-                var d = _LoadColider.Orientation[1];
-                _Load.Position += d * (_LoadColiderExtents.Y + 1);
-                _Load.Velocity = d * _ForceReal;
-                _Load = null;
-                _Smoke.Start();
-            }
+                _Shoot();
+        }
+        private void _Shoot()
+        {
+            var d = _LoadColider.Orientation[1];
+            _Load.Position += d * (_LoadColiderExtents.Y + 1);
+            _Load.Velocity = d * _ForceReal;
+            _Load = null;
+            _Smoke.Start();
+        }
+        public override void StaticCollision(Item item)
+        {
+            if (item != _Load
+            && _Load != null)
+                _Shoot();
         }
         public override void Act(Interactive interactive, Single deltaTime)
         {
@@ -206,7 +211,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (_LoadColider.ClosestPoint(p) == p)
             {
                 _Load = interactive;
-                _RotationF = Rotation == RotationTarget ? RotationB : RotationTarget;
+                _RotationF = _IsRotationTarget ? _StoredRotation : RotationTarget;
+                _IsRotationTarget = !_IsRotationTarget;
             }
         }
         #endregion ItemMethods

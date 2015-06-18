@@ -127,9 +127,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             _Dust.Update(deltaTime);
         }
-        protected override void OnContact(ItemContactState contactState)
+        protected override void OnContact(ItemContactState contactState, Single deltaTime)
         {
-            base.OnContact(contactState);
+            base.OnContact(contactState, deltaTime);
             _Dust.Start(contactState.Point, contactState.Approach, contactState.Normal);
         }
         #endregion ItemMethods

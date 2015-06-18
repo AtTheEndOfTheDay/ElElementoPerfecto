@@ -21,18 +21,24 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class Spring : Item
     {
         #region Constants
+        private const Single _ElasticityFactor = 100f;
+        private const Single _SpringElasticVelocityY = 20f;
+        private const Single _SpringContractedY = .5f;
+        private const Single _SpringSizeInverseY = 1f / 17f;
         private static readonly Vector3 _CoverScaleFactor = new Vector3(2f, .2f, 2f);
         private static readonly Vector3 _CoverTranslation = new Vector3(0f, 8f, 0f);
         #endregion Constants
 
         #region Constructors
+        private readonly MeshTranslatedScaledPart _Top;
+        private readonly MeshTranslatedScaledPart _Bottom;
         private readonly ObbTranslatedCollider _Collider;
         public Spring()
         {
             var mesh = Game.Current.GetMesh("Spring");
             Add(new MeshStaticPart(mesh));
-            Add(new MeshTranslatedScaledPart(Game.Current.NewMesh("WallRounded"), _CoverTranslation, _CoverScaleFactor) { Color = Color.FromArgb(123, 123, 123) });
-            Add(new MeshTranslatedScaledPart(Game.Current.NewMesh("WallRounded"), -_CoverTranslation, _CoverScaleFactor) { Color = Color.FromArgb(0, 0, 0) });
+            Add(_Top = new MeshTranslatedScaledPart(Game.Current.NewMesh("WallRounded"), _CoverTranslation, _CoverScaleFactor) { Color = Color.FromArgb(123, 123, 123) });
+            Add(_Bottom = new MeshTranslatedScaledPart(Game.Current.NewMesh("WallRounded"), -_CoverTranslation, _CoverScaleFactor) { Color = Color.FromArgb(0, 0, 0) });
             Add(_Collider = new ObbTranslatedCollider(mesh));
         }
         #endregion Constructors
@@ -49,25 +55,85 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _SoundEffect = Game.Current.GetSound(_SoundString, EffectVolume);
             }
         }
-        public Single Elasticity { get; set; }
+        public Single _Elasticity = 1f;
+        public Single _RealElasticity = _ElasticityFactor;
+        public Single Elasticity
+        {
+            get { return _Elasticity; }
+            set
+            {
+                _Elasticity = value;
+                _RealElasticity = _ElasticityFactor * value;
+            }
+        }
         #endregion Properties
 
-        #region ItemMethods
-        private Boolean _IsContracting = false;
-        public override void Act(Interactive interactive, Single deltaTime)
+        #region ResetMethods
+        public override void LoadValues()
         {
-            base.Act(interactive, deltaTime);
+            base.LoadValues();
+            _TotalContraction = 0;
         }
-        protected override void OnContact(ItemContactState contactState)
+        #endregion ResetMethods
+
+        #region ItemMethods
+        public override void Animate(Single deltaTime)
         {
-            base.OnContact(contactState);
-            if (_SoundEffect != null)
-                _SoundEffect.play(false);
-            contactState.Collision.Restitution *= 1.5f;
+            if (_MaxDepthState != null)
+            {
+                var contraction = _MaxDepthState.ComputeApproachVelocity() * deltaTime;
+                _Contract(contraction);
+                _MaxDepthState = null;
+                _MaxDepth = 0;
+            }
+            else if (!_IsContactOcurred && _TotalContraction > 0)
+                _Contract(-_SpringElasticVelocityY * deltaTime * Scale.Y);
+            _IsContactOcurred = false;
+        }
+        private Boolean _IsContactOcurred = false;
+        private Single _MaxDepth = 0;
+        private ItemContactState _MaxDepthState = null;
+        private Single _TotalContraction = 0;
+        protected override void OnContact(ItemContactState contactState, Single deltaTime)
+        {
+            _IsContactOcurred = true;
+            if (_MaxDepth < contactState.Contact.Depth)
+            {
+                _MaxDepth = contactState.Contact.Depth;
+                _MaxDepthState = contactState;
+            }
+            if (Scale.Y < _SpringContractedY || _TotalContraction < 0
+            || !Vector3.Dot(_Collider.Top, contactState.Normal).TolerantEquals(1))
+            {
+                if (_TotalContraction < 0)
+                {
+                    _Contract(-_TotalContraction);
+                    if (_SoundEffect != null)
+                        _SoundEffect.play(false);
+                    _TotalContraction = 0;
+                }
+                base.OnContact(contactState, deltaTime);
+            }
+            else contactState.Interactive.AddForceAt(contactState.Radius, _RealElasticity * _TotalContraction * _Collider.Top);
+        }
+        private void _Contract(Single contraction)
+        {
+            _TotalContraction += contraction;
+            Scale = Scale.AddY(-contraction * _SpringSizeInverseY);
+            Position = Position.AddY(-contraction * .5f);
+        }
+        protected override void OnRestingContact(ItemContactState contactState)
+        {
+            if (Scale.Y < _SpringContractedY
+            || !Vector3.Dot(_Collider.Top, contactState.Normal).TolerantEquals(1))
+                base.OnRestingContact(contactState);
         }
         protected override void OnRestitutiveContact(ItemContactState contactState)
         {
-        } 
+            if (Scale.Y < _SpringContractedY
+            || !Vector3.Dot(_Collider.Top, contactState.Normal).TolerantEquals(1))
+                base.OnRestitutiveContact(contactState);
+        }
         #endregion ItemMethods
     }
 }

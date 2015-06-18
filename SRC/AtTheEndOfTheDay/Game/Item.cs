@@ -254,7 +254,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Colliders
 
         #region InteractionMethods
-        public virtual void ButtonSignal(Object[] signal) { }
+        public virtual void Signal(Object[] signal) { }
         public virtual void FindSiblings(Item[] items) { }
         public virtual void Build(Single deltaTime) { }
         public virtual void Animate(Single deltaTime) { }
@@ -266,7 +266,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var reacted = false;
             if (contactState.TimesReacted == 0)
             {
-                OnContact(contactState);
+                OnContact(contactState, deltaTime);
                 reacted = true;
             }
             if (contactState.Weight > 0)
@@ -281,7 +281,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             }
             return reacted;
         }
-        protected virtual void OnContact(ItemContactState contactState)
+        protected virtual void OnContact(ItemContactState contactState, Single deltaTime)
         {
             contactState.ApplyMinimumTranslation();
         }

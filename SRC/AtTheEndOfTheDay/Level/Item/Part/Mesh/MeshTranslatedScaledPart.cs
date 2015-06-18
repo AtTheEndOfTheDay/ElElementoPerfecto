@@ -7,21 +7,23 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class MeshTranslatedScaledPart : MeshTransformedPart
     {
         #region Constructors
-        private Vector3 _ScaleFactor;
-        private Vector3 _Translation;
+        public Vector3 ScaleFactor { get; set; }
+        public Vector3 Translation { get; set; }
         private Vector3 _TranslationCurrent;
         public MeshTranslatedScaledPart(TgcMesh mesh, Vector3 translation, Vector3 scaleFactor)
             : base(mesh)
         {
-            Position = _TranslationCurrent = _Translation = translation;
-            Scale = _ScaleFactor = scaleFactor;
+            Position = _TranslationCurrent = Translation = translation;
+            Scale = scaleFactor.MemberwiseMult(_ItemScale = Item.DefaultScale);
+            ScaleFactor = scaleFactor;
         }
         #endregion Constructors
 
         #region PartMethods
+        private Vector3 _ItemScale;
         protected override void Item_ScaleChanged(Item item)
         {
-            Scale = _ScaleFactor.MemberwiseMult(item.Scale);
+            Scale = ScaleFactor.MemberwiseMult(_ItemScale = item.Scale);
             UpdateTranslation(item);
         }
         protected override void Item_RotationChanged(Item item)
@@ -35,7 +37,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         protected void UpdateTranslation(Item item)
         {
-            _TranslationCurrent = Vector3.TransformCoordinate(_Translation, RotationMatrix);
+            _TranslationCurrent = Vector3.TransformCoordinate(Translation.MemberwiseMult(_ItemScale), RotationMatrix);
             Position = item.Position + _TranslationCurrent;
         }
         #endregion PartMethods

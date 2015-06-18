@@ -19,7 +19,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Gravitor : Item
     {
-        public override void ButtonSignal(Object[] signal)
+        public override void Signal(Object[] signal)
         {
             if (signal.Length == 0) return;
             var value = signal[0];

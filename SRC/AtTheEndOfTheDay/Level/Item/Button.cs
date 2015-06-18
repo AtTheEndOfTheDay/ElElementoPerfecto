@@ -88,7 +88,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             if (_RelatedItem != null
             && itemCollision.AnyNormalDotVector(_Collider.Top, dot => dot.Abs().TolerantEquals(1)))
-                _RelatedItem.ButtonSignal(_Signal);
+            {
+                _RelatedItem.Signal(_Signal);
+            }
             if (_SoundEffect != null)
                 _SoundEffect.play(false);
         }

@@ -88,7 +88,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion ResetMethods
 
         #region ItemMethods
-        public override void ButtonSignal(Object[] signal)
+        public override void Signal(Object[] signal)
         {
             if (signal.Length == 0)
                 Position = _EndOfTheWorld;

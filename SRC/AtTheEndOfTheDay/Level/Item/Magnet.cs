@@ -95,9 +95,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (Vector3.Dot(n, _Collider.Top) > _AttractionTolerance)
                 interactive.Momentum -= n * (_ForceReal / d2);
         }
-        protected override void OnContact(ItemContactState contactState)
+        protected override void OnContact(ItemContactState contactState, Single deltaTime)
         {
-            base.OnContact(contactState);
+            base.OnContact(contactState, deltaTime);
             _Spark.Start(contactState.Point, contactState.Approach, contactState.Normal);
         }
         #endregion ItemMethods

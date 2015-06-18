@@ -34,6 +34,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Vector3 Orthonormal { get; private set; }
         public Vector3 Velocity { get; private set; }
         public Single Approach { get; private set; }
+        public Single ComputeApproachVelocity()
+        {
+            return -Vector3.Dot(Normal, Interactive.GetVelocityAt(Radius));
+        }
         public Vector3 Momentum { get; private set; }
         public Single Weight { get; private set; }
         public Vector3 Restitution

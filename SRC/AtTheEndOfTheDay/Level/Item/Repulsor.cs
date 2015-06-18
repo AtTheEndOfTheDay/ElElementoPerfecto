@@ -90,7 +90,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion ResetMethods
 
         #region ItemMethods
-        public override void ButtonSignal(Object[] signal)
+        public override void Signal(Object[] signal)
         {
             if (signal.Length == 0) return;
             var value = signal[0];
@@ -109,9 +109,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (d2 < _RepulsionFactor * _RepulsionDistancePow2)
                 interactive.Momentum += n * (_ForceReal / d2);
         }
-        protected override void OnContact(ItemContactState contactState)
+        protected override void OnContact(ItemContactState contactState, Single deltaTime)
         {
-            base.OnContact(contactState);
+            base.OnContact(contactState, deltaTime);
             _Spark.Start(contactState.Point, contactState.Approach, contactState.Normal);
         }
         #endregion ItemMethods

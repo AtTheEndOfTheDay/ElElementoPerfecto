@@ -116,15 +116,19 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Parser.ParseLevels(_Paths[0], firstLevels);
             if (firstLevels.Count > 0)
             {
-                _Levels[0] = firstLevels[0];
-                _Levels[0].Load();
+                var level = _Levels[0] = firstLevels[0];
+                level.Load();
+                level.CameraPosition = level.CameraPosition.MultZ(_CameraFix);
             }
             for (var i = 1; i < _Levels.Length; i++)
             {
                 var levels = new List<Level>();
                 Parser.ParseLevels(_Paths[i], levels);
                 if (levels.Count > 0)
-                    _Levels[i] = levels[0];
+                {
+                    var level = _Levels[i] = levels[0];
+                    level.CameraPosition = level.CameraPosition.MultZ(_CameraFix);
+                }
             }
             _LoadLevelThread.Abort();
         }

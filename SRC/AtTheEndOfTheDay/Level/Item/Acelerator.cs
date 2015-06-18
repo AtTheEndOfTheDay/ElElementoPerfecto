@@ -15,7 +15,6 @@ using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
 
-
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
     public class Acelerator : Item

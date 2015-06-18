@@ -55,14 +55,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var mods = GuiController.Instance.Modifiers;
             mods.addBoolean("IsMeshVisible", "Mostrar Meshes", Game.Current.IsMeshVisible = true);
             mods.addBoolean("IsColliderVisible", "Mostrar Colliders", Game.Current.IsColliderVisible = true);
-            mods.addBoolean("IsToonShaderEnabled", "Usar Toon Shader", Game.Current.IsColliderVisible = true);
+            //mods.addBoolean("IsToonShaderEnabled", "Usar Toon Shader", Game.Current.IsColliderVisible = true);
         }
         private void _SetModifiers()
         {
             var mods = GuiController.Instance.Modifiers;
             Game.Current.IsMeshVisible = (Boolean)mods["IsMeshVisible"];
             Game.Current.IsColliderVisible = (Boolean)mods["IsColliderVisible"];
-            Game.Current.IsToonShaderEnabled = (Boolean)mods["IsToonShaderEnabled"];
+            //Game.Current.IsToonShaderEnabled = (Boolean)mods["IsToonShaderEnabled"];
         }
         #endregion Modifiers
 
