@@ -89,5 +89,8 @@ Las Meshes:
 Las Texturas:
 Efectos de Sonido:
 Efectos de Particulas:
+	Para la creación del efecto de particulas la técnica que utilizamos fue la de ir mapeando distintas texturas de una animación de un Spritesheet en un Quad, la cual fue posible porque el juego en si tiene una jugabilidad 2D.
+	Al no poseer un Quad que se adaptara a estos requerimientos (el TgcQuad solo se le permite setear un color y el TgcPlaneWall solo tiene orientaciones paralelas a los planos de los ejes cartecianos), reutilizamos código de ambas clases para poder crear una TextturedQuad.cs yluego una AnimatedQuad.cs que se encarga de generar la abstracción correspondiente a el mapeado de la textura en el Quad según ciertos parámetros, como el FrameRate y el tamaño de la textura.
+	Para los efectos que tenían que ver con el rebote de la pelota, lo que hicimos fue que el tamaño de la animación tuviese una relación directa con la velocidad de colisión de la misma, ya que creemos que esto le da un aspecto un poco más realista.
 Animaciones:
 Optimizacion:
