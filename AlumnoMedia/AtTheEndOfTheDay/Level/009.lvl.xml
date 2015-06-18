@@ -44,6 +44,8 @@
     <Acelerator Force="5" Scale="2.5,1,0.1"/>
     <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="" RelatedItem="Gravitor" Signal="-1" SoundEffect="@cambio gravedad2.wav"/>
     <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="" RelatedItem="Gravitor" Signal="-1" SoundEffect="@cambio gravedad2.wav"/>
+    <Button Name="" Properties="" Scale="1,0.5,1" Position="0,0,0" Rotation="" RelatedItem="Gravitor" Signal="-1" SoundEffect="@cambio gravedad2.wav"/>
+    <Acelerator Force="5" Scale="2.5,1,0.1"/>
     <Cannon Force="3"/>
   </User>
 </Level>
