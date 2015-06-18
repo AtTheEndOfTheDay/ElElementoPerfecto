@@ -3,7 +3,7 @@
        CameraPosition="0,0,-200" CameraTarget="0,0,0"
        LightPosition="500,500,-500" LightIntensity="500"
        PlanePoint="0,0,0" PlaneNormal="0,0,1"
-       Sound="@Crash Bandicoot 2.wav" WinSound="@Win2.wav"
+       Sound="@WhiteLevelMusic.wav" WinSound="@MysteriousWin.wav"
        WinSign="@Level.png" WinSignSize="113,56.5" WinSignPosition="-25, 0, -10">
   <Description>
     Aca va la descripcion del nivel.
@@ -26,7 +26,9 @@
     <Wall Name="Inferior" Properties="" Scale="39,0.4,1" Position="0,-83,0" Rotation="" Texture="@Walls.jpg"/>
     <Wall Name="LeftLateral" Properties="" Scale="0.4,21,1" Position="-154,0,0" Rotation="" Texture="@Walls.jpg"/>
     <Wall Name="RightLateral" Properties="" Scale="0.4,21,1" Position="+155,0,0" Rotation="" Texture="@Walls.jpg"/>
+   
     <!--Lvl Obstacles-->
+    <BlackHole Name="gargantua" Force="0.5" AtractionDistance ="5" Position="-80,67,0" Scale="1.5,1.5,1.5" MinScale="0.8" MaxScale="1.2"/>
     <Wall Name="" Properties="" Scale="0.4,15,1" Position="-100,20,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <Wall Name="" Properties="" Scale="12.5,0.4,1" Position="-11,27,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <Wall Name="" Properties="" Scale="17,0.4,1" Position="-30,-38,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
@@ -35,13 +37,15 @@
     <Wall Name="" Properties="" Scale="0.4,8.5,1" Position="38,-5,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <Wall Name="" Properties="" Scale="2,0.4,1" Position="-65,22,0" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg"/>
     <Wall Name="" Properties="" Scale="2.5,0.4,1" Position="-92,22,0" Rotation="0,0,-0.78" Texture="@ObstacleWalls.jpg"/>
-    <Portal Name="" Properties="" Scale="3,0.5,1" Position="35,10,0" Rotation="0,0,-1.57" ReceptorPosition="-98,67,0" ReceptorScale="3,0.2,1" ReceptorRotation="0,0,1.57"/>
+    <Button Properties="" Scale="1,0.8,1" Position="-97,40,0" Rotation="0,0,1.57" RelatedItem="gargantua" Signal="-100,-100,-100" SoundEffect="@GravityChange.wav"/>
+    
     <!--Lvl Resources-->
   </Game>
   <User>
     <Cannon Force="2"/>
     <Cannon Force="2"/>
     <Cannon Force="2"/>
+    <Portal Name="" Properties="" Scale="3,0.5,1" Position="35,10,0" Rotation="0,0,-1.57" ReceptorPosition="-98,67,0" ReceptorScale="3,0.2,1" ReceptorRotation="0,0,1.57"/>
     <Wall Name="" Properties="" Scale="5,0.4,1" Position="-65,22,0" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg" MaxScale="10" MinScale="2.5"/>
   </User>
 </Level>

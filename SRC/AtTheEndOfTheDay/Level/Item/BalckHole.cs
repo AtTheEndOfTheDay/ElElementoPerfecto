@@ -34,7 +34,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var mesh = Game.Current.NewMesh("BallTextured");
             Add(new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("BlackHole.jpg") });
             Add(new SphereCollider(mesh));
-            _SoundEffect = Game.Current.GetSound("blackhole2.wav", EffectVolume);
+            _SoundEffect = Game.Current.GetSound("BlackHole.wav", EffectVolume);
             Add(_StarStorm = new TranslatedParticlePart()
             {
                 Translation = new Vector3(0, 0, -4),

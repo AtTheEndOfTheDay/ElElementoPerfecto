@@ -129,12 +129,6 @@
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\004.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\011.lvl.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\010.lvl.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Level\009.lvl.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -251,6 +245,8 @@
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Level.png" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Texture\Sign\Win.png" />
     <Content Include="Estrategia\Boceto de Instrucciones.txt" />
+    <Content Include="GrupoInfo\Gustavo Crespi 149-169.6.jpg" />
+    <Content Include="GrupoInfo\Leandro Rodriguez 149-246.9.jpg" />
     <Content Include="GrupoInfo\Gaston Santoalla 149.324-3.jpg" />
     <Content Include="GrupoInfo\información.txt" />
   </ItemGroup>
