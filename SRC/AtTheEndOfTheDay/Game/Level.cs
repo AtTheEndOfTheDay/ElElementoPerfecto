@@ -32,7 +32,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private static readonly Vector3 DefaultPlaneNormal = Vector3Extension.Front;
         private static readonly Vector2 DefaultWinSignSize = new Vector2(113f, 56.5f);
         private static readonly Vector3 DefaultWinSignPosition = new Vector3(-25, 0, -10);
-        private static readonly TgcStaticSound WinSound = Game.Current.GetSound("Win.wav", 0);
         #endregion Constants
 
         #region Constructors
@@ -85,6 +84,28 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _Menu = value ?? Menu.Null;
                 if (value != null && !_Items.Contains(_Menu))
                     _Items.Add(_Menu);
+            }
+        }
+
+        private TgcStaticSound _WinSound = _SoundNull;
+
+        private String _WinSoundPath;
+        public String WinSound
+        {
+            get { return _WinSoundPath; }
+            set
+            {
+                if (_WinSoundPath == value) return;
+                _WinSoundPath = value;
+                if (_WinSound != _SoundNull)
+                    _WinSound.dispose();
+                if (String.IsNullOrWhiteSpace(value))
+                    _WinSound = _SoundNull;
+                else
+                {
+                    try { _WinSound = Game.Current.GetSound(value, 0); }
+                    catch { _WinSound = _SoundNull; }
+                }
             }
         }
         private String _WinSignPath;
@@ -267,6 +288,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             if (_WinSign.Texture != null)
                 _WinSign.Texture.dispose();
+            _WinSound.dispose();
             _Sound.dispose();
             foreach (var item in _Items)
                 item.Dispose();
@@ -331,7 +353,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 interactive.Simulate(deltaTime);
             IsComplete = _Goals.All(goal => goal.IsMeet);
             if (IsComplete)
-                WinSound.play();
+                _WinSound.play();
         }
 
         private void _Pick()
