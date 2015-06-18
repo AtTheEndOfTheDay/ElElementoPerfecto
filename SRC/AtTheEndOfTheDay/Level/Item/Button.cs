@@ -41,19 +41,26 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             set
             {
                 _RelatedItemString = value;
-                //TODO:  _RelatedItem = econtrar el item del Related - Parser
             }
         }
 
+        public override void FindSiblings(Item[] items)
+        {
+            if (_RelatedItemString != null)
+            {
+                _RelatedItem = null;
+                _RelatedItem = items.FirstOrDefault(i => i.Name.IgnoreCaseEquals(_RelatedItemString));
+                if (_RelatedItem == null) return;
+            }
+        }
         #endregion Properties
 
         #region ItemMethods
         private readonly ObbTranslatedCollider _Obb;
         private Item _RelatedItem;
-        public override bool React(ItemCollision itemCollision, float deltaTime)
+        public override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
         {
             _RelatedItem.ButtonSignal();
-            return base.React(itemCollision, deltaTime);
         }
         #endregion ItemMethods
     }

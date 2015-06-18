@@ -13,7 +13,7 @@
     <CollisionGoal Items="{Ball;Win}"/>
   </Goals>
   <Game>
-    <Gravitor Name="" Properties="" Scale="0,-98,0" Position="" Rotation=""/>
+    <Gravitor Name="Gravitor" Properties="" Scale="0,-98,0" Position="" Rotation=""/>
     <Menu Name="" Properties="" Position="120,0,0" Scale="2,7,1" Rotation="" ItemSize="20,-20,20" ItemRotation=".7, 0, .7" ItemRotationSpeed="0,.7,0"/>
     <Ball Name="Ball" Properties="" Scale="1,1,1" Position="-110,-20,0" Texture="@Pelota.jpg"/>
     <Wall Name="Win" Properties="" Scale="1,1,1" Position="55,50,0" Rotation="" Texture="@WinItem.jpg"/>

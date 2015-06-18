@@ -25,11 +25,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         #region Constructors
         MeshStaticPart _Mesh;
+        ObbCollider _Obb;
         public Acelerator()
         {
             var mesh = Game.Current.NewMesh("WallTextured");
             Add(_Mesh = new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("Acelerator.jpg") });
-            Add(new ObbCollider(mesh));
+            Add(_Obb = new ObbCollider(mesh));
         }
         #endregion Constructors
 
@@ -62,7 +63,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (itemCollision.Item != this) return false;
             var reacted = false;
             var interactive = itemCollision.Interactive;
-            interactive.Momentum += Vector3.TransformCoordinate(Vector3Extension.Right, this.RotationMatrix) * (_ForceReal);
+            interactive.Momentum += _Obb.Orientation[0] * (_ForceReal);
             return reacted;
         }
         #endregion ItemMethods
