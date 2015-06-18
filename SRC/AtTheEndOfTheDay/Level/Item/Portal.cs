@@ -30,10 +30,10 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private readonly TgcStaticSound _SoundEffect;
         public Portal()
         {
-            var mesh = Game.Current.NewMesh("WallTextured");
+            var mesh = Game.Current.NewMesh("BallTextured");
             Add(_PartList[0] = new MeshStaticPart(mesh) { Texture = Game.Current.GetMaterial("BluePortal.png") });
-            Add(_Collider); _PartList[1] = _Collider = new ObbCollider(mesh);
-            var receptorMesh = Game.Current.NewMesh("WallTextured");
+            _PartList[1] = _Collider = new ObbCollider(mesh); Add(_Collider); 
+            var receptorMesh = Game.Current.NewMesh("BallTextured");
             Add(_PartList[2] = _Receptor = new MeshImmutableePart(receptorMesh) { Texture = Game.Current.GetMaterial("OrangePortal.png") });
             _SoundEffect = Game.Current.GetSound("portal2.wav", EffectVolume);
         }
