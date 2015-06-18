@@ -22,7 +22,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     {
         #region Constants
         private const Single _ElasticityFactor = 100f;
-        private const Single _SpringElasticVelocityY = 20f;
+        private const Single _SpringElasticVelocityY = 50f;
         private const Single _SpringContractedY = .5f;
         private const Single _SpringSizeInverseY = 1f / 17f;
         private static readonly Vector3 _CoverScaleFactor = new Vector3(2f, .2f, 2f);
@@ -74,9 +74,23 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             base.LoadValues();
             _TotalContraction = 0;
         }
+        private static readonly Vector3 _MenuProportion = Vector3Extension.One * .7f;
+        public override void MenuTransform(Vector3 scale, Vector3 rotation, Vector3 position)
+        {
+            base.MenuTransform(scale.MemberwiseMult(_MenuProportion), rotation, position);
+        }
         #endregion ResetMethods
 
         #region ItemMethods
+        public override void Build(Single deltaTime)
+        {
+            var input = GuiController.Instance.D3dInput;
+            var stepR = deltaTime * BuildRotationSpeed;
+            if (input.keyDown(Key.D))
+                Rotation = Rotation.AddZ(-stepR);
+            else if (input.keyDown(Key.A))
+                Rotation = Rotation.AddZ(stepR);
+        }
         public override void Animate(Single deltaTime)
         {
             if (_MaxDepthState != null)
@@ -120,7 +134,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             _TotalContraction += contraction;
             Scale = Scale.AddY(-contraction * _SpringSizeInverseY);
-            Position = Position.AddY(-contraction * .5f);
+            Position = Position + contraction * _Collider.Bottom;
         }
         protected override void OnRestingContact(ItemContactState contactState)
         {
