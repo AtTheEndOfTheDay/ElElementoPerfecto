@@ -3,7 +3,7 @@
        CameraPosition="0,0,-200" CameraTarget="0,0,0"
        LightPosition="500,500,-500" LightIntensity="500"
        PlanePoint="0,0,0" PlaneNormal="0,0,1"
-       Sound="@WhiteLevelMusic.wav" WinSound="@Win2.wav"
+       Sound="@WhiteLevelMusic.wav" WinSound="@MysteriousWin.wav"
        WinSign="@Level.png" WinSignSize="113,56.5" WinSignPosition="-25, 0, -10">
   <Description>
     Aca va la descripcion del nivel.
