@@ -42,8 +42,6 @@
     <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
     <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
     <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
-    <Repulsor Force="1" Scale="1,1,1" RepulsionDistance="3"/>
-    <BlackHole Force="2" AtractionDistance ="5" Scale="1,1,1" MinScale="0.8" MaxScale="1.2"/>
     <BlackHole Force="2" AtractionDistance ="5" Scale="1,1,1" MinScale="0.8" MaxScale="1.2"/>
     <Wall Name="" Properties="" Scale="5,0.4,1" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg" MaxScale="10" MinScale="2.5"/>
     <Cannon Force="3"/>
