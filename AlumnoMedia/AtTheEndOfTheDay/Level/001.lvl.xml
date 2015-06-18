@@ -4,7 +4,7 @@
        LightPosition="500,500,-500" LightIntensity="500"
        PlanePoint="0,0,0" PlaneNormal="0,0,1"
        Sound="@Crash Bandicoot 2.wav" WinSign="@Level.png"
-       WinSignScaling=".5,.5" WinSignPosition="300, 200">
+       WinSignSize="113,56.5" WinSignPosition="-25, 0, -10">
   <Level.Description>
     Aca va la descripcion del nivel.
     Si se defie esta propiedad se ignora el atributo.

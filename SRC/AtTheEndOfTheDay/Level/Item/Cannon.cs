@@ -7,7 +7,7 @@ using TgcViewer;
 using TgcViewer.Example;
 using TgcViewer.Utils.Modifiers;
 using TgcViewer.Utils._2D;
-using TgcViewer.Utils.TgcGeometry;
+using TgcViewer.Utils.TgcGeometry; 
 using TgcViewer.Utils.TgcSceneLoader;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX;

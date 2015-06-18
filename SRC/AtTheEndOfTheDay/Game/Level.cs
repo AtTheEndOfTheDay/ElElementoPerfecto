@@ -30,8 +30,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private const Single DefaultLightIntensity = 66f;
         private static readonly Vector3 DefaultPlanePoint = Vector3.Empty;
         private static readonly Vector3 DefaultPlaneNormal = Vector3Extension.Front;
-        private static readonly Vector2 DefaultWinSignScaling = new Vector2(0.5f, 0.5f);
-        private static readonly Vector2 DefaultWinSignPosition = new Vector2(300, 200);
+        private static readonly Vector2 DefaultWinSignSize = new Vector2(113f, 56.5f);
+        private static readonly Vector3 DefaultWinSignPosition = new Vector3(-25, 0, -10);
         private static readonly TgcStaticSound WinSound = Game.Current.GetSound("Win.wav", 0);
         #endregion Constants
 
@@ -106,17 +106,17 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 }
             }
         }
-        private TgcSprite _WinSign = new TgcSprite()
+        private TexturedQuad _WinSign = new TexturedQuad()
         {
-            Scaling = DefaultWinSignScaling,
+            Size = DefaultWinSignSize,
             Position = DefaultWinSignPosition,
         };
-        public Vector2 WinSignScaling
+        public Vector2 WinSignSize
         {
-            get { return _WinSign.Scaling; }
-            set { _WinSign.Scaling = value; }
+            get { return _WinSign.Size; }
+            set { _WinSign.Size = value; }
         }
-        public Vector2 WinSignPosition
+        public Vector3 WinSignPosition
         {
             get { return _WinSign.Position; }
             set { _WinSign.Position = value; }
@@ -251,9 +251,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             if (IsComplete)
             {
-                GuiController.Instance.Drawer2D.beginDrawSprite();
-                _WinSign.render();
-                GuiController.Instance.Drawer2D.endDrawSprite();
+                _WinSign.Render();
             }
             foreach (var item in _Items)
                 item.Render(shader);
@@ -268,7 +266,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public void Dispose()
         {
             if (_WinSign.Texture != null)
-                _WinSign.dispose();
+                _WinSign.Texture.dispose();
             _Sound.dispose();
             foreach (var item in _Items)
                 item.Dispose();
