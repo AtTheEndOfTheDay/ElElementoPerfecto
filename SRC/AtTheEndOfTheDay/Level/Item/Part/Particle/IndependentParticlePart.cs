@@ -37,6 +37,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         public void Start(Vector3 location, Single Power, Vector3 newUpDirection)
         {
+            if (Power < 15)
+                return;
+
             if (Animation != null)
             {
                 Animation.Size = _InitialSize *(_PowerFactor * Power);
