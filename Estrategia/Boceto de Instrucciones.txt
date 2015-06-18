@@ -49,7 +49,7 @@ Items del Juego:
 		Construccion: este objeto solo se puede posicionar con el mouse.
 
 	Boton: mas que un item en si mismo, este es un auxiliar, al presionarlo desde arriba o abajo, permite cambiar las propiedades de alguno de los items del escenario, el jugador debera descubrir cual de esos items es el que el boton modifica y de que manera. Este podria hacer desaparecer algun obstaculo o incluso cambiar la gravedad.
-		Construccion: solo se posciona con el mouse
+		Construccion: Se posiciona con el mouse y se rota con las letras A y D.
 
 	Cañon: el poderoso cañon nos permitira disparar a la pelota en la direccion que querramos, siempre y cuando lleguemos a cargarlo. Al iniciar la simulacion el cañon estara inactivo, hasta que el usuario logre que la pelota entre en el orificio del cañon, cargandolo. Una vez que el cañon este cargado rotara, abandonando su rotacion inicial y se colocara el posicion de disparo, una vez finalizado, disparara a la pelota con cierta potencia (puede variar en distintos cañones) hacia esa direccion. En caso de que el cañon sea parte del nivel, las posiciones (inicial y de disparo) seran propias del cañon y el usuario no podra elegirlas, en caso de que el cañon sea un item del usuario este podra tanto posicionarlo donde quiera como tambien establecerle las posiciones que el desee (por esto es el item mas complejo de construir)
 		Construccion: ademas de desplazarlo con el mouse, el cañon posee 3 tipos de rotacion, la primera de ellas es la rotacion absoluta, en la cual rota tanto el cañon en si como su base, es decir rota todo el objeto, para lograr esta rotacion el usuario podra presionar las teclas Q y E.
@@ -77,20 +77,51 @@ Items del Juego:
 Desiciones de Diseño Tomadas:
 
 Jugabilidad:
+	Dado que el juego proponia un ambiente de resolucion de acertijos utilizando diferentes items, se decidio tener una jugabilidad 2D, auqnue el modelo en si es 3D, durante el juego solo se maneja en el eje X,Y para las interacciones normales, haciendo mas facil para el usuario como tambien para su diseño.
+
 El Juego, sus etapas, diseño general:
+	
 Elaboracion de Niveles:
+	A la hora de armar los niveles, en el principio del desarrollo se utilizaba una clase, la cual poseia los valores de los objetos harcodeados y los instanciaba dependiendo el nivel en el que se encontraba. Sin embargo con el objetivo de poder hacerlos con mas facildiad y sin la necesidad de recompilar el juego se decidio pasarlos a un archivo de texto para luego a traves de un parser (Parser.cs), se levantan y se instancian los diferentes niveles. Luego intentando llevar esto un poco mas alla, se decidio que este parser levante los niveles de un archivo .xml, seteando las properties propias de cada objeto instanciado del nivel. Para esto se utilizo refleccion (reflector), una herramienta provista por .net que permite interpretar lso valores del .xml en clases y objetos concretos del codigo del ejemplo.
+	La elaboracion del mismo consta de diferentes bloques, el primero (que contiene a todos los demas), es el bloque Level, que setea propiedades generales del nivel como la musica de fondo, la intensidad y posicion de la luz, el cartel de victoria, etc.
+	Luego de la seccion Level, esta la seccion Goals, en la cual se instancian los objetivos puntuales del nivel (todos los niveles creados poseen el mismo objetivo).
+	Siguiendo con la instanciacion del nivel se instancian los objetos propios del nivel que no pueden ser controlados por el usuario con sus diferentes propiedades, como el menu, las paredes limite y los obstaculos y recursos fijos, como tambien la pelota.
+	Por ultimo se deben instanciar los items del usuario, que son aquellos que apareceran ene l menu y sobre los cuales el usuario tendra control para ir avanzando por los diferentes niveles.
+
 Los Objetivos:
+	En realidad el juego consta de un solo objetivo, que la pelotita llegue a tocar el cubo dimensional, sin embargo por como esta diseñado el mismo, podrian agregarse objetivos facilmente, ya que cada nivel posee una lista de objetivos, y estos todos entienden los mismos mensajes, asi pudiendo responder si estan completos con una logica particular. Sin embargo, el unico objetivo que esta realmente implementado es que se de la colision de dos objetos (lso cuales son configurados por el archivo .xml).
 Los Items:
+	
+
 Las Partes:
-	Colliders:
-	Meshes:
-	Particles:
+	Parte de la versatilidad que se busco a la hora de realizar los items, consistia en independizar el concepto del item (su comportamiento en si) del comportamiento de sus partes. Considerando partes del item, sus colliders, y sus meshes. Dado que algunos de los items tienen mas de una mesh y mas de un collider (como el cañon), se decidio tener una lista de las partes, las cuales se suscribian a ciertos eventos (como el cambio de la escala, posicion y rotacion del item) y se iban adaptando a la vez.
+	Este desacoplamiento del item con sus partes, nos permitio por ejemplo tener partes de un item estaticas, mientras otras se movian. por ejemplo el cañon permite rotar la parte superior independientemente de la base, o el portal, permite mover el umbral de entrada sin que el usuario tenga control del de salida.
+	Ademas de esta manera, podemos controlar en las diferentes etapas de simulacion del juego con que objetos deseo interactuar y con cuales no.
+		Colliders: Existen diferentes tipos, algunos siguen al objeto en todas sus transformacion y otros, como el ObbTranslatedUnRotatedCollider, el cual ademas de estar trasladado del centro de origen del objeto no rota siempre con el mismo. Sin embargo quizas el mas complejo es el HollowObbCollider, que es subclase del CompositeCollider (Un collider conformado por varios collider con diferentes caracteristicas), este HollowObbCollider es el utilizado en cañon para hacer que la pelota ingrese en el mismo, para luego ser capturado por otro collider en el centro del cañon. De esta manera se permite cargar el cañon colocando la pelota en su interior para que este luego la dispare.
+		Meshes: La mayoria de las meshes siguen al item en todas sus transformaciones, sin embargo algunas no como la base del cañon, que al igual que uno de sus tantos colliders, no rotan con el siempre. Ademas algunos objetos tienen mas de una mesh y separadas, como es el caso del portal que posee una mesh (con una textura azul) la cual es el umbral de entrada y otra mesh (con una textura naranja) el cual es un umbral de salida y esta segunda no sigue a la primera ni en su textura ni en su color, es practicamente independiente de la primera.
+		Particles: A la hora de realizar los efectos de particulas (explicados mas adelante), diferentes items poseian diferentes efectos, entonces, como muchos de estos efectos deben acoplarse al item en sus transformaciones o deben ocurrir en situaciones especiales y seguir al item, se decidio que estos Quads, sean parte del item en si.
+
 Las Meshes:
+	Todas las meshes utilizadas (incluso las paredes y la pelota) fueron realizadas en 3DMax y exportadas al TgcViewer con el importador provisto por la catedra.
+
 Las Texturas:
+	Algunas de las texturas utilizadas fueron sacados de de las que se encuentran en el TgcViewer, sin embargo la gran mayoria, se buscaron en internet, intentando que se mapee correctamente con el objeto que intentabamos lograr. Sin embargo como muchos objetos fueron realizados en el 3DMax, no se necesitaron tantas texturas.
+	A la hora de elegir las mismas, se decidio una tematica espacial-futurista dado que muchos de los objetos (agujero negro, portal, repulsor) daban la impresion de un tiempo futuro.
+
 Efectos de Sonido:
+	A la hora de ponerle sonido al juego, buscamos distintos sonidos en internet, aunque muchos nos sirvieron (como el disparo del cañon) muchos de ellos fueron creados por nosotros utilizando la herramienta provista por esta pagina:  http://www.superflashbros.net/as3sfxr/
+	Esa herramienta te permite obtener diferentes sonidos editando ciertos efectos y frecuencias, logrando sonidos mas acordes al ambiente que habiamos armado para el ejemplo.
+	Como musica de fondo optamos por parte de la banda sonora de un juego conocido de playstation "Crash bandicoot 2", en donde la musica con un estilo futurista que encaja con la tematica elegida intentando agregrar un ambiente mas relajado o misterioso para los niveles que presentamos.
+
 Efectos de Particulas:
-	Para la creación del efecto de particulas la técnica que utilizamos fue la de ir mapeando distintas texturas de una animación de un Spritesheet en un Quad, la cual fue posible porque el juego en si tiene una jugabilidad 2D.
-	Al no poseer un Quad que se adaptara a estos requerimientos (el TgcQuad solo se le permite setear un color y el TgcPlaneWall solo tiene orientaciones paralelas a los planos de los ejes cartecianos), reutilizamos código de ambas clases para poder crear una TextturedQuad.cs yluego una AnimatedQuad.cs que se encarga de generar la abstracción correspondiente a el mapeado de la textura en el Quad según ciertos parámetros, como el FrameRate y el tamaño de la textura.
-	Para los efectos que tenían que ver con el rebote de la pelota, lo que hicimos fue que el tamaño de la animación tuviese una relación directa con la velocidad de colisión de la misma, ya que creemos que esto le da un aspecto un poco más realista.
+	Para lograr los efectos de particulas (el humo del cañon, el polvo de las paredes, las chispas del iman y el repulsor y el poder del agujero negro), conseguimos diferentes Atlas Textures (algunos por internet, otros hechos por nosotros con Gimp y Photoshop). Decidimos utilizar esta tecnica ya que al poseer una jugabilidad 2D el efecto visual logrado era el deseado.
+	Para lograr el efecto, se necesitaba un Quad, al cual se le cargaba la textura y cambiando el mapeado de la misma (UV offset) a gran velocidad, se produce el efecto visual de la animacion.
+	Uno de los problemas que se nos presento es que el TgcQuad solo permite setear un color (no puede ponerse textura) y el TgcPlaneWall solo tiene orientaciones paralelas a los ejes cartesianos (no nos permitia rotar la animacion con nuestros objetos). Para resolver esto, reutilizamos el codigo de ambas clases del TgcViewer y definimos dos clases, TextturedQuad.cs y AnimatedQuad.cs, con estas dos clases logramos tanto el seteo de la textura como el mapeado de la misma durante la animacion. Controlando el tamaño de la textura y la velocidad de la animacion.
+	Ademas en aquellos efectos que dependen del rebote de la pelota, el tamaño del efecto tiene una relacion directa con la velocidad de colision de la misma, asi logrando un efecto un poco mas creible.
+
 Animaciones:
+	Las diferentes animaciones que se utlizaron, el encogimiento del resorte, el reposicionamiento del cañon, el cambio constante del agujero negro, decidimos aplicar diferentes tipos de transformaciones a los items, asi rotandolos o escalandolos en diferentes momentos y de la manera adecuada, se logro el efecto deseado. Algunas animaciones (como las flechas del acelerador) se utilizo la misma tecnica que se uso en las particulas, logrando un movimiento continuo y constante sin modificar la mesh en si.
+
 Optimizacion:
+	En cuanto a la optimizacion del juego, uno de los problemas mas grandes que tuvimos es la carga de los niveles, al levantarlos del disco (desde los archivos .xml) en el momento de inicio del juego, se perdia mucho tiempo en el inicio del juego. Para dar una solucion a este problema, por un lado se decidio poner una pantalla de carga al inicio con una animacion (para que el jugador vea que ya se inicio el juego) y ademas, a la hora de levantar los niveles, estos no se levantan todos al inicio, sino que se levantan dinamicamente uno a uno, mostrandose el primer nivel una vez que ya se cargo. Para esto se utilizo un hilo secundario en la aplicacion que se encarga de verificar si tanto el nivel siguiente como el anterior estan cargados y en caso de nos estarlos comienza su carga, pero sin interferir a la jugabilidad del juego.
+	Otro de los puntos en los que se intento optimizar el ejemplo es en la cantidad de calculos realizados durante la simulacion fisica. Como la cantidad de meshes en pantalla no son demasiadas, el motor fisico era una de las pocas cosas que enlentecian el juego. Para evitar el exceso de calculos, se separo la simulacion en diferentes etapas
