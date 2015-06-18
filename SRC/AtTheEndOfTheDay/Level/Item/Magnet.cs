@@ -35,7 +35,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Add(_Spark = new IndependentParticlePart()
             {
                 Translation = new Vector3(0, 0, -4),
-                Sound = Game.Current.GetSound("iman.wav", EffectVolume),
+                Sound = Game.Current.GetSound("Magnet.wav", EffectVolume),
                 Animation = new AnimatedQuad()
                 {
                     Texture = Game.Current.GetParticle("SparksFinal.png"),
