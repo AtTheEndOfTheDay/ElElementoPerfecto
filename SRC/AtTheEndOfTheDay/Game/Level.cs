@@ -212,7 +212,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             _Sound.play(true);
             _Menu.Add(_Actives);
-            Remove(_Actives);
+            Remove(_Actives.ToArray());
             RollBack();
         }
         public void RollBack()

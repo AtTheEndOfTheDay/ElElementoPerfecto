@@ -248,6 +248,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Colliders
 
         #region InteractionMethods
+        public virtual void ButtonSignal(Object[] signal) { }
         public virtual void FindSiblings(Item[] items) { }
         public virtual void Build(Single deltaTime) { }
         public virtual void Animate(Single deltaTime) { }
@@ -283,8 +284,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             return reacted;
         }
        	public virtual void ReceiveCollision(Vector3 point, Single approachVel, Vector3 normal) { }
-	public virtual void ButtonSignal() { }
-
         #endregion InteractionMethods
     }
 }

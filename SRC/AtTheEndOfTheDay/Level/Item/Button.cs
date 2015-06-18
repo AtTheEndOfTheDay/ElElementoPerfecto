@@ -20,6 +20,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class Button : Item
     {
         #region Constants
+        private static readonly Object[] _SignalNull = { };
         #endregion Constants
 
         #region Constructors
@@ -43,7 +44,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _RelatedItemString = value;
             }
         }
-
+        private Object[] _Signal = _SignalNull;
+        public Object[] Signal
+        {
+            get { return _Signal; }
+            set { _Signal = value ?? _SignalNull; }
+        }
         public override void FindSiblings(Item[] items)
         {
             if (_RelatedItemString != null)
@@ -60,7 +66,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private Item _RelatedItem;
         public override void ReceiveCollision(Vector3 point, float approachVel, Vector3 normal)
         {
-            _RelatedItem.ButtonSignal();
+            _RelatedItem.ButtonSignal(Signal);
         }
         #endregion ItemMethods
     }
