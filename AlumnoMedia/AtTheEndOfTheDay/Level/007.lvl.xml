@@ -33,8 +33,8 @@
     <Wall Name="" Properties="" Scale="19,0.4,1" Position="15,0,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <Wall Name="" Properties="" Scale="13,0.4,1" Position="-5,40,0" Rotation="" Texture="@ObstacleWalls.jpg"/>
     <!--Lvl Resources-->
-    <Portal Name="" Properties="" Scale="3,0.5 ,1" Position="-62,-55,0" Rotation="0,0,1.57" ReceptorPosition="92,-60,0" ReceptorScale="3,0.2,1" ReceptorRotation="0,0,1.57"/>
-    <Portal Name="" Properties="" Scale="3,0.5,1" Position="92,-20,0" Rotation="0,0,1.57" ReceptorPosition="-58,20,0" ReceptorScale="3,0.2,1" ReceptorRotation="0,0,1.57"/>
+    <Portal Name="" Properties="" Scale="3,0.5 ,1" Position="-62,-55,0" Rotation="0,0,1.57" ReceptorPosition="92,-60,0" ReceptorScale="3,0.2,1" ReceptorRotation="0,0,-1.57"/>
+    <Portal Name="" Properties="" Scale="3,0.5,1" Position="92,-20,0" Rotation="0,0,-1.57" ReceptorPosition="-58,20,0" ReceptorScale="3,0.2,1" ReceptorRotation="0,0,1.57"/>
     <!--Lvl Resources-->
   </Game>
   <User>
