@@ -14,6 +14,7 @@ using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
 using TgcViewer.Utils.Sound;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -81,11 +82,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private Single _CameraFix;
         private String[] _Paths;
         private Level[] _Levels;
-        private TexturedQuad _LoadSign = new TexturedQuad()
-        {
-            Size = new Vector2(113f, 56.5f),
-            Position = new Vector3(-25, 0, -10),
-        };
+
         public void Init(String mediaFolder)
         {
             if (_Levels != null) Dispose();
@@ -107,8 +104,57 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _LoadLevelThread = new Thread(_LoadLevelThreadHandler);
             _LoadLevelThread.Start();
             //TODO:Cambiar cartel
-            _LoadSign.Texture = GetSign("Win.png");
+
+            InitLoadingSign();
+            
         }
+
+        private TexturedQuad _LoadSign = new TexturedQuad()
+        {
+            Size = new Vector2(250f, 150f),
+            Position = new Vector3(0, 0, -10),
+        };
+        private TgcQuad _BlackQuad = new TgcQuad()
+        { 
+            Center = Vector3.Empty,
+            Normal = Vector3Extension.Back,
+            Size = new Vector2(1000, 1000),
+            Color = Color.Black,
+            
+        };
+        private AnimatedQuad[] _LoadingAnimations = new AnimatedQuad[4];
+
+        private void InitLoadingSign()
+        {
+            Vector2 auxSize;
+            _LoadSign.Texture = GetSign("Loading3.png");
+            var camera = GuiController.Instance.ThirdPersonCamera;
+            camera.setCamera(Vector3.Empty, 0, -200);
+            camera.Enable = true;
+
+            _BlackQuad.updateValues();
+
+            for (int i = 0; i < 4; i++)
+            {
+                _LoadingAnimations[i] = new AnimatedQuad()
+                {
+                    Texture = Game.Current.GetParticle("RedArrows.png"),
+                    FrameSize = new Size(512, 256),
+
+                    Size = auxSize = new Vector2(40, 20),
+                    Position = new Vector3(auxSize.X / 2 + (auxSize.X * (i - 2)), 0, -10),
+                    FirstFrame = 7,
+                    CurrentFrame = 7,
+                    FrameRate = 4,
+                    TotalFrames = 0,
+                };
+
+                _LoadingAnimations[i].Start();
+            }
+
+        }
+
+
         private Thread _LoadLevelThread;
         private void _LoadLevelThreadHandler()
         {
@@ -135,7 +181,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var level = _Levels[_LevelIndex];
             if (level == null)
             {
+                _BlackQuad.render();
                 _LoadSign.Render();
+                for (int i = 0; i < 4; i++)
+                {
+                    _LoadingAnimations[i].Update(deltaTime);
+                    _LoadingAnimations[i].Render();
+                }
                 return;
             }
             TgcD3dInput input = GuiController.Instance.D3dInput;
