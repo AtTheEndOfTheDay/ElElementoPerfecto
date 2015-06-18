@@ -333,37 +333,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             else _Build(deltaTime);
         }
 
-        private void _Simulation(Single deltaTime)
-        {
-            var collisions = new List<ItemCollision>();
-            foreach (var item in _Items)
-            {
-                item.Animate(deltaTime);
-                foreach (var interactive in _Interactives)
-                {
-                    item.Act(interactive, deltaTime);
-                    var collision = item.Collide(interactive);
-                    if (collision != null)
-                        collisions.Add(collision);
-                }
-            }
-            var i = 0;
-            var reacted = true;
-            var maxIterations = _Interactives.Count * 2;
-            while (reacted && i++ < maxIterations)
-            {
-                reacted = false;
-                foreach (var collision in collisions)
-                    if (collision.ComputeReaction(deltaTime))
-                        reacted = true;
-            }
-            foreach (var interactive in _Interactives)
-                interactive.Simulate(deltaTime);
-            IsComplete = _Goals.All(goal => goal.IsMeet);
-            if (IsComplete)
-                _WinSound.play();
-        }
-
         private void _Pick()
         {
             var input = GuiController.Instance.D3dInput;
@@ -415,6 +384,42 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                     _Selected = null;
                 }
             }
+        }
+
+        private void _Simulation(Single deltaTime)
+        {
+            var collisions = new List<ItemCollision>();
+            foreach (var item in _Items)
+            {
+                item.Animate(deltaTime);
+                foreach (var other in _Items)
+                    if (item != other
+                    && item.Collides(other))
+                        item.StaticCollision(other);
+                foreach (var interactive in _Interactives)
+                {
+                    if (interactive == item) continue;
+                    item.Act(interactive, deltaTime);
+                    var collision = item.Collide(interactive);
+                    if (collision != null)
+                        collisions.Add(collision);
+                }
+            }
+            var i = 0;
+            var reacted = true;
+            var maxIterations = _Interactives.Count * 2;
+            while (reacted && i++ < maxIterations)
+            {
+                reacted = false;
+                foreach (var collision in collisions)
+                    if (collision.ComputeReaction(deltaTime))
+                        reacted = true;
+            }
+            foreach (var item in _Items)
+                item.Simulate(deltaTime);
+            IsComplete = _Goals.All(goal => goal.IsMeet);
+            if (IsComplete)
+                _WinSound.play();
         }
         #endregion StageControl
     }

@@ -95,6 +95,8 @@
     <Compile Include="SRC\AtTheEndOfTheDay\Game\IGameComponent.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Acelerator.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\BalckHole.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshTranslatedScaledPart.cs" />
+    <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Spring.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Collider\Collision\ItemContactState.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Mesh\MeshTemporalRecursivePart.cs" />
     <Compile Include="SRC\AtTheEndOfTheDay\Level\Item\Part\Particle\IndependentParticlePart.cs" />

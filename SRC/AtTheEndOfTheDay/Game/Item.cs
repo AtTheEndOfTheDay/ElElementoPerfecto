@@ -258,6 +258,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public virtual void FindSiblings(Item[] items) { }
         public virtual void Build(Single deltaTime) { }
         public virtual void Animate(Single deltaTime) { }
+        public virtual void StaticCollision(Item item) { }
         public virtual void Act(Interactive interactive, Single deltaTime) { }
         protected virtual void OnCollision(ItemCollision itemCollision) { }
         public virtual Boolean React(ItemContactState contactState, Single deltaTime)
@@ -292,6 +293,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             contactState.ApplyFriction();
         }
+        public virtual void Simulate(Single deltaTime) { }
         #endregion InteractionMethods
     }
 }

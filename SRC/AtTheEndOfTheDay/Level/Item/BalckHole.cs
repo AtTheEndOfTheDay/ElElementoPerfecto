@@ -128,7 +128,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         protected override void OnCollision(ItemCollision itemCollision)
         {
             itemCollision.Interactive.Position = _EndOfTheWorld;
-            _SoundEffect.play(false);
+            if (_SoundEffect != null)
+                _SoundEffect.play(false);
         }
         #endregion ItemMethods
     }

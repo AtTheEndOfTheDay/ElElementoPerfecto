@@ -67,7 +67,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         protected override void OnCollision(ItemCollision itemCollision)
         {
             itemCollision.Interactive.Position = _Receptor.Position;
-            _SoundEffect.play(false);
+            if (_SoundEffect != null)
+                _SoundEffect.play(false);
             ClearParts();
         }
         public override Boolean React(ItemContactState contactState, Single deltaTime)

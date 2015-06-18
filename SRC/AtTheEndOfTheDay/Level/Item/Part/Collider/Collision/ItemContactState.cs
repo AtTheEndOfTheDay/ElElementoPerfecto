@@ -23,8 +23,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Momentum = Interactive.GetForceAt(Radius);
             Weight = -Vector3.Dot(Normal, Momentum);
             Orthonormal = Normal.Orthonormal(Velocity);
-            Restitution = (1 + Collision.Restitution) * Approach * Normal;
-            Friction = Weight * (Normal - collision.Friction * Orthonormal);
         }
         public Vector3 Point { get; private set; }
         public Vector3 Radius { get; private set; }
@@ -38,12 +36,18 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Single Approach { get; private set; }
         public Vector3 Momentum { get; private set; }
         public Single Weight { get; private set; }
-        public Vector3 Restitution { get; private set; }
+        public Vector3 Restitution
+        {
+            get { return (1 + Collision.Restitution) * Approach * Normal; }
+        }
         public void ApplyRestitution()
         {
             Interactive.AddVelocityAt(Radius, Restitution);
         }
-        public Vector3 Friction { get; private set; }
+        public Vector3 Friction
+        {
+            get { return Weight * (Normal - Collision.Friction * Orthonormal); }
+        }
         public void ApplyFriction()
         {
             Interactive.AddForceAt(Radius, Friction);

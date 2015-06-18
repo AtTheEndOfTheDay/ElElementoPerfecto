@@ -27,7 +27,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private const Single _BodyObbScaleY = .8f;
         private const Single _BaseObbScaleY = .13f;
         private static readonly Vector3 _LoadColiderExtents = Vector3Extension.One * 4f;
-        private static readonly Vector3 _BaseObbTranslation = Vector3Extension.Bottom * 11f;
+        private static readonly Vector3 _BaseObbTranslation = Vector3Extension.Bottom * 12f;
         private static readonly Vector3 _MinBorderScale = Vector3Extension.One * _BorderScale;
         private static readonly Vector3 _MaxBorderScale = new Vector3(1f, 0f, 1f) * _BorderScale;
         #endregion Constants
@@ -96,7 +96,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _ForceReal = value * _ForceFactor;
             }
         }
-        public Vector3 RotationA { get; set; }
+        public Vector3 RotationTarget { get; set; }
         public Vector3 RotationB { get; set; }
         public Single BaseRotationZ
         {
@@ -112,16 +112,18 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         #region ResetMethods
         private Interactive _Load = null;
-        private Boolean _IsRotationA = false;
         private Vector3 _BaseRotationSaved;
+        private Boolean _IsRotationASaved = false;
         public override void SaveValues()
         {
             _BaseRotationSaved = _Base.Rotation;
+            _IsRotationASaved = _IsRotationA;
             base.SaveValues();
         }
         public override void LoadValues()
         {
             _Base.Rotation = _BaseRotationSaved;
+            _IsRotationA = _IsRotationASaved;
             base.LoadValues();
             OnScaleChanged();
             _Load = null;
@@ -136,12 +138,13 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion ResetMethods
 
         #region ItemMethods
+        private Boolean _IsRotationA = false;
         public override void Build(Single deltaTime)
         {
             var input = GuiController.Instance.D3dInput;
             if (input.keyUp(Key.W))
             {
-                Rotation = _IsRotationA ? RotationB : RotationA;
+                Rotation = _IsRotationA ? RotationB : RotationTarget;
                 _IsRotationA = !_IsRotationA;
             }
             if (input.keyDown(Key.D))
@@ -163,11 +166,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 if (_IsRotationA)
                     RotationB = RotationB.AdvanceZ(step, to);
                 else
-                    RotationA = RotationA.AdvanceZ(step, to);
+                    RotationTarget = RotationTarget.AdvanceZ(step, to);
             }
             var r = Rotation = Rotation.AdvanceZ(step, to);
             if (_IsRotationA)
-                RotationA = r;
+                RotationTarget = r;
             else RotationB = r;
         }
         private Vector3 _RotationF = Vector3.Empty;
@@ -203,7 +206,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (_LoadColider.ClosestPoint(p) == p)
             {
                 _Load = interactive;
-                _RotationF = Rotation == RotationA ? RotationB : RotationA;
+                _RotationF = Rotation == RotationTarget ? RotationB : RotationTarget;
             }
         }
         #endregion ItemMethods

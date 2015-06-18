@@ -23,7 +23,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Ball()
         {
             var mesh = Game.Current.NewMesh("Ball");
-            _MeshTextured = new MeshTemporalRecursivePart(Game.Current.NewMesh("BallTextured"));
+            _MeshTextured = new MeshTemporalRecursivePart(Game.Current.NewMesh("BallTextured"), 1);
             Add(_Mesh = new MeshTemporalRecursivePart(mesh));
             Add(new SphereCollider(mesh));
         }
@@ -103,7 +103,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion ResetMethods
 
         #region ItemMethods
-        public override void Animate(float deltaTime)
+        public override void Animate(Single deltaTime)
         {
             if (_IsTextured)
                 _MeshTextured.Update(deltaTime);

@@ -28,7 +28,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private readonly IndependentParticlePart _Spark;
         public Repulsor()
         {
-            var mesh = Game.Current.NewMesh("Ball");
+            var mesh = Game.Current.NewMesh("Repulsor");
             Add(new MeshStaticPart(mesh) { Color = Color.FromArgb(0, 75, 0, 0) });
             Add(new SphereCollider(mesh));
             Add(_Spark = new IndependentParticlePart()

@@ -117,7 +117,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             r.Normalize();
             Momentum += Vector3.Dot(r, force) * r;
         }
-        public void Simulate(Single deltaTime)
+        public override void Simulate(Single deltaTime)
         {
             Velocity += deltaTime * MassInverse * Momentum;
             Position += deltaTime * Velocity;
@@ -126,7 +126,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             AngularVelocity += deltaTime * Iinv.Multiply(AngularMomentum);
             Rotation += deltaTime * AngularVelocity;
             AngularMomentum = Vector3.Empty;
-        }
+         }
         #endregion InteractionMethods
     }
 }

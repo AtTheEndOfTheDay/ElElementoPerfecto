@@ -18,34 +18,26 @@ using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
-    public class Button : Item
+    public class Spring : Item
     {
         #region Constants
-        private static readonly Object[] _SignalNull = { };
+        private static readonly Vector3 _CoverScaleFactor = new Vector3(2f, .2f, 2f);
+        private static readonly Vector3 _CoverTranslation = new Vector3(0f, 8f, 0f);
         #endregion Constants
 
         #region Constructors
         private readonly ObbTranslatedCollider _Collider;
-        public Button()
+        public Spring()
         {
-            var mesh = Game.Current.GetMesh("Torus");
+            var mesh = Game.Current.GetMesh("Spring");
             Add(new MeshStaticPart(mesh));
-            Add(new MeshStaticPart(Game.Current.GetMesh("Cylinder")));
+            Add(new MeshTranslatedScaledPart(Game.Current.NewMesh("WallRounded"), _CoverTranslation, _CoverScaleFactor) { Color = Color.FromArgb(123, 123, 123) });
+            Add(new MeshTranslatedScaledPart(Game.Current.NewMesh("WallRounded"), -_CoverTranslation, _CoverScaleFactor) { Color = Color.FromArgb(0, 0, 0) });
             Add(_Collider = new ObbTranslatedCollider(mesh));
         }
         #endregion Constructors
 
         #region Properties
-        private Item _RelatedItem;
-        private String _RelatedItemName;
-        public String RelatedItem
-        {
-            get { return _RelatedItemName; }
-            set
-            {
-                _RelatedItemName = value;
-            }
-        }
         private TgcStaticSound _SoundEffect;
         private String _SoundString;
         public String SoundEffect
@@ -57,32 +49,25 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _SoundEffect = Game.Current.GetSound(_SoundString, EffectVolume);
             }
         }
-        private Object[] _Signal = _SignalNull;
-        public Object[] Signal
-        {
-            get { return _Signal; }
-            set { _Signal = value ?? _SignalNull; }
-        }
+        public Single Elasticity { get; set; }
         #endregion Properties
 
         #region ItemMethods
-        public override void FindSiblings(Item[] items)
+        private Boolean _IsContracting = false;
+        public override void Act(Interactive interactive, Single deltaTime)
         {
-            if (_RelatedItemName != null)
-            {
-                _RelatedItem = null;
-                _RelatedItem = items.FirstOrDefault(i => i.Name.IgnoreCaseEquals(_RelatedItemName));
-                if (_RelatedItem == null) return;
-            }
+            base.Act(interactive, deltaTime);
         }
-        protected override void OnCollision(ItemCollision itemCollision)
+        protected override void OnContact(ItemContactState contactState)
         {
-            if (_RelatedItem != null
-            && itemCollision.AnyNormalDotVector(_Collider.Top, dot => dot.Abs().TolerantEquals(1)))
-                _RelatedItem.ButtonSignal(_Signal);
+            base.OnContact(contactState);
             if (_SoundEffect != null)
                 _SoundEffect.play(false);
+            contactState.Collision.Restitution *= 1.5f;
         }
+        protected override void OnRestitutiveContact(ItemContactState contactState)
+        {
+        } 
         #endregion ItemMethods
     }
 }

@@ -13,6 +13,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             Scale = Item.DefaultScale;
             Rotation = Item.DefaultRotation;
             Position = Item.DefaultPosition;
+            RotationMatrix = Item.DefaultRotationMatrix;
         }
         #endregion Constructors
 
@@ -20,15 +21,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public override void Attach(Item item)
         {
             Detach(item);
-            item.ScaleChanged += ItemScaleChanged;
-            item.RotationChanged += ItemRotationChanged;
-            item.PositionChanged += ItemPositionChanged;
+            item.ScaleChanged += Item_ScaleChanged;
+            item.RotationChanged += Item_RotationChanged;
+            item.PositionChanged += Item_PositionChanged;
         }
         public override void Detach(Item item)
         {
-            item.ScaleChanged -= ItemScaleChanged;
-            item.RotationChanged -= ItemRotationChanged;
-            item.PositionChanged -= ItemPositionChanged;
+            item.ScaleChanged -= Item_ScaleChanged;
+            item.RotationChanged -= Item_RotationChanged;
+            item.PositionChanged -= Item_PositionChanged;
         }
         public override void Render(Item item, Effect shader)
         {
@@ -41,16 +42,18 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         public Vector3 Scale { get; set; }
         public Vector3 Rotation { get; set; }
         public Vector3 Position { get; set; }
+        public Matrix RotationMatrix { get; set; }
 
-        protected virtual void ItemScaleChanged(Item item)
+        protected virtual void Item_ScaleChanged(Item item)
         {
             Scale = item.Scale;
         }
-        protected virtual void ItemRotationChanged(Item item)
+        protected virtual void Item_RotationChanged(Item item)
         {
             Rotation = item.Rotation;
+            RotationMatrix = item.RotationMatrix;
         }
-        protected virtual void ItemPositionChanged(Item item)
+        protected virtual void Item_PositionChanged(Item item)
         {
             Position = item.Position;
         }

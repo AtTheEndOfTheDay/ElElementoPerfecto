@@ -33,13 +33,10 @@
     <Wall Name="" Properties="" Scale="2.5,0.4,1" Position="-24,-28,0" Rotation="0,0,-0.78" Texture="@ObstacleWalls.jpg"/>
     <Wall Name="" Properties="" Scale="2.5,0.4,1" Position="-24,-11,0" Rotation="0,0,0.78" Texture="@ObstacleWalls.jpg"/>
     <!--Lvl Resources-->
-    <Cannon Name="" Properties="" Force="1.5" Scale="" Position="-130,-62,0" Rotation="0,0,0" RotationA="0,0,0" RotationB="0,0,-0.90"/>
+    <Cannon Name="" Properties="" Force="1.5" Scale="" Position="-130,-62,0" Rotation="0,0,0" RotationTarget="0,0,-0.90"/>
   </Game>
   <User>
     <Magnet Force="3" Scale="1.25,1.25,1.25"/>
-   
-   
-   
-    
+    <Spring Elasticity=".1" SoundEffect="@cambio gravedad2.wav"/>
   </User>
 </Level>
