@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using TgcViewer;
-using TgcViewer.Utils.TgcSceneLoader;
-using TgcViewer.Utils.TgcGeometry;
-using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.TgcGeometry;
+using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -18,7 +16,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             Sphere = sphere;
             _Radius = sphere.Radius;
-            sphere.setRenderColor(Collider.DefaultColiderColor);
+            sphere.setRenderColor(DefaultColiderColor);
         }
         #endregion Constructors
 

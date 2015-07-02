@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Linq;
-using System.Reflection;
-using System.Globalization;
-using System.Collections.Generic;
-using System.Drawing;
 using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using TgcViewer;
-using TgcViewer.Utils.TgcSceneLoader;
-using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {

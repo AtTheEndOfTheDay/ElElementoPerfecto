@@ -1,20 +1,18 @@
 ﻿using System;
-using System.IO;
-using System.Xml;
-using System.Linq;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Threading;
 using TgcViewer;
-using TgcViewer.Utils.TgcSceneLoader;
-using System.Reflection;
-using System.Collections.Generic;
 using TgcViewer.Utils.Input;
+using TgcViewer.Utils.Shaders;
+using TgcViewer.Utils.Sound;
+using TgcViewer.Utils.TgcGeometry;
+using TgcViewer.Utils.TgcSceneLoader;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
-using TgcViewer.Utils.Sound;
-using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -25,6 +23,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         #region Constants
         private const Single _OriginalAspectRatio = 961f / 510f;
+        private readonly Dx3D.Effect _ToonShader = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "AtTheEndOfTheDay\\Mesh\\ToonShading.fx");
         private readonly Dx3D.Effect _LightShader = GuiController.Instance.Shaders.TgcMeshPointLightShader.Clone(GuiController.Instance.D3dDevice);
         private void _LoadShaders()
         {
@@ -40,6 +39,37 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _LightShader.SetValue("materialSpecularExp", 10f);
         }
         #endregion Constants
+
+        #region GraphsConfig
+        public Boolean IsMeshVisible { get; set; }
+        public Boolean IsColliderVisible { get; set; }
+        public Boolean IsToonShaderEnabled { get; set; }
+        public Boolean IsTemporalEffectEnabled { get; set; }
+        private void _GraphsConfig()
+        {
+            var gui = GuiController.Instance;
+            var input = gui.D3dInput;
+            if (input.keyPressed(Key.F6))
+                IsToonShaderEnabled = !IsToonShaderEnabled;
+            else if (input.keyPressed(Key.F7))
+                IsTemporalEffectEnabled = !IsTemporalEffectEnabled;
+            else if (input.keyPressed(Key.F8))
+                IsMeshVisible = !IsMeshVisible;
+            else if (input.keyPressed(Key.F9))
+                IsColliderVisible = !IsColliderVisible;
+            else if (input.keyPressed(Key.F10))
+                gui.FpsCounterEnable = !gui.FpsCounterEnable;
+            else if (input.keyPressed(Key.F11))
+                gui.AxisLines.Enable = !gui.AxisLines.Enable;
+            else if (input.keyPressed(Key.F12))
+            {
+                var rs = gui.D3dDevice.RenderState;
+                rs.FillMode = rs.FillMode == FillMode.WireFrame
+                    ? FillMode.Solid
+                    : FillMode.WireFrame;
+            }
+        }
+        #endregion GraphsConfig
 
         #region Media
         private String _MaterialFolder;
@@ -76,9 +106,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion Media
 
         #region GamePlay
-        public Boolean IsMeshVisible { get; set; }
-        public Boolean IsColliderVisible { get; set; }
-        public Boolean IsToonShaderEnabled { get; set; }
         private Single _CameraFix;
         private String[] _Paths;
         private Level[] _Levels;
@@ -94,9 +121,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _Scene = new TgcSceneLoader().loadSceneFromFile(mediaFolder + "Mesh\\Items.xml");
             foreach (var mesh in _Scene.Meshes)
             {
+                mesh.AlphaBlendEnable = true;
                 mesh.AutoTransformEnable = false;
                 mesh.AutoUpdateBoundingBox = false;
+                //mesh.Technique = "NormalMap";
             }
+            _ToonShader.Technique = "NormalMap";
             var screen = GuiController.Instance.Panel3d.Size;
             _CameraFix = _OriginalAspectRatio / ((Single)screen.Width / screen.Height);
             _Paths = Directory.GetFiles(mediaFolder + "Level\\", "*.xml", SearchOption.AllDirectories);
@@ -147,7 +177,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             {
                 _LoadingAnimations[i] = new AnimatedQuad()
                 {
-                    Texture = Game.Current.GetParticle("RedArrows.png"),
+                    Texture = Current.GetParticle("RedArrows.png"),
                     FrameSize = new Size(512, 256),
 
                     Size = auxSize,
@@ -190,6 +220,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         private Int32 _LevelIndex = 0;
         public void Play(Single deltaTime)
         {
+            _GraphsConfig();
             _LvlHack();
             var level = _Levels[_LevelIndex];
             if (level == null)
@@ -204,7 +235,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 }
                 return;
             }
-            TgcD3dInput input = GuiController.Instance.D3dInput;
+            var input = GuiController.Instance.D3dInput;
             if (level.IsComplete)
             {
                 if (input.keyDown(Key.R))
@@ -214,12 +245,32 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             }
             else level.Play(deltaTime);
             level.SetCamera();
-            level.SetLight(_LightShader);
-            level.Render(_LightShader);
+            _LightShader.SetValue("lightPosition", TgcParserUtils.vector3ToFloat4Array(level.LightPosition));
+            _LightShader.SetValue("lightIntensity", level.LightIntensity);
             _LightShader.SetValue("materialAmbientColor", ColorValue.FromColor(Color.White));
             _LightShader.SetValue("materialDiffuseColor", ColorValue.FromColor(Color.White));
             _LightShader.SetValue("materialSpecularColor", ColorValue.FromColor(Color.White));
+            level.Render(IsToonShaderEnabled ? _ToonShader : _LightShader);
+            //level.Render(_ToonShader);
             //level.Render(_LightShader);
+        }
+        public void SetColor(Dx3D.Effect shader, Color color)
+        {
+            if (shader == _LightShader)
+            {
+                shader.SetValue("materialAmbientColor", ColorValue.FromColor(color));
+                shader.SetValue("materialDiffuseColor", ColorValue.FromColor(color));
+                shader.SetValue("materialSpecularColor", ColorValue.FromColor(color));
+            }
+        }
+        public void SetAlpha(Dx3D.Effect shader, Single alpha)
+        {
+            if (shader == _LightShader)
+            {
+                var color = shader.GetValueColor(shader.GetParameter(null, "materialDiffuseColor"));
+                color.Alpha = alpha;
+                shader.SetValue("materialDiffuseColor", color);
+            }
         }
         public void Dispose()
         {

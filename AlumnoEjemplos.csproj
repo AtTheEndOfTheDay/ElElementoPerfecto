@@ -199,6 +199,8 @@
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\Texture\NegativeMaterial.bmp" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\Texture\NeutralMaterial.bmp" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\Texture\PositiveMaterial.bmp" />
+    <None Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\ToonShading.fx" />
+    <Content Include="AlumnoMedia\AtTheEndOfTheDay\Mesh\TgcMeshPointLightShader.fx" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\BertycoX   The Signal.mp3" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\cambio gravedad.wav" />
     <Content Include="AlumnoMedia\AtTheEndOfTheDay\Sound\cañon.wav" />

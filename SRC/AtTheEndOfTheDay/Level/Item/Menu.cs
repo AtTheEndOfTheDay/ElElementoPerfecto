@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
-using TgcViewer;
-using TgcViewer.Example;
-using TgcViewer.Utils.Modifiers;
-using TgcViewer.Utils._2D;
-using TgcViewer.Utils.TgcGeometry;
-using TgcViewer.Utils.TgcSceneLoader;
-using TgcViewer.Utils.Input;
+using System.Linq;
 using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using Microsoft.DirectX.DirectInput;
+using TgcViewer.Utils.TgcGeometry;
 using Dx3D = Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
@@ -107,7 +98,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         }
         public override void Animate(Single deltaTime)
         {
-            var scale = _ItemSize.Abs() * Item.ScaleSizeFactor;
+            var scale = _ItemSize.Abs() * ScaleSizeFactor;
             ItemRotation += deltaTime * ItemRotationSpeed;
             var rotation = Rotation + ItemRotation;
             var start = Position + _ItemStart;

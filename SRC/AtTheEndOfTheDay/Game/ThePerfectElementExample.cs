@@ -1,19 +1,6 @@
 using System;
-using System.IO;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
 using TgcViewer;
 using TgcViewer.Example;
-using TgcViewer.Utils.Modifiers;
-using TgcViewer.Utils._2D;
-using TgcViewer.Utils.TgcGeometry;
-using TgcViewer.Utils.TgcSceneLoader;
-using TgcViewer.Utils.Input;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
@@ -54,15 +41,17 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             var mods = GuiController.Instance.Modifiers;
             mods.addBoolean("IsMeshVisible", "Mostrar Meshes", Game.Current.IsMeshVisible = true);
-            mods.addBoolean("IsColliderVisible", "Mostrar Colliders", Game.Current.IsColliderVisible = true);
-            //mods.addBoolean("IsToonShaderEnabled", "Usar Toon Shader", Game.Current.IsColliderVisible = true);
+            mods.addBoolean("IsColliderVisible", "Mostrar Colliders", Game.Current.IsColliderVisible = false);
+            mods.addBoolean("IsToonShaderEnabled", "Usar Toon Shader", Game.Current.IsToonShaderEnabled = false);
+            mods.addBoolean("IsTemporalEffectEnabled", "Usar Temporal Effect", Game.Current.IsTemporalEffectEnabled = false);
         }
         private void _SetModifiers()
         {
             var mods = GuiController.Instance.Modifiers;
             Game.Current.IsMeshVisible = (Boolean)mods["IsMeshVisible"];
             Game.Current.IsColliderVisible = (Boolean)mods["IsColliderVisible"];
-            //Game.Current.IsToonShaderEnabled = (Boolean)mods["IsToonShaderEnabled"];
+            Game.Current.IsToonShaderEnabled = (Boolean)mods["IsToonShaderEnabled"];
+            Game.Current.IsTemporalEffectEnabled = (Boolean)mods["IsTemporalEffectEnabled"];
         }
         #endregion Modifiers
 
@@ -85,7 +74,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
-            _SetModifiers();
+            //_SetModifiers();
             Game.Current.Play(elapsedTime);
         }
         /// <summary>

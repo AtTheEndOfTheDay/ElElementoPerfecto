@@ -1,6 +1,6 @@
-﻿using Microsoft.DirectX;
-using System;
+﻿using System;
 using System.Linq;
+using Microsoft.DirectX;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {

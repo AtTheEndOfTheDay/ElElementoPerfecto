@@ -1,6 +1,6 @@
-﻿using TgcViewer.Utils.TgcSceneLoader;
-using Microsoft.DirectX;
+﻿using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {

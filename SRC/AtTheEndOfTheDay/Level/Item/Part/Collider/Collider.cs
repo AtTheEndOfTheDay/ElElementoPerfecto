@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {

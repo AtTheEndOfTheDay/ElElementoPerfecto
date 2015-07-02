@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Drawing;
 using System.Collections.Generic;
-using TgcViewer;
-using TgcViewer.Utils.TgcSceneLoader;
+using System.Drawing;
+using System.Linq;
 using TgcViewer.Utils.TgcGeometry;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using Microsoft.DirectX.DirectInput;
 using Dx3D = Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement

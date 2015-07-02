@@ -2,9 +2,8 @@
 using System.Drawing;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
-using TgcViewer;
-using TgcViewer.Utils.TgcSceneLoader;
 using TgcViewer.Utils.TgcGeometry;
+using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -25,7 +24,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             Obb = obb;
             _Extents = obb.Extents;
-            obb.setRenderColor(Collider.DefaultColiderColor);
+            obb.setRenderColor(DefaultColiderColor);
         }
         #endregion Constructors
 

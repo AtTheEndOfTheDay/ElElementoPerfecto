@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using TgcViewer.Utils.TgcSceneLoader;
 using Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -9,11 +9,14 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     {
         #region Constructors
         public readonly TgcMesh Mesh;
+        private readonly String _Technique;
         public MeshPart(TgcMesh mesh)
         {
             Mesh = mesh;
-            Mesh.AutoTransformEnable = false;
-            Mesh.AutoUpdateBoundingBox = false;
+            mesh.AlphaBlendEnable = true;
+            mesh.AutoTransformEnable = false;
+            mesh.AutoUpdateBoundingBox = false;
+            _Technique = mesh.Technique;
         }
         #endregion Constructors
 
@@ -46,6 +49,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             if (Game.Current.IsMeshVisible)
             {
+                Mesh.Technique = Game.Current.IsToonShaderEnabled ? "NormalMap" : _Technique;
                 Mesh.Effect = shader;
                 Mesh.render();
             }

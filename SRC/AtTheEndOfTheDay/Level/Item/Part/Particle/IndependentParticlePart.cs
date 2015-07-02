@@ -1,8 +1,5 @@
-﻿using Microsoft.DirectX;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement

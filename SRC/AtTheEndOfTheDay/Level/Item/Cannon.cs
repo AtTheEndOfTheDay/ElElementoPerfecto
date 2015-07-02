@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
-using TgcViewer;
-using TgcViewer.Example;
-using TgcViewer.Utils.Modifiers;
-using TgcViewer.Utils._2D;
-using TgcViewer.Utils.TgcGeometry; 
-using TgcViewer.Utils.TgcSceneLoader;
-using TgcViewer.Utils.Input;
 using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
-using Dx3D = Microsoft.DirectX.Direct3D;
+using TgcViewer;
 using TgcViewer.Utils.Sound;
+using TgcViewer.Utils.TgcGeometry;
+using Dx3D = Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -83,8 +74,9 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         {
             _Base.Rotation = new Vector3(Rotation.X, Rotation.Y, _Base.Rotation.Z.Clamp(Rotation.Z - FastMath.PI_HALF, Rotation.Z + FastMath.PI_HALF));
             _BaseCollider.SetOrientation(_Base.Rotation);
-            if (!_IsRotationTarget)
-                _StoredRotation = Rotation;
+            if (_IsRotationTarget)
+                RotationTarget = Rotation;
+            else _StoredRotation = Rotation;
         }
         #endregion Constructors
 
@@ -116,10 +108,12 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #region ResetMethods
         private Interactive _Load = null;
         private Vector3 _BaseRotationSaved;
+        private Vector3 _RotationTargetSaved;
         private Boolean _IsRotationTargetSaved = false;
         public override void SaveValues()
         {
             _BaseRotationSaved = _Base.Rotation;
+            _RotationTargetSaved = RotationTarget;
             _IsRotationTargetSaved = _IsRotationTarget;
             base.SaveValues();
         }
@@ -128,6 +122,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             _ChargeSound.dispose();
             _ChargeSound = Game.Current.GetSound("CannonCharge.wav", 0);
             _Base.Rotation = _BaseRotationSaved;
+            RotationTarget = _RotationTargetSaved;
             _IsRotationTarget = _IsRotationTargetSaved;
             base.LoadValues();
             OnScaleChanged();
@@ -150,8 +145,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             var input = GuiController.Instance.D3dInput;
             if (input.keyUp(Key.W))
             {
-                Rotation = _IsRotationTarget ? _StoredRotation : RotationTarget;
                 _IsRotationTarget = !_IsRotationTarget;
+                Rotation = _IsRotationTarget ? RotationTarget : _StoredRotation;
             }
             if (input.keyDown(Key.D))
                 _BuildRotation(deltaTime, _Base.Rotation.Z - FastMath.PI_HALF, false);
@@ -169,10 +164,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             {
                 _Base.Rotation = _Base.Rotation.AdvanceZ(step, to);
                 _BaseCollider.SetOrientation(_Base.Rotation);
+                if (_IsRotationTarget)
+                    _StoredRotation = _StoredRotation.AdvanceZ(step, to);
+                else RotationTarget = RotationTarget.AdvanceZ(step, to);
             }
             var r = Rotation = Rotation.AdvanceZ(step, to);
-            if (_IsRotationTarget)
-                RotationTarget = r;
         }
         private Vector3 _RotationF = Vector3.Empty;
         public override void Animate(Single deltaTime)
@@ -197,15 +193,15 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 _Shoot();
         }
         private void _Shoot()
-            {
-                _ChargeSound.dispose();
-                _ChargeSound = Game.Current.GetSound("CannonCharge.wav", 0);
-                var d = _LoadColider.Orientation[1];
-                _Load.Position += d * (_LoadColiderExtents.Y + 1);
-                _Load.Velocity = d * _ForceReal;
-                _Load = null;
-                _Smoke.Start();
-            }
+        {
+            _ChargeSound.dispose();
+            _ChargeSound = Game.Current.GetSound("CannonCharge.wav", 0);
+            var d = _LoadColider.Orientation[1];
+            _Load.Position += d * (_LoadColiderExtents.Y + 1);
+            _Load.Velocity = d * _ForceReal;
+            _Load = null;
+            _Smoke.Start();
+        }
         public override void StaticCollision(Item item)
         {
             if (item != _Load
@@ -219,8 +215,8 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             if (_LoadColider.ClosestPoint(p) == p)
             {
                 _Load = interactive;
-                _RotationF = _IsRotationTarget ? _StoredRotation : RotationTarget;
                 _IsRotationTarget = !_IsRotationTarget;
+                _RotationF = _IsRotationTarget ? RotationTarget : _StoredRotation;
             }
         }
         #endregion ItemMethods

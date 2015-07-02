@@ -1,10 +1,6 @@
-﻿using System.Drawing;
-using TgcViewer;
-using TgcViewer.Utils.TgcSceneLoader;
+﻿using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using Microsoft.DirectX.DirectInput;
+using TgcViewer.Utils.TgcSceneLoader;
 using Dx3D = Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement

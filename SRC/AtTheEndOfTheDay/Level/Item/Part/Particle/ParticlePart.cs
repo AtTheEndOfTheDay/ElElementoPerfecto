@@ -1,10 +1,6 @@
-﻿using AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement;
+﻿using System;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement

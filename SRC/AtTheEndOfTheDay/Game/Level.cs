@@ -1,22 +1,14 @@
 ﻿using System;
-using System.Linq;
-using System.Reflection;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using TgcViewer;
-using TgcViewer.Example;
-using TgcViewer.Utils.Modifiers;
-using TgcViewer.Utils._2D;
-using TgcViewer.Utils.TgcGeometry;
-using TgcViewer.Utils.TgcSceneLoader;
-using TgcViewer.Utils.Input;
+using System.Linq;
 using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.DirectInput;
-using Dx3D = Microsoft.DirectX.Direct3D;
+using TgcViewer;
+using TgcViewer.Utils.Input;
 using TgcViewer.Utils.Sound;
+using TgcViewer.Utils.TgcGeometry;
+using Dx3D = Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 {
@@ -271,11 +263,6 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
             camera.RotationY = CameraPosition.X;
             camera.Enable = true;
         }
-        public void SetLight(Dx3D.Effect shader)
-        {
-            shader.SetValue("lightPosition", TgcParserUtils.vector3ToFloat4Array(LightPosition));
-            shader.SetValue("lightIntensity", LightIntensity);
-        }
         public void Render(Dx3D.Effect shader)
         {
             if (IsComplete)
@@ -286,9 +273,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                 item.Render(shader);
             if (_Selected != null)
             {
-                shader.SetValue("materialAmbientColor", ColorValue.FromColor(_SelectedColor));
-                shader.SetValue("materialDiffuseColor", ColorValue.FromColor(_SelectedColor));
-                shader.SetValue("materialSpecularColor", ColorValue.FromColor(_SelectedColor));
+                Game.Current.SetColor(shader, _SelectedColor);
                 _Selected.Render(shader);
             }
         }
