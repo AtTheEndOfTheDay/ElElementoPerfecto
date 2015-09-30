@@ -15,6 +15,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
     public class Level : IGameComponent, IDisposable
     {
         #region Constants
+        private const Single SimulationTimeStep = .025f;
         private static readonly TgcStaticSound _SoundNull = new TgcStaticSound();
         private static readonly Vector3 DefaultCameraPosition = Vector3Extension.Back * 200f;
         private static readonly Vector3 DefaultCameraTarget = Vector3.Empty;
@@ -289,6 +290,7 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
         #endregion GamePlay
 
         #region StageControl
+        private Single _SimulationDeltaTime = 0f;
         private void _StageControl()
         {
             if (_Selected != null) return;
@@ -300,7 +302,11 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
                         item.SaveValues();
                 if (_Stage == _Simulation)
                     _Stage = null;
-                else _Stage = _Simulation;
+                else
+                {
+                    _SimulationDeltaTime = 0f;
+                    _Stage = _Simulation;
+                }
             }
             else if (input.keyPressed(Key.C))
             {
@@ -373,6 +379,16 @@ namespace AlumnoEjemplos.AtTheEndOfTheDay.ThePerfectElement
 
         private void _Simulation(Single deltaTime)
         {
+            if (_SimulationDeltaTime > SimulationTimeStep)
+            {
+                _SimulationDeltaTime -= SimulationTimeStep;
+                deltaTime = SimulationTimeStep;
+            }
+            else
+            {
+                _SimulationDeltaTime += deltaTime;
+                return;
+            }
             var collisions = new List<ItemCollision>();
             foreach (var item in _Items)
             {
